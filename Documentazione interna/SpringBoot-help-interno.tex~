@@ -1,0 +1,65 @@
+% Created 2020-02-17 lun 11:47
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\date{}
+\title{Documentazione helper interna}
+\hypersetup{
+ pdfauthor={Aurelio},
+ pdftitle={Documentazione helper interna},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 26.3 (Org mode 9.1.9)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+
+\section*{Tipi di classe}
+\label{sec:org22cd787}
+
+\begin{itemize}
+\item Model
+
+Una classe il cui nome termina per Model, per esempio UtenteModel, rappresenta il modello di un utente all'interno del sistema. Generalmente dovrebbe essere composto solo da attributi, costruttore e getter (non setter).
+Non setter perchè tutti i valori di un utente risiedono nel database.
+L'oggetto utente è istanziato tramite costruttore.
+
+\item Service
+
+Una classe il cui nome termina per Service, per esempio UtenteService, rappresenta le funzionalita della 
+utente.
+In spring boot viene annotata con @Service sopra la definizione della classe.
+Può contenere direttamente la funzionalità o richiamare funzionalità definite altrove (per la dependency injection).
+
+\item RestController
+
+Una classe il cui nome termina per Controller, per esempio UtenteController, rappresenta le funzionalità
+della classe utenti richiamabili esternamente tramite richieste HTTP.
+L' annotazione sulla definizione della classe è @RestController.
+
+L' url dell endpoint è definito tramite @RequestMapping("url"), per esempio @RequestMapping("api/Utente").
+Le funzioni in questa classe sono accessibili tramite richieste http, per dire di che tipo di richieste si usano le annotazioni:
+\begin{description}
+\item[{@PostMapping}] per una POST
+
+\item[{@GetMapping}] per una GET
+
+\item[{@PutMapping}] per una Post
+\end{description}
+
+Per testare il rest API vi consiglio \href{https://www.postman.com/}{PostMan}.
+\end{itemize}
+\end{document}
