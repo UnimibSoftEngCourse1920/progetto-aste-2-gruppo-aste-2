@@ -1,5 +1,6 @@
 # Emacs / Org-Mode / tex
 
 *.tex
-*.org
+*.tex~
+*.org~
 *.*~
