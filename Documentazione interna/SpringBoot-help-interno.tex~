@@ -1,4 +1,4 @@
-% Created 2020-02-17 lun 11:47
+% Created 2020-02-17 lun 11:52
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -28,7 +28,7 @@
 \maketitle
 
 \section*{Tipi di classe}
-\label{sec:org22cd787}
+\label{sec:orgf6cf20d}
 
 \begin{itemize}
 \item Model
@@ -62,4 +62,19 @@ Le funzioni in questa classe sono accessibili tramite richieste http, per dire d
 
 Per testare il rest API vi consiglio \href{https://www.postman.com/}{PostMan}.
 \end{itemize}
+
+\section*{Altre annotazioni utili}
+\label{sec:org0206760}
+
+\begin{description}
+\item[{@Repository}] indica che è una classe che parla con un database.
+
+\item[{@AutoWired}] gestisce la dependency injection, la useremo penso sempre solo
+per costruttori. In automatico fornisce al costruttore un oggetto
+del tipo richiesto dal costruttore. 
+In pratica il costruttore della classe non viene "manualmente" chiamato da nessuna parte.
+
+\item[{@Qualifier("nome")}] Per disambiguare tra diverse possibili classi per @AutoWired 
+si puo qualificare/dare un nome via annotazione alle classi.
+\end{description}
 \end{document}
