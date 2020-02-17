@@ -9,7 +9,7 @@ Questo progetto consiste nella progettazione e implementazione di uno strumento 
 al servizio di aste online, qualitativamente competitivo rispetto agli strumenti esistenti della
 stessa categoria, tenendo conto di alcune caratteristiche di funzionamento, consultabili nella
 traccia del progetto
-([Aste Online-OK-M.pdf](https://github.com/UnimibSoftEngCourse1920/progetto-aste-2-gruppo-aste-2/blob/master/Aste%20Online-OK-M.pdf)).
+([Aste Online-OK-M.pdf](https://github.com/UnimibSoftEngCourse1920/progetto-aste-2-gruppo-aste-2/blob/master/Documentazione%20interna/Aste%20Online-OK-M.pdf)).
 
 Il sistema fornisce accesso agli utenti attraverso il Web.
 
