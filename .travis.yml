@@ -10,5 +10,5 @@ addons:
    secure: $SONAR_TOKEN
 
 script:
-- cd Backend/ProgettoAste
+- cd Backend/ProgettoAste2
 - mvn clean verify sonar:sonar -Dsonar.projectKey=UnimibSoftEngCourse1920_progetto-aste-2-gruppo-aste-2
