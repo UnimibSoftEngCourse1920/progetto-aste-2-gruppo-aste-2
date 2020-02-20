@@ -15,9 +15,9 @@ class OggettoModelTest {
     {
         UUID provaId = UUID.randomUUID();
         OggettoModel oggettoTest = new OggettoModel(provaId, "nome", "Descrizione","http://www.example.com/docs/resource1.html");
-        assertEquals(oggettoTest.getNome(),"nome", "Nome deve essere 'nome'");
-        assertEquals(oggettoTest.getDescrizione(),"Descrizione","Descrizione deve essere 'Descrizione'");
-        assertEquals(oggettoTest.getUrlImmagine(),"http://www.example.com/docs/resource1.html", "url sbagliato");
-        assertEquals(oggettoTest.getId().toString(), provaId.toString(), "Id errato");
+        assertEquals("nome", oggettoTest.getNome(),"Nome deve essere 'nome'");
+        assertEquals("Descrizione",oggettoTest.getDescrizione(),"Descrizione deve essere 'Descrizione'");
+        assertEquals("http://www.example.com/docs/resource1.html", oggettoTest.getUrlImmagine(), "url sbagliato");
+        assertEquals(provaId.toString(), oggettoTest.getId().toString(),"Id errato");
     }
 }

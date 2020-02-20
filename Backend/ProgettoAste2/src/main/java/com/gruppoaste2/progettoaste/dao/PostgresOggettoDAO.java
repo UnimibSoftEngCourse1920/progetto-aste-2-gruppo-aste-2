@@ -3,6 +3,7 @@ package com.gruppoaste2.progettoaste.dao;
 import com.gruppoaste2.progettoaste.model.OggettoModel;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,12 +21,12 @@ public class PostgresOggettoDAO implements OggettoDAO {
 
     @Override
     public List<OggettoModel> trovaOggetti() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
     public List<OggettoModel> trovaOggetti(UUID idAsta) {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
