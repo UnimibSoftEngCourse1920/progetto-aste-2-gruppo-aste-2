@@ -1,4 +1,4 @@
-package com.gruppoaste2.progettoAste;
+package com.gruppoaste2.progettoaste;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
