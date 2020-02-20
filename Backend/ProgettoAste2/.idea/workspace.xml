@@ -2,17 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a7d8d368-a5b6-4c52-ae81-2c55d0c9b761" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gruppoaste2/progettoAste/ProgettoAsteApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gruppoaste2/progettoaste/ProgettoAsteApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gruppoaste2/progettoAste/api/rename.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gruppoaste2/progettoaste/api/rename.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gruppoaste2/progettoAste/dao/dao.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gruppoaste2/progettoaste/dao/dao.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gruppoaste2/progettoAste/model/model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gruppoaste2/progettoaste/model/model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gruppoaste2/progettoAste/service/service.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gruppoaste2/progettoaste/service/service.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/gruppoaste2/progettoAste/ProgettoAsteApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/gruppoaste2/progettoaste/ProgettoAsteApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/gruppoaste2/progettoAste/ProgettoAsteApplication.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/gruppoaste2/progettoAste/ProgettoAsteApplicationTests.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+        <option value="JUnit5 Test Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
@@ -28,10 +34,20 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/pom.xml" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
-  <component name="RunManager" selected="Application.ProgettoAsteApplication (1)">
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.gruppoaste2.progettoaste.model" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.OggettoModelTest.testOggettoModel">
     <configuration name="ProgettoAsteApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.gruppoaste2.progettoaste.ProgettoAsteApplication" />
       <module name="ProgettoAste" />
@@ -58,8 +74,25 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="OggettoModelTest.testOggettoModel" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ProgettoAste" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.gruppoaste2.progettoaste.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.gruppoaste2.progettoaste.model" />
+      <option name="MAIN_CLASS_NAME" value="com.gruppoaste2.progettoaste.model.OggettoModelTest" />
+      <option name="METHOD_NAME" value="testOggettoModel" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.OggettoModelTest.testOggettoModel" />
         <item itemvalue="Application.ProgettoAsteApplication (1)" />
         <item itemvalue="Application.ProgettoAsteApplication" />
       </list>
@@ -76,29 +109,41 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1324" height="177" key="GridCell.Tab.0.bottom" timestamp="1582215080796">
+    <state x="491" y="116" width="378" height="562" key="#com.intellij.ide.util.MemberChooser" timestamp="1582236277270">
       <screen x="0" y="25" width="1366" height="743" />
     </state>
-    <state width="1324" height="177" key="GridCell.Tab.0.bottom/0.25.1366.743/1366.0.1920.1080@0.25.1366.743" timestamp="1582215080796" />
-    <state width="1324" height="177" key="GridCell.Tab.0.center" timestamp="1582215080796">
+    <state x="491" y="116" width="378" height="562" key="#com.intellij.ide.util.MemberChooser/0.25.1366.743/1366.0.1920.1080@0.25.1366.743" timestamp="1582236277270" />
+    <state width="1324" height="177" key="GridCell.Tab.0.bottom" timestamp="1582236398911">
       <screen x="0" y="25" width="1366" height="743" />
     </state>
-    <state width="1324" height="177" key="GridCell.Tab.0.center/0.25.1366.743/1366.0.1920.1080@0.25.1366.743" timestamp="1582215080796" />
-    <state width="1324" height="177" key="GridCell.Tab.0.left" timestamp="1582215080795">
+    <state width="1324" height="177" key="GridCell.Tab.0.bottom/0.25.1366.743/1366.0.1920.1080@0.25.1366.743" timestamp="1582236398911" />
+    <state width="1324" height="177" key="GridCell.Tab.0.center" timestamp="1582236398910">
       <screen x="0" y="25" width="1366" height="743" />
     </state>
-    <state width="1324" height="177" key="GridCell.Tab.0.left/0.25.1366.743/1366.0.1920.1080@0.25.1366.743" timestamp="1582215080795" />
-    <state width="1324" height="177" key="GridCell.Tab.0.right" timestamp="1582215080796">
+    <state width="1324" height="177" key="GridCell.Tab.0.center/0.25.1366.743/1366.0.1920.1080@0.25.1366.743" timestamp="1582236398910" />
+    <state width="1324" height="177" key="GridCell.Tab.0.left" timestamp="1582236398910">
       <screen x="0" y="25" width="1366" height="743" />
     </state>
-    <state width="1324" height="177" key="GridCell.Tab.0.right/0.25.1366.743/1366.0.1920.1080@0.25.1366.743" timestamp="1582215080796" />
+    <state width="1324" height="177" key="GridCell.Tab.0.left/0.25.1366.743/1366.0.1920.1080@0.25.1366.743" timestamp="1582236398910" />
+    <state width="1324" height="177" key="GridCell.Tab.0.right" timestamp="1582236398911">
+      <screen x="0" y="25" width="1366" height="743" />
+    </state>
+    <state width="1324" height="177" key="GridCell.Tab.0.right/0.25.1366.743/1366.0.1920.1080@0.25.1366.743" timestamp="1582236398911" />
     <state x="278" y="133" width="804" height="528" key="Vcs.Push.Dialog.v2" timestamp="1582210726204">
       <screen x="0" y="25" width="1366" height="743" />
     </state>
     <state x="278" y="133" width="804" height="528" key="Vcs.Push.Dialog.v2/0.25.1366.743/1366.0.1920.1080@0.25.1366.743" timestamp="1582210726204" />
-    <state x="454" y="317" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1582210387698">
+    <state x="454" y="317" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1582236219597">
       <screen x="0" y="25" width="1366" height="743" />
     </state>
-    <state x="454" y="317" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.25.1366.743/1366.0.1920.1080@0.25.1366.743" timestamp="1582210387698" />
+    <state x="454" y="317" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.25.1366.743/1366.0.1920.1080@0.25.1366.743" timestamp="1582236219597" />
+    <state x="399" y="118" width="562" height="558" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1582235139394">
+      <screen x="0" y="25" width="1366" height="743" />
+    </state>
+    <state x="399" y="118" width="562" height="558" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.25.1366.743/1366.0.1920.1080@0.25.1366.743" timestamp="1582235139394" />
+    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1582234194184">
+      <screen x="0" y="25" width="1366" height="743" />
+    </state>
+    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup/0.25.1366.743/1366.0.1920.1080@0.25.1366.743" timestamp="1582234194184" />
   </component>
 </project>
