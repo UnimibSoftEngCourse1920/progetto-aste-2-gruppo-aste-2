@@ -2,7 +2,7 @@ package com.gruppoaste2.progettoaste.model;
 
 import java.util.UUID;
 
-public class UtenteModel {
+public abstract class UtenteModel {
     private UUID id;
     private String username;
     private String email;

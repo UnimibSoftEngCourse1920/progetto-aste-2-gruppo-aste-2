@@ -2,13 +2,14 @@ package com.gruppoaste2.progettoaste.model;
 
 import java.util.UUID;
 
+
 public class ConfigurazioneModel {
-    private UUID id;
-    private boolean timeSlot;
-    //Time durataTimeslot ?
-    private int maxTimeSlot;
-    private int maxOfferte;
-    private double penale; //dovrà essere percentuale
+
+    private final UUID id;
+    private final boolean timeSlot;
+    private final int maxTimeSlot;
+    private final int maxOfferte;
+    private final double penale; // 0.1 per indicare 10% per esempio
 
     public ConfigurazioneModel(UUID id, boolean timeSlot, int maxTimeSlot, int maxOfferte, double penale) {
         this.id = id;

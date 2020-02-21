@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface UtenteRegistratoDAO {
+
     public boolean insersciUtenteRegistrato(UtenteRegistratoModel utenteRegistrto);
 
     public boolean eliminaUtenteRegistrato(UUID id);
