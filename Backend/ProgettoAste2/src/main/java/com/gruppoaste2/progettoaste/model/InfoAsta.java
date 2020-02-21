@@ -34,3 +34,4 @@ public class InfoAsta {
         return durataTimeSlot;
     }
 }
+ 
