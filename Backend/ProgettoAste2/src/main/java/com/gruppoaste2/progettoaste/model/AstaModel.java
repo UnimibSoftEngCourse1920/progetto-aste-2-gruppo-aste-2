@@ -11,15 +11,21 @@ public class AstaModel {
     private final double ora;
     private final Date dataInizio;
     private final Date dataFine;
+    ConfigurazioneModel configurazione;
+    OfferteModel offerta[];
     //ToDo:
-    //private Date durataTimeSolt; ?
+    //private Date durataTimeSolt; ? non li setto in ConfigurazioneModel?!
 
-    public AstaModel(UUID id, double ora, Date dataInizio, Date dataFine /*, Date durataTimeSolt*/){
+
+    public AstaModel(ArrayList<OggettoModel> oggetto, UUID id, double ora, Date dataInizio, Date dataFine,
+                     ConfigurazioneModel configurazione, OfferteModel[] offerta) {
+        this.oggetto = oggetto;
         this.id = id;
         this.ora = ora;
         this.dataInizio = dataInizio;
         this.dataFine = dataFine;
-        /*this.durataTimeSlot = durataTimeSlot;*/
+        this.configurazione = configurazione;
+        this.offerta = offerta; //sta cosa mi sa di schifo assurdo, ma ehy lo ha fatto intellij ¯\_(ツ)_/¯
     }
 
     public ArrayList<OggettoModel> getOggetto() {
