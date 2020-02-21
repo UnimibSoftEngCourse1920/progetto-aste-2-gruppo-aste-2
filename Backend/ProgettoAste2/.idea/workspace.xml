@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="a7d8d368-a5b6-4c52-ae81-2c55d0c9b761" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gruppoaste2/progettoaste/service/OggettoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gruppoaste2/progettoaste/service/OggettoService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,8 +13,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JUnit5 Test Class" />
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
