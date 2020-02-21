@@ -14,4 +14,11 @@ public class UtenteRegistratoModel extends UtenteModel {
         this.portafoglio = portafoglio;
     }
 
+    public String getNumeroTelefono() {
+        return numeroTelefono;
+    }
+
+    public PortafoglioModel getPortafoglio() {
+        return portafoglio;
+    }
 }

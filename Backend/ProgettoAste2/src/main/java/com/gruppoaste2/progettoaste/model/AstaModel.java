@@ -1,7 +1,6 @@
 package com.gruppoaste2.progettoaste.model;
 
 import java.sql.Time;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
