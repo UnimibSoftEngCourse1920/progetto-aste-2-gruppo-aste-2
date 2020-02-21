@@ -2,7 +2,6 @@ package com.gruppoaste2.progettoaste.model;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.util.List;
 
 public class InfoAsta {
 
