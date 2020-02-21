@@ -4,8 +4,8 @@ import com.gruppoaste2.progettoaste.dao.OggettoDAO;
 import com.gruppoaste2.progettoaste.model.OggettoModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
+import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,7 +15,7 @@ public class OggettoService {
     private final OggettoDAO oggettoDAO;
 
     @Autowired
-    public OggettoService(@Qualifier("postgres") OggettoDAO oggettoDAO) {
+    public OggettoService(@Qualifier("postgres-oggetto") OggettoDAO oggettoDAO) {
         this.oggettoDAO = oggettoDAO;
     }
 
