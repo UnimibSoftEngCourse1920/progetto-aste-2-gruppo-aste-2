@@ -7,7 +7,7 @@ public class UtenteRegistratoModel extends UtenteModel {
     PortafoglioModel portafoglio;
 
 
-    public UtenteRegistratoModel(UUID id, String username, String email) {
+    public UtenteRegistratoModel(UUID id, String username, String email, String telefono) {
         super(id, username, email);
         this.telefono = telefono;
     }

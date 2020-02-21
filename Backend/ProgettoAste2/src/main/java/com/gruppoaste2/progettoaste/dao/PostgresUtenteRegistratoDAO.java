@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository ("postgres")
-public class PostgresUtenteRegistrtoDAO implements UtenteRegistratoDAO{
+public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
 
     @Override
     public boolean insersciUtenteRegistrato(UtenteRegistratoModel utenteRegistrto) {
