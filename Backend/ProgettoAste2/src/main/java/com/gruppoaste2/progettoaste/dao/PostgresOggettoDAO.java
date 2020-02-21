@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-@Repository("postgres") // serve per identificare il tipo di database da usare (per dipendency injection)
+@Repository("postgres-oggetto") // serve per identificare il tipo di database da usare (per dipendency injection)
 public class PostgresOggettoDAO implements OggettoDAO {
     @Override
     public int inserisciOggetto(UUID id, OggettoModel oggetto) {

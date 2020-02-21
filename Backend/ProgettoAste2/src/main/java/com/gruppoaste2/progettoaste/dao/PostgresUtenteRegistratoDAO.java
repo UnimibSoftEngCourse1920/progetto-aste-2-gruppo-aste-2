@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-@Repository("postgres")
+@Repository("postgres-utente")
 public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
 
     @Override

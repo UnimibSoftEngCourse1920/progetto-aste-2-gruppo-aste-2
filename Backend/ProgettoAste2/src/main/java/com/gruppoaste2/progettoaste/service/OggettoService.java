@@ -15,7 +15,7 @@ public class OggettoService {
     private final OggettoDAO oggettoDAO;
 
     @Autowired
-    public OggettoService(@Qualifier("postgres") OggettoDAO oggettoDAO) {
+    public OggettoService(@Qualifier("postgres-oggetto") OggettoDAO oggettoDAO) {
         this.oggettoDAO = oggettoDAO;
     }
 
