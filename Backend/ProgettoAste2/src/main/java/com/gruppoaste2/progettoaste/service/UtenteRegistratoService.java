@@ -15,7 +15,7 @@ public class UtenteRegistratoService {
     private final UtenteRegistratoDAO utenteRegistratoDAO;
 
     @Autowired
-    public UtenteRegistratoService(@Qualifier("") UtenteRegistratoDAO utenteRegistratoDAO) {
+    public UtenteRegistratoService(@Qualifier("postgres") UtenteRegistratoDAO utenteRegistratoDAO) {
         this.utenteRegistratoDAO = utenteRegistratoDAO;
     }
 
