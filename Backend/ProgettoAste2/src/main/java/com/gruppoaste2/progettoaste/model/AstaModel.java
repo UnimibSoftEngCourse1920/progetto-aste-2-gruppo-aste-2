@@ -7,44 +7,23 @@ import java.util.UUID;
 
 public class AstaModel {
 
-    private List<OggettoModel> oggetti;
+
     private final UUID id;
-    private final double prezzoPartenza;
-    private final Date dataInizio;
-    private final Date dataFine;
     private final ConfigurazioneModel configurazione;
     private final List<OffertaModel> offerte;
-    private final Time durataTimeSlot;
+    private final List<OggettoModel> oggetti;
+    private final InfoAsta infoAsta;
 
-    public AstaModel(List<OggettoModel> oggetti, UUID id, double prezzoPartenza, Date dataInizio, Date dataFine, ConfigurazioneModel configurazione, List<OffertaModel> offerte, Time durataTimeSlot) {
-        this.oggetti = oggetti;
+    public AstaModel(UUID id, ConfigurazioneModel configurazione, List<OffertaModel> offerte, List<OggettoModel> oggetti, InfoAsta infoAsta) {
         this.id = id;
-        this.prezzoPartenza = prezzoPartenza;
-        this.dataInizio = dataInizio;
-        this.dataFine = dataFine;
         this.configurazione = configurazione;
         this.offerte = offerte;
-        this.durataTimeSlot = durataTimeSlot;
-    }
-
-    public List<OggettoModel> getOggetti() {
-        return oggetti;
+        this.oggetti = oggetti;
+        this.infoAsta = infoAsta;
     }
 
     public UUID getId() {
         return id;
-    }
-
-    public double getPrezzoPartenza() {
-        return prezzoPartenza;
-    }
-
-    public Date getDataInizio() {
-        return dataInizio;
-    }
-
-    public Date getDataFine() {
-        return dataFine;
     }
 
     public ConfigurazioneModel getConfigurazione() {
@@ -55,7 +34,11 @@ public class AstaModel {
         return offerte;
     }
 
-    public Time getDurataTimeSlot() {
-        return durataTimeSlot;
+    public List<OggettoModel> getOggetti() {
+        return oggetti;
+    }
+
+    public InfoAsta getInfoAsta() {
+        return infoAsta;
     }
 }
