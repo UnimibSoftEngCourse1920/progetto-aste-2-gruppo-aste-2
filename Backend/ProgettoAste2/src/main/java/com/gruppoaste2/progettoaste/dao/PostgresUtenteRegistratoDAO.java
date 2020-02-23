@@ -37,14 +37,14 @@ public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
 
     @Override
     public List<UtenteRegistratoModel> trovaTuttiUtentiRegistrati() {
-        final String sql = "SELECT * FROM utenteregistrato";
+        final String sql = "SELECT * FROM utente_registrato";
         return jdbcTemplate.query(sql, (resultSet, i) -> {
             UUID id = UUID.fromString(resultSet.getString("id"));
             String username = resultSet.getString("username");
             String email = resultSet.getString("email");
             String telefono = resultSet.getString("telefono");
             String password = resultSet.getString("password");
-            double credito = resultSet.getDouble("creditodisponibile");
+            double credito = resultSet.getDouble("credito_disponibile");
             return new UtenteRegistratoModel(id, username, email, telefono, password, new PortafoglioModel(credito));
         });
     }
