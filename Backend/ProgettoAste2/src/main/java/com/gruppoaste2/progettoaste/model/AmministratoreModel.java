@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class AmministratoreModel extends UtenteModel {
 
-    public AmministratoreModel(UUID id, String username, String email) {
-        super(id, username, email);
+    public AmministratoreModel(UUID id, String username, String email, String password) {
+        super(id, username, email, password);
     }
 }

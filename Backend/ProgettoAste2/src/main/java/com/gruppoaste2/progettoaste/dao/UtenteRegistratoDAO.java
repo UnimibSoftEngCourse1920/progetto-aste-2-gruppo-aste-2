@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface UtenteRegistratoDAO {
 
-    public boolean insersciUtenteRegistrato(UtenteRegistratoModel utenteRegistrto);
+    public boolean insersciUtenteRegistrato(UtenteRegistratoModel utenteRegistrato);
 
     public boolean eliminaUtenteRegistrato(UUID id);
 

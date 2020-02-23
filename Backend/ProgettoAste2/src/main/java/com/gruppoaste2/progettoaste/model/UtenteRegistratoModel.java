@@ -8,8 +8,8 @@ public class UtenteRegistratoModel extends UtenteModel {
     private final PortafoglioModel portafoglio;
 
 
-    public UtenteRegistratoModel(UUID id, String username, String email, String numeroTelefono, PortafoglioModel portafoglio) {
-        super(id, username, email);
+    public UtenteRegistratoModel(UUID id, String username, String email, String numeroTelefono, String password, PortafoglioModel portafoglio) {
+        super(id, username, email,password);
         this.numeroTelefono = numeroTelefono;
         this.portafoglio = portafoglio;
     }
