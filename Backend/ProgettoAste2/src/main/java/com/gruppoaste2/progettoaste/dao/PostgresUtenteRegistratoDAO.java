@@ -31,7 +31,7 @@ public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
     }
 
     @Override
-    public UtenteRegistratoModel trovaUtenteRegistro(UUID id) {
+    public UtenteRegistratoModel trovaUtenteRegistrato(UUID id) {
         return null;
     }
 
@@ -50,7 +50,7 @@ public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
     }
 
     @Override
-    public boolean aggiornaUtenteRegistrto(UUID id, UtenteRegistratoModel utenteAggiornato) {
+    public boolean aggiornaUtenteRegistrato(UUID id, UtenteRegistratoModel utenteAggiornato) {
         return false;
     }
 }

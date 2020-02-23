@@ -11,10 +11,10 @@ public interface UtenteRegistratoDAO {
 
     public boolean eliminaUtenteRegistrato(UUID id);
 
-    public UtenteRegistratoModel trovaUtenteRegistro(UUID id);
+    public UtenteRegistratoModel trovaUtenteRegistrato(UUID id);
 
     public List<UtenteRegistratoModel> trovaTuttiUtentiRegistrati();
 
-    public boolean aggiornaUtenteRegistrto(UUID id, UtenteRegistratoModel utenteAggiornato);
+    public boolean aggiornaUtenteRegistrato(UUID id, UtenteRegistratoModel utenteAggiornato);
 
 }
