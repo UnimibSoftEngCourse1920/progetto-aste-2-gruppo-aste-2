@@ -4,11 +4,10 @@ package com.gruppoaste2.progettoaste.api;
 import com.gruppoaste2.progettoaste.model.UtenteRegistratoModel;
 import com.gruppoaste2.progettoaste.service.UtenteRegistratoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequestMapping("api/utenteregistrato")
 @RestController
@@ -31,5 +30,18 @@ public class UtenteRegistratoController {
     public List<UtenteRegistratoModel> trovaUtentiRegistrati()
     {
         return utenteRegistratoService.trovaTuttiUtentiRegistrati();
+    }
+
+    @GetMapping(path="{id}")
+    public UtenteRegistratoModel trovaUtenteRegistrato(@PathVariable("id") UUID id)
+    {
+        return utenteRegistratoService.trovaUtenteRegistro(id)
+                .orElse(null);
+    }
+
+    @PostMapping("/aggiungi")
+    public int aggiungiUtenteRegistrato(@RequestBody UtenteRegistratoModel utente)
+    {
+        return utenteRegistratoService.insersciUtenteRegistrato(utente);
     }
 }

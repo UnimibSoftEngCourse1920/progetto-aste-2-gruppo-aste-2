@@ -5,20 +5,23 @@ import java.util.UUID;
 public class UtenteRegistratoModel extends UtenteModel {
 
     private final String numeroTelefono;
-    private final PortafoglioModel portafoglio;
+    private final double credito;
 
-
-    public UtenteRegistratoModel(UUID id, String username, String email, String numeroTelefono, String password, PortafoglioModel portafoglio) {
+    public UtenteRegistratoModel(UUID id, String username, String email, String numeroTelefono, String password, double credito){
         super(id, username, email,password);
         this.numeroTelefono = numeroTelefono;
-        this.portafoglio = portafoglio;
+        this.credito = credito;
+
     }
 
     public String getNumeroTelefono() {
         return numeroTelefono;
     }
 
-    public PortafoglioModel getPortafoglio() {
-        return portafoglio;
+    public double getCredito()
+    {
+        return credito;
     }
+
+
 }

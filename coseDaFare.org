@@ -1,0 +1,3 @@
+- controllo eccezzioni per le chiamate al db (tipo controllare se c'è gia dentro lo stesso utente)
+- vedere la sicurezza (se rimane tempo)
+- aggiungere test per tutte le funzioni controller

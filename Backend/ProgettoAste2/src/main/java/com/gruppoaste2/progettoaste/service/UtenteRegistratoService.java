@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -19,15 +20,15 @@ public class UtenteRegistratoService {
         this.utenteRegistratoDAO = utenteRegistratoDAO;
     }
 
-    public boolean insersciUtenteRegistrato(UtenteRegistratoModel utenteRegistratoModel) {
-        return utenteRegistratoDAO.insersciUtenteRegistrato(utenteRegistratoModel);
+    public int insersciUtenteRegistrato(UtenteRegistratoModel utenteRegistratoModel) {
+        return utenteRegistratoDAO.inserisciUtenteRegistrato(utenteRegistratoModel);
     }
 
     public boolean eliminaUtenteRegistrato(UUID id){
         return utenteRegistratoDAO.eliminaUtenteRegistrato(id);
     }
 
-    public UtenteRegistratoModel trovaUtenteRegistro(UUID id){
+    public Optional<UtenteRegistratoModel> trovaUtenteRegistro(UUID id){
         return utenteRegistratoDAO.trovaUtenteRegistrato(id);
     }
 

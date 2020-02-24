@@ -3,18 +3,25 @@ package com.gruppoaste2.progettoaste.dao;
 import com.gruppoaste2.progettoaste.model.UtenteRegistratoModel;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface UtenteRegistratoDAO {
 
-    public boolean insersciUtenteRegistrato(UtenteRegistratoModel utenteRegistrato);
+    int inserisciUtenteRegistrato(UUID id, UtenteRegistratoModel utenteRegistrato);
 
-    public boolean eliminaUtenteRegistrato(UUID id);
+    default int inserisciUtenteRegistrato(UtenteRegistratoModel utenteRegistrato)
+    {
+        UUID id = UUID.randomUUID();
+        return inserisciUtenteRegistrato(id,utenteRegistrato);
+    }
 
-    public UtenteRegistratoModel trovaUtenteRegistrato(UUID id);
+    boolean eliminaUtenteRegistrato(UUID id);
 
-    public List<UtenteRegistratoModel> trovaTuttiUtentiRegistrati();
+    Optional<UtenteRegistratoModel> trovaUtenteRegistrato(UUID id);
 
-    public boolean aggiornaUtenteRegistrato(UUID id, UtenteRegistratoModel utenteAggiornato);
+    List<UtenteRegistratoModel> trovaTuttiUtentiRegistrati();
+
+    boolean aggiornaUtenteRegistrato(UUID id, UtenteRegistratoModel utenteAggiornato);
 
 }
