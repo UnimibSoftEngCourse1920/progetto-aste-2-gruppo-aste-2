@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-@Repository
+@Repository("postgres-asta")
 public class PostgresAstaDAO implements AstaDAO {
     @Override
     public boolean inserisciAsta(AstaModel asta) {
