@@ -132,7 +132,8 @@ SET default_table_access_method = heap;
 CREATE TABLE public.amministratore (
     username character varying(100) NOT NULL,
     id uuid NOT NULL,
-    email character varying(300) NOT NULL
+    email character varying(300) NOT NULL,
+    password character varying(50) NOT NULL
 );
 
 
@@ -283,7 +284,7 @@ ALTER TABLE public.utente_registrato OWNER TO postgres;
 -- Data for Name: amministratore; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.amministratore (username, id, email) FROM stdin;
+COPY public.amministratore (username, id, email, password) FROM stdin;
 \.
 
 
