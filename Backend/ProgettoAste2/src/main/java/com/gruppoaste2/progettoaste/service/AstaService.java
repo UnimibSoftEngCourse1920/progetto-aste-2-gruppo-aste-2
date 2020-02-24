@@ -11,38 +11,38 @@ import java.util.UUID;
 
 @Service
 public class AstaService {
-    private final AstaDAO AstaDAO;
+    private final AstaDAO astaDAO;
 
     @Autowired
     public AstaService(@Qualifier("postgres-asta") AstaDAO astaDAO) {
-        AstaDAO = astaDAO;
+        this.astaDAO = astaDAO;
     }
 
     public boolean inserisciAsta(AstaModel asta){
-        return AstaDAO.inserisciAsta(asta);
+        return astaDAO.inserisciAsta(asta);
     }
 
     public boolean eliminaAsta (UUID id){
-        return  AstaDAO.eliminaAsta(id);
+        return  astaDAO.eliminaAsta(id);
     }
 
     public AstaModel trovaAsta(UUID id){
-        return AstaDAO.trovaAsta(id);
+        return astaDAO.trovaAsta(id);
     }
 
     public List<AstaModel> trovaAste(){
-        return AstaDAO.trovaAste();
+        return astaDAO.trovaAste();
     }
 
     public boolean aggiornaAsta(UUID id, AstaModel astAggiornata){
-        return AstaDAO.aggiornaAsta(id, astAggiornata);
+        return astaDAO.aggiornaAsta(id, astAggiornata);
     }
 
     public boolean faiOffertaBustaChiusa(UUID id, double offerta){
-        return AstaDAO.faiOffertaBustaChiusa(id, offerta);
+        return astaDAO.faiOffertaBustaChiusa(id, offerta);
     }
 
     public boolean faiOffertaSuperamentoImmediato(UUID id, double offerta){
-        return AstaDAO.faiOffertaSuperamentoImmediato(id, offerta);
+        return astaDAO.faiOffertaSuperamentoImmediato(id, offerta);
     }
 }
