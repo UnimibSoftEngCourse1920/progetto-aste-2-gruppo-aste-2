@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-@Repository
+@Repository("postgres-categoria")
 public class PostgresCategoriaDAO implements CategoriaDAO{
     @Override
     public boolean insersciCategoria(CategoriaModel categtegoria) {
