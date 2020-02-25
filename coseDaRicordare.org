@@ -1,0 +1,2 @@
+- Per qualche motivo windows 7 non ha installato il locale en_US.utf8, quindi per il dump sql bisogna cambiare la stringa en_us.utf8 con English.
+- Su windows 10 e linux funziona normalmente
