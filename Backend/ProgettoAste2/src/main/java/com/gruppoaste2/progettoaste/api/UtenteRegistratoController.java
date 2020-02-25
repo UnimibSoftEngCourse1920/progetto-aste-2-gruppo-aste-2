@@ -86,8 +86,8 @@ public class UtenteRegistratoController {
         return new InfoCredito(creditoTotale, creditoDisponibile, creditoImpegnato);
     }
 
-    @GetMapping(path = "/credito/aggiungi/{quanto}")
-    public int aggiungiCredito(UUID id, @PathVariable("quanto") float creditoAggiunto)
+    @GetMapping(path = "/credito/aggiungi/{id}/{quanto}")
+    public int aggiungiCredito(@PathVariable("id") UUID id, @PathVariable("quanto") float creditoAggiunto)
     {
         return utenteRegistratoService.aggiungiCredito(id,creditoAggiunto);
     }

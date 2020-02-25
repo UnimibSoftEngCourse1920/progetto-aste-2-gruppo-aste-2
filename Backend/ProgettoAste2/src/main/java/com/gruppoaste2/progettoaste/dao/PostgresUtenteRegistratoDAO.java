@@ -94,7 +94,9 @@ public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
 
     @Override
     public int aggiungiCredito(UUID id, float creditoAggiunto) {
-        return 0;
+        final float credito = creditoAggiunto + creditoDisponibile(id);
+        final String sql = "UPDATE utente_registrato SET credito_disponibile = ? WHERE id = ?";
+        return jdbcTemplate.update(sql, credito, id);
     }
 
     @Override
