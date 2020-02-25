@@ -65,9 +65,13 @@ public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
         });
     }
 
+    // Quando chiamato anche se magari cambio solo un valore per l'utente devo comunque specificare tutti gli altri
+    // altrimenti di default sono null che il database non accetta (per i vincoli di not null)
     @Override
-    public boolean aggiornaUtenteRegistrato(UUID id, UtenteRegistratoModel utenteAggiornato) {
-        return false;
+    public int aggiornaUtenteRegistrato(UUID id, UtenteRegistratoModel utenteAggiornato) {
+        final String sql = "UPDATE utente_registrato SET username = ?, password = ?, email = ?, telefono = ?, credito_disponibile = ? WHERE id = ?";
+        return jdbcTemplate.update(sql,utenteAggiornato.getUsername(), utenteAggiornato.getPassword(), utenteAggiornato.getEmail(),
+                utenteAggiornato.getNumeroTelefono(), utenteAggiornato.getCredito(), id);
     }
 
     @Override

@@ -36,7 +36,7 @@ public class UtenteRegistratoService {
         return utenteRegistratoDAO.trovaTuttiUtentiRegistrati();
     }
 
-    public boolean aggiornaUtenteRegistrato(UUID id, UtenteRegistratoModel utenteAggiornato){
+    public int aggiornaUtenteRegistrato(UUID id, UtenteRegistratoModel utenteAggiornato){
         return utenteRegistratoDAO.aggiornaUtenteRegistrato(id, utenteAggiornato);
     }
 

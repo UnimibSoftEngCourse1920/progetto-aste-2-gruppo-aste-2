@@ -22,7 +22,7 @@ public interface UtenteRegistratoDAO {
 
     List<UtenteRegistratoModel> trovaTuttiUtentiRegistrati();
 
-    boolean aggiornaUtenteRegistrato(UUID id, UtenteRegistratoModel utenteAggiornato);
+    int aggiornaUtenteRegistrato(UUID id, UtenteRegistratoModel utenteAggiornato);
 
     boolean controllaUsernameOccupato(String username);
 

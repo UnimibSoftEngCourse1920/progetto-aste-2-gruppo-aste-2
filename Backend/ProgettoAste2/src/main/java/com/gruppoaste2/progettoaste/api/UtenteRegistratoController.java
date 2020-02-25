@@ -45,6 +45,12 @@ public class UtenteRegistratoController {
         return utenteRegistratoService.inserisciUtenteRegistrato(utente);
     }
 
+    @PostMapping(path = "/aggiorna/{id}")
+    public int aggiornaUtenteRegistrato(@PathVariable("id") UUID id, @RequestBody UtenteRegistratoModel utenteAggiornato)
+    {
+        return utenteRegistratoService.aggiornaUtenteRegistrato(id, utenteAggiornato);
+    }
+
     @GetMapping(path = "elimina/{id}") // funziona
     public int eliminaUtenteRegistrato(@PathVariable("id") UUID id)
     {
