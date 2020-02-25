@@ -1,6 +1,7 @@
 package com.gruppoaste2.progettoaste.api;
 
 
+import com.gruppoaste2.progettoaste.model.InfoCredito;
 import com.gruppoaste2.progettoaste.model.UtenteRegistratoModel;
 import com.gruppoaste2.progettoaste.service.UtenteRegistratoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,8 +77,20 @@ public class UtenteRegistratoController {
     }
 
     @GetMapping(path = "/credito/{id}")
-    public float creditoDisponibile(@PathVariable("id") UUID id)
+    public InfoCredito infoCredito(@PathVariable("id") UUID id)
     {
-        return utenteRegistratoService.creditoDisponibile(id);
+        final float creditoTotale = utenteRegistratoService.creditoTotale(id);
+        final float creditoImpegnato = utenteRegistratoService.creditoImpegnato(id);
+        final float creditoDisponibile = creditoTotale - creditoImpegnato;
+
+        return new InfoCredito(creditoTotale, creditoDisponibile, creditoImpegnato);
     }
+
+    @GetMapping(path = "/credito/aggiungi/{quanto}")
+    public int aggiungiCredito(UUID id, @PathVariable("quanto") float creditoAggiunto)
+    {
+        return utenteRegistratoService.aggiungiCredito(id,creditoAggiunto);
+    }
+
+
 }

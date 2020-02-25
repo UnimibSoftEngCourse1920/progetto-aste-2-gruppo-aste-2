@@ -55,8 +55,23 @@ public class UtenteRegistratoService {
         return utenteRegistratoDAO.controllaUtenteEsiste(utente);
     }
 
-    public float creditoDisponibile(UUID id)
+    public int aggiungiCredito(UUID id, float creditoAggiunto)
+    {
+        return utenteRegistratoDAO.aggiungiCredito(id,creditoAggiunto);
+    }
+
+    public float creditoTotale(UUID id)
     {
         return utenteRegistratoDAO.creditoTotale(id);
+    }
+
+    public float creditoImpegnato(UUID id)
+    {
+        return utenteRegistratoDAO.creditoImpegnato(id);
+    }
+
+    public float creditoDisponibile(UUID id)
+    {
+        return utenteRegistratoDAO.creditoDisponibile(id);
     }
 }

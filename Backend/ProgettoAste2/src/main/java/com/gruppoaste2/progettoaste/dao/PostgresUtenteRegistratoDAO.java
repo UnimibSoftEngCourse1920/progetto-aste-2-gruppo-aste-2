@@ -93,18 +93,36 @@ public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
     }
 
     @Override
-    public int aggiungiCredito(UUID id, double creditoAggiunto) {
+    public int aggiungiCredito(UUID id, float creditoAggiunto) {
         return 0;
     }
 
     @Override
-    public double creditoDisponibile(UUID id) {
-        return 0;
+    public float creditoDisponibile(UUID id) {
+        return creditoTotale(id) - creditoImpegnato(id);
     }
 
     @Override
-    public double creditoImpegnato(UUID id) {
-        return 0;
+    public float creditoImpegnato(UUID id) {
+        final String sql =
+                "SELECT o.credito_offerto FROM offerta as o, asta as a WHERE o.id_utente_registrato = ? AND o.id_asta = a.id AND a.data_fine is null";
+
+        float creditoImpegnato = 0;
+
+        List<Float> credito_offerte = jdbcTemplate.query(
+                sql,
+                (resultSet, i) -> {
+                    float credito = resultSet.getFloat("credito_offerto");
+                    return credito;
+                },
+                id);
+
+        for(float offerta : credito_offerte)
+        {
+            creditoImpegnato += offerta;
+        }
+
+        return creditoImpegnato;
     }
 
     @Override
