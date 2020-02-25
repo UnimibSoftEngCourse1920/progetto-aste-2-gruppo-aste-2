@@ -218,7 +218,8 @@ CREATE TABLE public.configurazione (
     durata_timeslot_fisso time without time zone NOT NULL,
     numero_max_timeslot bigint NOT NULL,
     numero_offerte_contemporanee_utente bigint NOT NULL,
-    tipo_timeslot public.tipotimeslotasta NOT NULL
+    tipo_timeslot public.tipotimeslotasta NOT NULL,
+    data_creazione date NOT NULL
 );
 
 
@@ -332,7 +333,7 @@ COPY public.categoria_oggetto (id_oggetto, id_categoria) FROM stdin;
 -- Data for Name: configurazione; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.configurazione (id, durata_timeslot_fisso, numero_max_timeslot, numero_offerte_contemporanee_utente, tipo_timeslot) FROM stdin;
+COPY public.configurazione (id, durata_timeslot_fisso, numero_max_timeslot, numero_offerte_contemporanee_utente, tipo_timeslot, data_creazione) FROM stdin;
 \.
 
 
