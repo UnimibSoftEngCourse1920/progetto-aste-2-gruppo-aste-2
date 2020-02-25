@@ -54,4 +54,9 @@ public class UtenteRegistratoService {
     {
         return utenteRegistratoDAO.controllaUtenteEsiste(utente);
     }
+
+    public float creditoDisponibile(UUID id)
+    {
+        return utenteRegistratoDAO.creditoTotale(id);
+    }
 }

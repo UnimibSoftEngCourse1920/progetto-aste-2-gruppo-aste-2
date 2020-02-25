@@ -45,7 +45,7 @@ public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
                     String email = resultSet.getString("email");
                     String telefono = resultSet.getString("telefono");
                     String password = resultSet.getString("password");
-                    double credito = resultSet.getDouble("credito_disponibile");
+                    float credito = resultSet.getFloat("credito_disponibile");
                     return new UtenteRegistratoModel(id_d, username, email, telefono, password, credito);
                 });
         return Optional.ofNullable(utenteTrovato);
@@ -60,7 +60,7 @@ public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
             String email = resultSet.getString("email");
             String telefono = resultSet.getString("telefono");
             String password = resultSet.getString("password");
-            double credito = resultSet.getDouble("credito_disponibile");
+            float credito = resultSet.getFloat("credito_disponibile");
             return new UtenteRegistratoModel(id, username, email, telefono, password, credito);
         });
     }
@@ -90,5 +90,26 @@ public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
     public boolean controllaUtenteEsiste(UtenteRegistratoModel utente) {
         final String sql = "SELECT EXISTS(SELECT 1 FROM utente_registrato WHERE username = ? AND email = ? AND password = ?)";
         return jdbcTemplate.queryForObject(sql,Boolean.class, utente.getUsername(), utente.getEmail(), utente.getPassword());
+    }
+
+    @Override
+    public int aggiungiCredito(UUID id, double creditoAggiunto) {
+        return 0;
+    }
+
+    @Override
+    public double creditoDisponibile(UUID id) {
+        return 0;
+    }
+
+    @Override
+    public double creditoImpegnato(UUID id) {
+        return 0;
+    }
+
+    @Override
+    public float creditoTotale(UUID id) {
+        final String sql = "SELECT credito_disponibile FROM utente_registrato WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, Float.class, id);
     }
 }

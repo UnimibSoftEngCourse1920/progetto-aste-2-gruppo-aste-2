@@ -30,4 +30,13 @@ public interface UtenteRegistratoDAO {
 
     boolean controllaUtenteEsiste(UtenteRegistratoModel utente);
 
+    int aggiungiCredito(UUID id, double creditoAggiunto);
+
+    double creditoDisponibile(UUID id);
+
+    double creditoImpegnato(UUID id);
+
+    float creditoTotale(UUID id);
+
+
 }

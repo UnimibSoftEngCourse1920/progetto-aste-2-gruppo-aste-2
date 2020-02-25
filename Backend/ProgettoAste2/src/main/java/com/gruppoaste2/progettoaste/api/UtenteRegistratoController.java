@@ -74,4 +74,10 @@ public class UtenteRegistratoController {
     {
         return utenteRegistratoService.controllaUtenteEsiste(utente);
     }
+
+    @GetMapping(path = "/credito/{id}")
+    public float creditoDisponibile(@PathVariable("id") UUID id)
+    {
+        return utenteRegistratoService.creditoDisponibile(id);
+    }
 }
