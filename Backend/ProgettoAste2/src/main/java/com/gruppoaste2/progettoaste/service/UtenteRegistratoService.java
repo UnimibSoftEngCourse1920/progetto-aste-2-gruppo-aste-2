@@ -20,11 +20,11 @@ public class UtenteRegistratoService {
         this.utenteRegistratoDAO = utenteRegistratoDAO;
     }
 
-    public int insersciUtenteRegistrato(UtenteRegistratoModel utenteRegistratoModel) {
+    public int inserisciUtenteRegistrato(UtenteRegistratoModel utenteRegistratoModel) {
         return utenteRegistratoDAO.inserisciUtenteRegistrato(utenteRegistratoModel);
     }
 
-    public boolean eliminaUtenteRegistrato(UUID id){
+    public int eliminaUtenteRegistrato(UUID id){
         return utenteRegistratoDAO.eliminaUtenteRegistrato(id);
     }
 
@@ -36,7 +36,22 @@ public class UtenteRegistratoService {
         return utenteRegistratoDAO.trovaTuttiUtentiRegistrati();
     }
 
-    public boolean aggiornaUtenteRegistrto(UUID id, UtenteRegistratoModel utenteAggiornato){
+    public boolean aggiornaUtenteRegistrato(UUID id, UtenteRegistratoModel utenteAggiornato){
         return utenteRegistratoDAO.aggiornaUtenteRegistrato(id, utenteAggiornato);
+    }
+
+    public boolean controllaUsernameOccupato(String username)
+    {
+        return utenteRegistratoDAO.controllaUsernameOccupato(username);
+    }
+
+    public boolean controllaEmailOccupata(String email)
+    {
+        return utenteRegistratoDAO.controllaEmailOccupata(email);
+    }
+
+    public boolean controllaUtenteEsiste(UtenteRegistratoModel utente)
+    {
+        return utenteRegistratoDAO.controllaUtenteEsiste(utente);
     }
 }

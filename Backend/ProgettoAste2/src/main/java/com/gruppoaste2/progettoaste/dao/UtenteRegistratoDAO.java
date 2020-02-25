@@ -16,12 +16,18 @@ public interface UtenteRegistratoDAO {
         return inserisciUtenteRegistrato(id,utenteRegistrato);
     }
 
-    boolean eliminaUtenteRegistrato(UUID id);
+    int eliminaUtenteRegistrato(UUID id);
 
     Optional<UtenteRegistratoModel> trovaUtenteRegistrato(UUID id);
 
     List<UtenteRegistratoModel> trovaTuttiUtentiRegistrati();
 
     boolean aggiornaUtenteRegistrato(UUID id, UtenteRegistratoModel utenteAggiornato);
+
+    boolean controllaUsernameOccupato(String username);
+
+    boolean controllaEmailOccupata(String email);
+
+    boolean controllaUtenteEsiste(UtenteRegistratoModel utente);
 
 }

@@ -29,8 +29,9 @@ public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
     }
 
     @Override
-    public boolean eliminaUtenteRegistrato(UUID id) {
-        return false;
+    public int eliminaUtenteRegistrato(UUID id) {
+        final String sql = "DELETE FROM utente_registrato WHERE id = ?";
+        return jdbcTemplate.update(sql, id);
     }
 
     @Override
@@ -67,5 +68,23 @@ public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
     @Override
     public boolean aggiornaUtenteRegistrato(UUID id, UtenteRegistratoModel utenteAggiornato) {
         return false;
+    }
+
+    @Override
+    public boolean controllaUsernameOccupato(String username) {
+        final String sql = "SELECT EXISTS(SELECT 1 FROM utente_registrato WHERE username = ?)";
+        return jdbcTemplate.queryForObject(sql,Boolean.class,username);
+    }
+
+    @Override
+    public boolean controllaEmailOccupata(String email) {
+        final String sql = "SELECT EXISTS(SELECT 1 FROM utente_registrato WHERE email = ?)";
+        return jdbcTemplate.queryForObject(sql,Boolean.class, email);
+    }
+
+    @Override
+    public boolean controllaUtenteEsiste(UtenteRegistratoModel utente) {
+        final String sql = "SELECT EXISTS(SELECT 1 FROM utente_registrato WHERE username = ? AND email = ? AND password = ?)";
+        return jdbcTemplate.queryForObject(sql,Boolean.class, utente.getUsername(), utente.getEmail(), utente.getPassword());
     }
 }
