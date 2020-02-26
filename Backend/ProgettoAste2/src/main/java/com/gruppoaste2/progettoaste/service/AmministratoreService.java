@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -18,19 +19,19 @@ public class AmministratoreService {
         this.amministratoreDAO = amministratoreDAO;
     }
 
-    public boolean insersciAmministratore(AmministratoreModel amministratoreModel){
-        return amministratoreDAO.insersciamministratore(amministratoreModel);
+    public int inserisciAmministratore(AmministratoreModel amministratoreModel){
+        return amministratoreDAO.inserisciAmministratore(amministratoreModel);
     }
 
     public boolean eliminaAmministratore(UUID id){
         return amministratoreDAO.eliminaAmministratore(id);
     }
 
-    public AmministratoreModel trovaAmministratore(UUID id){
+    public Optional<AmministratoreModel> trovaAmministratore(UUID id){
         return amministratoreDAO.trovaAmministratore(id);
     }
 
-    public List<AmministratoreModel> trovaAmministratori(){
+    public Optional<List<AmministratoreModel>> trovaAmministratori(){
         return amministratoreDAO.trovaAmministratori();
     }
 

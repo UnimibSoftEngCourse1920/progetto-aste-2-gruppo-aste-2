@@ -1,17 +1,32 @@
 package com.gruppoaste2.progettoaste.dao;
 
 import com.gruppoaste2.progettoaste.model.AmministratoreModel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository("postgres-amministratore")
 public class PostgresAmministratoreDAO implements AmministratoreDAO {
+
+    private final JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    public PostgresAmministratoreDAO(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
     @Override
-    public boolean insersciamministratore(AmministratoreModel amministratoreModel) {
-        return false;
+    public int inserisciAmministratore(UUID id, AmministratoreModel amministratore) {
+        final String sql = "INSERT INTO amministratore(id,username,password,email)" +
+                " VALUES(?,?,?,?)";
+        return jdbcTemplate.update(sql,
+                id,amministratore.getUsername(),amministratore.getPassword(),amministratore.getEmail());
+
     }
 
     @Override
@@ -20,14 +35,34 @@ public class PostgresAmministratoreDAO implements AmministratoreDAO {
     }
 
     @Override
-    public AmministratoreModel trovaAmministratore(UUID id) {
-        return null;
+    public Optional<AmministratoreModel> trovaAmministratore(UUID id) {
+        final String sql = "SELECT * FROM amministratore WHERE id = ?";
+        AmministratoreModel ammTrovato = jdbcTemplate.queryForObject(sql,
+        (resultSet, i) -> {
+            String username = resultSet.getString("username");
+            String password = resultSet.getString("password");
+            String email = resultSet.getString("email");
+            return new AmministratoreModel(id,username,email,password);
+        },
+                id);
+        return  Optional.ofNullable(ammTrovato);
     }
 
     @Override
-    public List<AmministratoreModel> trovaAmministratori() {
-        return Collections.emptyList();
+    public Optional<List<AmministratoreModel>> trovaAmministratori() {
+        final String sql = "SELECT * FROM amministratore";
+        List<AmministratoreModel> listAmmTrovati = jdbcTemplate.query(sql, (resultSet, i) ->
+        {
+            UUID id = UUID.fromString(resultSet.getString("id"));
+            String username = resultSet.getString("username");
+            String password = resultSet.getString("password");
+            String email = resultSet.getString("email");
+            return new AmministratoreModel(id,username,email,password);
+        });
+
+        return Optional.ofNullable(listAmmTrovati);
     }
+
 
     @Override
     public boolean aggiornaAmministratore(UUID id, AmministratoreModel amministratoreAggiornato) {
