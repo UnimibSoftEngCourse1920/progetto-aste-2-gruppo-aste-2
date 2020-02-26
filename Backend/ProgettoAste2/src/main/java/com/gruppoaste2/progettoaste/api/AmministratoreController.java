@@ -43,4 +43,23 @@ public class AmministratoreController {
     {
         return amministratoreService.trovaAmministratori();
     }
+
+    @GetMapping(path = "/controlla/username/{user}")
+    public boolean controllaUsernameOccupato(@PathVariable("user") String username)
+    {
+        return amministratoreService.controllaUsernameOccupato(username);
+    }
+
+    @GetMapping(path = "/controlla/email/{mail}")
+    public boolean controllaEmailOccupata(@PathVariable("mail") String email)
+    {
+        return amministratoreService.controllaEmailOccupata(email);
+    }
+
+    @GetMapping("/controlla/utente")
+    public boolean controllaUtenteEsiste(@RequestBody AmministratoreModel amministratore)
+    {
+        return amministratoreService.controllaAmministratoreEsiste(amministratore);
+    }
+
 }

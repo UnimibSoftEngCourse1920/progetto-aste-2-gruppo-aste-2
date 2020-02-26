@@ -68,4 +68,22 @@ public class PostgresAmministratoreDAO implements AmministratoreDAO {
     public boolean aggiornaAmministratore(UUID id, AmministratoreModel amministratoreAggiornato) {
         return false;
     }
+
+    @Override
+    public boolean controllaUsernameOccupato(String username) {
+        final String sql = "SELECT EXISTS(SELECT 1 FROM amministratore WHERE username = ?)";
+        return jdbcTemplate.queryForObject(sql,Boolean.class,username);
+    }
+
+    @Override
+    public boolean controllaEmailOccupata(String email) {
+        final String sql = "SELECT EXISTS(SELECT 1 FROM amministratore WHERE email = ?)";
+        return jdbcTemplate.queryForObject(sql,Boolean.class,email);
+    }
+
+    @Override
+    public boolean controllaAmministratoreEsiste(AmministratoreModel amministratore) {
+        final String sql = "SELECT EXISTS(SELECT 1 FROM amministratore WHERE username = ? AND email = ? AND password = ?)";
+        return jdbcTemplate.queryForObject(sql,Boolean.class, amministratore.getUsername(), amministratore.getEmail(), amministratore.getPassword());
+    }
 }

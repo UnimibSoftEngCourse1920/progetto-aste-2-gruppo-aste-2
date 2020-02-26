@@ -38,4 +38,19 @@ public class AmministratoreService {
     public boolean aggiornaAmministratore(UUID id, AmministratoreModel amministratoreAggiornato){
         return amministratoreDAO.aggiornaAmministratore(id, amministratoreAggiornato);
     }
+
+    public boolean controllaUsernameOccupato(String username)
+    {
+        return amministratoreDAO.controllaUsernameOccupato(username);
+    }
+
+    public boolean controllaEmailOccupata(String email)
+    {
+        return amministratoreDAO.controllaEmailOccupata(email);
+    }
+
+    public boolean controllaAmministratoreEsiste(AmministratoreModel amministratore)
+    {
+        return amministratoreDAO.controllaAmministratoreEsiste(amministratore);
+    }
 }
