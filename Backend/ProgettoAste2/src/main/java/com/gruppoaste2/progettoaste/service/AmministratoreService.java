@@ -23,7 +23,7 @@ public class AmministratoreService {
         return amministratoreDAO.inserisciAmministratore(amministratoreModel);
     }
 
-    public boolean eliminaAmministratore(UUID id){
+    public int eliminaAmministratore(UUID id){
         return amministratoreDAO.eliminaAmministratore(id);
     }
 
@@ -35,7 +35,7 @@ public class AmministratoreService {
         return amministratoreDAO.trovaAmministratori();
     }
 
-    public boolean aggiornaAmministratore(UUID id, AmministratoreModel amministratoreAggiornato){
+    public int aggiornaAmministratore(UUID id, AmministratoreModel amministratoreAggiornato){
         return amministratoreDAO.aggiornaAmministratore(id, amministratoreAggiornato);
     }
 

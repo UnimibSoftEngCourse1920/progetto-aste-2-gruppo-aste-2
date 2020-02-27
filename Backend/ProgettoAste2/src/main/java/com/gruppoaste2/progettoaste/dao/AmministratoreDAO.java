@@ -17,13 +17,13 @@ public interface AmministratoreDAO {
         return inserisciAmministratore(id,amministratore);
     }
 
-    public boolean eliminaAmministratore(UUID id);
+    public int eliminaAmministratore(UUID id);
 
     public Optional<AmministratoreModel> trovaAmministratore(UUID id);
 
     public Optional<List<AmministratoreModel>> trovaAmministratori();
 
-    public boolean aggiornaAmministratore(UUID id, AmministratoreModel amministratoreAggiornato);
+    public int aggiornaAmministratore(UUID id, AmministratoreModel amministratoreAggiornato);
 
     boolean controllaUsernameOccupato(String username);
 

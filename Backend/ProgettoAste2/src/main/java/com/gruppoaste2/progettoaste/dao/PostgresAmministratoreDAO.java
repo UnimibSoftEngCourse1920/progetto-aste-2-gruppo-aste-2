@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -30,8 +29,9 @@ public class PostgresAmministratoreDAO implements AmministratoreDAO {
     }
 
     @Override
-    public boolean eliminaAmministratore(UUID id) {
-        return false;
+    public int eliminaAmministratore(UUID id) {
+        final String sql = "DELETE FROM amministratore WHERE id = ?";
+        return jdbcTemplate.update(sql, id);
     }
 
     @Override
@@ -65,8 +65,9 @@ public class PostgresAmministratoreDAO implements AmministratoreDAO {
 
 
     @Override
-    public boolean aggiornaAmministratore(UUID id, AmministratoreModel amministratoreAggiornato) {
-        return false;
+    public int aggiornaAmministratore(UUID id, AmministratoreModel amministratoreAggiornato) {
+        final String sql = "UPDATE utente_registrato SET username = ?, password = ?, email = ? WHERE id = ?";
+        return jdbcTemplate.update(sql,amministratoreAggiornato.getUsername(), amministratoreAggiornato.getPassword(), amministratoreAggiornato.getEmail(), id);
     }
 
     @Override

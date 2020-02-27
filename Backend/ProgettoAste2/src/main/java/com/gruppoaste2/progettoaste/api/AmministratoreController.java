@@ -50,6 +50,12 @@ public class AmministratoreController {
         return amministratoreService.controllaUsernameOccupato(username);
     }
 
+    @GetMapping(path = "elimina/{id}")
+    public int eliminaAmministratore(@PathVariable("id") UUID id)
+    {
+        return amministratoreService.eliminaAmministratore(id);
+    }
+
     @GetMapping(path = "/controlla/email/{mail}")
     public boolean controllaEmailOccupata(@PathVariable("mail") String email)
     {
@@ -57,9 +63,15 @@ public class AmministratoreController {
     }
 
     @GetMapping("/controlla/utente")
-    public boolean controllaUtenteEsiste(@RequestBody AmministratoreModel amministratore)
+    public boolean controllaAmministratoreEsiste(@RequestBody AmministratoreModel amministratore)
     {
         return amministratoreService.controllaAmministratoreEsiste(amministratore);
+    }
+
+    @PostMapping("/aggiorna/{id}")
+    public int aggiornaAmministratore(@PathVariable("id") UUID id, @RequestBody AmministratoreModel amministratoreAggiornato)
+    {
+        return amministratoreService.aggiornaAmministratore(id, amministratoreAggiornato);
     }
 
 }
