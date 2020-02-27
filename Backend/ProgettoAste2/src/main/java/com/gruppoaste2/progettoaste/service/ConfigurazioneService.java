@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -18,19 +19,23 @@ public class ConfigurazioneService {
         this.configurazioneDAO = configurazioneDAO;
     }
 
-    public boolean inserisciConfigurazione(ConfigurazioneModel configurazioneModel) {
-        return configurazioneDAO.inserisciConfigurazione(configurazioneModel);
+    public int inserisciConfigurazione(UUID id,ConfigurazioneModel configurazioneModel) {
+        return configurazioneDAO.inserisciConfigurazione(id, configurazioneModel);
     }
 
-    public boolean eliminaConfiguazione(UUID id) {
+    public int eliminaConfiguazione(UUID id) {
         return configurazioneDAO.eliminaConfiguazione(id);
     }
 
-    public ConfigurazioneModel trovaConfigurazione(UUID id) {
+    public Optional<ConfigurazioneModel> trovaConfigurazione(UUID id) {
         return configurazioneDAO.trovaConfigurazione(id);
     }
 
-    public List<ConfigurazioneModel> trovaConfigurazioni() {
+    public Optional<List<ConfigurazioneModel>> trovaConfigurazioni() {
         return configurazioneDAO.trovaConfigurazioni();
+    }
+
+    public boolean esisteConfSimile (ConfigurazioneModel configurazioneModel){
+        return configurazioneDAO.esisteConfSimile(configurazioneModel);
     }
 }
