@@ -36,7 +36,7 @@ public class PostgresConfigurazioneDAO implements ConfigurazioneDAO{
 
     @Override
     public Optional<ConfigurazioneModel> trovaConfigurazione(UUID id) {
-        final String sql = "SELECT * FROM amministratore WHERE id = ?";
+        final String sql = "SELECT * FROM configurazione WHERE id = ?";
         ConfigurazioneModel confTrovato = jdbcTemplate.queryForObject(sql,
                 (resultSet, i) -> {
                     boolean timeSlot = Boolean.parseBoolean(resultSet.getString("timeSlot"));
