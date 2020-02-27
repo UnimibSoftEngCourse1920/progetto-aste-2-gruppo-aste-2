@@ -19,8 +19,8 @@ public class ConfigurazioneService {
         this.configurazioneDAO = configurazioneDAO;
     }
 
-    public int inserisciConfigurazione(UUID id,ConfigurazioneModel configurazioneModel) {
-        return configurazioneDAO.inserisciConfigurazione(id, configurazioneModel);
+    public int inserisciConfigurazione(ConfigurazioneModel configurazioneModel) {
+        return configurazioneDAO.inserisciConfigurazione(configurazioneModel);
     }
 
     public int eliminaConfiguazione(UUID id) {

@@ -25,8 +25,8 @@ public class ConfigurazioneController {
     }
 
     @PostMapping("/inserisci")
-    public int inserisciConfigurazione(@RequestBody UUID id, @RequestBody ConfigurazioneModel configurazioneModel){
-        return configurazioneService.inserisciConfigurazione(id, configurazioneModel); //controllare id qui
+    public int inserisciConfigurazione(@RequestBody ConfigurazioneModel configurazioneModel){
+        return configurazioneService.inserisciConfigurazione(configurazioneModel); //controllare id qui
     }
 
     @GetMapping(path = "elimina/{id}")
