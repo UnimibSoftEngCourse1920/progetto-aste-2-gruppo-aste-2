@@ -1,8 +1,12 @@
 package com.gruppoaste2.progettoaste.api;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.gruppoaste2.progettoaste.model.CategoriaModel
+import com.gruppoaste2.progettoaste.service.CategoriaService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.UUID;
 
 @RequestMapping("api/categoria")
 @RestController
