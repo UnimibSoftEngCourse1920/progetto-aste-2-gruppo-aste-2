@@ -19,7 +19,7 @@ public class CategoriaService {
     }
 
     public boolean inserisciCategoria(CategoriaModel categoria){
-        return categoriaDAO.insersciCategoria(categoria);
+        return categoriaDAO.inserisciCategoria(categoria);
 
     }
 
@@ -35,7 +35,7 @@ public class CategoriaService {
         return categoriaDAO.trovaCategorie();
     }
 
-    public boolean aggiornaCategoria (UUID id, CategoriaModel categoriAggiornata){
-        return categoriaDAO.aggiornaCategoria(id, categoriAggiornata);
+    public boolean aggiornaCategoria (UUID id, CategoriaModel categoriaAggiornata){
+        return categoriaDAO.aggiornaCategoria(id, categoriaAggiornata);
     }
 }

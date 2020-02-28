@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface CategoriaDAO {
 
-    public boolean insersciCategoria(CategoriaModel categtegoria);
+    public boolean inserisciCategoria(CategoriaModel categoria);
 
     public boolean eliminaCategoria(UUID id);
 
@@ -15,5 +15,5 @@ public interface CategoriaDAO {
 
     public List<CategoriaModel> trovaCategorie();
 
-    public boolean aggiornaCategoria (UUID id, CategoriaModel categoriAggiornata);
+    public boolean aggiornaCategoria (UUID id, CategoriaModel categoriaAggiornata);
 }
