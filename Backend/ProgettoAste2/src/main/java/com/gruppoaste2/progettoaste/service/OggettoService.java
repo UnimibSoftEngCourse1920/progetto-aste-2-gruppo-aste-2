@@ -55,9 +55,9 @@ public class OggettoService {
         return oggettoDAO.oggettiVintiDaUtente(idUtente);
     }
 
-    public int aggiornaOggetto(UUID idOggetto)
+    public int aggiornaOggetto(UUID idOggetto, OggettoModel oggettoAggiornato)
     {
-        return oggettoDAO.aggiornaOggetto(idOggetto);
+        return oggettoDAO.aggiornaOggetto(idOggetto, oggettoAggiornato);
     }
 
 

@@ -26,6 +26,12 @@ public class OggettoController {
         return oggettoService.inserisciOggetto(idAsta, oggetto);
     }
 
+    @PostMapping(path = "/aggiorna{id}")
+    public int aggiornaOggetto(@PathVariable("id") UUID idOggetto, @RequestBody OggettoModel oggettoAggiornato)
+    {
+        return oggettoService.aggiornaOggetto(idOggetto, oggettoAggiornato);
+    }
+
     @GetMapping("/oggetti")
     public List<OggettoModel> trovaOggetti()
     {
