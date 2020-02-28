@@ -3,21 +3,24 @@ package com.gruppoaste2.progettoaste.dao;
 import com.gruppoaste2.progettoaste.model.AstaModel;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface AstaDAO {
 
-    public boolean inserisciAsta(AstaModel asta);
+    int inserisciAsta(UUID id, AstaModel asta);
 
-    public boolean eliminaAsta (UUID id);
+    default int inserisciAsta(AstaModel asta)
+    {
+        UUID id = UUID.randomUUID();
+        return inserisciAsta(id, asta);
+    }
 
-    public AstaModel trovaAsta(UUID id);
+    int eliminaAsta(UUID id);
 
-    public List<AstaModel> trovaAste();
+    Optional<AstaModel> trovaAsta(UUID id);
 
-    public boolean aggiornaAsta(UUID id, AstaModel astAggiornata);
+    List<AstaModel> trovaTutteAste();
 
-    public boolean faiOffertaBustaChiusa(UUID id, double offerta);
-
-    public boolean faiOffertaSuperamentoImmediato(UUID id, double offerta);
+    int aggiornaAsta(UUID id, AstaModel astaAggiornata);
 }
