@@ -35,7 +35,9 @@ public class ConfigurazioneService {
         return configurazioneDAO.trovaConfigurazioni();
     }
 
-    public boolean esisteConfSimile (ConfigurazioneModel configurazioneModel){
-        return configurazioneDAO.esisteConfSimile(configurazioneModel);
+    public Optional<ConfigurazioneModel> trovaUltimaConfigurazione()
+    {
+        return configurazioneDAO.trovaUltimaConfigurazione();
     }
+
 }

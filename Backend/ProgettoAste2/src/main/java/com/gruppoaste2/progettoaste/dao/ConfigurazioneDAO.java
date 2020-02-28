@@ -22,6 +22,6 @@ public interface ConfigurazioneDAO {
 
     public Optional<List<ConfigurazioneModel>> trovaConfigurazioni();
 
-    public boolean esisteConfSimile (ConfigurazioneModel configurazioneModel);
+    public Optional<ConfigurazioneModel> trovaUltimaConfigurazione();
 
 }

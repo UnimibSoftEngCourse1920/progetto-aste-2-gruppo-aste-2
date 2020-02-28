@@ -18,12 +18,6 @@ public class ConfigurazioneController {
         this.configurazioneService = configurazioneService;
     }
 
-    @GetMapping
-    public String esempioGet()
-    {
-        return "<h1>Prova ciao hai fatto una get ad localhost:8080/api/configurazione<h1>";
-    }
-
     @PostMapping("/inserisci")
     public int inserisciConfigurazione(@RequestBody ConfigurazioneModel configurazioneModel){
         return configurazioneService.inserisciConfigurazione(configurazioneModel); //controllare id qui
@@ -44,8 +38,10 @@ public class ConfigurazioneController {
         return configurazioneService.trovaConfigurazioni();
     }
 
-     @PostMapping("/configurazione")
-     public boolean esisteConfSimile (@RequestBody ConfigurazioneModel configurazioneModel){
-        return configurazioneService.esisteConfSimile(configurazioneModel);
+    @GetMapping("/ultima")
+    public Optional<ConfigurazioneModel> trovaUltimaConfigurazione()
+    {
+        return configurazioneService.trovaUltimaConfigurazione();
     }
+
 }
