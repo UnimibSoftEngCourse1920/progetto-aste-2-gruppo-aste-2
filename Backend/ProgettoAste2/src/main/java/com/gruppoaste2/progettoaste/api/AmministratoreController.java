@@ -20,12 +20,6 @@ public class AmministratoreController {
         this.amministratoreService = amministratoreService;
     }
 
-    @GetMapping
-    public String esempioGet()
-    {
-        return "<h1>Prova ciao hai fatto una get ad localhost:8080/api/amministratore<h1>";
-    }
-
     @PostMapping("/inserisci")
     public int inserisciAmministratore(@RequestBody AmministratoreModel amministratore)
     {

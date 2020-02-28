@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -19,12 +20,12 @@ public class OggettoService {
         this.oggettoDAO = oggettoDAO;
     }
 
-    public int inserisciOggetto(UUID idOggetto, OggettoModel oggetto)
+    public int inserisciOggetto(UUID idAsta, OggettoModel oggetto)
     {
-        return oggettoDAO.inserisciOggetto(idOggetto,oggetto);
+        return oggettoDAO.inserisciOggetto(idAsta,oggetto);
     }
 
-    public OggettoModel trovaOggetto(UUID idOggetto)
+    public Optional<OggettoModel> trovaOggetto(UUID idOggetto)
     {
         return oggettoDAO.trovaOggetto(idOggetto);
     }
@@ -37,6 +38,21 @@ public class OggettoService {
     public List<OggettoModel> trovaOggetti()
     {
         return oggettoDAO.trovaOggetti();
+    }
+
+    public List<OggettoModel> oggettiRegistratiDaUtente(UUID idUtente)
+    {
+        return oggettoDAO.oggettiRegistratiDaUtente(idUtente);
+    }
+
+    public List<OggettoModel> oggettiInCorsoAstaDaUtente(UUID idUtente)
+    {
+        return oggettoDAO.oggettiInCorsoAstaDaUtente(idUtente);
+    }
+
+    public List<OggettoModel> oggettiVintiDaUtente(UUID idUtente)
+    {
+        return oggettoDAO.oggettiVintiDaUtente(idUtente);
     }
 
     public int aggiornaOggetto(UUID idOggetto)
