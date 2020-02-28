@@ -24,7 +24,7 @@ public interface OggettoDAO {
 
     public Optional<OggettoModel> trovaOggetto(UUID idOggetto);
 
-    public int aggiornaOggetto(UUID idOggetto);
+    public int aggiornaOggetto(UUID idOggetto, OggettoModel oggettoAggiornato);
 
     public List<OggettoModel> oggettiRegistratiDaUtente(UUID idUtente);
 

@@ -79,9 +79,10 @@ public class PostgresOggettoDAO implements OggettoDAO {
     }
 
     @Override
-    public int aggiornaOggetto(UUID idOggetto) {
-        return 0;
-    } // todo
+    public int aggiornaOggetto(UUID idOggetto, OggettoModel oggettoAggiornato) {
+        final String sql = "UPDATE oggetto SET nome = ?, descrizione = ?, url_immagine = ? WHERE id = ?";
+        return jdbcTemplate.update(sql, oggettoAggiornato.getNome(), oggettoAggiornato.getDescrizione(), oggettoAggiornato.getUrlImmagine(), idOggetto);
+    }
 
     @Override
     public List<OggettoModel> oggettiRegistratiDaUtente(UUID idUtente) {
