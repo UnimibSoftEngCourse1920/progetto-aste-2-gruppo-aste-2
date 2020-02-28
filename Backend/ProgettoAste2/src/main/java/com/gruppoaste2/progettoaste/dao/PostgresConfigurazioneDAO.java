@@ -1,6 +1,5 @@
 package com.gruppoaste2.progettoaste.dao;
 
-import com.gruppoaste2.progettoaste.model.AmministratoreModel;
 import com.gruppoaste2.progettoaste.model.ConfigurazioneModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
