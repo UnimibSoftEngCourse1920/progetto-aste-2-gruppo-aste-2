@@ -113,9 +113,8 @@ public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
 
         List<Float> creditoOfferte = jdbcTemplate.query(
                 sql,
-                (resultSet, i) -> {
-                    return resultSet.getFloat("credito_offerto");
-                },
+                (resultSet, i) -> resultSet.getFloat("credito_offerto")
+                ,
                 id);
 
         for(float offerta : creditoOfferte)

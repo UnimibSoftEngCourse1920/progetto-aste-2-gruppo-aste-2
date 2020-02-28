@@ -13,11 +13,11 @@ import java.util.*;
 public class PostgresConfigurazioneDAO implements ConfigurazioneDAO{
 
     private final JdbcTemplate jdbcTemplate;
-    private static final String nomeTipoSlot = "tipo_timeslot";
-    private static final String nomeMaxOff = "numero_offerte_contemporanee_utente";
-    private static final String nomeDurata = "durata_timeslot_fisso";
-    private static final String nomeDataCreazione = "data_creazione";
-    private static final String nomePenale = "penale";
+    private static final String TIMESLOT = "tipo_timeslot";
+    private static final String NUMERO_OFFERTE_CONTEMPORANEE_UTENTE = "numero_offerte_contemporanee_utente";
+    private static final String DURATA_TIMESLOT_FISSO = "durata_timeslot_fisso";
+    private static final String DATA_CREAZIONE = "data_creazione";
+    private static final String PENALE = "penale";
 
     @Autowired
     public PostgresConfigurazioneDAO(JdbcTemplate jdbcTemplate) {
@@ -44,12 +44,12 @@ public class PostgresConfigurazioneDAO implements ConfigurazioneDAO{
         final String sql = "SELECT * FROM configurazione WHERE id = ?";
         ConfigurazioneModel confTrovato = jdbcTemplate.queryForObject(sql,
                 (resultSet, i) -> {
-                    String timeSlot = resultSet.getString(nomeTipoSlot);
-                    int  maxTimeSlot = Integer.parseInt(resultSet.getString(nomeMaxOff));
-                    int maxOfferte = Integer.parseInt(resultSet.getString(nomeMaxOff));
-                    double penale =  Double.parseDouble(resultSet.getString(nomePenale));
-                    Date dataCreazione =  Date.valueOf(resultSet.getString(nomeDataCreazione));
-                    Time durata = Time.valueOf(resultSet.getString(nomeDurata));
+                    String timeSlot = resultSet.getString(TIMESLOT);
+                    int  maxTimeSlot = Integer.parseInt(resultSet.getString(NUMERO_OFFERTE_CONTEMPORANEE_UTENTE));
+                    int maxOfferte = Integer.parseInt(resultSet.getString(NUMERO_OFFERTE_CONTEMPORANEE_UTENTE));
+                    double penale =  Double.parseDouble(resultSet.getString(PENALE));
+                    Date dataCreazione =  Date.valueOf(resultSet.getString(DATA_CREAZIONE));
+                    Time durata = Time.valueOf(resultSet.getString(DURATA_TIMESLOT_FISSO));
                     return new ConfigurazioneModel(id,timeSlot,maxTimeSlot,maxOfferte,penale,dataCreazione, durata);
                 },
                 id);
@@ -62,12 +62,12 @@ public class PostgresConfigurazioneDAO implements ConfigurazioneDAO{
         List<ConfigurazioneModel> listConfigurazioni = jdbcTemplate.query(sql, (resultSet, i) ->
         {
             UUID id = UUID.fromString(resultSet.getString("id"));
-            String timeSlot = resultSet.getString(nomeTipoSlot);
-            int  maxTimeSlot = Integer.parseInt(resultSet.getString(nomeMaxOff));
-            int maxOfferte = Integer.parseInt(resultSet.getString(nomeMaxOff));
-            double penale =  Double.parseDouble(resultSet.getString(nomePenale));
-            Date dataCreazione =  Date.valueOf(resultSet.getString(nomeDataCreazione));
-            Time durata = Time.valueOf(resultSet.getString(nomeDurata));
+            String timeSlot = resultSet.getString(TIMESLOT);
+            int  maxTimeSlot = Integer.parseInt(resultSet.getString(NUMERO_OFFERTE_CONTEMPORANEE_UTENTE));
+            int maxOfferte = Integer.parseInt(resultSet.getString(NUMERO_OFFERTE_CONTEMPORANEE_UTENTE));
+            double penale =  Double.parseDouble(resultSet.getString(PENALE));
+            Date dataCreazione =  Date.valueOf(resultSet.getString(DATA_CREAZIONE));
+            Time durata = Time.valueOf(resultSet.getString(DURATA_TIMESLOT_FISSO));
             return new ConfigurazioneModel(id,timeSlot,maxTimeSlot,maxOfferte,penale,dataCreazione, durata);
         });
 
@@ -80,12 +80,12 @@ public class PostgresConfigurazioneDAO implements ConfigurazioneDAO{
         ConfigurazioneModel configTrovata = jdbcTemplate.queryForObject(sql,
                 (resultSet, i) -> {
                     UUID id = UUID.fromString(resultSet.getString("id"));
-                    String timeSlot = resultSet.getString(nomeTipoSlot);
-                    int  maxTimeSlot = Integer.parseInt(resultSet.getString(nomeMaxOff));
-                    int maxOfferte = Integer.parseInt(resultSet.getString(nomeMaxOff));
-                    double penale =  Double.parseDouble(resultSet.getString(nomePenale));
-                    Date dataCreazione =  Date.valueOf(resultSet.getString(nomeDataCreazione));
-                    Time durata = Time.valueOf(resultSet.getString(nomeDurata));
+                    String timeSlot = resultSet.getString(TIMESLOT);
+                    int  maxTimeSlot = Integer.parseInt(resultSet.getString(NUMERO_OFFERTE_CONTEMPORANEE_UTENTE));
+                    int maxOfferte = Integer.parseInt(resultSet.getString(NUMERO_OFFERTE_CONTEMPORANEE_UTENTE));
+                    double penale =  Double.parseDouble(resultSet.getString(PENALE));
+                    Date dataCreazione =  Date.valueOf(resultSet.getString(DATA_CREAZIONE));
+                    Time durata = Time.valueOf(resultSet.getString(DURATA_TIMESLOT_FISSO));
                     return new ConfigurazioneModel(id,timeSlot,maxTimeSlot,maxOfferte,penale,dataCreazione, durata);
                 });
         return Optional.ofNullable(configTrovata);
