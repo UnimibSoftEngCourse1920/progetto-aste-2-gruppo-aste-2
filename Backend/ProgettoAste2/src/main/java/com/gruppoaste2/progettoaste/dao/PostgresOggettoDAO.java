@@ -13,6 +13,9 @@ import java.util.UUID;
 public class PostgresOggettoDAO implements OggettoDAO {
 
     private final JdbcTemplate jdbcTemplate;
+    private static final String NOME = "nome";
+    private static final String DESCRIZIONE = "descrizione";
+    private static final String URL = "url_immagine";
 
     @Autowired
     public PostgresOggettoDAO(JdbcTemplate jdbcTemplate) {
@@ -37,9 +40,9 @@ public class PostgresOggettoDAO implements OggettoDAO {
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> {
                     UUID id = UUID.fromString(resultSet.getString("id"));
-                    String nome = resultSet.getString("nome");
-                    String descrizione = resultSet.getString("descrizione");
-                    String urlImmagine = resultSet.getString("url_immagine");
+                    String nome = resultSet.getString(NOME);
+                    String descrizione = resultSet.getString(DESCRIZIONE);
+                    String urlImmagine = resultSet.getString(URL);
                     return new OggettoModel(id,nome,descrizione,urlImmagine);
                 });
 
@@ -51,9 +54,9 @@ public class PostgresOggettoDAO implements OggettoDAO {
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> {
                     UUID id = UUID.fromString(resultSet.getString("id"));
-                    String nome = resultSet.getString("nome");
-                    String descrizione = resultSet.getString("descrizione");
-                    String urlImmagine = resultSet.getString("url_immagine");
+                    String nome = resultSet.getString(NOME);
+                    String descrizione = resultSet.getString(DESCRIZIONE);
+                    String urlImmagine = resultSet.getString(URL);
                     return new OggettoModel(id,nome,descrizione,urlImmagine);
                 },
                 idAsta);
@@ -66,9 +69,9 @@ public class PostgresOggettoDAO implements OggettoDAO {
         OggettoModel oggettoTrovato = jdbcTemplate.queryForObject(sql,
                 (resultSet, i) -> {
                     UUID id = UUID.fromString(resultSet.getString("id"));
-                    String nome = resultSet.getString("nome");
-                    String descrizione = resultSet.getString("descrizione");
-                    String urlImmagine = resultSet.getString("url_immagine");
+                    String nome = resultSet.getString(NOME);
+                    String descrizione = resultSet.getString(DESCRIZIONE);
+                    String urlImmagine = resultSet.getString(URL);
                     return new OggettoModel(id,nome,descrizione,urlImmagine);
                 },
                 idOggetto);
@@ -78,7 +81,7 @@ public class PostgresOggettoDAO implements OggettoDAO {
     @Override
     public int aggiornaOggetto(UUID idOggetto) {
         return 0;
-    }
+    } // todo
 
     @Override
     public List<OggettoModel> oggettiRegistratiDaUtente(UUID idUtente) {
@@ -86,9 +89,9 @@ public class PostgresOggettoDAO implements OggettoDAO {
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> {
                     UUID id = UUID.fromString(resultSet.getString("id"));
-                    String nome = resultSet.getString("nome");
-                    String descrizione = resultSet.getString("descrizione");
-                    String urlImmagine = resultSet.getString("url_immagine");
+                    String nome = resultSet.getString(NOME);
+                    String descrizione = resultSet.getString(DESCRIZIONE);
+                    String urlImmagine = resultSet.getString(URL);
                     return new OggettoModel(id,nome,descrizione,urlImmagine);
                 },
                 idUtente);
@@ -100,9 +103,9 @@ public class PostgresOggettoDAO implements OggettoDAO {
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> {
                     UUID id = UUID.fromString(resultSet.getString("id"));
-                    String nome = resultSet.getString("nome");
-                    String descrizione = resultSet.getString("descrizione");
-                    String urlImmagine = resultSet.getString("url_immagine");
+                    String nome = resultSet.getString(NOME);
+                    String descrizione = resultSet.getString(DESCRIZIONE);
+                    String urlImmagine = resultSet.getString(URL);
                     return new OggettoModel(id,nome,descrizione,urlImmagine);
                 },
                 idUtente);
