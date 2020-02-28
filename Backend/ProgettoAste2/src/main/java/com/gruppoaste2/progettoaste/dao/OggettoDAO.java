@@ -30,6 +30,6 @@ public interface OggettoDAO {
 
     public List<OggettoModel> oggettiInCorsoAstaDaUtente(UUID idUtente);
 
-    public List<OggettoModel> oggettiVintiDaUtente(UUID idUtente);
+    public Optional<List<OggettoModel>> oggettiVintiDaUtente(UUID idUtente);
 
 }

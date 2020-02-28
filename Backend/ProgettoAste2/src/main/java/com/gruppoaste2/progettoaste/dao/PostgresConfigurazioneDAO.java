@@ -14,11 +14,11 @@ import java.util.*;
 public class PostgresConfigurazioneDAO implements ConfigurazioneDAO{
 
     private final JdbcTemplate jdbcTemplate;
-    private final String nomeTipoSlot = "tipo_timeslot";
-    private final String nomeMaxOff = "numero_offerte_contemporanee_utente";
-    private final String nomeDurata = "durata_timeslot_fisso";
-    private final String nomeDataCreazione = "data_creazione";
-    private final String nomePenale = "penale";
+    private static final String nomeTipoSlot = "tipo_timeslot";
+    private static final String nomeMaxOff = "numero_offerte_contemporanee_utente";
+    private static final String nomeDurata = "durata_timeslot_fisso";
+    private static final String nomeDataCreazione = "data_creazione";
+    private static final String nomePenale = "penale";
 
     @Autowired
     public PostgresConfigurazioneDAO(JdbcTemplate jdbcTemplate) {

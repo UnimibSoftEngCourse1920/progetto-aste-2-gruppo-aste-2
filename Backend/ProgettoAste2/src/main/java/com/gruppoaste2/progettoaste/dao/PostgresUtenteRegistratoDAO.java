@@ -40,13 +40,13 @@ public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
         UtenteRegistratoModel utenteTrovato = jdbcTemplate.queryForObject(
                 sql, new Object[]{id},
                 (resultSet, i) -> {
-                    UUID id_d = UUID.fromString(resultSet.getString("id"));
+                    UUID idTrovato = UUID.fromString(resultSet.getString("id"));
                     String username = resultSet.getString("username");
                     String email = resultSet.getString("email");
                     String telefono = resultSet.getString("telefono");
                     String password = resultSet.getString("password");
                     float credito = resultSet.getFloat("credito_disponibile");
-                    return new UtenteRegistratoModel(id_d, username, email, telefono, password, credito);
+                    return new UtenteRegistratoModel(idTrovato, username, email, telefono, password, credito);
                 });
         return Optional.ofNullable(utenteTrovato);
     }
@@ -111,15 +111,14 @@ public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
 
         float creditoImpegnato = 0;
 
-        List<Float> credito_offerte = jdbcTemplate.query(
+        List<Float> creditoOfferte = jdbcTemplate.query(
                 sql,
                 (resultSet, i) -> {
-                    float credito = resultSet.getFloat("credito_offerto");
-                    return credito;
+                    return resultSet.getFloat("credito_offerto");
                 },
                 id);
 
-        for(float offerta : credito_offerte)
+        for(float offerta : creditoOfferte)
         {
             creditoImpegnato += offerta;
         }
