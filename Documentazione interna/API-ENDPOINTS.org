@@ -1,0 +1,100 @@
+* Link Generale
+  L'url base è http://localhost:8080/api
+
+** Endpoints
+   - Utente Registrato
+     Url base http://localhost:8080/api/utenteregistrato
+
+     - Tutti gli utenti registrati
+
+       GET http://localhost:8080/api/utenteregistrato/utenti
+
+     - Un utente specifico 
+
+       GET http://localhost:8080/api/utenteregistrato/id-utente
+
+       Per esempio http://localhost:8080/api/utenteregistrato/id-utente/02942f14-7636-4d81-bb48-31b8977edad7
+
+     - Aggiungere un utente
+
+       POST http://localhost:8080/api/utenteregistrato/aggiungi
+       Nel body della richesta http vanno messi i valori dell utente da aggiungere.
+       Per esempio:
+
+       #+BEGIN_SRC 
+       {
+          "username": "Prova",
+	  "email": "boh@gmail.com",
+	  "numeroTelefono": 213123132213,
+	  "password": "bohPasswod",
+	  "credito": 42
+       }
+       #+END_SRC
+
+     - Aggiornare/cambiare un utente
+
+       POST http://localhost:8080/api/utenteregistrato/aggiorna/id-utente
+
+       Nel body della richiesta http vanno i valori aggiornati, bisogna specificarli tutti
+       lo stesso anche se ne cambio solo uno. Attributi non specificati hanno come valore di default NULL.
+
+       Per esempio:
+
+       POST http://localhost:8080/api/utenteregistrato/aggiorna/02942f14-7636-4d81-bb48-31b8977edad7
+       
+        #+BEGIN_SRC 
+       {
+          "username": "Prova",
+	  "email": "boh@gmail.com",
+	  "numeroTelefono": 213123132213,
+	  "password": "bohPasswod",
+	  "credito": 42
+       }
+       #+END_SRC
+
+     - Eliminare un utente
+ 
+       POST http://localhost:8080/api/utenteregistrato/elimina/id-utente
+
+       Per esempio http://localhost:8080/api/utenteregistrato/elimina/id-utente/02942f14-7636-4d81-bb48-31b8977edad7
+
+     - Controllare se un username è già stato scelto
+       
+       GET http://localhost:8080/api/utenteregistrato/controlla/username/user
+
+       Per esempio:
+
+       GET http://localhost:8080/api/utenteregistrato/controlla/username/nomeQualsiasi
+
+     - Controllare se l'email è già stata scelta
+
+       GET http://localhost:8080/api/utenteregistrato/controlla/email/email
+
+       Per esempio:
+
+       GET http://localhost:8080/api/utenteregistrato/controlla/email/prova@gmail.com
+
+     - Controlla se un utente è già presente
+
+       GET http://localhost:8080/api/utenteregistrato/controlla/utente
+       
+       Nel body i dati dell utente: 
+       
+       #+BEGIN_SRC 
+       {
+          "username": "Prova",
+	  "email": "boh@gmail.com",
+	  "numeroTelefono": 213123132213,
+	  "password": "bohPasswod",
+	  "credito": 42
+       }
+       #+END_SRC
+       
+     - Credito disponibile per un utente
+
+       GET http://localhost:8080/api/utenteregistrato/credito/id-utente
+
+     - Aggiungere credito ad un utente
+       
+       GET http://localhost:8080/api/utenteregistrato/credito/aggiungi/id-utente/quantità
+
