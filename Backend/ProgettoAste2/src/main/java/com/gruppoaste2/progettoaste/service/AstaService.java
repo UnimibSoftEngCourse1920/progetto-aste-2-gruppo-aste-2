@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class AstaService {
+
     private final AstaDAO astaDAO;
 
     @Autowired
@@ -18,31 +20,23 @@ public class AstaService {
         this.astaDAO = astaDAO;
     }
 
-    public boolean inserisciAsta(AstaModel asta){
-        return astaDAO.inserisciAsta(asta);
+    public int inserisciAsta(AstaModel astaModel) {
+        return astaDAO.inserisciAsta(astaModel);
     }
 
-    public boolean eliminaAsta (UUID id){
-        return  astaDAO.eliminaAsta(id);
+    public int eliminaAsta(UUID id){
+        return astaDAO.eliminaAsta(id);
     }
 
-    public AstaModel trovaAsta(UUID id){
+    public Optional<AstaModel> trovaAsta(UUID id){
         return astaDAO.trovaAsta(id);
     }
 
-    public List<AstaModel> trovaAste(){
-        return astaDAO.trovaAste();
+    public List<AstaModel> trovaTutteAste(){
+        return astaDAO.trovaTutteAste();
     }
 
-    public boolean aggiornaAsta(UUID id, AstaModel astAggiornata){
-        return astaDAO.aggiornaAsta(id, astAggiornata);
-    }
-
-    public boolean faiOffertaBustaChiusa(UUID id, double offerta){
-        return astaDAO.faiOffertaBustaChiusa(id, offerta);
-    }
-
-    public boolean faiOffertaSuperamentoImmediato(UUID id, double offerta){
-        return astaDAO.faiOffertaSuperamentoImmediato(id, offerta);
+    public int aggiornaAsta(UUID id, AstaModel astaAggiornata){
+        return astaDAO.aggiornaAsta(id, astaAggiornata);
     }
 }

@@ -7,36 +7,41 @@ public class AstaModel {
 
 
     private final UUID id;
-    private final ConfigurazioneModel configurazione;
-    private final List<OffertaModel> offerte;
-    private final List<OggettoModel> oggetti;
     private final InfoAsta infoAsta;
+    private final ConfigurazioneModel configurazione;
+    private final List<OggettoModel> oggetti;
+    private final UtenteRegistratoModel astaManager;
+    private final List<OffertaModel> offerte;
 
-    public AstaModel(UUID id, ConfigurazioneModel configurazione, List<OffertaModel> offerte, List<OggettoModel> oggetti, InfoAsta infoAsta) {
+    public AstaModel(UUID id, InfoAsta infoAsta, ConfigurazioneModel configurazione, List<OggettoModel> oggetti,
+                     UtenteRegistratoModel astaManager, List<OffertaModel> offerte) {
         this.id = id;
-        this.configurazione = configurazione;
-        this.offerte = offerte;
-        this.oggetti = oggetti;
         this.infoAsta = infoAsta;
+        this.configurazione = configurazione;
+        this.oggetti = oggetti;
+        this.astaManager = astaManager;
+        this.offerte = offerte;
     }
 
     public UUID getId() {
         return id;
     }
 
-    public ConfigurazioneModel getConfigurazione() {
-        return configurazione;
+    public InfoAsta getInfoAsta() {
+        return infoAsta;
     }
 
-    public List<OffertaModel> getOfferte() {
-        return offerte;
+    public ConfigurazioneModel getConfigurazione() {
+        return configurazione;
     }
 
     public List<OggettoModel> getOggetti() {
         return oggetti;
     }
 
-    public InfoAsta getInfoAsta() {
-        return infoAsta;
+    public UtenteRegistratoModel getAstaManager() { return astaManager; }
+
+    public List<OffertaModel> getOfferte() {
+        return offerte;
     }
 }
