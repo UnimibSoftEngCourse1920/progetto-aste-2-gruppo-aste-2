@@ -22,10 +22,12 @@ public class PostgresAstaDAO implements AstaDAO {
     private final OffertaDAO offertaDAO;
 
     @Autowired
-    public PostgresAstaDAO(JdbcTemplate jdbcTemplate, UtenteRegistratoDAO utenteRegistratoDAO, ConfigurazioneDAO configurazioneDAO) {
+    public PostgresAstaDAO(JdbcTemplate jdbcTemplate, UtenteRegistratoDAO utenteRegistratoDAO, ConfigurazioneDAO configurazioneDAO, OggettoDAO oggettoDAO, OffertaDAO offertaDAO) {
         this.jdbcTemplate = jdbcTemplate;
         this.utenteRegistratoDAO = utenteRegistratoDAO;
         this.configurazioneDAO = configurazioneDAO;
+        this.oggettoDAO = oggettoDAO;
+        this.offertaDAO = offertaDAO;
     }
 
     @Override
@@ -75,7 +77,7 @@ public class PostgresAstaDAO implements AstaDAO {
                     // TODO: throw AstaManagerNotFoundException
 
                     List<OggettoModel> oggetti = oggettoDAO.trovaOggetti(id);
-                    List<OffertaModel> offerte = offertaDAO.trovaOfferte(id);
+                    List<OffertaModel> offerte = offertaDAO.trovaTutteOfferteAsta(id);
                     String tipo = resultSet.getString("tipo");
                     float prezzoPartenza = resultSet.getFloat("prezzo_partenza");
                     Date dataInizio = resultSet.getDate("data_inizio");
@@ -113,9 +115,8 @@ public class PostgresAstaDAO implements AstaDAO {
             else
                 return null;
             // TODO: throw AstaManagerNotFoundException
-
             List<OggettoModel> oggetti = oggettoDAO.trovaOggetti(id);
-            List<OffertaModel> offerte = offertaDAO.trovaOfferte(id);
+            List<OffertaModel> offerte = offertaDAO.trovaTutteOfferteAsta(id);
             String tipo = resultSet.getString("tipo");
             float prezzoPartenza = resultSet.getFloat("prezzo_partenza");
             Date dataInizio = resultSet.getDate("data_inizio");

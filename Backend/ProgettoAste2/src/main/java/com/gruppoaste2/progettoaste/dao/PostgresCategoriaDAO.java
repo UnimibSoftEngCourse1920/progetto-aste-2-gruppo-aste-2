@@ -64,4 +64,4 @@ public class PostgresCategoriaDAO implements CategoriaDAO{
         return jdbcTemplate.update(sql,categoriaAggiornata.getNome());
     }
 }
-}
+
