@@ -4,12 +4,15 @@ import java.util.Map;
 import java.util.UUID;
 
 public class CategoriaModel {
+
     private final UUID id;
     private final Map<String, String> attributi;
+    private final String nome;
 
-    public CategoriaModel(UUID id, Map<String, String> attributi) {
+    public CategoriaModel(UUID id, Map<String, String> attributi, String nome) {
         this.id = id;
         this.attributi = attributi;
+        this.nome = nome;
     }
 
     public UUID getId() {
@@ -18,5 +21,9 @@ public class CategoriaModel {
 
     public Map<String, String> getAttributi() {
         return attributi;
+    }
+
+    public String getNome() {
+        return nome;
     }
 }

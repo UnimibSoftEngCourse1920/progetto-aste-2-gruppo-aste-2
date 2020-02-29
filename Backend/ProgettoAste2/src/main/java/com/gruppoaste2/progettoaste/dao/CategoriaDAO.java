@@ -1,19 +1,27 @@
 package com.gruppoaste2.progettoaste.dao;
 
 import com.gruppoaste2.progettoaste.model.CategoriaModel;
+import com.gruppoaste2.progettoaste.model.UtenteRegistratoModel;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface CategoriaDAO {
 
-    public boolean inserisciCategoria(CategoriaModel categoria);
+    int inserisciCategoria(UUID idCategoria, CategoriaModel categoria);
 
-    public boolean eliminaCategoria(UUID id);
+    default int inserisciCategoria(CategoriaModel categoria)
+    {
+        UUID id = UUID.randomUUID();
+        return inserisciCategoria(id,categoria);
+    }
 
-    public CategoriaModel trovaCategoria(UUID id);
+    int eliminaCategoria(UUID id);
 
-    public List<CategoriaModel> trovaCategorie();
+    Optional<CategoriaModel> trovaCategoria(UUID id);
 
-    public boolean aggiornaCategoria (UUID id, CategoriaModel categoriaAggiornata);
+    List<CategoriaModel> trovaCategorie();
+
+    int aggiornaCategoria (UUID id, CategoriaModel categoriaAggiornata);
 }

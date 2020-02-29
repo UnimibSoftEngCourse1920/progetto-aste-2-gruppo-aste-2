@@ -1,6 +1,6 @@
 package com.gruppoaste2.progettoaste.api;
 
-import com.gruppoaste2.progettoaste.model.CategoriaModel
+import com.gruppoaste2.progettoaste.model.CategoriaModel;
 import com.gruppoaste2.progettoaste.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
