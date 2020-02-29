@@ -1,5 +1,6 @@
 package com.gruppoaste2.progettoaste.dao;
 
+import com.gruppoaste2.progettoaste.model.AttributoModel;
 import com.gruppoaste2.progettoaste.model.CategoriaModel;
 import com.gruppoaste2.progettoaste.model.UtenteRegistratoModel;
 
@@ -24,4 +25,10 @@ public interface CategoriaDAO {
     List<CategoriaModel> trovaCategorie();
 
     int aggiornaCategoria (UUID id, CategoriaModel categoriaAggiornata);
+
+    List<AttributoModel> trovaAttributiCategoria(UUID idCategoria);
+
+    List<CategoriaModel> trovaCategorieOggetto (UUID idOggetto);
+
+    String valoreAttributoOggetto(UUID idOggetto, UUID idAttributo);
 }
