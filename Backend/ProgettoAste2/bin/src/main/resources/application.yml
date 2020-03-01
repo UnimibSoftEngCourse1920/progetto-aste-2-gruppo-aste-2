@@ -1,0 +1,6 @@
+app:
+  datasource:
+    jdbc-url: jdbc:postgresql://localhost:5433/databaseaste
+    username: postgres
+    password: postgres
+    pool-size: 30
