@@ -230,7 +230,7 @@ ALTER TABLE public.configurazione OWNER TO postgres;
 --
 
 CREATE TABLE public.offerta (
-    id_utente_registrato uuid NOT NULL,
+    id_offerente uuid NOT NULL,
     id_asta uuid NOT NULL,
     data_offerta date NOT NULL,
     credito_offerto real NOT NULL
@@ -341,7 +341,7 @@ COPY public.configurazione (id, durata_timeslot_fisso, numero_max_timeslot, nume
 -- Data for Name: offerta; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.offerta (id_utente_registrato, id_asta, data_offerta, credito_offerto) FROM stdin;
+COPY public.offerta (id_offerente, id_asta, data_offerta, credito_offerto) FROM stdin;
 \.
 
 
@@ -456,7 +456,7 @@ ALTER TABLE ONLY public.oggetto
 --
 
 ALTER TABLE ONLY public.offerta
-    ADD CONSTRAINT offerta_pkey PRIMARY KEY (id_utente_registrato, id_asta);
+    ADD CONSTRAINT offerta_pkey PRIMARY KEY (id_offerente, id_asta);
 
 
 --
@@ -580,11 +580,11 @@ ALTER TABLE ONLY public.offerta
 
 
 --
--- Name: offerta id_utente_registrato; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: offerta id_offerente; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.offerta
-    ADD CONSTRAINT id_utente_registrato FOREIGN KEY (id_utente_registrato) REFERENCES public.utente_registrato(id) NOT VALID;
+    ADD CONSTRAINT id_offerente FOREIGN KEY (id_offerente) REFERENCES public.utente_registrato(id) NOT VALID;
 
 
 --
