@@ -40,15 +40,15 @@ public class OffertaService {
         return offertaDAO.trovaTutteOfferteAsta(idAsta);
     }
 
-    public List<OffertaModel> trovaTutteOfferteUtente(UUID idUtenteOfferente){
-        return offertaDAO.trovaTutteOfferteUtente(idUtenteOfferente);
+    public List<OffertaModel> trovaTutteOfferteUtente(UUID idOfferente){
+        return offertaDAO.trovaTutteOfferteUtente(idOfferente);
     }
 
-    public List<OffertaModel> trovaTutteOfferteUtenteAsta(UUID idUtenteOfferente, UUID idAsta){
-        return offertaDAO.trovaTutteOfferteUtenteAsta(idUtenteOfferente, idAsta);
+    public List<OffertaModel> trovaTutteOfferteUtenteAsta(UUID idOfferente, UUID idAsta){
+        return offertaDAO.trovaTutteOfferteUtenteAsta(idOfferente, idAsta);
     }
 
-    public int aggiornaOfferta(UUID id, UUID idAsta, OffertaModel offertaAggiornata){
-        return offertaDAO.aggiornaOfferta(id, idAsta, offertaAggiornata);
+    public int aggiornaOfferta(UUID id, OffertaModel offertaAggiornata){
+        return offertaDAO.aggiornaOfferta(id, offertaAggiornata);
     }
 }

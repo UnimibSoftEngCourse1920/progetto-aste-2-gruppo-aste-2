@@ -8,16 +8,18 @@ public class OffertaModel {
     private final UUID id;
     private final float creditoOfferto;
     private final Date dataOfferta;
-    private final UtenteRegistratoModel utenteOfferente;
+    private final UtenteRegistratoModel offerente;
 
-    public OffertaModel(UUID id, float creditoOfferto, Date dataOfferta, UtenteRegistratoModel utenteOfferente) {
+    public OffertaModel(UUID id, float creditoOfferto, Date dataOfferta, UtenteRegistratoModel offerente) {
         this.id = id;
         this.creditoOfferto = creditoOfferto;
         this.dataOfferta = dataOfferta;
-        this.utenteOfferente = utenteOfferente;
+        this.offerente = offerente;
     }
 
-    public UUID getId() { return id; }
+    public UUID getId() {
+        return id;
+    }
 
     public float getCreditoOfferto() {
         return creditoOfferto;
@@ -27,7 +29,7 @@ public class OffertaModel {
         return dataOfferta;
     }
 
-    public UtenteRegistratoModel getUtenteOfferente() {
-        return utenteOfferente;
+    public UtenteRegistratoModel getOfferente() {
+        return offerente;
     }
 }

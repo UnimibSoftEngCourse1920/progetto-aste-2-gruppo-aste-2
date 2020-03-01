@@ -44,16 +44,16 @@ public class OffertaController {
         return offertaService.trovaTutteOfferteAsta(idAsta);
     }
 
-    @GetMapping("/offerte/{idUtenteOfferente}")
-    public List<OffertaModel> trovaTutteOfferteUtente(@PathVariable("idUtenteOfferente") UUID idUtenteOfferente)
+    @GetMapping("/offerte/{idOfferente}")
+    public List<OffertaModel> trovaTutteOfferteUtente(@PathVariable("idOfferente") UUID idOfferente)
     {
-        return offertaService.trovaTutteOfferteUtente(idUtenteOfferente);
+        return offertaService.trovaTutteOfferteUtente(idOfferente);
     }
 
-    @GetMapping("/offerte/{idUtenteOfferente}/{idAsta}")
-    public List<OffertaModel> trovaTutteOfferteUtenteAsta(@PathVariable("idUtenteOfferente") UUID idUtenteOfferente, @PathVariable("idAsta") UUID idAsta)
+    @GetMapping("/offerte/{idOfferente}/{idAsta}")
+    public List<OffertaModel> trovaTutteOfferteUtenteAsta(@PathVariable("idOfferente") UUID idOfferente, @PathVariable("idAsta") UUID idAsta)
     {
-        return offertaService.trovaTutteOfferteUtenteAsta(idUtenteOfferente, idAsta);
+        return offertaService.trovaTutteOfferteUtenteAsta(idOfferente, idAsta);
     }
 
     @PostMapping("/aggiungi")
@@ -63,9 +63,9 @@ public class OffertaController {
     }
 
     @PostMapping(path = "/aggiorna/{id}")
-    public int aggiornaOfferta(@PathVariable("id") UUID id, UUID idAsta, @RequestBody OffertaModel utenteAggiornato)
+    public int aggiornaOfferta(@PathVariable("id") UUID id, @RequestBody OffertaModel utenteAggiornato)
     {
-        return offertaService.aggiornaOfferta(id, idAsta, utenteAggiornato);
+        return offertaService.aggiornaOfferta(id, utenteAggiornato);
     }
 
     @GetMapping(path = "elimina/{id}")

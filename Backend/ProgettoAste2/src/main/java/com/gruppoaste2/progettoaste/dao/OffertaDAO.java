@@ -24,9 +24,9 @@ public interface OffertaDAO {
 
     List<OffertaModel> trovaTutteOfferteAsta(UUID idAsta);
 
-    List<OffertaModel> trovaTutteOfferteUtente(UUID idUtenteOfferente);
+    List<OffertaModel> trovaTutteOfferteUtente(UUID idOfferente);
 
-    List<OffertaModel> trovaTutteOfferteUtenteAsta(UUID idUtenteOfferente, UUID idAsta);
+    List<OffertaModel> trovaTutteOfferteUtenteAsta(UUID idOfferente, UUID idAsta);
 
-    int aggiornaOfferta(UUID id, UUID idAsta, OffertaModel offertaAggiornata);
+    int aggiornaOfferta(UUID id, OffertaModel offertaAggiornata);
 }
