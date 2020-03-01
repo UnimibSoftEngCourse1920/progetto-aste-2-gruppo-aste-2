@@ -232,7 +232,7 @@ ALTER TABLE public.configurazione OWNER TO postgres;
 CREATE TABLE public.offerta (
     id_utente_registrato uuid NOT NULL,
     id_asta uuid NOT NULL,
-    data date NOT NULL,
+    data_offerta date NOT NULL,
     credito_offerto real NOT NULL
 );
 
@@ -341,7 +341,7 @@ COPY public.configurazione (id, durata_timeslot_fisso, numero_max_timeslot, nume
 -- Data for Name: offerta; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.offerta (id_utente_registrato, id_asta, data, credito_offerto) FROM stdin;
+COPY public.offerta (id_utente_registrato, id_asta, data_offerta, credito_offerto) FROM stdin;
 \.
 
 
