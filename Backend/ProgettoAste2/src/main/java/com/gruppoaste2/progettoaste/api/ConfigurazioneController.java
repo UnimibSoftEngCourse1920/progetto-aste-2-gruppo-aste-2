@@ -38,7 +38,7 @@ public class ConfigurazioneController {
         return configurazioneService.trovaConfigurazioni();
     }
 
-    @GetMapping("/ultima")
+    @GetMapping("/configurazioni/ultima")
     public Optional<ConfigurazioneModel> trovaUltimaConfigurazione()
     {
         return configurazioneService.trovaUltimaConfigurazione();

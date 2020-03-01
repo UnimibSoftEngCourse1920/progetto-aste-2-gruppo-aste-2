@@ -8,12 +8,12 @@ import java.util.UUID;
 
 public interface OffertaDAO {
 
-    int inserisciOfferta(UUID id, OffertaModel offerta);
+    int inserisciOfferta(UUID id, UUID idAsta, OffertaModel offerta);
 
-    default int inserisciOfferta(OffertaModel offerta)
+    default int inserisciOfferta(UUID idAsta, OffertaModel offerta)
     {
         UUID id = UUID.randomUUID();
-        return inserisciOfferta(id, offerta);
+        return inserisciOfferta(id, idAsta, offerta);
     }
 
     int eliminaOfferta(UUID id);
@@ -24,9 +24,9 @@ public interface OffertaDAO {
 
     List<OffertaModel> trovaTutteOfferteAsta(UUID idAsta);
 
-    List<OffertaModel> trovaTutteOfferteUtente(UUID idUtente);
+    List<OffertaModel> trovaTutteOfferteUtente(UUID idUtenteOfferente);
 
-    List<OffertaModel> trovaTutteOfferteUtenteAsta(UUID idUtente, UUID idAsta);
+    List<OffertaModel> trovaTutteOfferteUtenteAsta(UUID idUtenteOfferente, UUID idAsta);
 
-    int aggiornaOfferta(UUID id, OffertaModel offertaAggiornata);
+    int aggiornaOfferta(UUID id, UUID idAsta, OffertaModel offertaAggiornata);
 }

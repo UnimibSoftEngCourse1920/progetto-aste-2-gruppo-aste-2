@@ -1,6 +1,5 @@
 package com.gruppoaste2.progettoaste.api;
 
-
 import com.gruppoaste2.progettoaste.model.InfoCredito;
 import com.gruppoaste2.progettoaste.model.UtenteRegistratoModel;
 import com.gruppoaste2.progettoaste.service.UtenteRegistratoService;

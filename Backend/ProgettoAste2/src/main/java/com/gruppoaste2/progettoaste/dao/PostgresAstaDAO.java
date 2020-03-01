@@ -74,7 +74,7 @@ public class PostgresAstaDAO implements AstaDAO {
                         configurazione = optionalConfigurazione.get();
                     else
                         return null;
-                    // TODO: throw AstaManagerNotFoundException
+                    // TODO: throw ConfigurazioneNotFoundException
 
                     List<OggettoModel> oggetti = oggettoDAO.trovaOggetti(id);
                     List<OffertaModel> offerte = offertaDAO.trovaTutteOfferteAsta(id);

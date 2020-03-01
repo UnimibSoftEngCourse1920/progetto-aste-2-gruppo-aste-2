@@ -25,7 +25,7 @@ public class AstaController {
         return "<h1>Prova ciao hai fatto una get ad localhost:8080/api/asta<h1>";
     }
 
-    @GetMapping("/asta")
+    @GetMapping("/aste")
     public List<AstaModel> trovaAste()
     {
         return astaService.trovaTutteAste();

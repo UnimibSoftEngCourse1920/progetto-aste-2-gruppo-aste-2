@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class OggettoModel {
 
-    private final UUID id; // tipo speciale per id
+    private final UUID id;
     private final String nome;
     private final String descrizione;
     private final String urlImmagine;
