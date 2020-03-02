@@ -1,24 +1,30 @@
 package com.gruppoaste2.progettoaste.api;
 
-import com.gruppoaste2.progettoaste.model.AmministratoreModel;
+import static org.hamcrest.Matchers.containsString;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import static org.hamcrest.Matchers.containsString;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.gruppoaste2.progettoaste.service.AmministratoreService;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.skyscreamer.jsonassert.JSONAssert;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.Optional;
 import java.util.UUID;
 
-@RunWith(SpringRunner.class)
 @WebMvcTest(AmministratoreController.class)
 class AmministratoreControllerTest {
 
@@ -29,16 +35,24 @@ class AmministratoreControllerTest {
     private AmministratoreService amministratoreService;
 
     @Test
-    void inserisciAmministratoreTest() {
+    public void inserisciAmministratoreShouldReturn0() throws Exception {
+
     }
 
     @Test
-    void trovaAmministratoreTest() throws Exception {
-        UUID provaId = UUID.randomUUID();
-        AmministratoreModel amministratoreModel = new AmministratoreModel(provaId, "username", "email", "password");
+    public void inserisciAmministratoreShouldReturn1() throws Exception {
 
-        Mockito.when(amministratoreService.trovaAmministratore(provaId)).thenReturn(java.util.Optional.of(amministratoreModel));
+    }
 
+    @Test
+    public void trovaAmministratoreShouldReturnNull() throws Exception {
+        UUID id = UUID.randomUUID();
+        when(amministratoreService.trovaAmministratore(id)).thenReturn(Optional.empty());
+    }
+
+    @Test
+    public void trovaAmministratoreShouldReturnAmministratoreWithId() throws Exception {
+        /*
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/amministratore/" + provaId).accept(MediaType.APPLICATION_JSON);
 
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -48,29 +62,37 @@ class AmministratoreControllerTest {
         String expected = "{id:" + provaId + ",username:username,email:email,password:password}";
 
         JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(),false);
+
+         */
     }
 
     @Test
-    void trovaAmministratoriTest() {
+    public void trovaAmministratoriTest() throws Exception {
+
     }
 
     @Test
-    void controllaUsernameOccupatoTest() {
+    public void controllaUsernameOccupatoTest() throws Exception {
+
     }
 
     @Test
-    void eliminaAmministratoreTest() {
+    public void eliminaAmministratoreTest() throws Exception {
+
     }
 
     @Test
-    void controllaEmailOccupataTest() {
+    public void controllaEmailOccupataTest() throws Exception {
+
     }
 
     @Test
-    void controllaAmministratoreEsisteTest() {
+    public void controllaAmministratoreEsisteTest() throws Exception {
+
     }
 
     @Test
-    void aggiornaAmministratoreTest() {
+    public void aggiornaAmministratoreTest() throws Exception {
+
     }
 }
