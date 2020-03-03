@@ -74,6 +74,19 @@ class AmministratoreControllerTest {
 
     @Test
     public void whenTrovaAmministratori_givenNotExistingAmministratori_thenReturnEmptyJson() throws Exception {
+        List<AmministratoreModel> amministratoriTrovati = Arrays.asList();
+
+        given(amministratoreService.trovaAmministratori()).willReturn(amministratoriTrovati);
+
+        mockMvc.perform(get("/api/amministratore/amministratori")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$", hasSize(0)));
+    }
+
+    @Test
+    public void whenTrovaAmministratori_givenExistingAmministratori_thenReturnJsonArray() throws Exception {
         UUID id = UUID.randomUUID();
 
         List<AmministratoreModel> amministratoriTrovati =
@@ -81,40 +94,16 @@ class AmministratoreControllerTest {
 
         given(amministratoreService.trovaAmministratori()).willReturn(amministratoriTrovati);
 
-        mockMvc.perform(get("/api/amministratore/" + id.toString())
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isMap())
-                .andExpect(jsonPath("$.id").value(amministratoreTrovato.get().getId().toString()))
-                .andExpect(jsonPath("$.username").value(amministratoreTrovato.get().getUsername()))
-                .andExpect(jsonPath("$.email").value(amministratoreTrovato.get().getEmail()))
-                .andExpect(jsonPath("$.password").value(amministratoreTrovato.get().getPassword()));
-    }
-
-    @Test
-    public void whenTrovaAmministratori_givenExistingAmministratori_thenReturnJsonArray() throws Exception {
-        UUID id = UUID.randomUUID();
-
-        List<AmministratoreModel> amministratoriTrovati = Optional.of(new ArrayList<>());
-
-        amministratoriTrovati.get().add(new AmministratoreModel(id1,"username1","email1","password1"));
-
-        given(amministratoreService.trovaAmministratori()).willReturn(amministratoriTrovati);
-
         mockMvc.perform(get("/api/amministratore/amministratori")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0]").isMap())
-                .andExpect(jsonPath("$[0].id").value(amministratoriTrovati.get().get(0).getId().toString()))
-                .andExpect(jsonPath("$[0].username").value(amministratoriTrovati.get().get(0).getUsername()))
-                .andExpect(jsonPath("$[0].email").value(amministratoriTrovati.get().get(0).getEmail()))
-                .andExpect(jsonPath("$[0].password").value(amministratoriTrovati.get().get(0).getPassword()))
-                .andExpect(jsonPath("$[1]").isMap())
-                .andExpect(jsonPath("$[1].id").value(amministratoriTrovati.get().get(1).getId().toString()))
-                .andExpect(jsonPath("$[1].username").value(amministratoriTrovati.get().get(1).getUsername()))
-                .andExpect(jsonPath("$[1].email").value(amministratoriTrovati.get().get(1).getEmail()))
-                .andExpect(jsonPath("$[1].password").value(amministratoriTrovati.get().get(1).getPassword()));
+                .andExpect(jsonPath("$[0].id").value(amministratoriTrovati.get(0).getId().toString()))
+                .andExpect(jsonPath("$[0].username").value(amministratoriTrovati.get(0).getUsername()))
+                .andExpect(jsonPath("$[0].email").value(amministratoriTrovati.get(0).getEmail()))
+                .andExpect(jsonPath("$[0].password").value(amministratoriTrovati.get(0).getPassword()));
     }
 
     @Test
