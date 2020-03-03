@@ -34,7 +34,7 @@ ALTER ROLE postgres WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION
 --
 
 -- Dumped from database version 12.2
--- Dumped by pg_dump version 12.1
+-- Dumped by pg_dump version 12.2
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -60,7 +60,7 @@ SET row_security = off;
 --
 
 -- Dumped from database version 12.2
--- Dumped by pg_dump version 12.1
+-- Dumped by pg_dump version 12.2
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -219,7 +219,8 @@ CREATE TABLE public.configurazione (
     numero_max_timeslot bigint NOT NULL,
     numero_offerte_contemporanee_utente bigint NOT NULL,
     tipo_timeslot public.tipotimeslotasta NOT NULL,
-    data_creazione date NOT NULL
+    data_creazione date NOT NULL,
+    penale real NOT NULL
 );
 
 
@@ -230,9 +231,9 @@ ALTER TABLE public.configurazione OWNER TO postgres;
 --
 
 CREATE TABLE public.offerta (
-    id_utente_registrato uuid NOT NULL,
+    id_offerente uuid NOT NULL,
     id_asta uuid NOT NULL,
-    data date NOT NULL,
+    data_offerta date NOT NULL,
     credito_offerto real NOT NULL
 );
 
@@ -286,6 +287,7 @@ ALTER TABLE public.utente_registrato OWNER TO postgres;
 --
 
 COPY public.amministratore (username, id, email, password) FROM stdin;
+Provolone	93fdad81-6724-46d0-9c90-c6b237a908d7	parmigiano@brie.com	boh
 \.
 
 
@@ -333,7 +335,9 @@ COPY public.categoria_oggetto (id_oggetto, id_categoria) FROM stdin;
 -- Data for Name: configurazione; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.configurazione (id, durata_timeslot_fisso, numero_max_timeslot, numero_offerte_contemporanee_utente, tipo_timeslot, data_creazione) FROM stdin;
+COPY public.configurazione (id, durata_timeslot_fisso, numero_max_timeslot, numero_offerte_contemporanee_utente, tipo_timeslot, data_creazione, penale) FROM stdin;
+19d8c42e-96ce-4477-a262-5552fca1ed1b	00:30:00	10	30	fisso	2017-03-14	0.1
+46cebfbe-635c-4e0d-bdb5-4abebb57f94b	00:30:00	10	30	variabile	2018-03-14	0.7
 \.
 
 
@@ -341,7 +345,7 @@ COPY public.configurazione (id, durata_timeslot_fisso, numero_max_timeslot, nume
 -- Data for Name: offerta; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.offerta (id_utente_registrato, id_asta, data, credito_offerto) FROM stdin;
+COPY public.offerta (id_offerente, id_asta, data_offerta, credito_offerto) FROM stdin;
 \.
 
 
@@ -366,8 +370,8 @@ COPY public.tipo_asta (nome) FROM stdin;
 --
 
 COPY public.utente_registrato (id, username, password, email, telefono, credito_disponibile) FROM stdin;
-02942f14-7636-4d81-bb48-31b8977edad7	userProva	password	userProva@gmail.com	\N	58
 b505c3b6-7769-4c6f-a000-80e1615b77a8	Luca	1243	superBoh@boh.com	\N	666
+6c7983dc-e7f6-498b-801c-eee9e6c8e489	dsduca	1243	lol@boh.com	\N	666
 \.
 
 
@@ -456,7 +460,7 @@ ALTER TABLE ONLY public.oggetto
 --
 
 ALTER TABLE ONLY public.offerta
-    ADD CONSTRAINT offerta_pkey PRIMARY KEY (id_utente_registrato, id_asta);
+    ADD CONSTRAINT offerta_pkey PRIMARY KEY (id_offerente, id_asta);
 
 
 --
@@ -584,7 +588,7 @@ ALTER TABLE ONLY public.offerta
 --
 
 ALTER TABLE ONLY public.offerta
-    ADD CONSTRAINT id_utente_registrato FOREIGN KEY (id_utente_registrato) REFERENCES public.utente_registrato(id) NOT VALID;
+    ADD CONSTRAINT id_utente_registrato FOREIGN KEY (id_offerente) REFERENCES public.utente_registrato(id) NOT VALID;
 
 
 --
@@ -610,7 +614,7 @@ ALTER TABLE ONLY public.asta
 --
 
 -- Dumped from database version 12.2
--- Dumped by pg_dump version 12.1
+-- Dumped by pg_dump version 12.2
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
