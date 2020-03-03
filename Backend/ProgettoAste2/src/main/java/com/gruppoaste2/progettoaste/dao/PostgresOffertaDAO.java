@@ -18,13 +18,11 @@ public class PostgresOffertaDAO implements OffertaDAO{
     private final JdbcTemplate jdbcTemplate;
 
     private final UtenteRegistratoDAO utenteRegistratoDAO;
-    private final AstaDAO astaDAO;
 
     @Autowired
-    public PostgresOffertaDAO(JdbcTemplate jdbcTemplate, UtenteRegistratoDAO utenteRegistratoDAO, AstaDAO astaDAO) {
+    public PostgresOffertaDAO(JdbcTemplate jdbcTemplate, UtenteRegistratoDAO utenteRegistratoDAO) {
         this.jdbcTemplate = jdbcTemplate;
         this.utenteRegistratoDAO = utenteRegistratoDAO;
-        this.astaDAO = astaDAO;
     }
 
     @Override
