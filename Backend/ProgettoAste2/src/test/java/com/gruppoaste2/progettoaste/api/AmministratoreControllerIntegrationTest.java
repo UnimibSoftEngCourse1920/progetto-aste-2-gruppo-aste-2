@@ -10,11 +10,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -77,7 +78,27 @@ class AmministratoreControllerIntegrationTest {
 
     @Test
     public void trovaAmministratoriTest() throws Exception {
+        UUID id1 = UUID.randomUUID();
+        UUID id2 = UUID.randomUUID();
 
+        Optional<List<AmministratoreModel>> amministratoriTrovati = Optional.of(new ArrayList<AmministratoreModel>());
+
+        amministratoriTrovati.get().add(new AmministratoreModel(id1,"username1","email1","password1"));
+        amministratoriTrovati.get().add(new AmministratoreModel(id2,"username2","email2","password2"));
+
+        given(amministratoreService.trovaAmministratori()).willReturn(amministratoriTrovati);
+
+        mockMvc.perform(get("/api/amministratore/amministratori")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(amministratoriTrovati.get().get(0).getId().toString()))
+                .andExpect(jsonPath("$[0].username").value(amministratoriTrovati.get().get(0).getUsername()))
+                .andExpect(jsonPath("$[0].email").value(amministratoriTrovati.get().get(0).getEmail()))
+                .andExpect(jsonPath("$[0].password").value(amministratoriTrovati.get().get(0).getPassword()))
+                .andExpect(jsonPath("$[1].id").value(amministratoriTrovati.get().get(1).getId().toString()))
+                .andExpect(jsonPath("$[1].username").value(amministratoriTrovati.get().get(1).getUsername()))
+                .andExpect(jsonPath("$[1].email").value(amministratoriTrovati.get().get(1).getEmail()))
+                .andExpect(jsonPath("$[1].password").value(amministratoriTrovati.get().get(1).getPassword()));
     }
 
     @Test
