@@ -67,7 +67,7 @@ public class PostgresOggettoDAO implements OggettoDAO {
     @Override
     public Optional<OggettoModel> trovaOggetto(UUID idOggetto) {
         final String sql = "SELECT * FROM oggetto WHERE id = ?";
-        OggettoModel oggettoTrovato = jdbcTemplate.queryForObject(sql,
+        List<OggettoModel> results = jdbcTemplate.query(sql,
                 (resultSet, i) -> {
                     UUID id = UUID.fromString(resultSet.getString("id"));
                     String nome = resultSet.getString(NOME);
@@ -76,7 +76,9 @@ public class PostgresOggettoDAO implements OggettoDAO {
                     return new OggettoModel(id,nome,descrizione,urlImmagine);
                 },
                 idOggetto);
-        return Optional.ofNullable(oggettoTrovato);
+
+        OggettoModel returnable = (results.isEmpty())? null : results.get(0);
+        return  Optional.ofNullable(returnable);
     }
 
     @Override

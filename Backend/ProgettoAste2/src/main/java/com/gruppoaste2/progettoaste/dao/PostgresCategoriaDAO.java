@@ -37,7 +37,7 @@ public class PostgresCategoriaDAO implements CategoriaDAO{
     @Override
     public Optional<CategoriaModel> trovaCategoria(UUID id) {
         final String sql = "SELECT * FROM categoria WHERE id = ?";
-        CategoriaModel categoriaTrovata = jdbcTemplate.queryForObject(sql,
+        List<CategoriaModel> results = jdbcTemplate.query(sql,
                 (resultSet, i) -> {
                     UUID idTrovato = UUID.fromString(resultSet.getString("id"));
                     String nomeTrovato = resultSet.getString("nome");
@@ -45,7 +45,9 @@ public class PostgresCategoriaDAO implements CategoriaDAO{
                 },
                 id);
 
-        return Optional.ofNullable(categoriaTrovata);
+        CategoriaModel returnable = (results.isEmpty())? null : results.get(0);
+        return  Optional.ofNullable(returnable);
+
     }
 
     @Override

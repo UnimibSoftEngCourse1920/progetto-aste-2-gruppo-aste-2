@@ -42,7 +42,7 @@ public class PostgresConfigurazioneDAO implements ConfigurazioneDAO{
     @Override
     public Optional<ConfigurazioneModel> trovaConfigurazione(UUID id) {
         final String sql = "SELECT * FROM configurazione WHERE id = ?";
-        ConfigurazioneModel confTrovato = jdbcTemplate.queryForObject(sql,
+        List<ConfigurazioneModel> results = jdbcTemplate.query(sql,
                 (resultSet, i) -> {
                     String timeSlot = resultSet.getString(TIMESLOT);
                     int  maxTimeSlot = Integer.parseInt(resultSet.getString(NUMERO_OFFERTE_CONTEMPORANEE_UTENTE));
@@ -53,7 +53,9 @@ public class PostgresConfigurazioneDAO implements ConfigurazioneDAO{
                     return new ConfigurazioneModel(id,timeSlot,maxTimeSlot,maxOfferte,penale,dataCreazione, durata);
                 },
                 id);
-        return  Optional.ofNullable(confTrovato);
+
+        ConfigurazioneModel returnable = (results.isEmpty())? null : results.get(0);
+        return  Optional.ofNullable(returnable);
     }
 
     @Override
@@ -77,7 +79,7 @@ public class PostgresConfigurazioneDAO implements ConfigurazioneDAO{
     @Override
     public Optional<ConfigurazioneModel> trovaUltimaConfigurazione() {
         final String sql = "SELECT * FROM configurazione ORDER BY data_creazione DESC LIMIT 1";
-        ConfigurazioneModel configTrovata = jdbcTemplate.queryForObject(sql,
+        List<ConfigurazioneModel> results = jdbcTemplate.query(sql,
                 (resultSet, i) -> {
                     UUID id = UUID.fromString(resultSet.getString("id"));
                     String timeSlot = resultSet.getString(TIMESLOT);
@@ -88,6 +90,8 @@ public class PostgresConfigurazioneDAO implements ConfigurazioneDAO{
                     Time durata = Time.valueOf(resultSet.getString(DURATA_TIMESLOT_FISSO));
                     return new ConfigurazioneModel(id,timeSlot,maxTimeSlot,maxOfferte,penale,dataCreazione, durata);
                 });
-        return Optional.ofNullable(configTrovata);
+
+        ConfigurazioneModel returnable = (results.isEmpty())? null : results.get(0);
+        return  Optional.ofNullable(returnable);
     }
 }
