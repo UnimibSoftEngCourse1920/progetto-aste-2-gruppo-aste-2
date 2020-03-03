@@ -10,11 +10,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.*;
 
 import static org.mockito.BDDMockito.given;
+import static org.springframework.mock.http.server.reactive.MockServerHttpRequest.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -103,17 +105,35 @@ class AmministratoreControllerIntegrationTest {
 
     @Test
     public void controllaUsernameOccupatoTest() throws Exception {
+        String username = "username";
 
+        given(amministratoreService.controllaUsernameOccupato(username)).willReturn(true);
+
+        mockMvc.perform(get("/api/amministratore/controlla/username/" + username)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 
     @Test
     public void eliminaAmministratoreTest() throws Exception {
+        UUID id = UUID.randomUUID();
 
+        given(amministratoreService.eliminaAmministratore(id)).willReturn(0);
+
+        mockMvc.perform(get("/api/amministratore/elimina/" + id.toString())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 
     @Test
     public void controllaEmailOccupataTest() throws Exception {
+        String email = "email";
 
+        given(amministratoreService.controllaEmailOccupata(email)).willReturn(true);
+
+        mockMvc.perform(get("/api/amministratore/controlla/email/" + email)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 
     @Test
