@@ -43,7 +43,7 @@ class AmministratoreControllerTest {
     public void whenTrovaAmministratore_givenNotExistingAmministratore_thenReturnEmptyJson() throws Exception {
         UUID id = UUID.randomUUID();
 
-        Optional<AmministratoreModel> amministratoreTrovato = Optional.ofNullable(null);
+        Optional<AmministratoreModel> amministratoreTrovato = Optional.empty();
 
         given(amministratoreService.trovaAmministratore(id)).willReturn(amministratoreTrovato);
 
@@ -58,7 +58,7 @@ class AmministratoreControllerTest {
         UUID id = UUID.randomUUID();
 
         Optional<AmministratoreModel> amministratoreTrovato =
-                Optional.ofNullable(new AmministratoreModel(id,"username","email","password"));
+                Optional.of(new AmministratoreModel(id,"username","email","password"));
 
         given(amministratoreService.trovaAmministratore(id)).willReturn(amministratoreTrovato);
 
@@ -74,7 +74,7 @@ class AmministratoreControllerTest {
 
     @Test
     public void whenTrovaAmministratori_givenNotExistingAmministratori_thenReturnEmptyJson() throws Exception {
-        List<AmministratoreModel> amministratoriTrovati = Arrays.asList();
+        List<AmministratoreModel> amministratoriTrovati = Collections.emptyList();
 
         given(amministratoreService.trovaAmministratori()).willReturn(amministratoriTrovati);
 
@@ -90,7 +90,7 @@ class AmministratoreControllerTest {
         UUID id = UUID.randomUUID();
 
         List<AmministratoreModel> amministratoriTrovati =
-                Arrays.asList(new AmministratoreModel(id,"username","email","password"));
+                Collections.singletonList(new AmministratoreModel(id,"username","email","password"));
 
         given(amministratoreService.trovaAmministratori()).willReturn(amministratoriTrovati);
 
