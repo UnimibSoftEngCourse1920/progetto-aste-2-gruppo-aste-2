@@ -20,7 +20,7 @@ public interface AmministratoreDAO {
 
     public Optional<AmministratoreModel> trovaAmministratore(UUID id);
 
-    public Optional<List<AmministratoreModel>> trovaAmministratori();
+    public List<AmministratoreModel> trovaAmministratori();
 
     public int aggiornaAmministratore(UUID id, AmministratoreModel amministratoreAggiornato);
 

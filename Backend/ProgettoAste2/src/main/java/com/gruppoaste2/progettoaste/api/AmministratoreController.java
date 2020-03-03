@@ -27,13 +27,13 @@ public class AmministratoreController {
     }
 
     @GetMapping(path = "/{id}")
-    public Optional<AmministratoreModel> trovaAmministratore(@PathVariable("id") UUID id)
+    public AmministratoreModel trovaAmministratore(@PathVariable("id") UUID id)
     {
-        return amministratoreService.trovaAmministratore(id);
+        return amministratoreService.trovaAmministratore(id).orElse(null);
     }
 
     @GetMapping("/amministratori")
-    public Optional<List<AmministratoreModel>> trovaAmministratori()
+    public List<AmministratoreModel> trovaAmministratori()
     {
         return amministratoreService.trovaAmministratori();
     }

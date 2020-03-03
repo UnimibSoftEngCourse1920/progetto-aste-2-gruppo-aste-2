@@ -37,21 +37,24 @@ public class PostgresAmministratoreDAO implements AmministratoreDAO {
     @Override
     public Optional<AmministratoreModel> trovaAmministratore(UUID id) {
         final String sql = "SELECT * FROM amministratore WHERE id = ?";
-        AmministratoreModel ammTrovato = jdbcTemplate.queryForObject(sql,
-        (resultSet, i) -> {
-            String username = resultSet.getString("username");
-            String password = resultSet.getString("password");
-            String email = resultSet.getString("email");
-            return new AmministratoreModel(id,username,email,password);
-        },
+         List<AmministratoreModel> results = jdbcTemplate.query(sql,
+                (resultSet, i) -> {
+                    String username = resultSet.getString("username");
+                    String password = resultSet.getString("password");
+                    String email = resultSet.getString("email");
+                    return new AmministratoreModel(id,username,email,password);
+                },
                 id);
-        return  Optional.ofNullable(ammTrovato);
+
+        AmministratoreModel returnable = (results.isEmpty())? null : results.get(0);
+        return  Optional.ofNullable(returnable);
     }
 
     @Override
-    public Optional<List<AmministratoreModel>> trovaAmministratori() {
+    public List<AmministratoreModel> trovaAmministratori() {
         final String sql = "SELECT * FROM amministratore";
-        List<AmministratoreModel> listAmmTrovati = jdbcTemplate.query(sql, (resultSet, i) ->
+
+        return jdbcTemplate.query(sql, (resultSet, i) ->
         {
             UUID id = UUID.fromString(resultSet.getString("id"));
             String username = resultSet.getString("username");
@@ -59,8 +62,6 @@ public class PostgresAmministratoreDAO implements AmministratoreDAO {
             String email = resultSet.getString("email");
             return new AmministratoreModel(id,username,email,password);
         });
-
-        return Optional.ofNullable(listAmmTrovati);
     }
 
 

@@ -31,7 +31,7 @@ public class AmministratoreService {
         return amministratoreDAO.trovaAmministratore(id);
     }
 
-    public Optional<List<AmministratoreModel>> trovaAmministratori(){
+    public List<AmministratoreModel> trovaAmministratori(){
         return amministratoreDAO.trovaAmministratori();
     }
 
