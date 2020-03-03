@@ -7,7 +7,7 @@ addons:
  sonarcloud:
   organization: "unimibsoftengcourse1920"
   token:
-   secure: ${SONAR_TOKEN}
+   secure: $SONAR_TOKEN
 
 script:
 - cd Backend/ProgettoAste2
