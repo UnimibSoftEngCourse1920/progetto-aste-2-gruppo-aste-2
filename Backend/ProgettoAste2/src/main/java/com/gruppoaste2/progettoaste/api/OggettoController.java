@@ -63,7 +63,7 @@ public class OggettoController {
     }
 
     @GetMapping(path = "/vinti/{id}")
-    public Optional<List<OggettoModel>> oggettiVintiDaUtente(@PathVariable("id") UUID idUtente)
+    public List<OggettoModel> oggettiVintiDaUtente(@PathVariable("id") UUID idUtente)
     {
         return oggettoService.oggettiVintiDaUtente(idUtente);
     }

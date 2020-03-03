@@ -50,7 +50,7 @@ public class OggettoService {
         return oggettoDAO.oggettiInCorsoAstaDaUtente(idUtente);
     }
 
-    public Optional<List<OggettoModel>> oggettiVintiDaUtente(UUID idUtente)
+    public List<OggettoModel> oggettiVintiDaUtente(UUID idUtente)
     {
         return oggettoDAO.oggettiVintiDaUtente(idUtente);
     }

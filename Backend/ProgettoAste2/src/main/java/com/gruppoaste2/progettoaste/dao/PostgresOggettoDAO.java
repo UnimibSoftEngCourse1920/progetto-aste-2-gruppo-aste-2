@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -113,7 +114,8 @@ public class PostgresOggettoDAO implements OggettoDAO {
     }
 
     @Override
-    public Optional<List<OggettoModel>> oggettiVintiDaUtente(UUID idUtente) {
-        return Optional.empty();
+    // todo
+    public List<OggettoModel> oggettiVintiDaUtente(UUID idUtente) {
+        return Collections.emptyList();
     }
 }
