@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(UtenteRegistratoController.class)
-class UtenteRegistratoControllerIntegrationTest {
+class UtenteRegistratoControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -38,6 +38,7 @@ class UtenteRegistratoControllerIntegrationTest {
     void esempioGet() {
     }
 
+    // Test trovaUtenteRegistrato
     @Test
     public void whenTrovaUtenteRegistrato_givenNotExistingUtenteRegistrato_thenReturnEmptyJson() throws Exception {
         UUID id = UUID.randomUUID();
@@ -73,6 +74,7 @@ class UtenteRegistratoControllerIntegrationTest {
                 .andExpect(jsonPath("$.credito").value(utenteRegistratoTrovato.get().getCredito()));
     }
 
+    // Test trovaUtentiRegistrati
     @Test
     public void whenTrovaUtentiRegistrati_givenNotExistingUtentiRegistrati_thenReturnEmptyJson() throws Exception {
         List<UtenteRegistratoModel> utentiRegistratiTrovati = Arrays.asList();
@@ -117,16 +119,85 @@ class UtenteRegistratoControllerIntegrationTest {
     void aggiornaUtenteRegistrato() {
     }
 
+    // Test eliminaUtenteRegistrato
     @Test
-    void eliminaUtenteRegistrato() {
+    public void whenEliminaUtenteRegistrato_givenNonExistingUtenteRegistrato_thenReturnJsonNumber0() throws Exception {
+        UUID id = UUID.randomUUID();
+
+        given(utenteRegistratoService.eliminaUtenteRegistrato(id)).willReturn(0);
+
+        mockMvc.perform(get("/api/utenteregistrato/elimina/" + id.toString())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNumber())
+                .andExpect(jsonPath("$").value(0));
     }
 
     @Test
-    void controllaUsernameOccupato() {
+    public void whenEliminaUtenteRegistrato_givenExistingUtenteRegistrato_thenReturnJsonNumber1() throws Exception {
+        UUID id = UUID.randomUUID();
+
+        given(utenteRegistratoService.eliminaUtenteRegistrato(id)).willReturn(1);
+
+        mockMvc.perform(get("/api/utenteregistrato/elimina/" + id.toString())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNumber())
+                .andExpect(jsonPath("$").value(1));
+    }
+
+    // Test controllaUsernameOccupato
+    @Test
+    public void whenControllaUsernameOccupato_givenUsernameNonOccupato_thenReturnJsonBooleanFalse() throws Exception {
+        String username = "username";
+
+        given(utenteRegistratoService.controllaUsernameOccupato(username)).willReturn(false);
+
+        mockMvc.perform(get("/api/utenteregistrato/controlla/username/" + username)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isBoolean())
+                .andExpect(jsonPath("$").value(false));
     }
 
     @Test
-    void controllaEmailOccupata() {
+    public void whenControllaUsernameOccupato_givenUsernameOccupato_thenReturnJsonBooleanTrue() throws Exception {
+        String username = "username";
+
+        given(utenteRegistratoService.controllaUsernameOccupato(username)).willReturn(true);
+
+        mockMvc.perform(get("/api/utenteregistrato/controlla/username/" + username)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isBoolean())
+                .andExpect(jsonPath("$").value(true));
+    }
+
+    // Test controllaEmailOccupata
+    @Test
+    public void whenControllaEmailOccupata_givenEmailNonOccupata_thenReturnJsonBooleanFalse() throws Exception {
+        String email = "email";
+
+        given(utenteRegistratoService.controllaEmailOccupata(email)).willReturn(false);
+
+        mockMvc.perform(get("/api/utenteregistrato/controlla/email/" + email)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isBoolean())
+                .andExpect(jsonPath("$").value(false));
+    }
+
+    @Test
+    public void whenControllaEmailOccupata_givenEmailOccupata_thenReturnJsonBooleanTrue() throws Exception {
+        String email = "email";
+
+        given(utenteRegistratoService.controllaEmailOccupata(email)).willReturn(true);
+
+        mockMvc.perform(get("/api/utenteregistrato/controlla/email/" + email)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isBoolean())
+                .andExpect(jsonPath("$").value(true));
     }
 
     @Test
