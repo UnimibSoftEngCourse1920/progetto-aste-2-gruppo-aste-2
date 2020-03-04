@@ -1,5 +1,6 @@
 package com.gruppoaste2.progettoaste.api;
 
+import com.gruppoaste2.progettoaste.model.AttributoModel;
 import com.gruppoaste2.progettoaste.model.CategoriaModel;
 import com.gruppoaste2.progettoaste.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,21 @@ public class CategoriaController {
     public int eliminaCategoria(@PathVariable("id") UUID id)
     {
         return categoriaService.eliminaCategoria(id);
+    }
+
+    @GetMapping(path = "/attributi/{id}")
+    public List<AttributoModel> trovaAttributiCategoria(@PathVariable("id") UUID id){
+        return categoriaService.trovaAttributiCategoria(id);
+    }
+
+    @GetMapping(path = "/oggetto/{id}")
+    public List<CategoriaModel> trovaCategorieOggetto(@PathVariable("id") UUID idOggetto) {
+        return categoriaService.trovaCategorieOggetto(idOggetto);
+    }
+
+    @GetMapping("/attributo")
+    public String valoreAttributoOggetto(UUID idOggetto, UUID idAttributo){
+        return categoriaService.valoreAttributoOggetto(idOggetto, idAttributo);
     }
 
 }

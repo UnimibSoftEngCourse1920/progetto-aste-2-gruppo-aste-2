@@ -1,6 +1,7 @@
 package com.gruppoaste2.progettoaste.service;
 
 import com.gruppoaste2.progettoaste.dao.CategoriaDAO;
+import com.gruppoaste2.progettoaste.model.AttributoModel;
 import com.gruppoaste2.progettoaste.model.CategoriaModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -39,5 +40,17 @@ public class CategoriaService {
 
     public int aggiornaCategoria (UUID id, CategoriaModel categoriaAggiornata){
         return categoriaDAO.aggiornaCategoria(id, categoriaAggiornata);
+    }
+
+    public List<AttributoModel> trovaAttributiCategoria(UUID idCategoria){
+        return categoriaDAO.trovaAttributiCategoria(idCategoria);
+    }
+
+    public List<CategoriaModel> trovaCategorieOggetto (UUID idOggetto){
+        return categoriaDAO.trovaCategorieOggetto(idOggetto);
+    }
+
+    public String valoreAttributoOggetto(UUID idOggetto, UUID idAttributo){
+        return categoriaDAO.valoreAttributoOggetto(idOggetto, idAttributo);
     }
 }
