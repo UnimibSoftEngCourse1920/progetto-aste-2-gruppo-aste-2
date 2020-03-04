@@ -77,21 +77,21 @@ class ConfigurazioneControllerTest {
 
     // Test trovaConfigurazione
     @Test
-    public void whenTrovaConfigurazione_givenNotExistingConfigurazione_thenReturnEmptyJson() throws Exception {
+    public void whenTrovaConfigurazione_givenNonExistingConfigurazione_thenReturnEmptyJson() throws Exception {
         UUID id = UUID.randomUUID();
 
-        Optional<ConfigurazioneModel> configurazioneTrovata = Optional.ofNullable(null);
+        Optional<ConfigurazioneModel> configurazioneTrovata = Optional.empty();
 
         given(configurazioneService.trovaConfigurazione(id)).willReturn(configurazioneTrovata);
 
-        mockMvc.perform(get("/api/configurazione/" + id.toString())
+        mockMvc.perform(get("/api/configurazione/" + id)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").doesNotExist());
     }
 
     @Test
-    public void whenConfigurazione_givenExistingConfigurazione_thenReturnJsonConfigurazione() throws Exception {
+    public void whenTrovaConfigurazione_givenExistingConfigurazione_thenReturnJsonMapConfigurazione() throws Exception {
         UUID id = UUID.randomUUID();
 
         Optional<ConfigurazioneModel> configurazioneTrovata =
@@ -99,7 +99,7 @@ class ConfigurazioneControllerTest {
 
         given(configurazioneService.trovaConfigurazione(id)).willReturn(configurazioneTrovata);
 
-        mockMvc.perform(get("/api/configurazione/" + id.toString())
+        mockMvc.perform(get("/api/configurazione/" + id)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isMap())
@@ -114,8 +114,8 @@ class ConfigurazioneControllerTest {
 
     // Test trovaConfigurazioni
     @Test
-    public void whenTrovaConfigurazioni_givenNotExistingConfigurazioni_thenReturnEmptyJson() throws Exception {
-        List<ConfigurazioneModel> configurazioniTrovate = Arrays.asList();
+    public void whenTrovaConfigurazioni_givenNonExistingConfigurazioni_thenReturnEmptyJsonArray() throws Exception {
+        List<ConfigurazioneModel> configurazioniTrovate = Collections.emptyList();
 
         given(configurazioneService.trovaConfigurazioni()).willReturn(Optional.of(configurazioniTrovate));
 
@@ -127,7 +127,7 @@ class ConfigurazioneControllerTest {
     }
 
     @Test
-    public void whenTrovaConfigurazioni_givenExistingConfigurazioni_thenReturnJsonArray() throws Exception {
+    public void whenTrovaConfigurazioni_givenExistingConfigurazioni_thenReturnJsonArrayOfMapsConfigurazione() throws Exception {
         UUID id = UUID.randomUUID();
 
         List<ConfigurazioneModel> configurazioniTrovate =

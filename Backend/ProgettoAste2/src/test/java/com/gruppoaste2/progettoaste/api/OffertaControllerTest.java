@@ -13,10 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,34 +32,30 @@ class OffertaControllerTest {
     @MockBean
     private OffertaService offertaService;
 
-    @Test
-    void esempioGet() {
-    }
-
     // Test trovaOfferta
     @Test
-    public void whenTrovaOfferta_givenNotExistingOfferta_thenReturnEmptyJson() throws Exception {
+    public void whenTrovaOfferta_givenNonExistingOfferta_thenReturnEmptyJson() throws Exception {
         UUID id = UUID.randomUUID();
 
-        Optional<OffertaModel> offertaTrovata = Optional.ofNullable(null);
+        Optional<OffertaModel> offertaTrovata = Optional.empty();
 
         given(offertaService.trovaOfferta(id)).willReturn(offertaTrovata);
 
-        mockMvc.perform(get("/api/offerta/" + id.toString())
+        mockMvc.perform(get("/api/offerta/" + id)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").doesNotExist());
     }
 
     @Test
-    public void whenTrovaOfferta_givenExistingOfferta_thenReturnJsonOfferta() throws Exception {
+    public void whenTrovaOfferta_givenExistingOfferta_thenReturnJsonMapOfferta() throws Exception {
 
     }
 
     // Test trovaTutteOfferte
     @Test
-    public void whenTrovaTutteOfferte_givenNotExistingTutteOfferte_thenReturnEmptyJson() throws Exception {
-        List<OffertaModel> tutteOfferteTrovate = Arrays.asList();
+    public void whenTrovaTutteOfferte_givenNonExistingTutteOfferte_thenReturnEmptyJsonArray() throws Exception {
+        List<OffertaModel> tutteOfferteTrovate = Collections.emptyList();
 
         given(offertaService.trovaTutteOfferte()).willReturn(tutteOfferteTrovate);
 
@@ -74,7 +67,7 @@ class OffertaControllerTest {
     }
 
     @Test
-    public void whenTrovaTutteOfferte_givenExistingTutteOfferte_thenReturnJsonArray() throws Exception {
+    public void whenTrovaTutteOfferte_givenExistingTutteOfferte_thenReturnJsonArrayOfMapsTutteOfferte() throws Exception {
 
     }
 
