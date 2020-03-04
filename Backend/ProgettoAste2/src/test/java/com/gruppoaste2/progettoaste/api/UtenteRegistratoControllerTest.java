@@ -1,8 +1,6 @@
 package com.gruppoaste2.progettoaste.api;
 
-import com.gruppoaste2.progettoaste.model.AmministratoreModel;
 import com.gruppoaste2.progettoaste.model.UtenteRegistratoModel;
-import com.gruppoaste2.progettoaste.service.AmministratoreService;
 import com.gruppoaste2.progettoaste.service.UtenteRegistratoService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -13,10 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.BDDMockito.given;
@@ -34,35 +29,31 @@ class UtenteRegistratoControllerTest {
     @MockBean
     private UtenteRegistratoService utenteRegistratoService;
 
-    @Test
-    void esempioGet() {
-    }
-
     // Test trovaUtenteRegistrato
     @Test
-    public void whenTrovaUtenteRegistrato_givenNotExistingUtenteRegistrato_thenReturnEmptyJson() throws Exception {
+    public void whenTrovaUtenteRegistrato_givenNonExistingUtenteRegistrato_thenReturnEmptyJson() throws Exception {
         UUID id = UUID.randomUUID();
 
-        Optional<UtenteRegistratoModel> utenteRegistratoTrovato = Optional.ofNullable(null);
+        Optional<UtenteRegistratoModel> utenteRegistratoTrovato = Optional.empty();
 
         given(utenteRegistratoService.trovaUtenteRegistro(id)).willReturn(utenteRegistratoTrovato);
 
-        mockMvc.perform(get("/api/utenteregistrato/" + id.toString())
+        mockMvc.perform(get("/api/utenteregistrato/" + id)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").doesNotExist());
     }
 
     @Test
-    public void whenUtenteRegistrato_givenExistingUtenteRegistrato_thenReturnJsonUtenteRegistrato() throws Exception {
+    public void whenUtenteRegistrato_givenExistingUtenteRegistrato_thenReturnJsonMapUtenteRegistrato() throws Exception {
         UUID id = UUID.randomUUID();
 
         Optional<UtenteRegistratoModel> utenteRegistratoTrovato =
-                Optional.ofNullable(new UtenteRegistratoModel(id,"username","email", "numeroTelefono", "password", 3.14f));
+                Optional.of(new UtenteRegistratoModel(id,"username","email", "numeroTelefono", "password", 3.14f));
 
         given(utenteRegistratoService.trovaUtenteRegistro(id)).willReturn(utenteRegistratoTrovato);
 
-        mockMvc.perform(get("/api/utenteregistrato/" + id.toString())
+        mockMvc.perform(get("/api/utenteregistrato/" + id)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isMap())
@@ -76,8 +67,8 @@ class UtenteRegistratoControllerTest {
 
     // Test trovaUtentiRegistrati
     @Test
-    public void whenTrovaUtentiRegistrati_givenNotExistingUtentiRegistrati_thenReturnEmptyJson() throws Exception {
-        List<UtenteRegistratoModel> utentiRegistratiTrovati = Arrays.asList();
+    public void whenTrovaUtentiRegistrati_givenNonExistingUtentiRegistrati_thenReturnEmptyJsonArray() throws Exception {
+        List<UtenteRegistratoModel> utentiRegistratiTrovati = Collections.emptyList();
 
         given(utenteRegistratoService.trovaTuttiUtentiRegistrati()).willReturn(utentiRegistratiTrovati);
 
@@ -89,11 +80,11 @@ class UtenteRegistratoControllerTest {
     }
 
     @Test
-    public void whenTrovaUtentiRegistrati_givenExistingUtentiRegistrati_thenReturnJsonArray() throws Exception {
+    public void whenTrovaUtentiRegistrati_givenExistingUtentiRegistrati_thenReturnJsonArrayOfMapsUtentiRegistrati() throws Exception {
         UUID id = UUID.randomUUID();
 
         List<UtenteRegistratoModel> utentiRegistratiTrovati =
-                Arrays.asList(new UtenteRegistratoModel(id,"username","email", "numeroTelefono", "password", 3.14f));
+                Collections.singletonList(new UtenteRegistratoModel(id,"username","email", "numeroTelefono", "password", 3.14f));
 
         given(utenteRegistratoService.trovaTuttiUtentiRegistrati()).willReturn(utentiRegistratiTrovati);
 

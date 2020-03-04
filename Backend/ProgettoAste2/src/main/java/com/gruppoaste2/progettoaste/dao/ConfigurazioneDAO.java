@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface ConfigurazioneDAO {
 
-    default int inserisciConfigurazione( ConfigurazioneModel configurazioneModel)
+    default int inserisciConfigurazione(ConfigurazioneModel configurazioneModel)
     {
         UUID id = UUID.randomUUID();
         return inserisciConfigurazione(id,configurazioneModel);
