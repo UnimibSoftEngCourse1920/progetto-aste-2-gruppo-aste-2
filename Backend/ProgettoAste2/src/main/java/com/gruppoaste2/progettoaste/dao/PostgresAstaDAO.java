@@ -82,7 +82,7 @@ public class PostgresAstaDAO implements AstaDAO {
                     float prezzoPartenza = resultSet.getFloat("prezzo_partenza");
                     Date dataInizio = resultSet.getDate("data_inizio");
                     Date dataFine = resultSet.getDate("data_fine");
-                    Time durataTimeslot = resultSet.getTime("durata_timeslot");
+                    long durataTimeslot = resultSet.getLong("durata_timeslot");
                     return new AstaModel(idTrovato, new InfoAsta(tipo, prezzoPartenza, dataInizio, dataFine, durataTimeslot),
                             configurazione, oggetti, astaManager, offerte);
                 });
@@ -121,7 +121,7 @@ public class PostgresAstaDAO implements AstaDAO {
             float prezzoPartenza = resultSet.getFloat("prezzo_partenza");
             Date dataInizio = resultSet.getDate("data_inizio");
             Date dataFine = resultSet.getDate("data_fine");
-            Time durataTimeslot = resultSet.getTime("durata_timeslot");
+            long durataTimeslot = resultSet.getLong("durata_timeslot");
             return new AstaModel(id, new InfoAsta(tipo, prezzoPartenza, dataInizio, dataFine, durataTimeslot),
                     configurazione, oggetti, astaManager, offerte);
         });

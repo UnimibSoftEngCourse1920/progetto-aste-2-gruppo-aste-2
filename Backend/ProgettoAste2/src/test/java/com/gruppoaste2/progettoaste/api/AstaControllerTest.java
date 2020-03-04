@@ -1,9 +1,7 @@
 package com.gruppoaste2.progettoaste.api;
 
-import com.gruppoaste2.progettoaste.model.AstaModel;
-import com.gruppoaste2.progettoaste.model.OffertaModel;
+import com.gruppoaste2.progettoaste.model.*;
 import com.gruppoaste2.progettoaste.service.AstaService;
-import com.gruppoaste2.progettoaste.service.OffertaService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,22 +11,21 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.time.LocalDate;
+import java.util.*;
+import java.sql.Date;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
-@WebMvcTest(AstaController.class)
-class AstaControllerTest {
+import static org.mockito.BDDMockito.given;
+import static org.springframework.web.servlet.function.RequestPredicates.contentType;
 
+public class AstaControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -36,19 +33,15 @@ class AstaControllerTest {
     private AstaService astaService;
 
     @Test
-    void esempioGet() {
-    }
-
-    // Test trovaAsta
-    @Test
-    public void whenTrovaAsta_givenNotExistingAsta_thenReturnEmptyJson() throws Exception {
+    public void whenTrovaAsta_givenNonExistingAsta_thenReturnEmptyJson() throws Exception{
         UUID id = UUID.randomUUID();
+        UUID id2 = UUID.randomUUID();
 
         Optional<AstaModel> astaTrovata = Optional.ofNullable(null);
 
         given(astaService.trovaAsta(id)).willReturn(astaTrovata);
 
-        mockMvc.perform(get("/api/asta/" + id.toString())
+        mockMvc.perform(get("/api/asta/" + id)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").doesNotExist());
@@ -56,13 +49,21 @@ class AstaControllerTest {
 
     @Test
     public void whenTrovaAsta_givenExistingAsta_thenReturnJsonMapAsta() throws Exception {
-        UUID id = UUID.randomUUID();
+        UUID idasta = UUID.randomUUID();
+        UUID idconf = UUID.randomUUID();
+        UUID idUtente = UUID.randomUUID();
+        List<OggettoModel> oggetti = new ArrayList<>();
+        List<OffertaModel> offerta = new ArrayList<>();
 
-        Optional<AstaModel> astaTrovata = Optional.of(new AstaModel (id,
+        Optional<AstaModel> astaTrovata = Optional.of(new AstaModel (idasta,
                 new InfoAsta("info", 3.4,
                         Date.valueOf(LocalDate.now()),
                         Date.valueOf(LocalDate.now()),
                         0),
-                        new ConfigurazioneModel(id2, )));
+                        new ConfigurazioneModel(idconf, "fisso", 1, 4, 0.21,
+                                Date.valueOf(LocalDate.now()), 0),
+                        oggetti,
+                        new UtenteRegistratoModel(idUtente, "username", "email", "339025613", "boh", 0),
+                        offerta));
     }
 }

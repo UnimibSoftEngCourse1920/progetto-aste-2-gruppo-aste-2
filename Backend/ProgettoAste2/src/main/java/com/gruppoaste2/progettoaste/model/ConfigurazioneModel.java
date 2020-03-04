@@ -8,16 +8,16 @@ import java.util.UUID;
 public class ConfigurazioneModel {
 
     private final UUID id;
-    private final String timeSlot;
+    private final String tipoTimeSlot;
     private final int maxTimeSlot;
     private final int maxOfferte;
     private final double penale; // 0.1 per indicare 10% per esempio valore tra 0 e 1
     private final Date dataCreazione;
-    private final Time durataTimeslotFisso;
+    private final long durataTimeslotFisso;
 
-    public ConfigurazioneModel(UUID id, String timeSlot, int maxTimeSlot, int maxOfferte, double penale, Date dataCreazione, Time durataTimeslotFisso) {
+    public ConfigurazioneModel(UUID id, String tipoTimeSlot, int maxTimeSlot, int maxOfferte, double penale, Date dataCreazione, long durataTimeslotFisso) {
         this.id = id;
-        this.timeSlot = timeSlot;
+        this.tipoTimeSlot = tipoTimeSlot;
         this.maxTimeSlot = maxTimeSlot;
         this.maxOfferte = maxOfferte;
         this.penale = penale;
@@ -30,8 +30,8 @@ public class ConfigurazioneModel {
         return id;
     }
 
-    public String getTimeSlot() {
-        return timeSlot;
+    public String getTipoTimeSlot() {
+        return tipoTimeSlot;
     }
 
     public int getMaxTimeSlot() {
@@ -50,7 +50,7 @@ public class ConfigurazioneModel {
         return dataCreazione;
     }
 
-    public Time getDurataTimeslotFisso() {
+    public long getDurataTimeslotFisso() {
         return durataTimeslotFisso;
     }
 }
