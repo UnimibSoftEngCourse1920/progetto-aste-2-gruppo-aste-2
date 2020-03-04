@@ -31,7 +31,7 @@ public class AstaController {
         return astaService.trovaTutteAste();
     }
 
-    @GetMapping(path="{id}")
+    @GetMapping(path="/{id}")
     public AstaModel trovaAsta(@PathVariable("id") UUID id)
     {
         return astaService.trovaAsta(id)

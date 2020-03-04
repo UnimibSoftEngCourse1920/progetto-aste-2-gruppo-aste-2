@@ -16,16 +16,16 @@ import java.util.*;
 import java.sql.Date;
 
 import static org.hamcrest.Matchers.hasSize;
+
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import static org.mockito.BDDMockito.given;
-import static org.springframework.web.servlet.function.RequestPredicates.contentType;
-
-public class AstaControllerTest {
+@RunWith(SpringRunner.class)
+@WebMvcTest(AstaController.class)
+class AstaControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -36,7 +36,7 @@ public class AstaControllerTest {
     public void whenTrovaAsta_givenNonExistingAsta_thenReturnEmptyJson() throws Exception{
         UUID id = UUID.randomUUID();
 
-        Optional<AstaModel> astaTrovata = Optional.ofNullable(null);
+        Optional<AstaModel> astaTrovata = Optional.empty();
 
         given(astaService.trovaAsta(id)).willReturn(astaTrovata);
 
@@ -51,8 +51,16 @@ public class AstaControllerTest {
         UUID idasta = UUID.randomUUID();
         UUID idconf = UUID.randomUUID();
         UUID idUtente = UUID.randomUUID();
+        UUID idOgge = UUID.randomUUID();
+        UUID idoff = UUID.randomUUID();
+        UUID idut2 = UUID.randomUUID();
         List<OggettoModel> oggetti = new ArrayList<>();
-        List<OffertaModel> offerta = new ArrayList<>();
+        List<OffertaModel> offerte = new ArrayList<>();
+        OggettoModel ogg1 = new OggettoModel(idOgge, "nome", "descrizione", "url");
+        oggetti.add(ogg1);
+        OffertaModel off1 = new OffertaModel(idoff, 1, Date.valueOf(LocalDate.now()),
+                new UtenteRegistratoModel(idut2, "username1", "email1", "+39339025613", "boh1", 2));
+        offerte.add(off1);
 
         Optional<AstaModel> astaTrovata = Optional.of(new AstaModel (idasta,
                 new InfoAsta("info", 3.4,
@@ -63,19 +71,51 @@ public class AstaControllerTest {
                                 Date.valueOf(LocalDate.now()), 0),
                         oggetti,
                         new UtenteRegistratoModel(idUtente, "username", "email", "339025613", "boh", 0),
-                        offerta));
+                        offerte));
 
         given(astaService.trovaAsta(idasta)).willReturn(astaTrovata);
 
-        mockMvc.perform(get("/api/amministratore/" + idasta)
+        mockMvc.perform(get("/api/asta/" + idasta)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isMap())
                 .andExpect(jsonPath("$.id").value(astaTrovata.get().getId().toString()))
-                .andExpect(jsonPath("$.infoAsta").value(astaTrovata.get().getInfoAsta().toString()))
-                .andExpect(jsonPath("$.configurazione").value(astaTrovata.get().getConfigurazione().toString()))
-                .andExpect(jsonPath("$.oggetti").value(astaTrovata.get().getOggetti().toString()))
-                .andExpect(jsonPath("$.astaManeger").value(astaTrovata.get().getAstaManager().toString()))
-                .andExpect(jsonPath("$.offerta").value(astaTrovata.get().getOfferte().toString()));
+                .andExpect(jsonPath("$.infoAsta").isMap())
+                .andExpect(jsonPath("$.infoAsta.tipo").value(astaTrovata.get().getInfoAsta().getTipo()))
+                .andExpect(jsonPath("$.infoAsta.prezzoPartenza").value(astaTrovata.get().getInfoAsta().getPrezzoPartenza()))
+                .andExpect(jsonPath("$.infoAsta.dataInizio").value(astaTrovata.get().getInfoAsta().getDataInizio()))
+                .andExpect(jsonPath("$.infoAsta.dataFine").value(astaTrovata.get().getInfoAsta().getDataFine()))
+                .andExpect(jsonPath("$.infoAsta.durataTimeslot").value(astaTrovata.get().getInfoAsta().getDurataTimeSlot()))
+                .andExpect(jsonPath("$.configurazione").isMap())
+                .andExpect(jsonPath("$.configurazione.id").value(astaTrovata.get().getConfigurazione().getId()))
+                .andExpect(jsonPath("$.configurazione.timpoTimeSlot").value(astaTrovata.get().getConfigurazione().getTipoTimeSlot()))
+                .andExpect(jsonPath("$.configurazione.maxTimeSlot").value(astaTrovata.get().getConfigurazione().getMaxTimeSlot()))
+                .andExpect(jsonPath("$.configurazione.maxOfferte").value(astaTrovata.get().getConfigurazione().getMaxOfferte()))
+                .andExpect(jsonPath("$.configurazione.panale").value(astaTrovata.get().getConfigurazione().getPenale()))
+                .andExpect(jsonPath("$.configurazione.dataCreazione").value(astaTrovata.get().getConfigurazione().getDataCreazione()))
+                .andExpect(jsonPath("$.configurazione.durataTimeSlotFisso").value(astaTrovata.get().getConfigurazione().getDurataTimeslotFisso()))
+                .andExpect(jsonPath("$.oggetti").isArray())
+                .andExpect(jsonPath("$.oggetti[0]").isMap())
+                .andExpect(jsonPath("$.oggetti[0].id").value(astaTrovata.get().getOggetti().get(0).getId()))
+                .andExpect(jsonPath("$.oggetti[0].nome").value(astaTrovata.get().getOggetti().get(0).getNome()))
+                .andExpect(jsonPath("$.oggetti[0].descrizione").value(astaTrovata.get().getOggetti().get(0).getDescrizione()))
+                .andExpect(jsonPath("$.oggetti[0].urlImmagine").value(astaTrovata.get().getOggetti().get(0).getUrlImmagine()))
+                .andExpect(jsonPath("$.astaManager").isMap())
+                .andExpect(jsonPath("$.offerte").isArray());
+    }
+
+    @Test
+    public void whenAggiungiAsta_givenNonExistingAsta_thenReturnJsonNumber1() throws Exception {
+
+    }
+
+    @Test
+    public void whenAggiungiAsta_givenExistingAsta_thenReturnJsonNumber0() throws Exception {
+
+    }
+
+    @Test
+    public void when_givenNonExistingAmministratori_thenReturnEmptyJsonArray() throws Exception {
+
     }
 }

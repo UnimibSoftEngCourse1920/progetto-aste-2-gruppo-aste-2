@@ -44,7 +44,7 @@ public class AmministratoreController {
         return amministratoreService.controllaUsernameOccupato(username);
     }
 
-    @GetMapping(path = "elimina/{id}")
+    @GetMapping(path = "/elimina/{id}")
     public int eliminaAmministratore(@PathVariable("id") UUID id)
     {
         return amministratoreService.eliminaAmministratore(id);
