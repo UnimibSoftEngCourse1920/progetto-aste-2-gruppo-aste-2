@@ -50,8 +50,8 @@ public class AmministratoreController {
         return amministratoreService.eliminaAmministratore(id);
     }
 
-    @GetMapping(path = "/controlla/email/{mail}")
-    public boolean controllaEmailOccupata(@PathVariable("mail") String email)
+    @GetMapping(path = "/controlla/email/{email}")
+    public boolean controllaEmailOccupata(@PathVariable("email") String email)
     {
         return amministratoreService.controllaEmailOccupata(email);
     }
