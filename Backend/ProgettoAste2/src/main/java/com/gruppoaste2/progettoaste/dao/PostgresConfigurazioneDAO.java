@@ -30,7 +30,7 @@ public class PostgresConfigurazioneDAO implements ConfigurazioneDAO{
                 " VALUES(?,?::tipotimeslotasta,?,?,?,?,?)";
         return jdbcTemplate.update(sql,
                 id,configurazioneModel.getTipoTimeSlot(),configurazioneModel.getMaxTimeSlot(),configurazioneModel.getMaxOfferte(),
-                configurazioneModel.getPenale(), configurazioneModel.getDataCreazione(), configurazioneModel.getDurataTimeslotFisso());
+                configurazioneModel.getPenale(), configurazioneModel.getDataCreazione(), configurazioneModel.getDurataTimeSlotFisso());
     }
 
     @Override
