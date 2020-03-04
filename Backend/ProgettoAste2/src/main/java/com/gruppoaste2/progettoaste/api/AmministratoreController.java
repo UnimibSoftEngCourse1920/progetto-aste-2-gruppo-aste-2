@@ -23,7 +23,7 @@ public class AmministratoreController {
     @PostMapping("/inserisci")
     public int inserisciAmministratore(@RequestBody AmministratoreModel amministratore)
     {
-        return  amministratoreService.inserisciAmministratore(amministratore);
+        return amministratoreService.inserisciAmministratore(amministratore);
     }
 
     @GetMapping(path = "/{id}")
@@ -38,8 +38,8 @@ public class AmministratoreController {
         return amministratoreService.trovaAmministratori();
     }
 
-    @GetMapping(path = "/controlla/username/{user}")
-    public boolean controllaUsernameOccupato(@PathVariable("user") String username)
+    @GetMapping(path = "/controlla/username/{username}")
+    public boolean controllaUsernameOccupato(@PathVariable("username") String username)
     {
         return amministratoreService.controllaUsernameOccupato(username);
     }

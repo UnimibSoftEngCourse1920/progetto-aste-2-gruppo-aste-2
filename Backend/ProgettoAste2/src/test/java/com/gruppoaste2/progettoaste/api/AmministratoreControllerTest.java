@@ -1,5 +1,6 @@
 package com.gruppoaste2.progettoaste.api;
 
+import com.google.gson.Gson;
 import com.gruppoaste2.progettoaste.model.AmministratoreModel;
 import com.gruppoaste2.progettoaste.service.AmministratoreService;
 import org.junit.jupiter.api.Test;
@@ -32,36 +33,46 @@ class AmministratoreControllerTest {
 
     // Test inserisciAmministratore
     @Test
-    public void whenInserisciAmministratore_givenExistingAmministratore_thenReturnJsonNumber0() throws Exception {
+    public void whenInserisciAmministratore_givenExistingAmministratore_thenReturnJsonNumber1() throws Exception {
         /*
-        UUID id = UUID.randomUUID();
+        String body = "{"
+                + "\"username\":\"username\","
+                + "\"email\":\"email\","
+                + "\"password\":\"password\""
+                + "}";
 
-        AmministratoreModel amministratore = new AmministratoreModel(id,"username","email","password");
-
-        given(amministratoreService.inserisciAmministratore(amministratore)).willReturn(0);
+        given(amministratoreService.inserisciAmministratore(new Gson().fromJson(body, AmministratoreModel.class))).willReturn(1);
 
         mockMvc.perform(post("/api/amministratore/inserisci")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isNumber())
-                .andExpect(jsonPath("$").value(0));
-         */
-    }
-
-    @Test
-    public void whenInserisciAmministratore_givenNonExistingAmministratore_thenReturnJsonNumber1() throws Exception {
-        /*
-        UUID id = UUID.randomUUID();
-
-        AmministratoreModel amministratore = new AmministratoreModel(id,"username","email","password");
-
-        given(amministratoreService.inserisciAmministratore(amministratore)).willReturn(1);
-
-        mockMvc.perform(post("/api/amministratore/inserisci")
+                .accept(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8")
+                .content(body)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isNumber())
                 .andExpect(jsonPath("$").value(1));
+         */
+    }
+
+    @Test
+    public void whenInserisciAmministratore_givenNonExistingAmministratore_thenReturnJsonNumber0() throws Exception {
+        /*
+        String body = "{"
+                + "\"username\":\"username\","
+                + "\"email\":\"email\","
+                + "\"password\":\"password\""
+                + "}";
+
+        given(amministratoreService.inserisciAmministratore(new Gson().fromJson(body, AmministratoreModel.class))).willReturn(0);
+
+        mockMvc.perform(post("/api/amministratore/inserisci")
+                .accept(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8")
+                .content(body)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNumber())
+                .andExpect(jsonPath("$").value(0));
          */
     }
 
@@ -218,26 +229,23 @@ class AmministratoreControllerTest {
     // Test controllaAmministratoreEsiste
     @Test
     public void whenControllaAmministratoreEsiste_givenNonExistingAmministratore_thenReturnJsonBooleanFalse() throws Exception {
-        UUID id = UUID.randomUUID();
         String username = "username";
         String email = "email";
         String password = "password";
 
-        AmministratoreModel amministratore = new AmministratoreModel(id, username, email, password);
+        AmministratoreModel amministratore = new AmministratoreModel(null, username, email, password);
 
         given(amministratoreService.controllaAmministratoreEsiste(amministratore)).willReturn(false);
 
         String body = "{"
-                + "\"object\": {"
-                + "\"id\": \"" + id + "\","
-                + "\"username\": \"" + username + "\","
-                + "\"email\": \"" + email + "\","
-                + "\"password\": \"" + password + "\""
-                + "}"
+                + "\"username\":\"" + username + "\","
+                + "\"email\":\"" + email + "\","
+                + "\"password\":\"" + password + "\""
                 + "}";
 
         mockMvc.perform(get("/api/amministratore/controlla/utente")
-                .characterEncoding(body)
+                .characterEncoding("UTF-8")
+                .content(body)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isBoolean())
@@ -246,19 +254,27 @@ class AmministratoreControllerTest {
 
     @Test
     public void whenControllaAmministratoreEsiste_givenExistingAmministratore_thenReturnJsonBooleanTrue() throws Exception {
-        /*
-        UUID id = UUID.randomUUID();
+        String username = "username";
+        String email = "email";
+        String password = "password";
 
-        AmministratoreModel amministratore = new AmministratoreModel(id,"username","email","password");
+        AmministratoreModel amministratore = new AmministratoreModel(null, username, email, password);
 
         given(amministratoreService.controllaAmministratoreEsiste(amministratore)).willReturn(true);
 
+        String body = "{"
+                + "\"username\":\"" + username + "\","
+                + "\"email\":\"" + email + "\","
+                + "\"password\":\"" + password + "\""
+                + "}";
+
         mockMvc.perform(get("/api/amministratore/controlla/utente")
+                .characterEncoding("UTF-8")
+                .content(body)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isBoolean())
                 .andExpect(jsonPath("$").value(true));
-         */
     }
 
     // Test aggiornaAmministratore
