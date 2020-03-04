@@ -152,12 +152,12 @@ class ConfigurazioneControllerTest {
 
     // Test trovaUltimaConfigurazione
     @Test
-    public void whenTrovaUltimaConfigurazione_givenNotExistingUltimaConfigurazione_thenReturnEmptyJson() throws Exception {
+    public void whenTrovaUltimaConfigurazione_givenNonExistingUltimaConfigurazione_thenReturnEmptyJson() throws Exception {
 
     }
 
     @Test
-    public void whenUltimaConfigurazione_givenExistingUltimaConfigurazione_thenReturnJsonConfigurazione() throws Exception {
+    public void whenTrovaUltimaConfigurazione_givenExistingUltimaConfigurazione_thenReturnJsonMapUltimaConfigurazione() throws Exception {
 
     }
 }
