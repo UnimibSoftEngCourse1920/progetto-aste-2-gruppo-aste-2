@@ -122,17 +122,119 @@ class AstaControllerTest {
     }
 
     @Test
-    public void whenAggiungiAsta_givenNonExistingAsta_thenReturnJsonNumber1() throws Exception {
+    public void whenTrovaAste_givenExistingAste_thenReturnJsonArrayMapsAste() throws Exception {
+        UUID idasta = UUID.randomUUID();
+        UUID idconf = UUID.randomUUID();
+        UUID idUtente = UUID.randomUUID();
+        UUID idOgge = UUID.randomUUID();
+        UUID idoff = UUID.randomUUID();
+        UUID idut2 = UUID.randomUUID();
+        List<OggettoModel> oggetti = new ArrayList<>();
+        List<OffertaModel> offerte = new ArrayList<>();
+        OggettoModel ogg1 = new OggettoModel(idOgge, "nome", "descrizione", "url");
+        oggetti.add(ogg1);
+        OffertaModel off1 = new OffertaModel(idoff, 1, Date.valueOf(LocalDate.now()),
+                new UtenteRegistratoModel(idut2, "username1", "email1", "+39339025613", "boh1", 2));
+        offerte.add(off1);
+
+        List<AstaModel> asteTrovate =
+                Collections.singletonList(new AstaModel (idasta,
+                new InfoAsta("info", 3.4,
+                        Date.valueOf(LocalDate.now()),
+                        Date.valueOf(LocalDate.now()),
+                        0),
+                new ConfigurazioneModel(idconf, "fisso", 1, 4, 0.21,
+                        Date.valueOf(LocalDate.now()), 0),
+                oggetti,
+                new UtenteRegistratoModel(idUtente, "username", "email", "339025613", "boh", 0),
+                offerte));
+        given(astaService.trovaTutteAste()).willReturn(asteTrovate);
+
+        mockMvc.perform(get("/api/asta/aste")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0]").isMap())
+                .andExpect(jsonPath("$[0].id").value(asteTrovate.get(0).getId().toString()))
+                .andExpect(jsonPath("$[0].infoAsta").isMap())
+                .andExpect(jsonPath("$[0].infoAsta.tipo").value(asteTrovate.get(0).getInfoAsta().getTipo()))
+                .andExpect(jsonPath("$[0].infoAsta.prezzoPartenza").value(asteTrovate.get(0).getInfoAsta().getPrezzoPartenza()))
+                .andExpect(jsonPath("$[0].infoAsta.dataInizio").value(asteTrovate.get(0).getInfoAsta().getDataInizio().toString()))
+                .andExpect(jsonPath("$[0].infoAsta.dataFine").value(asteTrovate.get(0).getInfoAsta().getDataFine().toString()))
+                .andExpect(jsonPath("$[0].infoAsta.durataTimeSlot").value(asteTrovate.get(0).getInfoAsta().getDurataTimeSlot()))
+                .andExpect(jsonPath("$[0].configurazione").isMap())
+                .andExpect(jsonPath("$[0].configurazione.id").value(asteTrovate.get(0).getConfigurazione().getId().toString()))
+                .andExpect(jsonPath("$[0].configurazione.maxTimeSlot").value(asteTrovate.get(0).getConfigurazione().getMaxTimeSlot()))
+                .andExpect(jsonPath("$[0].configurazione.maxOfferte").value(asteTrovate.get(0).getConfigurazione().getMaxOfferte()))
+                .andExpect(jsonPath("$[0].configurazione.penale").value(asteTrovate.get(0).getConfigurazione().getPenale()))
+                .andExpect(jsonPath("$[0].configurazione.dataCreazione").value(asteTrovate.get(0).getConfigurazione().getDataCreazione().toString()))
+                .andExpect(jsonPath("$[0].configurazione.durataTimeSlotFisso").value(asteTrovate.get(0).getConfigurazione().getDurataTimeSlotFisso()))
+                .andExpect(jsonPath("$[0].oggetti").isArray())
+                .andExpect(jsonPath("$[0].oggetti[0]").isMap())
+                .andExpect(jsonPath("$[0].oggetti[0].id").value(asteTrovate.get(0).getOggetti().get(0).getId().toString()))
+                .andExpect(jsonPath("$[0].oggetti[0].nome").value(asteTrovate.get(0).getOggetti().get(0).getNome()))
+                .andExpect(jsonPath("$[0].oggetti[0].descrizione").value(asteTrovate.get(0).getOggetti().get(0).getDescrizione()))
+                .andExpect(jsonPath("$[0].oggetti[0].urlImmagine").value(asteTrovate.get(0).getOggetti().get(0).getUrlImmagine()))
+                .andExpect(jsonPath("$[0].astaManager").isMap())
+                .andExpect(jsonPath("$[0].astaManager.id").value(asteTrovate.get(0).getAstaManager().getId().toString()))
+                .andExpect(jsonPath("$[0].astaManager.username").value(asteTrovate.get(0).getAstaManager().getUsername()))
+                .andExpect(jsonPath("$[0].astaManager.email").value(asteTrovate.get(0).getAstaManager().getEmail()))
+                .andExpect(jsonPath("$[0].astaManager.numeroTelefono").value(asteTrovate.get(0).getAstaManager().getNumeroTelefono()))
+                .andExpect(jsonPath("$[0].astaManager.password").value(asteTrovate.get(0).getAstaManager().getPassword()))
+                .andExpect(jsonPath("$[0].astaManager.credito").value(asteTrovate.get(0).getAstaManager().getCredito()))
+                .andExpect(jsonPath("$[0].offerte").isArray())
+                .andExpect(jsonPath("$[0].offerte[0]").isMap())
+                .andExpect(jsonPath("$[0].offerte[0].id").value(asteTrovate.get(0).getOfferte().get(0).getId().toString()))
+                .andExpect(jsonPath("$[0].offerte[0].creditoOfferto").value(asteTrovate.get(0).getOfferte().get(0).getCreditoOfferto()))
+                .andExpect(jsonPath("$[0].offerte[0].dataOfferta").value(asteTrovate.get(0).getOfferte().get(0).getDataOfferta().toString()))
+                .andExpect(jsonPath("$[0].offerte[0].offerente").isMap())
+                .andExpect(jsonPath("$[0].offerte[0]offerente.id").value(asteTrovate.get(0).getOfferte().get(0).getOfferente().getId().toString()))
+                .andExpect(jsonPath("$[0].offerte[0]offerente.username").value(asteTrovate.get(0).getOfferte().get(0).getOfferente().getUsername()))
+                .andExpect(jsonPath("$[0].offerte[0]offerente.email").value(asteTrovate.get(0).getOfferte().get(0).getOfferente().getEmail()))
+                .andExpect(jsonPath("$[0].offerte[0]offerente.numeroTelefono").value(asteTrovate.get(0).getOfferte().get(0).getOfferente().getNumeroTelefono()))
+                .andExpect(jsonPath("$[0].offerte[0]offerente.password").value(asteTrovate.get(0).getOfferte().get(0).getOfferente().getPassword()))
+                .andExpect(jsonPath("$[0].offerte[0]offerente.credito").value(asteTrovate.get(0).getOfferte().get(0).getOfferente().getCredito()));
+    }
+
+    @Test
+    public void whenTrovaAste_givenNonExistingAste_thenReturnEmptyJsonArray() throws Exception {
+        List<AstaModel> asteTrovati = Collections.emptyList();
+
+        given(astaService.trovaTutteAste()).willReturn(asteTrovati);
+
+        mockMvc.perform(get("/api/asta/aste")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$", hasSize(0)));
+    }
+
+    @Test
+    public void whenEliminaAste_givenNonExistingAsta_thenReturnJsonNumber0() throws Exception {
+        UUID id = UUID.randomUUID();
+
+        given(astaService.eliminaAsta(id)).willReturn(0);
+
+        mockMvc.perform(get("/api/asta/elimina/" + id)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNumber())
+                .andExpect(jsonPath("$").value(0));
 
     }
 
     @Test
-    public void whenAggiungiAsta_givenExistingAsta_thenReturnJsonNumber0() throws Exception {
+    public void whenEliminaAsta_givenExistingAsta_thenReturnJsonNumber1() throws Exception {
+        UUID id = UUID.randomUUID();
 
+        given(astaService.eliminaAsta(id)).willReturn(1);
+
+        mockMvc.perform(get("/api/asta/elimina/" + id)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNumber())
+                .andExpect(jsonPath("$").value(1));
     }
 
-    @Test
-    public void when_givenNonExistingAmministratori_thenReturnEmptyJsonArray() throws Exception {
-
-    }
 }

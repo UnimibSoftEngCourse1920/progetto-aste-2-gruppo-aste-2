@@ -109,7 +109,7 @@ class ConfigurazioneControllerTest {
                 .andExpect(jsonPath("$.maxOfferte").value(configurazioneTrovata.get().getMaxOfferte()))
                 .andExpect(jsonPath("$.penale").value(configurazioneTrovata.get().getPenale()))
                 .andExpect(jsonPath("$.dataCreazione").value(configurazioneTrovata.get().getDataCreazione().toString()))
-                .andExpect(jsonPath("$.durataTimeslotFisso").value(configurazioneTrovata.get().getDurataTimeSlotFisso()));
+                .andExpect(jsonPath("$.durataTimeSlotFisso").value(configurazioneTrovata.get().getDurataTimeSlotFisso()));
     }
 
     // Test trovaConfigurazioni
@@ -147,7 +147,7 @@ class ConfigurazioneControllerTest {
                 .andExpect(jsonPath("$[0].maxOfferte").value(configurazioniTrovate.get(0).getMaxOfferte()))
                 .andExpect(jsonPath("$[0].penale").value(configurazioniTrovate.get(0).getPenale()))
                 .andExpect(jsonPath("$[0].dataCreazione").value(configurazioniTrovate.get(0).getDataCreazione().toString()))
-                .andExpect(jsonPath("$[0].durataTimeslotFisso").value(configurazioniTrovate.get(0).getDurataTimeSlotFisso()));
+                .andExpect(jsonPath("$[0].durataTimeSlotFisso").value(configurazioniTrovate.get(0).getDurataTimeSlotFisso()));
     }
 
     // Test trovaUltimaConfigurazione
