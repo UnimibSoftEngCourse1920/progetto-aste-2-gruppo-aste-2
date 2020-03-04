@@ -35,7 +35,6 @@ public class AstaControllerTest {
     @Test
     public void whenTrovaAsta_givenNonExistingAsta_thenReturnEmptyJson() throws Exception{
         UUID id = UUID.randomUUID();
-        UUID id2 = UUID.randomUUID();
 
         Optional<AstaModel> astaTrovata = Optional.ofNullable(null);
 
@@ -65,5 +64,18 @@ public class AstaControllerTest {
                         oggetti,
                         new UtenteRegistratoModel(idUtente, "username", "email", "339025613", "boh", 0),
                         offerta));
+
+        given(astaService.trovaAsta(idasta)).willReturn(astaTrovata);
+
+        mockMvc.perform(get("/api/amministratore/" + idasta)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isMap())
+                .andExpect(jsonPath("$.id").value(astaTrovata.get().getId().toString()))
+                .andExpect(jsonPath("$.infoAsta").value(astaTrovata.get().getInfoAsta().toString()))
+                .andExpect(jsonPath("$.configurazione").value(astaTrovata.get().getConfigurazione().toString()))
+                .andExpect(jsonPath("$.oggetti").value(astaTrovata.get().getOggetti().toString()))
+                .andExpect(jsonPath("$.astaManeger").value(astaTrovata.get().getAstaManager().toString()))
+                .andExpect(jsonPath("$.offerta").value(astaTrovata.get().getOfferte().toString()));
     }
 }
