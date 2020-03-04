@@ -37,11 +37,18 @@ class ConfigurazioneControllerTest {
     @MockBean
     private ConfigurazioneService configurazioneService;
 
+    // Test inserisciConfigurazione
     @Test
-    void inserisciConfigurazione() {
+    public void whenInserisciConfigurazione_givenExistingConfigurazione_thenReturnJsonNumber0() throws Exception {
+
     }
 
-    // Test eliminaUtenteRegistrato
+    @Test
+    public void whenInserisciConfigurazione_givenNonExistingConfigurazione_thenReturnJsonNumber1() throws Exception {
+
+    }
+
+    // Test eliminaConfigurazione
     @Test
     public void whenEliminaConfigurazione_givenNonExistingConfigurazione_thenReturnJsonNumber0() throws Exception {
         UUID id = UUID.randomUUID();
