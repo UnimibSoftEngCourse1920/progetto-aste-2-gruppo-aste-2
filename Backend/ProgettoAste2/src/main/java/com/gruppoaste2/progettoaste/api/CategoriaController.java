@@ -51,7 +51,7 @@ public class CategoriaController {
         return categoriaService.aggiornaCategoria(id, categoriaAggiornata);
     }
 
-    @GetMapping(path = "elimina/{id}") // funziona
+    @GetMapping(path = "/elimina/{id}") // funziona
     public int eliminaCategoria(@PathVariable("id") UUID id)
     {
         return categoriaService.eliminaCategoria(id);
@@ -67,8 +67,8 @@ public class CategoriaController {
         return categoriaService.trovaCategorieOggetto(idOggetto);
     }
 
-    @GetMapping("/attributo")
-    public String valoreAttributoOggetto(UUID idOggetto, UUID idAttributo){
+    @GetMapping("/attributo/{idOggetto}/oggetto/{idAttributo}")
+    public String valoreAttributoOggetto(@PathVariable("idOggetto") UUID idOggetto,@PathVariable("idAttributo") UUID idAttributo){
         return categoriaService.valoreAttributoOggetto(idOggetto, idAttributo);
     }
 
