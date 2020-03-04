@@ -111,12 +111,26 @@ class UtenteRegistratoControllerTest {
                 .andExpect(jsonPath("$[0].credito").value(utentiRegistratiTrovati.get(0).getCredito()));
     }
 
+    // Test aggiungiUtenteRegistrato
     @Test
-    void aggiungiUtenteRegistrato() {
+    public void whenAggiungiUtenteRegistrato_givenExistingUtenteRegistrato_thenReturnJsonNumber0() throws Exception {
+
     }
 
     @Test
-    void aggiornaUtenteRegistrato() {
+    public void whenAggiungiUtenteRegistrato_givenNonExistingUtenteRegistrato_thenReturnJsonNumber1() throws Exception {
+
+    }
+
+    // Test aggiornaUtenteRegistrato
+    @Test
+    public void whenAggiornaUtenteRegistrato_givenNonExistingUtenteRegistrato_thenReturnJsonNumber0() throws Exception {
+
+    }
+
+    @Test
+    public void whenAggiornaUtenteRegistrato_givenExistingUtenteRegistrato_thenReturnJsonNumber1() throws Exception {
+
     }
 
     // Test eliminaUtenteRegistrato
@@ -200,15 +214,37 @@ class UtenteRegistratoControllerTest {
                 .andExpect(jsonPath("$").value(true));
     }
 
+    // Test controllaUtenteEsiste
     @Test
-    void controllaUtenteEsiste() {
+    public void whenControllaUtenteRegistratoEsiste_givenNonExistingUtenteRegistrato_thenReturnJsonBooleanFalse() throws Exception {
+
     }
 
     @Test
-    void infoCredito() {
+    public void whenControllaUtenteRegistratoEsiste_givenExistingUtenteRegistrato_thenReturnJsonBooleanTrue() throws Exception {
+
+    }
+
+    //test infoCredito
+    @Test
+    public void whenInfoCredito_givenNonExistingCredito_thenReturnEmptyJson() throws Exception {
+
     }
 
     @Test
-    void aggiungiCredito() {
+    public void whenInfoCredito_givenExistingCredito_thenReturnJsonInfoCredito() throws Exception {
+
     }
+
+    //test aggiungiCredito
+    @Test
+    public void whenAggiungiCredito_givenNonExistingCredito_thenReturnJsonNumber0() throws Exception {
+
+    }
+
+    @Test
+    public void whenAggiungiCredito_givenExistingCredito_thenReturnJsonNumber1() throws Exception {
+
+    }
+
 }
