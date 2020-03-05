@@ -56,7 +56,7 @@ public class AmministratoreController {
         return amministratoreService.controllaEmailOccupata(email);
     }
 
-    @GetMapping("/controlla/utente")
+    @PostMapping("/controlla/amministratore")
     public boolean controllaAmministratoreEsiste(@RequestBody AmministratoreModel amministratore)
     {
         return amministratoreService.controllaAmministratoreEsiste(amministratore);

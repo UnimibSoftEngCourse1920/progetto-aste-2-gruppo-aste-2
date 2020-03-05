@@ -69,7 +69,7 @@ public class UtenteRegistratoController {
         return utenteRegistratoService.controllaEmailOccupata(email);
     }
 
-    @GetMapping("/controlla/utente")
+    @PostMapping("/controlla/utente")
     public boolean controllaUtenteEsiste(@RequestBody UtenteRegistratoModel utente) // nel body della richiesta posso anche avere non tutti gli attributi dell oggetto
     {
         return utenteRegistratoService.controllaUtenteEsiste(utente);
