@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface OggettoDAO {
 
-    public int inserisciOggetto(UUID idOggetto, UUID idAsta, OggettoModel oggetto);
+    int inserisciOggetto(UUID idOggetto, UUID idAsta, OggettoModel oggetto);
 
     default int inserisciOggetto(UUID idAsta, OggettoModel oggetto)
     {
@@ -16,20 +16,20 @@ public interface OggettoDAO {
         return inserisciOggetto(id, idAsta, oggetto);
     }
 
-    public int eliminaOggetto(UUID id);
+    int eliminaOggetto(UUID id);
 
-    public List<OggettoModel> trovaOggetti();
+    List<OggettoModel> trovaOggetti();
 
-    public List<OggettoModel> trovaOggetti(UUID idAsta);
+    List<OggettoModel> trovaOggetti(UUID idAsta);
 
-    public Optional<OggettoModel> trovaOggetto(UUID idOggetto);
+    Optional<OggettoModel> trovaOggetto(UUID idOggetto);
 
-    public int aggiornaOggetto(UUID idOggetto, OggettoModel oggettoAggiornato);
+    int aggiornaOggetto(UUID idOggetto, OggettoModel oggettoAggiornato);
 
-    public List<OggettoModel> oggettiRegistratiDaUtente(UUID idUtente);
+    List<OggettoModel> oggettiRegistratiDaUtente(UUID idUtente);
 
-    public List<OggettoModel> oggettiInCorsoAstaDaUtente(UUID idUtente);
+    List<OggettoModel> oggettiInCorsoAstaDaUtente(UUID idUtente);
 
-    public List<OggettoModel> oggettiVintiDaUtente(UUID idUtente);
+    List<OggettoModel> oggettiVintiDaUtente(UUID idUtente);
 
 }

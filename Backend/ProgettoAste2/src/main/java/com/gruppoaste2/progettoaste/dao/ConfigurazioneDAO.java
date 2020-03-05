@@ -14,14 +14,14 @@ public interface ConfigurazioneDAO {
         return inserisciConfigurazione(id,configurazioneModel);
     }
 
-    public int inserisciConfigurazione(UUID id, ConfigurazioneModel configurazioneModel);
+    int inserisciConfigurazione(UUID id, ConfigurazioneModel configurazioneModel);
 
-    public int eliminaConfiguazione(UUID id);
+    int eliminaConfiguazione(UUID id);
 
-    public Optional<ConfigurazioneModel> trovaConfigurazione(UUID id);
+    Optional<ConfigurazioneModel> trovaConfigurazione(UUID id);
 
-    public Optional<List<ConfigurazioneModel>> trovaConfigurazioni();
+    Optional<List<ConfigurazioneModel>> trovaConfigurazioni();
 
-    public Optional<ConfigurazioneModel> trovaUltimaConfigurazione();
+    Optional<ConfigurazioneModel> trovaUltimaConfigurazione();
 
 }

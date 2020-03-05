@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(AmministratoreController.class)
-class AmministratoreControllerTest {
+public class AmministratoreControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -32,36 +32,46 @@ class AmministratoreControllerTest {
 
     // Test inserisciAmministratore
     @Test
-    public void whenInserisciAmministratore_givenExistingAmministratore_thenReturnJsonNumber0() throws Exception {
+    public void whenInserisciAmministratore_givenExistingAmministratore_thenReturnJsonNumber1() throws Exception {
         /*
-        UUID id = UUID.randomUUID();
+        String body = "{"
+                + "\"username\":\"username\","
+                + "\"email\":\"email\","
+                + "\"password\":\"password\""
+                + "}";
 
-        AmministratoreModel amministratore = new AmministratoreModel(id,"username","email","password");
-
-        given(amministratoreService.inserisciAmministratore(amministratore)).willReturn(0);
+        given(amministratoreService.inserisciAmministratore(new Gson().fromJson(body, AmministratoreModel.class))).willReturn(1);
 
         mockMvc.perform(post("/api/amministratore/inserisci")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isNumber())
-                .andExpect(jsonPath("$").value(0));
-         */
-    }
-
-    @Test
-    public void whenInserisciAmministratore_givenNonExistingAmministratore_thenReturnJsonNumber1() throws Exception {
-        /*
-        UUID id = UUID.randomUUID();
-
-        AmministratoreModel amministratore = new AmministratoreModel(id,"username","email","password");
-
-        given(amministratoreService.inserisciAmministratore(amministratore)).willReturn(1);
-
-        mockMvc.perform(post("/api/amministratore/inserisci")
+                .accept(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8")
+                .content(body)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isNumber())
                 .andExpect(jsonPath("$").value(1));
+         */
+    }
+
+    @Test
+    public void whenInserisciAmministratore_givenNonExistingAmministratore_thenReturnJsonNumber0() throws Exception {
+        /*
+        String body = "{"
+                + "\"username\":\"username\","
+                + "\"email\":\"email\","
+                + "\"password\":\"password\""
+                + "}";
+
+        given(amministratoreService.inserisciAmministratore(new Gson().fromJson(body, AmministratoreModel.class))).willReturn(0);
+
+        mockMvc.perform(post("/api/amministratore/inserisci")
+                .accept(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8")
+                .content(body)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNumber())
+                .andExpect(jsonPath("$").value(0));
          */
     }
 
@@ -74,7 +84,7 @@ class AmministratoreControllerTest {
 
         given(amministratoreService.trovaAmministratore(id)).willReturn(amministratoreTrovato);
 
-        mockMvc.perform(get("/api/amministratore/" + id.toString())
+        mockMvc.perform(get("/api/amministratore/" + id)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").doesNotExist());
@@ -89,7 +99,7 @@ class AmministratoreControllerTest {
 
         given(amministratoreService.trovaAmministratore(id)).willReturn(amministratoreTrovato);
 
-        mockMvc.perform(get("/api/amministratore/" + id.toString())
+        mockMvc.perform(get("/api/amministratore/" + id)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isMap())
@@ -114,7 +124,7 @@ class AmministratoreControllerTest {
     }
 
     @Test
-    public void whenTrovaAmministratori_givenExistingAmministratori_thenReturnJsonArrayMapsAmministratori() throws Exception {
+    public void whenTrovaAmministratori_givenExistingAmministratori_thenReturnJsonArrayOfMapsAmministratori() throws Exception {
         UUID id = UUID.randomUUID();
 
         List<AmministratoreModel> amministratoriTrovati =
@@ -168,7 +178,7 @@ class AmministratoreControllerTest {
 
         given(amministratoreService.eliminaAmministratore(id)).willReturn(0);
 
-        mockMvc.perform(get("/api/amministratore/elimina/" + id.toString())
+        mockMvc.perform(get("/api/amministratore/elimina/" + id)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isNumber())
@@ -181,7 +191,7 @@ class AmministratoreControllerTest {
 
         given(amministratoreService.eliminaAmministratore(id)).willReturn(1);
 
-        mockMvc.perform(get("/api/amministratore/elimina/" + id.toString())
+        mockMvc.perform(get("/api/amministratore/elimina/" + id)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isNumber())
@@ -219,13 +229,17 @@ class AmministratoreControllerTest {
     @Test
     public void whenControllaAmministratoreEsiste_givenNonExistingAmministratore_thenReturnJsonBooleanFalse() throws Exception {
         /*
-        UUID id = UUID.randomUUID();
+        String body = "{"
+                + "\"username\":\"username\","
+                + "\"email\":\"email\","
+                + "\"password\":\"password\""
+                + "}";
 
-        AmministratoreModel amministratore = new AmministratoreModel(id,"username","email","password");
-
-        given(amministratoreService.controllaAmministratoreEsiste(amministratore)).willReturn(false);
+        given(amministratoreService.controllaAmministratoreEsiste(new Gson().fromJson(body, AmministratoreModel.class))).willReturn(false);
 
         mockMvc.perform(get("/api/amministratore/controlla/utente")
+                .characterEncoding("UTF-8")
+                .content(body)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isBoolean())
@@ -236,13 +250,17 @@ class AmministratoreControllerTest {
     @Test
     public void whenControllaAmministratoreEsiste_givenExistingAmministratore_thenReturnJsonBooleanTrue() throws Exception {
         /*
-        UUID id = UUID.randomUUID();
+        String body = "{"
+                + "\"username\":\"username\","
+                + "\"email\":\"email\","
+                + "\"password\":\"password\""
+                + "}";
 
-        AmministratoreModel amministratore = new AmministratoreModel(id,"username","email","password");
-
-        given(amministratoreService.controllaAmministratoreEsiste(amministratore)).willReturn(true);
+        given(amministratoreService.controllaAmministratoreEsiste(new Gson().fromJson(body, AmministratoreModel.class))).willReturn(true);
 
         mockMvc.perform(get("/api/amministratore/controlla/utente")
+                .characterEncoding("UTF-8")
+                .content(body)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isBoolean())
@@ -260,7 +278,7 @@ class AmministratoreControllerTest {
 
         given(amministratoreService.aggiornaAmministratore(id, amministratore)).willReturn(0);
 
-        mockMvc.perform(post("/api/amministratore/aggiorna/" + id.toString())
+        mockMvc.perform(post("/api/amministratore/aggiorna/" + id)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isNumber())
@@ -277,7 +295,7 @@ class AmministratoreControllerTest {
 
         given(amministratoreService.aggiornaAmministratore(id, amministratore)).willReturn(1);
 
-        mockMvc.perform(post("/api/amministratore/aggiorna/" + id.toString())
+        mockMvc.perform(post("/api/amministratore/aggiorna/" + id)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isNumber())

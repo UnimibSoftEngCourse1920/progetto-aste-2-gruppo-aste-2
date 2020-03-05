@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(OggettoController.class)
-class OggettoControllerTest {
+public class OggettoControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

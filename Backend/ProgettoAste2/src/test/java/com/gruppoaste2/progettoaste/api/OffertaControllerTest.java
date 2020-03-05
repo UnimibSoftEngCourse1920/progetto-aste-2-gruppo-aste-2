@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(OffertaController.class)
-class OffertaControllerTest {
+public class OffertaControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
