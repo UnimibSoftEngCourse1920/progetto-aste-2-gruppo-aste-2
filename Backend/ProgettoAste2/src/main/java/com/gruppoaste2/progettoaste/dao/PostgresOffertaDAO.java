@@ -87,7 +87,7 @@ public class PostgresOffertaDAO implements OffertaDAO{
     @Override
     public List<OffertaModel> trovaTutteOfferteAsta(UUID idAsta) {
         final String sql = "SELECT * FROM offerta WHERE id_asta = ?";
-        return jdbcTemplate.query(sql, (resultSet, i) -> {
+        return jdbcTemplate.query(sql, new Object[]{idAsta}, (resultSet, i) -> {
             UUID id = UUID.fromString(resultSet.getString("id"));
 
             UUID idOfferente = UUID.fromString(resultSet.getString("id_offerente"));
