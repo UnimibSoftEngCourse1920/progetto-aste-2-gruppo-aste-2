@@ -1,9 +1,6 @@
 package com.gruppoaste2.progettoaste.api;
 
-import com.gruppoaste2.progettoaste.model.AstaModel;
-import com.gruppoaste2.progettoaste.model.ConfigurazioneModel;
-import com.gruppoaste2.progettoaste.model.OffertaModel;
-import com.gruppoaste2.progettoaste.model.UtenteRegistratoModel;
+import com.gruppoaste2.progettoaste.model.*;
 import com.gruppoaste2.progettoaste.service.OffertaService;
 import com.gruppoaste2.progettoaste.service.UtenteRegistratoService;
 import org.junit.jupiter.api.Test;
@@ -148,11 +145,68 @@ public class OffertaControllerTest {
     // Test trovaTutteOfferteUtenteAsta
     @Test
     public void whenTrovaTutteOfferteUtenteAsta_givenNonExistingTutteOfferteUtenteAsta_thenReturnEmptyJsonArray() throws Exception {
+        UUID idOfferente = UUID.randomUUID();
+        UUID idAsta = UUID.randomUUID();
 
+        List<OffertaModel> tutteOfferteTrovate = Collections.emptyList();
+
+        given(offertaService.trovaTutteOfferteUtenteAsta(idOfferente, idAsta)).willReturn(tutteOfferteTrovate);
+
+        mockMvc.perform(get("/api/offerta/offerte/" + idOfferente + "/" + idAsta)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$", hasSize(0)));
     }
 
     @Test
     public void whenTrovaTutteOfferteUtenteAsta_givenExistingTutteOfferteUtenteAsta_thenReturnJsonArrayOfMapsTutteOfferteUtenteAsta() throws Exception {
+        UUID idasta = UUID.randomUUID();
+        UUID idconf = UUID.randomUUID();
+        UUID idUtente = UUID.randomUUID();
+        UUID idOgge = UUID.randomUUID();
+        UUID idoff = UUID.randomUUID();
+        UUID idut2 = UUID.randomUUID();
+        List<OggettoModel> oggetti = new ArrayList<>();
+        List<OffertaModel> offerte = new ArrayList<>();
+        OggettoModel ogg1 = new OggettoModel(idOgge, "nome", "descrizione", "url");
+        oggetti.add(ogg1);
+        OffertaModel off1 = new OffertaModel(idoff, 1, Date.valueOf(LocalDate.now()),
+                new UtenteRegistratoModel(idut2, "username1", "email1", "+39339025613", "boh1", 2));
+        offerte.add(off1);
+
+        UtenteRegistratoModel offerente =
+                new UtenteRegistratoModel(idUtente, "username", "email", "339025613", "boh", 0);
+
+        AstaModel astaTrovata = new AstaModel (idasta,
+                new InfoAsta("info", 3.4,
+                        Date.valueOf(LocalDate.now()),
+                        Date.valueOf(LocalDate.now()),
+                        0),
+                new ConfigurazioneModel(idconf, "fisso", 1, 4, 0.21,
+                        Date.valueOf(LocalDate.now()), 0),
+                oggetti, offerente, offerte);
+
+        List<OffertaModel> tutteOfferteTrovate =
+                Collections.singletonList(new OffertaModel(idoff, 3.14f, Date.valueOf(LocalDate.now()), offerente));
+
+        given(offertaService.trovaTutteOfferteUtenteAsta(idUtente, idasta)).willReturn(tutteOfferteTrovate);
+
+        mockMvc.perform(get("/api/offerta/offerte/" + idUtente + "/" + idasta)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0]").isMap())
+                .andExpect(jsonPath("$[0].id").value(tutteOfferteTrovate.get(0).getId().toString()))
+                .andExpect(jsonPath("$[0].creditoOfferto").value(tutteOfferteTrovate.get(0).getCreditoOfferto()))
+                .andExpect(jsonPath("$[0].dataOfferta").value(tutteOfferteTrovate.get(0).getDataOfferta().toString()))
+                .andExpect(jsonPath("$[0].offerente.id").value(tutteOfferteTrovate.get(0).getOfferente().getId().toString()))
+                .andExpect(jsonPath("$[0].offerente.username").value(tutteOfferteTrovate.get(0).getOfferente().getUsername()))
+                .andExpect(jsonPath("$[0].offerente.email").value(tutteOfferteTrovate.get(0).getOfferente().getEmail()))
+                .andExpect(jsonPath("$[0].offerente.numeroTelefono").value(tutteOfferteTrovate.get(0).getOfferente().getNumeroTelefono()))
+                .andExpect(jsonPath("$[0].offerente.password").value(tutteOfferteTrovate.get(0).getOfferente().getPassword()))
+                .andExpect(jsonPath("$[0].offerente.credito").value(tutteOfferteTrovate.get(0).getOfferente().getCredito()));
 
     }
 

@@ -139,15 +139,15 @@ public class AstaControllerTest {
 
         List<AstaModel> asteTrovate =
                 Collections.singletonList(new AstaModel (idasta,
-                new InfoAsta("info", 3.4,
-                        Date.valueOf(LocalDate.now()),
-                        Date.valueOf(LocalDate.now()),
-                        0),
-                new ConfigurazioneModel(idconf, "fisso", 1, 4, 0.21,
-                        Date.valueOf(LocalDate.now()), 0),
-                oggetti,
-                new UtenteRegistratoModel(idUtente, "username", "email", "339025613", "boh", 0),
-                offerte));
+                        new InfoAsta("info", 3.4,
+                                Date.valueOf(LocalDate.now()),
+                                Date.valueOf(LocalDate.now()),
+                                0),
+                        new ConfigurazioneModel(idconf, "fisso", 1, 4, 0.21,
+                                Date.valueOf(LocalDate.now()), 0),
+                        oggetti,
+                        new UtenteRegistratoModel(idUtente, "username", "email", "339025613", "boh", 0),
+                        offerte));
         given(astaService.trovaTutteAste()).willReturn(asteTrovate);
 
         mockMvc.perform(get("/api/asta/aste")
@@ -211,7 +211,7 @@ public class AstaControllerTest {
     }
 
     @Test
-    public void whenEliminaAste_givenNonExistingAsta_thenReturnJsonNumber0() throws Exception {
+    public void whenEliminaAsta_givenNonExistingAsta_thenReturnJsonNumber0() throws Exception {
         UUID id = UUID.randomUUID();
 
         given(astaService.eliminaAsta(id)).willReturn(0);
