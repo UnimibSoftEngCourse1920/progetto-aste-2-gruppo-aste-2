@@ -145,7 +145,18 @@ public class OffertaControllerTest {
     // Test trovaTutteOfferteUtenteAsta
     @Test
     public void whenTrovaTutteOfferteUtenteAsta_givenNonExistingTutteOfferteUtenteAsta_thenReturnEmptyJsonArray() throws Exception {
+        UUID idOfferente = UUID.randomUUID();
+        UUID idAsta = UUID.randomUUID();
 
+        List<OffertaModel> tutteOfferteTrovate = Collections.emptyList();
+
+        given(offertaService.trovaTutteOfferteUtenteAsta(idOfferente, idAsta)).willReturn(tutteOfferteTrovate);
+
+        mockMvc.perform(get("/api/offerta/offerte/" + idOfferente + "/" + idAsta)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$", hasSize(0)));
     }
 
     @Test
