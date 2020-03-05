@@ -151,9 +151,7 @@ CREATE TABLE public.asta (
     data_fine date,
     durata_timeslot time without time zone NOT NULL,
     tipo character varying(100) NOT NULL,
-    prezzo_partenza real NOT NULL,
-    penale real NOT NULL,
-    CONSTRAINT check_penale CHECK (((penale >= (0)::double precision) AND (penale <= (1)::double precision)))
+    prezzo_partenza real NOT NULL
 );
 
 
@@ -220,7 +218,8 @@ CREATE TABLE public.configurazione (
     numero_offerte_contemporanee_utente bigint NOT NULL,
     tipo_timeslot public.tipotimeslotasta NOT NULL,
     data_creazione date NOT NULL,
-    penale real NOT NULL
+    penale real NOT NULL,
+    CONSTRAINT check_penale CHECK (((penale >= (0)::double precision) AND (penale <= (1)::double precision)))
 );
 
 
@@ -295,7 +294,7 @@ Provolone	93fdad81-6724-46d0-9c90-c6b237a908d7	parmigiano@brie.com	boh
 -- Data for Name: asta; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.asta (id, id_asta_manager, id_configurazione, data_inizio, data_fine, durata_timeslot, tipo, prezzo_partenza, penale) FROM stdin;
+COPY public.asta (id, id_asta_manager, id_configurazione, data_inizio, data_fine, durata_timeslot, tipo, prezzo_partenza) FROM stdin;
 \.
 
 
