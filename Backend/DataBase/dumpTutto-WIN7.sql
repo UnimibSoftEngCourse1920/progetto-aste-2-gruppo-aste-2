@@ -361,6 +361,8 @@ COPY public.oggetto (id, id_asta, nome, descrizione, url_immagine) FROM stdin;
 --
 
 COPY public.tipo_asta (nome) FROM stdin;
+busta_chiusa
+superamento_immediato
 \.
 
 
