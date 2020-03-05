@@ -1,9 +1,6 @@
 package com.gruppoaste2.progettoaste.api;
 
-import com.gruppoaste2.progettoaste.model.AstaModel;
-import com.gruppoaste2.progettoaste.model.ConfigurazioneModel;
-import com.gruppoaste2.progettoaste.model.OffertaModel;
-import com.gruppoaste2.progettoaste.model.UtenteRegistratoModel;
+import com.gruppoaste2.progettoaste.model.*;
 import com.gruppoaste2.progettoaste.service.OffertaService;
 import com.gruppoaste2.progettoaste.service.UtenteRegistratoService;
 import org.junit.jupiter.api.Test;
