@@ -91,11 +91,11 @@ public class ConfigurazioneControllerTest {
     }
 
     /*@Test
-    public void whenTrovaConfigurazione_givenExistingConfigurazione_thenReturnJsonMapConfigurazione() throws Exception {
+    public void whenTrovaConfigurazioni_givenExistingConfigurazioni_thenReturnJsonArrayOfMapsConfigurazione() throws Exception {
         UUID id = UUID.randomUUID();
 
-        Optional<ConfigurazioneModel> configurazioneTrovata =
-                Optional.of(new ConfigurazioneModel(id, "timeSlot", 3600, 10, 0.1, Date.valueOf(LocalDate.now()), 11620));
+        List<ConfigurazioneModel> configurazioniTrovate =
+                Collections.singletonList(new ConfigurazioneModel(id, "timeSlot", 3600, 10, 0.1, Date.valueOf(LocalDate.now()), 11620));
 
         given(configurazioneService.trovaConfigurazione(id)).willReturn(configurazioneTrovata);
 

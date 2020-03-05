@@ -38,13 +38,13 @@ public class OffertaController {
                 .orElse(null);
     }
 
-    @GetMapping("/offerte/{idAsta}")
+    @GetMapping("/offerte/asta/{idAsta}")
     public List<OffertaModel> trovaTutteOfferteAsta(@PathVariable("idAsta") UUID idAsta)
     {
         return offertaService.trovaTutteOfferteAsta(idAsta);
     }
 
-    @GetMapping("/offerte/{idOfferente}")
+    @GetMapping("/offerte/offerente/{idOfferente}")
     public List<OffertaModel> trovaTutteOfferteUtente(@PathVariable("idOfferente") UUID idOfferente)
     {
         return offertaService.trovaTutteOfferteUtente(idOfferente);
