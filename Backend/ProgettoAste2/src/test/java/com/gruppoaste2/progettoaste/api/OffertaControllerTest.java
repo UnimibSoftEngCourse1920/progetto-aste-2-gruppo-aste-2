@@ -159,7 +159,7 @@ public class OffertaControllerTest {
                 .andExpect(jsonPath("$", hasSize(0)));
     }
 
-    @Test
+    /*@Test
     public void whenTrovaTutteOfferteUtenteAsta_givenExistingTutteOfferteUtenteAsta_thenReturnJsonArrayOfMapsTutteOfferteUtenteAsta() throws Exception {
         UUID idasta = UUID.randomUUID();
         UUID idconf = UUID.randomUUID();
@@ -208,7 +208,7 @@ public class OffertaControllerTest {
                 .andExpect(jsonPath("$[0].offerente.password").value(tutteOfferteTrovate.get(0).getOfferente().getPassword()))
                 .andExpect(jsonPath("$[0].offerente.credito").value(tutteOfferteTrovate.get(0).getOfferente().getCredito()));
 
-    }
+    }*/
 
     // Test aggiungiOfferta
     @Test
