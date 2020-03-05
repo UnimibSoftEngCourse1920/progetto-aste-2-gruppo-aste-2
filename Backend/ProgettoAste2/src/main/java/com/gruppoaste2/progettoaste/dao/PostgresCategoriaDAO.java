@@ -69,7 +69,7 @@ public class PostgresCategoriaDAO implements CategoriaDAO{
 
     @Override
     public List<AttributoModel> trovaAttributiCategoria(UUID idCategoria) {
-        final String sql = "SELECT * FROM attributo";
+        final String sql = "SELECT * FROM attributo WHERE id_categoria = ?";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> {
                     UUID id = UUID.fromString(resultSet.getString("id"));

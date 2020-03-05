@@ -87,7 +87,7 @@ public class PostgresOffertaDAO implements OffertaDAO{
     @Override
     public List<OffertaModel> trovaTutteOfferteAsta(UUID idAsta) {
         final String sql = "SELECT * FROM offerta WHERE id_asta = ?";
-        return jdbcTemplate.query(sql, new Object[]{idAsta}, (resultSet, i) -> {
+        return jdbcTemplate.query(sql, (resultSet, i) -> {
             UUID id = UUID.fromString(resultSet.getString("id"));
 
             UUID idOfferente = UUID.fromString(resultSet.getString("id_offerente"));
@@ -102,7 +102,8 @@ public class PostgresOffertaDAO implements OffertaDAO{
             Date dataOfferta = resultSet.getDate("data_offerta");
             float creditoOfferto = resultSet.getFloat("credito_offerto");
             return new OffertaModel(id, creditoOfferto, dataOfferta, offerente);
-        });
+        },
+        idAsta);
     }
 
     @Override
@@ -122,7 +123,8 @@ public class PostgresOffertaDAO implements OffertaDAO{
             Date dataOfferta = resultSet.getDate("data_offerta");
             float creditoOfferto = resultSet.getFloat("credito_offerto");
             return new OffertaModel(id, creditoOfferto, dataOfferta, offerente);
-        });
+        },
+        idOfferente);
     }
 
     @Override
@@ -142,7 +144,8 @@ public class PostgresOffertaDAO implements OffertaDAO{
             Date dataOfferta = resultSet.getDate("data_offerta");
             float creditoOfferto = resultSet.getFloat("credito_offerto");
             return new OffertaModel(id, creditoOfferto, dataOfferta, offerente);
-        });
+        },
+        idOfferente, idAsta);
     }
 
     @Override
