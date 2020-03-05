@@ -49,7 +49,7 @@ public class PostgresConfigurazioneDAO implements ConfigurazioneDAO{
                     int maxOfferte = Integer.parseInt(resultSet.getString(NUMERO_OFFERTE_CONTEMPORANEE_UTENTE));
                     double penale =  Double.parseDouble(resultSet.getString(PENALE));
                     Date dataCreazione =  Date.valueOf(resultSet.getString(DATA_CREAZIONE));
-                    long durata = resultSet.getLong(DURATA_TIMESLOT_FISSO);
+                    Time durata = resultSet.getTime(DURATA_TIMESLOT_FISSO);
                     return new ConfigurazioneModel(id,timeSlot,maxTimeSlot,maxOfferte,penale,dataCreazione, durata);
                 },
                 id);
@@ -69,7 +69,7 @@ public class PostgresConfigurazioneDAO implements ConfigurazioneDAO{
             int maxOfferte = Integer.parseInt(resultSet.getString(NUMERO_OFFERTE_CONTEMPORANEE_UTENTE));
             double penale =  Double.parseDouble(resultSet.getString(PENALE));
             Date dataCreazione =  Date.valueOf(resultSet.getString(DATA_CREAZIONE));
-            long durata = resultSet.getLong(DURATA_TIMESLOT_FISSO);
+            Time durata = resultSet.getTime(DURATA_TIMESLOT_FISSO);
             return new ConfigurazioneModel(id,timeSlot,maxTimeSlot,maxOfferte,penale,dataCreazione, durata);
         });
 
@@ -87,7 +87,7 @@ public class PostgresConfigurazioneDAO implements ConfigurazioneDAO{
                     int maxOfferte = Integer.parseInt(resultSet.getString(NUMERO_OFFERTE_CONTEMPORANEE_UTENTE));
                     double penale =  Double.parseDouble(resultSet.getString(PENALE));
                     Date dataCreazione =  Date.valueOf(resultSet.getString(DATA_CREAZIONE));
-                    long durata = resultSet.getLong(DURATA_TIMESLOT_FISSO);
+                    Time durata = resultSet.getTime(DURATA_TIMESLOT_FISSO);
                     return new ConfigurazioneModel(id,timeSlot,maxTimeSlot,maxOfferte,penale,dataCreazione, durata);
                 });
 

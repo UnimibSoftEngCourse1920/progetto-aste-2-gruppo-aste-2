@@ -90,7 +90,7 @@ public class ConfigurazioneControllerTest {
                 .andExpect(jsonPath("$").doesNotExist());
     }
 
-    @Test
+    /*@Test
     public void whenTrovaConfigurazione_givenExistingConfigurazione_thenReturnJsonMapConfigurazione() throws Exception {
         UUID id = UUID.randomUUID();
 
@@ -110,7 +110,7 @@ public class ConfigurazioneControllerTest {
                 .andExpect(jsonPath("$.penale").value(configurazioneTrovata.get().getPenale()))
                 .andExpect(jsonPath("$.dataCreazione").value(configurazioneTrovata.get().getDataCreazione().toString()))
                 .andExpect(jsonPath("$.durataTimeSlotFisso").value(configurazioneTrovata.get().getDurataTimeSlotFisso()));
-    }
+    }*/
 
     // Test trovaConfigurazioni
     @Test
@@ -126,7 +126,7 @@ public class ConfigurazioneControllerTest {
                 .andExpect(jsonPath("$", hasSize(0)));
     }
 
-    @Test
+    /*@Test
     public void whenTrovaConfigurazioni_givenExistingConfigurazioni_thenReturnJsonArrayOfMapsConfigurazione() throws Exception {
         UUID id = UUID.randomUUID();
 
@@ -148,7 +148,7 @@ public class ConfigurazioneControllerTest {
                 .andExpect(jsonPath("$[0].penale").value(configurazioniTrovate.get(0).getPenale()))
                 .andExpect(jsonPath("$[0].dataCreazione").value(configurazioniTrovate.get(0).getDataCreazione().toString()))
                 .andExpect(jsonPath("$[0].durataTimeSlotFisso").value(configurazioniTrovate.get(0).getDurataTimeSlotFisso()));
-    }
+    }*/
 
     // Test trovaUltimaConfigurazione
     @Test
