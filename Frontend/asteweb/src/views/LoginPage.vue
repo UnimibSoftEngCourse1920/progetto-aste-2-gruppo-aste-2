@@ -53,7 +53,9 @@ export default {
         password: "",
         tipoUtente: ""
       },
-      show: true
+      show: true,
+      idAdmin: "",
+      idUtente: ""
     };
   },
   methods: {
@@ -105,8 +107,28 @@ export default {
           .then(response => response.json())
           .then(response => {
             if (response === true) {
-              // move to user homepage
+              // move to admin homepage
               alert("Amministratore trovato");
+              fetch("http://localhost:8080/api/amministratore/id", {
+                method: "post",
+                headers: {
+                  Accept: "application/json",
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                  username: this.form.username,
+                  password: this.form.password,
+                  email: this.form.email
+                })
+              })
+                .then(response => response.json())
+                .then(response => {
+                  this.idAdmin = response;
+                  console.log(this.idAdmin);
+                  this.$router.push({
+                    name: "admin"
+                  });
+                });
             } else {
               alert("Amministratore non trovato");
             }

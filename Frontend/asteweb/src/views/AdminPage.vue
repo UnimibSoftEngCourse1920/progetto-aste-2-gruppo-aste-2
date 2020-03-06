@@ -1,5 +1,15 @@
 <template>
-    <div class="adminPage">
-        ADMIN PAGE
-    </div>
+  <div class="adminPage">
+    <b-nav pills tabs fill>
+      <b-nav-item>Crea Configurazione</b-nav-item>
+      <b-nav-item>
+        <router-link to="/ultimaconfig">Configurazione attiva</router-link>
+      </b-nav-item>
+      <b-nav-item>
+        <router-link to="/transactions">Visualizza transazioni</router-link>
+      </b-nav-item>
+    </b-nav>
+  </div>
 </template>
+  
+

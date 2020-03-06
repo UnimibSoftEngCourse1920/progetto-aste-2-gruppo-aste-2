@@ -7,36 +7,28 @@
       <b-nav-item>
         <router-link to="/ultimaconfig">Configurazione attiva</router-link>
       </b-nav-item>
-      <b-nav-item active>
+      <b-nav-item>
         <router-link to="/transactions">Visualizza transazioni</router-link>
       </b-nav-item>
     </b-nav>
-    <b-table striped hover :items="offers"></b-table>
+    <b-table striped hover :items="config"></b-table>
   </div>
 </template>
-
 
 <script>
 export default {
   data() {
     return {
-      offers: []
+      config: []
     };
   },
   created: function() {
-    fetch("http://localhost:8080/api/offerta/offerte", {
+    fetch("http://localhost:8080/api/configurazione/configurazioni/ultima", {
       method: "get"
     })
       .then(response => response.json())
       .then(response => {
-        response.forEach(element => {
-          this.offers.push({
-            idOfferta: element.id,
-            creditoOfferto: element.creditoOfferto,
-            dataOfferta: element.dataOfferta,
-            offerente: element.offerente.id
-          });
-        });
+        this.config.push(response);
       });
   }
 };

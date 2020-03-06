@@ -29,4 +29,6 @@ public interface AmministratoreDAO {
     boolean controllaEmailOccupata(String email);
 
     boolean controllaAmministratoreEsiste(AmministratoreModel amministratore);
+
+    UUID ritornaIdAmministratore(AmministratoreModel amministratore);
 }

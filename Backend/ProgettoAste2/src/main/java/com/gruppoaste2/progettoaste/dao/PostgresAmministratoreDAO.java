@@ -88,4 +88,10 @@ public class PostgresAmministratoreDAO implements AmministratoreDAO {
         final String sql = "SELECT EXISTS(SELECT 1 FROM amministratore WHERE username = ? AND email = ? AND password = ?)";
         return jdbcTemplate.queryForObject(sql,Boolean.class, amministratore.getUsername(), amministratore.getEmail(), amministratore.getPassword());
     }
+
+    @Override
+    public UUID ritornaIdAmministratore(AmministratoreModel amministratore) {
+        final String sql = "SELECT id FROM amministratore WHERE username = ? AND email = ? AND password = ?";
+        return jdbcTemplate.queryForObject(sql,UUID.class, amministratore.getUsername(), amministratore.getEmail(), amministratore.getPassword());
+    }
 }

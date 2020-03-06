@@ -23,7 +23,6 @@ public class ConfigurazioneModel {
         this.penale = penale;
         this.dataCreazione = dataCreazione;
         this.durataTimeSlotFisso = durataTimeSlotFisso;
-
     }
 
     public UUID getId() {

@@ -53,4 +53,9 @@ public class AmministratoreService {
     {
         return amministratoreDAO.controllaAmministratoreEsiste(amministratore);
     }
+
+    public UUID ritornaIdAmministratore(AmministratoreModel amministratore)
+    {
+        return amministratoreDAO.ritornaIdAmministratore(amministratore);
+    }
 }

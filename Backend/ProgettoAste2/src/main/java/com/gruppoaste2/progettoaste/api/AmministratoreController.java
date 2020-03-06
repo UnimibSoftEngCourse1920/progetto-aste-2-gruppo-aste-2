@@ -67,4 +67,10 @@ public class AmministratoreController {
         return amministratoreService.aggiornaAmministratore(id, amministratoreAggiornato);
     }
 
+    @PostMapping("/id")
+    public UUID ritornaIdAmministratore(@RequestBody AmministratoreModel amministratore)
+    {
+        return amministratoreService.ritornaIdAmministratore(amministratore);
+    }
+
 }
