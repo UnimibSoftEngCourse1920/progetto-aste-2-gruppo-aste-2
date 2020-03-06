@@ -1,23 +1,31 @@
 <template>
   <div>
-    <b-table striped hover :offers="offers"></b-table>
+    <b-table striped hover :items="offers"></b-table>
   </div>
 </template>
+
 
 <script>
 export default {
   data() {
     return {
-      offers: []
+      offers: []      
     };
   },
-  mounted: function() {
+  created: function() {
     fetch("http://localhost:8080/api/offerta/offerte", {
       method: "get"
     })
       .then(response => response.json())
       .then(response => {
-        this.offers = response;
+        response.forEach(element => {
+          this.offers.push({
+            idOfferta: element.id,
+            creditoOfferto: element.creditoOfferto,
+            dataOfferta: element.dataOfferta,
+            offerente: element.offerente.id
+          });
+        });
       });
   }
 };
