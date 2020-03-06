@@ -2,7 +2,6 @@ package com.gruppoaste2.progettoaste.dao;
 
 import com.gruppoaste2.progettoaste.model.AttributoModel;
 import com.gruppoaste2.progettoaste.model.CategoriaModel;
-import com.gruppoaste2.progettoaste.model.UtenteRegistratoModel;
 
 import java.util.List;
 import java.util.Optional;
