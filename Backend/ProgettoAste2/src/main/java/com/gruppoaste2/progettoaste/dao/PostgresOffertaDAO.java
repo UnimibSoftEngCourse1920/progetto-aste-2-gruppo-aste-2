@@ -21,7 +21,7 @@ public class PostgresOffertaDAO implements OffertaDAO{
     private static final String IDOFFERENTE = "id_offerente";
     private static final String ID = "id";
     private static final String DATAOFFERTA= "data_offerta";
-    private static final String creditoOffertovar = "credito_offerto";
+    private static final String CREDITOOFFERTA = "credito_offerto";
 
 
     @Autowired
@@ -62,7 +62,7 @@ public class PostgresOffertaDAO implements OffertaDAO{
                     // TODO: throw OfferenteNotFoundException
 
                     Date dataOfferta = resultSet.getDate(DATAOFFERTA);
-                    float creditoOfferto = resultSet.getFloat(creditoOffertovar);
+                    float creditoOfferto = resultSet.getFloat(CREDITOOFFERTA);
                     return new OffertaModel(idTrovato, creditoOfferto, dataOfferta, offerente);
                 });
         return Optional.ofNullable(offertaTrovata);
@@ -84,7 +84,7 @@ public class PostgresOffertaDAO implements OffertaDAO{
             // TODO: throw OfferenteNotFoundException
 
             Date dataOfferta = resultSet.getDate(DATAOFFERTA);
-            float creditoOfferto = resultSet.getFloat(creditoOffertovar);
+            float creditoOfferto = resultSet.getFloat(CREDITOOFFERTA);
             return new OffertaModel(id, creditoOfferto, dataOfferta, utenteOfferente);
         });
     }
@@ -105,7 +105,7 @@ public class PostgresOffertaDAO implements OffertaDAO{
             // TODO: throw OfferenteNotFoundException
 
             Date dataOfferta = resultSet.getDate(DATAOFFERTA);
-            float creditoOfferto = resultSet.getFloat(creditoOffertovar);
+            float creditoOfferto = resultSet.getFloat(CREDITOOFFERTA);
             return new OffertaModel(id, creditoOfferto, dataOfferta, offerente);
         },
         idAsta);
@@ -126,7 +126,7 @@ public class PostgresOffertaDAO implements OffertaDAO{
             // TODO: throw OfferenteNotFoundException
 
             Date dataOfferta = resultSet.getDate(DATAOFFERTA);
-            float creditoOfferto = resultSet.getFloat(creditoOffertovar);
+            float creditoOfferto = resultSet.getFloat(CREDITOOFFERTA);
             return new OffertaModel(id, creditoOfferto, dataOfferta, offerente);
         },
         idOfferente);
@@ -147,7 +147,7 @@ public class PostgresOffertaDAO implements OffertaDAO{
             // TODO: throw OfferenteNotFoundException
 
             Date dataOfferta = resultSet.getDate(DATAOFFERTA);
-            float creditoOfferto = resultSet.getFloat(creditoOffertovar);
+            float creditoOfferto = resultSet.getFloat(CREDITOOFFERTA);
             return new OffertaModel(id, creditoOfferto, dataOfferta, offerente);
         },
         idOfferente, idAsta);
