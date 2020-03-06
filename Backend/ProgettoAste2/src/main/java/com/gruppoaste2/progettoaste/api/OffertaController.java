@@ -56,8 +56,8 @@ public class OffertaController {
         return offertaService.trovaTutteOfferteUtenteAsta(idOfferente, idAsta);
     }
 
-    @PostMapping("/aggiungi")
-    public int aggiungiOfferta(UUID idAsta, @RequestBody OffertaModel offerta)
+    @PostMapping(path = "/aggiungi/{id}")
+    public int aggiungiOfferta(@PathVariable("id") UUID idAsta, @RequestBody OffertaModel offerta)
     {
         return offertaService.inserisciOfferta(idAsta, offerta);
     }

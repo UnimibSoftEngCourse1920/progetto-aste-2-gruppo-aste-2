@@ -91,10 +91,7 @@ public class PostgresAstaDAO implements AstaDAO {
 
     @Override
     public List<AstaModel> trovaTutteAste() {
-        final String sql = "SELECT * " +
-                "FROM asta " +
-                "JOIN tipo_asta ON asta.tipo = tipo_asta.nome " +
-                "JOIN configurazione ON asta.id_configurazione = configurazione.id";
+        final String sql = "SELECT * FROM asta";
         return jdbcTemplate.query(sql, (resultSet, i) -> {
             UUID id = UUID.fromString(resultSet.getString("id"));
 
