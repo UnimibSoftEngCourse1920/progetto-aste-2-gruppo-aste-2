@@ -18,10 +18,10 @@ public class PostgresOffertaDAO implements OffertaDAO{
 
     private final UtenteRegistratoDAO utenteRegistratoDAO;
 
-    private final String id_offerente = "id_offerente";
-    private final String idString = "id";
-    private final String data_offerta= "data_offerta";
-    private final String credito_offerto = "credito_offerto";
+    private static final String idOfferenteString = "id_offerente";
+    private static final String idString = "id";
+    private static final String dataOffertaString= "data_offerta";
+    private static final String creditoOffertoString = "credito_offerto";
 
 
     @Autowired
@@ -52,7 +52,7 @@ public class PostgresOffertaDAO implements OffertaDAO{
                 (resultSet, i) -> {
                     UUID idTrovato = UUID.fromString(resultSet.getString(idString));
 
-                    UUID idOfferente = UUID.fromString(resultSet.getString(id_offerente));
+                    UUID idOfferente = UUID.fromString(resultSet.getString(idOfferenteString ));
                     Optional<UtenteRegistratoModel> optionalOfferente = utenteRegistratoDAO.trovaUtenteRegistrato(idOfferente);
                     UtenteRegistratoModel offerente;
                     if(optionalOfferente.isPresent())
@@ -61,8 +61,8 @@ public class PostgresOffertaDAO implements OffertaDAO{
                         return null;
                     // TODO: throw OfferenteNotFoundException
 
-                    Date dataOfferta = resultSet.getDate(data_offerta);
-                    float creditoOfferto = resultSet.getFloat(credito_offerto);
+                    Date dataOfferta = resultSet.getDate(dataOffertaString);
+                    float creditoOfferto = resultSet.getFloat(creditoOffertoString);
                     return new OffertaModel(idTrovato, creditoOfferto, dataOfferta, offerente);
                 });
         return Optional.ofNullable(offertaTrovata);
@@ -74,7 +74,7 @@ public class PostgresOffertaDAO implements OffertaDAO{
         return jdbcTemplate.query(sql, (resultSet, i) -> {
             UUID id = UUID.fromString(resultSet.getString(idString));
 
-            UUID idUtenteRegistrato = UUID.fromString(resultSet.getString(id_offerente));
+            UUID idUtenteRegistrato = UUID.fromString(resultSet.getString(idOfferenteString ));
             Optional<UtenteRegistratoModel> optionalUtenteOfferente = utenteRegistratoDAO.trovaUtenteRegistrato(idUtenteRegistrato);
             UtenteRegistratoModel utenteOfferente;
             if(optionalUtenteOfferente.isPresent())
@@ -83,8 +83,8 @@ public class PostgresOffertaDAO implements OffertaDAO{
                 return null;
             // TODO: throw OfferenteNotFoundException
 
-            Date dataOfferta = resultSet.getDate(data_offerta);
-            float creditoOfferto = resultSet.getFloat(credito_offerto);
+            Date dataOfferta = resultSet.getDate(dataOffertaString);
+            float creditoOfferto = resultSet.getFloat(creditoOffertoString);
             return new OffertaModel(id, creditoOfferto, dataOfferta, utenteOfferente);
         });
     }
@@ -95,7 +95,7 @@ public class PostgresOffertaDAO implements OffertaDAO{
         return jdbcTemplate.query(sql, (resultSet, i) -> {
             UUID id = UUID.fromString(resultSet.getString(idString));
 
-            UUID idOfferente = UUID.fromString(resultSet.getString(id_offerente));
+            UUID idOfferente = UUID.fromString(resultSet.getString(idOfferenteString ));
             Optional<UtenteRegistratoModel> optionalOfferente = utenteRegistratoDAO.trovaUtenteRegistrato(idOfferente);
             UtenteRegistratoModel offerente;
             if(optionalOfferente.isPresent())
@@ -104,8 +104,8 @@ public class PostgresOffertaDAO implements OffertaDAO{
                 return null;
             // TODO: throw OfferenteNotFoundException
 
-            Date dataOfferta = resultSet.getDate(data_offerta);
-            float creditoOfferto = resultSet.getFloat(credito_offerto);
+            Date dataOfferta = resultSet.getDate(dataOffertaString);
+            float creditoOfferto = resultSet.getFloat(creditoOffertoString);
             return new OffertaModel(id, creditoOfferto, dataOfferta, offerente);
         },
         idAsta);
@@ -125,8 +125,8 @@ public class PostgresOffertaDAO implements OffertaDAO{
                 return null;
             // TODO: throw OfferenteNotFoundException
 
-            Date dataOfferta = resultSet.getDate(data_offerta);
-            float creditoOfferto = resultSet.getFloat(credito_offerto);
+            Date dataOfferta = resultSet.getDate(dataOffertaString);
+            float creditoOfferto = resultSet.getFloat(creditoOffertoString);
             return new OffertaModel(id, creditoOfferto, dataOfferta, offerente);
         },
         idOfferente);
@@ -146,8 +146,8 @@ public class PostgresOffertaDAO implements OffertaDAO{
                 return null;
             // TODO: throw OfferenteNotFoundException
 
-            Date dataOfferta = resultSet.getDate(data_offerta);
-            float creditoOfferto = resultSet.getFloat(credito_offerto);
+            Date dataOfferta = resultSet.getDate(dataOffertaString);
+            float creditoOfferto = resultSet.getFloat(creditoOffertoString);
             return new OffertaModel(id, creditoOfferto, dataOfferta, offerente);
         },
         idOfferente, idAsta);
