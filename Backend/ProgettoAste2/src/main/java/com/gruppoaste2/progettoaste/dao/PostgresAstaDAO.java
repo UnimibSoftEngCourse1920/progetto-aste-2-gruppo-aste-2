@@ -21,6 +21,15 @@ public class PostgresAstaDAO implements AstaDAO {
     private final OggettoDAO oggettoDAO;
     private final OffertaDAO offertaDAO;
 
+    private final String idString = "id";
+    private final String id_asta_manager = "id_asta_manager";
+    private final String id_configurazione = "id_configurazione";
+    private final String tipoString ="tipo";
+    private final String prezzo_partenzaString = "prezzo_partenza";
+    private final String dataInizioString = "data_inizio";
+    private final String dataFineString = "data_fine";
+    private final String durataTimeSlotStrng = "durata_timeslot";
+
     @Autowired
     public PostgresAstaDAO(JdbcTemplate jdbcTemplate, UtenteRegistratoDAO utenteRegistratoDAO, ConfigurazioneDAO configurazioneDAO, OggettoDAO oggettoDAO, OffertaDAO offertaDAO) {
         this.jdbcTemplate = jdbcTemplate;
@@ -56,9 +65,9 @@ public class PostgresAstaDAO implements AstaDAO {
         AstaModel astaTrovata = jdbcTemplate.queryForObject(
                 sql, new Object[]{id},
                 (resultSet, i) -> {
-                    UUID idTrovato = UUID.fromString(resultSet.getString("id"));
+                    UUID idTrovato = UUID.fromString(resultSet.getString(idString));
 
-                    UUID idAstaManager = UUID.fromString(resultSet.getString("id_asta_manager"));
+                    UUID idAstaManager = UUID.fromString(resultSet.getString(id_asta_manager));
                     Optional<UtenteRegistratoModel> optionalAstaManager = utenteRegistratoDAO.trovaUtenteRegistrato(idAstaManager);
                     UtenteRegistratoModel astaManager;
                     if(optionalAstaManager.isPresent())
@@ -67,7 +76,7 @@ public class PostgresAstaDAO implements AstaDAO {
                         return null;
                     // TODO: throw AstaManagerNotFoundException
 
-                    UUID idConfigurazione = UUID.fromString(resultSet.getString("id_configurazione"));
+                    UUID idConfigurazione = UUID.fromString(resultSet.getString(id_configurazione));
                     Optional<ConfigurazioneModel> optionalConfigurazione = configurazioneDAO.trovaConfigurazione(idConfigurazione);
                     ConfigurazioneModel configurazione;
                     if(optionalConfigurazione.isPresent())
@@ -78,11 +87,11 @@ public class PostgresAstaDAO implements AstaDAO {
 
                     List<OggettoModel> oggetti = oggettoDAO.trovaOggetti(id);
                     List<OffertaModel> offerte = offertaDAO.trovaTutteOfferteAsta(id);
-                    String tipo = resultSet.getString("tipo");
-                    float prezzoPartenza = resultSet.getFloat("prezzo_partenza");
-                    Date dataInizio = resultSet.getDate("data_inizio");
-                    Date dataFine = resultSet.getDate("data_fine");
-                    Time durataTimeslot = resultSet.getTime("durata_timeslot");
+                    String tipo = resultSet.getString(tipoString);
+                    float prezzoPartenza = resultSet.getFloat(prezzo_partenzaString);
+                    Date dataInizio = resultSet.getDate(dataInizioString);
+                    Date dataFine = resultSet.getDate(dataFineString);
+                    Time durataTimeslot = resultSet.getTime(durataTimeSlotStrng);
                     return new AstaModel(idTrovato, new InfoAsta(tipo, prezzoPartenza, dataInizio, dataFine, durataTimeslot),
                             configurazione, oggetti, astaManager, offerte);
                 });
@@ -96,9 +105,9 @@ public class PostgresAstaDAO implements AstaDAO {
                 "JOIN tipo_asta ON asta.tipo = tipo_asta.nome " +
                 "JOIN configurazione ON asta.id_configurazione = configurazione.id";
         return jdbcTemplate.query(sql, (resultSet, i) -> {
-            UUID id = UUID.fromString(resultSet.getString("id"));
+            UUID id = UUID.fromString(resultSet.getString(idString));
 
-            UUID idAstaManager = UUID.fromString(resultSet.getString("id_asta_manager"));
+            UUID idAstaManager = UUID.fromString(resultSet.getString(id_asta_manager));
             Optional<UtenteRegistratoModel> optionalAstaManager = utenteRegistratoDAO.trovaUtenteRegistrato(idAstaManager);
             UtenteRegistratoModel astaManager;
             if(optionalAstaManager.isPresent())
@@ -107,7 +116,7 @@ public class PostgresAstaDAO implements AstaDAO {
                 return null;
             // TODO: throw AstaManagerNotFoundException
 
-            UUID idConfigurazione = UUID.fromString(resultSet.getString("id_configurazione"));
+            UUID idConfigurazione = UUID.fromString(resultSet.getString(id_configurazione));
             Optional<ConfigurazioneModel> optionalConfigurazione = configurazioneDAO.trovaConfigurazione(idConfigurazione);
             ConfigurazioneModel configurazione;
             if(optionalConfigurazione.isPresent())
@@ -117,11 +126,11 @@ public class PostgresAstaDAO implements AstaDAO {
             // TODO: throw AstaManagerNotFoundException
             List<OggettoModel> oggetti = oggettoDAO.trovaOggetti(id);
             List<OffertaModel> offerte = offertaDAO.trovaTutteOfferteAsta(id);
-            String tipo = resultSet.getString("tipo");
-            float prezzoPartenza = resultSet.getFloat("prezzo_partenza");
-            Date dataInizio = resultSet.getDate("data_inizio");
-            Date dataFine = resultSet.getDate("data_fine");
-            Time durataTimeslot = resultSet.getTime("durata_timeslot");
+            String tipo = resultSet.getString(tipoString);
+            float prezzoPartenza = resultSet.getFloat(prezzo_partenzaString);
+            Date dataInizio = resultSet.getDate(dataInizioString);
+            Date dataFine = resultSet.getDate(dataFineString);
+            Time durataTimeslot = resultSet.getTime(durataTimeSlotStrng);
             return new AstaModel(id, new InfoAsta(tipo, prezzoPartenza, dataInizio, dataFine, durataTimeslot),
                     configurazione, oggetti, astaManager, offerte);
         });
