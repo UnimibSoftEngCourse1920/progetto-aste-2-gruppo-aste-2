@@ -1,5 +1,6 @@
 package com.gruppoaste2.progettoaste.api;
 
+import com.google.gson.Gson;
 import com.gruppoaste2.progettoaste.model.AmministratoreModel;
 import com.gruppoaste2.progettoaste.service.AmministratoreService;
 import org.junit.jupiter.api.Test;
@@ -237,7 +238,7 @@ public class AmministratoreControllerTest {
 
         given(amministratoreService.controllaAmministratoreEsiste(new Gson().fromJson(body, AmministratoreModel.class))).willReturn(false);
 
-        mockMvc.perform(get("/api/amministratore/controlla/utente")
+        mockMvc.perform(post("/api/amministratore/controlla/utente")
                 .characterEncoding("UTF-8")
                 .content(body)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -258,7 +259,7 @@ public class AmministratoreControllerTest {
 
         given(amministratoreService.controllaAmministratoreEsiste(new Gson().fromJson(body, AmministratoreModel.class))).willReturn(true);
 
-        mockMvc.perform(get("/api/amministratore/controlla/utente")
+        mockMvc.perform(post("/api/amministratore/controlla/utente")
                 .characterEncoding("UTF-8")
                 .content(body)
                 .contentType(MediaType.APPLICATION_JSON))

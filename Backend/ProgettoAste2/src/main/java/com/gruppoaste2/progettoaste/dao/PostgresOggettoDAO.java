@@ -118,6 +118,15 @@ public class PostgresOggettoDAO implements OggettoDAO {
     @Override
     // todo
     public List<OggettoModel> oggettiVintiDaUtente(UUID idUtente) {
-        return Collections.emptyList();
+        final String sql = "SELECT o.id, o.nome, o.descrizione, o.url_immagine FROM oggetto as o, asta as a WHERE a.id_asta_manager = ? AND a.id = o.id_asta AND a.data_fine IS NOT NULL";
+        return jdbcTemplate.query(sql,
+                (resultSet, i) -> {
+                    UUID id = UUID.fromString(resultSet.getString("id"));
+                    String nome = resultSet.getString(NOME);
+                    String descrizione = resultSet.getString(DESCRIZIONE);
+                    String urlImmagine = resultSet.getString(URL);
+                    return new OggettoModel(id,nome,descrizione,urlImmagine);
+                },
+                idUtente);
     }
 }
