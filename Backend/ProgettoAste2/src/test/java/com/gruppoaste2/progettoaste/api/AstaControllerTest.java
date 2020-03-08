@@ -11,7 +11,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 import java.sql.Date;
 
@@ -68,7 +70,7 @@ public class AstaControllerTest {
                         Date.valueOf(LocalDate.now()),
                         0),
                         new ConfigurazioneModel(idconf, "fisso", 1, 4, 0.21,
-                                Date.valueOf(LocalDate.now()), 0),
+                                Date.valueOf(LocalDate.now()), 0,
                         oggetti,
                         new UtenteRegistratoModel(idUtente, "username", "email", "339025613", "boh", 0),
                         offerte));
@@ -118,8 +120,8 @@ public class AstaControllerTest {
                 .andExpect(jsonPath("$.offerte[0]offerente.numeroTelefono").value(astaTrovata.get().getOfferte().get(0).getOfferente().getNumeroTelefono()))
                 .andExpect(jsonPath("$.offerte[0]offerente.password").value(astaTrovata.get().getOfferte().get(0).getOfferente().getPassword()))
                 .andExpect(jsonPath("$.offerte[0]offerente.credito").value(astaTrovata.get().getOfferte().get(0).getOfferente().getCredito()));
-
     }*/
+
 
     /*@Test
     public void whenTrovaAste_givenExistingAste_thenReturnJsonArrayMapsAste() throws Exception {
