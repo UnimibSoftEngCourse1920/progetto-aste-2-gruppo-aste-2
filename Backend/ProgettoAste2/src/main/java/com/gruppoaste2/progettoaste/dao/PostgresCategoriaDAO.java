@@ -25,7 +25,7 @@ public class PostgresCategoriaDAO implements CategoriaDAO {
 
 
     @Override
-    public int inserisciCategoria(UUID idCategoria, CategoriaModel categoria) {
+    public int aggiungiCategoria(UUID idCategoria, CategoriaModel categoria) {
         final String sql = "INSERT INTO categoria(id, nome) " +
                 "VALUES(?, ?)";
         return jdbcTemplate.update(sql, idCategoria, categoria.getNome());
@@ -44,7 +44,7 @@ public class PostgresCategoriaDAO implements CategoriaDAO {
                 (resultSet, i) -> makeCategoriaFromResultSet(resultSet),
                 id);
         CategoriaModel returnable = (results.isEmpty())? null : results.get(0);
-        return  Optional.ofNullable(returnable);
+        return Optional.ofNullable(returnable);
     }
 
     @Override
@@ -52,12 +52,6 @@ public class PostgresCategoriaDAO implements CategoriaDAO {
         final String sql = "SELECT * FROM categoria";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeCategoriaFromResultSet(resultSet));
-    }
-
-    @Override
-    public int aggiornaCategoria(UUID id, CategoriaModel categoriaAggiornata) {
-        final String sql = "UPDATE categoria SET nome = ?";
-        return jdbcTemplate.update(sql, categoriaAggiornata.getNome());
     }
 
     @Override
@@ -84,6 +78,12 @@ public class PostgresCategoriaDAO implements CategoriaDAO {
         return jdbcTemplate.queryForObject(sql,
                 (resultSet, i) -> resultSet.getString("valore"),
                 idOggetto, idAttributo);
+    }
+
+    @Override
+    public int aggiornaCategoria(UUID id, CategoriaModel categoriaAggiornata) {
+        final String sql = "UPDATE categoria SET nome = ?";
+        return jdbcTemplate.update(sql, categoriaAggiornata.getNome());
     }
 
     private CategoriaModel makeCategoriaFromResultSet(ResultSet resultSet) throws SQLException {

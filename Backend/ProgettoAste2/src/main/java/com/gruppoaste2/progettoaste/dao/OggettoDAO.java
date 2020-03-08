@@ -18,18 +18,17 @@ public interface OggettoDAO {
 
     int eliminaOggetto(UUID id);
 
+    Optional<OggettoModel> trovaOggetto(UUID id);
+
     List<OggettoModel> trovaOggetti();
 
-    List<OggettoModel> trovaOggetti(UUID idAsta);
-
-    Optional<OggettoModel> trovaOggetto(UUID idOggetto);
+    List<OggettoModel> trovaOggettiAsta(UUID idAsta);
 
     int aggiornaOggetto(UUID idOggetto, OggettoModel oggettoAggiornato);
 
-    List<OggettoModel> oggettiRegistratiDaUtente(UUID idUtente);
+    List<OggettoModel> trovaOggettiRegistratiDaUtente(UUID idUtente);
 
-    List<OggettoModel> oggettiInCorsoAstaDaUtente(UUID idUtente);
+    List<OggettoModel> trovaOggettiInCorsoAstaUtente(UUID idUtente);
 
-    List<OggettoModel> oggettiVintiDaUtente(UUID idUtente);
-
+    List<OggettoModel> trovaOggettiVintiDaUtente(UUID idUtente);
 }

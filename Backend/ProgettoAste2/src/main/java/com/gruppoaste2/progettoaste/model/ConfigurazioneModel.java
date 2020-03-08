@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.UUID;
 
-
 public class ConfigurazioneModel {
 
     private final UUID id;

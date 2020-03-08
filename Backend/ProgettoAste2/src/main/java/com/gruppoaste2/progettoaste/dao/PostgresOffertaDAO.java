@@ -27,7 +27,7 @@ public class PostgresOffertaDAO implements OffertaDAO{
     }
 
     @Override
-    public int inserisciOfferta(UUID id, UUID idAsta, OffertaModel offerta) {
+    public int aggiungiOfferta(UUID id, UUID idAsta, OffertaModel offerta) {
         final String sql = "INSERT INTO offerta(id, id_offerente, id_asta, data_offerta, credito_offerto) " +
                 "VALUES(?, ?, ?, ?, ?)";
         return jdbcTemplate.update(sql,
@@ -51,14 +51,14 @@ public class PostgresOffertaDAO implements OffertaDAO{
     }
 
     @Override
-    public List<OffertaModel> trovaTutteOfferte() {
+    public List<OffertaModel> trovaOfferte() {
         final String sql = "SELECT * FROM offerta";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeOffertaFromResultSet(resultSet));
     }
 
     @Override
-    public List<OffertaModel> trovaTutteOfferteAsta(UUID idAsta) {
+    public List<OffertaModel> trovaOfferteAsta(UUID idAsta) {
         final String sql = "SELECT * FROM offerta WHERE id_asta = ?";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeOffertaFromResultSet(resultSet),
@@ -66,7 +66,17 @@ public class PostgresOffertaDAO implements OffertaDAO{
     }
 
     @Override
-    public List<OffertaModel> trovaTutteOfferteUtente(UUID idOfferente) {
+    public Optional<OffertaModel> trovaUltimaOffertaAsta(UUID idAsta) {
+        final String sql = "SELECT * FROM offerta WHERE id_asta = ? ORDER BY data_offerta DESC LIMIT 1";
+        List<OffertaModel> results = jdbcTemplate.query(
+                sql, (resultSet, i) -> makeOffertaFromResultSet(resultSet),
+                idAsta);
+        OffertaModel returnable = (results.isEmpty())? null : results.get(0);
+        return Optional.ofNullable(returnable);
+    }
+
+    @Override
+    public List<OffertaModel> trovaOfferteUtente(UUID idOfferente) {
         final String sql = "SELECT * FROM offerta WHERE id_offerente = ?";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeOffertaFromResultSet(resultSet),
@@ -74,7 +84,7 @@ public class PostgresOffertaDAO implements OffertaDAO{
     }
 
     @Override
-    public List<OffertaModel> trovaTutteOfferteUtenteAsta(UUID idOfferente, UUID idAsta) {
+    public List<OffertaModel> trovaOfferteUtenteAsta(UUID idOfferente, UUID idAsta) {
         final String sql = "SELECT * FROM offerta WHERE id_offerente = ? AND id_asta = ?";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeOffertaFromResultSet(resultSet),

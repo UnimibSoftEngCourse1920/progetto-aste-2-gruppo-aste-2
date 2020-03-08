@@ -3,7 +3,7 @@ package com.gruppoaste2.progettoaste.model;
 import java.sql.Date;
 import java.sql.Time;
 
-public class InfoAsta {
+public class InfoAstaModel {
 
     private final String tipo;
     private final double prezzoPartenza;
@@ -11,7 +11,7 @@ public class InfoAsta {
     private final Date dataFine;
     private final Time durataTimeSlot;
 
-    public InfoAsta(String tipo, double prezzoPartenza, Date dataInizio, Date dataFine, Time durataTimeSlot) {
+    public InfoAstaModel(String tipo, double prezzoPartenza, Date dataInizio, Date dataFine, Time durataTimeSlot) {
         this.tipo = tipo;
         this.prezzoPartenza = prezzoPartenza;
         this.dataInizio = dataInizio;

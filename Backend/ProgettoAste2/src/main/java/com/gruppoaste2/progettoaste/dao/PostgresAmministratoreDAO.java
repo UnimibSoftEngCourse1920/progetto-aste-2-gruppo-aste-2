@@ -43,7 +43,7 @@ public class PostgresAmministratoreDAO implements AmministratoreDAO {
                 (resultSet, i) -> makeAmministratoreFromResultSet(resultSet),
                  id);
         AmministratoreModel returnable = (results.isEmpty())? null : results.get(0);
-        return  Optional.ofNullable(returnable);
+        return Optional.ofNullable(returnable);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.gruppoaste2.progettoaste.api;
 
-import com.gruppoaste2.progettoaste.service.CategoriaService;
 import com.gruppoaste2.progettoaste.service.OggettoService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -9,8 +8,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(OggettoController.class)
@@ -77,7 +74,7 @@ public class OggettoControllerTest {
 
     }
 
-    // Test oggettiRegistratiDaUtente
+    // Test trovaOggettiRegistratiDaUtente
     @Test
     public void whenTrovaOggettiRegistratiDaUtente_givenNonExistingOggettiRegistratiDaUtente_thenReturnEmptyJsonArray() throws Exception {
 
@@ -88,7 +85,7 @@ public class OggettoControllerTest {
 
     }
 
-    // Test oggettiInCorsoAstaUtente
+    // Test trovaOggettiInCorsoAstaUtente
     @Test
     public void whenTrovaOggettiInCorsoAstaUtente_givenNonExistingOggettiInCorsoAstaUtente_thenReturnEmptyJsonArray() throws Exception {
 
@@ -99,7 +96,7 @@ public class OggettoControllerTest {
 
     }
 
-    // Test oggettiVintiDaUtente
+    // Test trovaOggettiVintiDaUtente
     @Test
     public void whenTrovaOggettiVintiDaUtente_givenNonExistingOggettiVintiDaUtente_thenReturnEmptyJsonArray() throws Exception {
 

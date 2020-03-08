@@ -16,8 +16,8 @@ public class PostgresOggettoDAO implements OggettoDAO {
 
     private final JdbcTemplate jdbcTemplate;
 
-    private static final String SELEZIONEOGGETTO = "SELECT o.id, o.nome, o.descrizione, o.url_immagine ";
-    private static final String DAOGGETTO =  "FROM oggetto AS o, asta AS a ";
+    private static final String SELECT_OGGETTO = "SELECT o.id, o.nome, o.descrizione, o.url_immagine ";
+    private static final String FROM_OGGETTO =  "FROM oggetto AS o, asta AS a ";
 
     @Autowired
     public PostgresOggettoDAO(JdbcTemplate jdbcTemplate) {
@@ -39,13 +39,13 @@ public class PostgresOggettoDAO implements OggettoDAO {
     }
 
     @Override
-    public Optional<OggettoModel> trovaOggetto(UUID idOggetto) {
+    public Optional<OggettoModel> trovaOggetto(UUID id) {
         final String sql = "SELECT * FROM oggetto WHERE id = ?";
         List<OggettoModel> results = jdbcTemplate.query(sql,
                 (resultSet, i) -> makeOggettoFromResultSet(resultSet),
-                idOggetto);
+                id);
         OggettoModel returnable = (results.isEmpty())? null : results.get(0);
-        return  Optional.ofNullable(returnable);
+        return Optional.ofNullable(returnable);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class PostgresOggettoDAO implements OggettoDAO {
     }
 
     @Override
-    public List<OggettoModel> trovaOggetti(UUID idAsta) {
+    public List<OggettoModel> trovaOggettiAsta(UUID idAsta) {
         final String sql = "SELECT * FROM oggetto WHERE id_asta = ?";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeOggettoFromResultSet(resultSet),
@@ -72,9 +72,8 @@ public class PostgresOggettoDAO implements OggettoDAO {
     }
 
     @Override
-    public List<OggettoModel> oggettiRegistratiDaUtente(UUID idUtente) {
-        final String sql = SELEZIONEOGGETTO +
-                DAOGGETTO +
+    public List<OggettoModel> trovaOggettiRegistratiDaUtente(UUID idUtente) {
+        final String sql = SELECT_OGGETTO + FROM_OGGETTO +
                 "WHERE a.id_asta_manager = ? AND a.id = o.id_asta";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeOggettoFromResultSet(resultSet),
@@ -82,19 +81,18 @@ public class PostgresOggettoDAO implements OggettoDAO {
     }
 
     @Override
-    public List<OggettoModel> oggettiInCorsoAstaDaUtente(UUID idUtente) {
-        final String sql = SELEZIONEOGGETTO +
-                DAOGGETTO +
+    public List<OggettoModel> trovaOggettiInCorsoAstaUtente(UUID idUtente) {
+        final String sql = SELECT_OGGETTO + FROM_OGGETTO +
                 "WHERE a.id_asta_manager = ? AND a.id = o.id_asta AND a.data_fine IS NULL";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeOggettoFromResultSet(resultSet),
                 idUtente);
     }
 
+    // TODO: non funziona, da sistemare
     @Override
-    public List<OggettoModel> oggettiVintiDaUtente(UUID idUtente) {
-        final String sql = SELEZIONEOGGETTO +
-                DAOGGETTO +
+    public List<OggettoModel> trovaOggettiVintiDaUtente(UUID idUtente) {
+        final String sql = SELECT_OGGETTO + FROM_OGGETTO +
                 "WHERE a.id_asta_manager = ? AND a.id = o.id_asta AND a.data_fine IS NOT NULL";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeOggettoFromResultSet(resultSet),

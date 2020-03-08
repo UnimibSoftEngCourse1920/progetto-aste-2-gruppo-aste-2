@@ -8,25 +8,27 @@ import java.util.UUID;
 
 public interface OffertaDAO {
 
-    int inserisciOfferta(UUID id, UUID idAsta, OffertaModel offerta);
+    int aggiungiOfferta(UUID id, UUID idAsta, OffertaModel offerta);
 
-    default int inserisciOfferta(UUID idAsta, OffertaModel offerta)
+    default int aggiungiOfferta(UUID idAsta, OffertaModel offerta)
     {
         UUID id = UUID.randomUUID();
-        return inserisciOfferta(id, idAsta, offerta);
+        return aggiungiOfferta(id, idAsta, offerta);
     }
 
     int eliminaOfferta(UUID id);
 
     Optional<OffertaModel> trovaOfferta(UUID id);
 
-    List<OffertaModel> trovaTutteOfferte();
+    List<OffertaModel> trovaOfferte();
 
-    List<OffertaModel> trovaTutteOfferteAsta(UUID idAsta);
+    List<OffertaModel> trovaOfferteAsta(UUID idAsta);
 
-    List<OffertaModel> trovaTutteOfferteUtente(UUID idOfferente);
+    Optional<OffertaModel> trovaUltimaOffertaAsta(UUID idAsta);
 
-    List<OffertaModel> trovaTutteOfferteUtenteAsta(UUID idOfferente, UUID idAsta);
+    List<OffertaModel> trovaOfferteUtente(UUID idOfferente);
+
+    List<OffertaModel> trovaOfferteUtenteAsta(UUID idOfferente, UUID idAsta);
 
     int aggiornaOfferta(UUID id, OffertaModel offertaAggiornata);
 }

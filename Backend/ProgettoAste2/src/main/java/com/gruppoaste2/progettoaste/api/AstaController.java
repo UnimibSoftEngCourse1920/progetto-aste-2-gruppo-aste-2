@@ -19,29 +19,29 @@ public class AstaController {
         this.astaService = astaService;
     }
 
-    @GetMapping
-    public String esempioGet()
+    @PostMapping("/aggiungi")
+    public int aggiungiAsta(@RequestBody AstaModel asta)
     {
-        return "<h1>Prova ciao hai fatto una get ad localhost:8080/api/asta<h1>";
+        return astaService.aggiungiAsta(asta);
     }
 
-    @GetMapping("/aste")
-    public List<AstaModel> trovaAste()
+    @GetMapping(path = "/elimina/{id}")
+    public int eliminaAsta(@PathVariable("id") UUID id)
     {
-        return astaService.trovaTutteAste();
+        return astaService.eliminaAsta(id);
     }
 
-    @GetMapping(path="/{id}")
+    @GetMapping(path = "/{id}")
     public AstaModel trovaAsta(@PathVariable("id") UUID id)
     {
         return astaService.trovaAsta(id)
                 .orElse(null);
     }
 
-    @PostMapping("/aggiungi")
-    public int aggiungiAsta(@RequestBody AstaModel asta)
+    @GetMapping("/aste")
+    public List<AstaModel> trovaAste()
     {
-        return astaService.inserisciAsta(asta);
+        return astaService.trovaAste();
     }
 
     @PostMapping(path = "/aggiorna/{id}")
@@ -49,11 +49,4 @@ public class AstaController {
     {
         return astaService.aggiornaAsta(id, astaAggiornata);
     }
-
-    @GetMapping(path = "elimina/{id}") // funziona
-    public int eliminaAsta(@PathVariable("id") UUID id)
-    {
-        return astaService.eliminaAsta(id);
-    }
-
 }

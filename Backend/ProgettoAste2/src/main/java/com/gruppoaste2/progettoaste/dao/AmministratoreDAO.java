@@ -13,7 +13,7 @@ public interface AmministratoreDAO {
     default int inserisciAmministratore(AmministratoreModel amministratore)
     {
         UUID id = UUID.randomUUID();
-        return inserisciAmministratore(id,amministratore);
+        return inserisciAmministratore(id, amministratore);
     }
 
     int eliminaAmministratore(UUID id);

@@ -65,7 +65,7 @@ public class AstaControllerTest {
         offerte.add(off1);
 
         Optional<AstaModel> astaTrovata = Optional.of(new AstaModel (idasta,
-                new InfoAsta("info", 3.4,
+                new InfoAstaModel("info", 3.4,
                         Date.valueOf(LocalDate.now()),
                         Date.valueOf(LocalDate.now()),
                         0),
@@ -122,9 +122,21 @@ public class AstaControllerTest {
                 .andExpect(jsonPath("$.offerte[0]offerente.credito").value(astaTrovata.get().getOfferte().get(0).getOfferente().getCredito()));
     }*/
 
+    @Test
+    public void whenTrovaAste_givenNonExistingAste_thenReturnEmptyJsonArray() throws Exception {
+        List<AstaModel> asteTrovate = Collections.emptyList();
+
+        given(astaService.trovaAste()).willReturn(asteTrovate);
+
+        mockMvc.perform(get("/api/asta/aste")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$", hasSize(0)));
+    }
 
     /*@Test
-    public void whenTrovaAste_givenExistingAste_thenReturnJsonArrayMapsAste() throws Exception {
+    public void whenTrovaAste_givenExistingAste_thenReturnJsonArrayOfMapsAste() throws Exception {
         UUID idasta = UUID.randomUUID();
         UUID idconf = UUID.randomUUID();
         UUID idUtente = UUID.randomUUID();
@@ -141,7 +153,7 @@ public class AstaControllerTest {
 
         List<AstaModel> asteTrovate =
                 Collections.singletonList(new AstaModel (idasta,
-                        new InfoAsta("info", 3.4,
+                        new InfoAstaModel("info", 3.4,
                                 Date.valueOf(LocalDate.now()),
                                 Date.valueOf(LocalDate.now()),
                                 0),
@@ -200,19 +212,6 @@ public class AstaControllerTest {
     }*/
 
     @Test
-    public void whenTrovaAste_givenNonExistingAste_thenReturnEmptyJsonArray() throws Exception {
-        List<AstaModel> asteTrovati = Collections.emptyList();
-
-        given(astaService.trovaTutteAste()).willReturn(asteTrovati);
-
-        mockMvc.perform(get("/api/asta/aste")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$", hasSize(0)));
-    }
-
-    @Test
     public void whenEliminaAsta_givenNonExistingAsta_thenReturnJsonNumber0() throws Exception {
         UUID id = UUID.randomUUID();
 
@@ -238,5 +237,4 @@ public class AstaControllerTest {
                 .andExpect(jsonPath("$").isNumber())
                 .andExpect(jsonPath("$").value(1));
     }
-
 }

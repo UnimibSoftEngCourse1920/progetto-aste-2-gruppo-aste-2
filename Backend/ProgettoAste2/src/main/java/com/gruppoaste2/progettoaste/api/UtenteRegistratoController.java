@@ -1,6 +1,6 @@
 package com.gruppoaste2.progettoaste.api;
 
-import com.gruppoaste2.progettoaste.model.InfoCredito;
+import com.gruppoaste2.progettoaste.model.InfoCreditoModel;
 import com.gruppoaste2.progettoaste.model.UtenteRegistratoModel;
 import com.gruppoaste2.progettoaste.service.UtenteRegistratoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,76 +20,72 @@ public class UtenteRegistratoController {
         this.utenteRegistratoService = utenteRegistratoService;
     }
 
+    // TODO: Da eliminare una volta finita la fase di testing
     @GetMapping
     public String esempioGet()
     {
         return "<h1>Prova ciao hai fatto una get ad localhost:8080/api/utenteregistrato<h1>";
     }
 
-    @GetMapping("/utenti")
-    public List<UtenteRegistratoModel> trovaUtentiRegistrati()
+    @PostMapping("/aggiungi")
+    public int aggiungiUtenteRegistrato(@RequestBody UtenteRegistratoModel utente)
     {
-        return utenteRegistratoService.trovaTuttiUtentiRegistrati();
+        return utenteRegistratoService.aggiungiUtenteRegistrato(utente);
     }
 
-    @GetMapping(path="{id}")
+    @GetMapping(path = "/elimina/{id}")
+    public int eliminaUtenteRegistrato(@PathVariable("id") UUID id)
+    {
+        return utenteRegistratoService.eliminaUtenteRegistrato(id);
+    }
+
+    @GetMapping(path = "/{id}")
     public UtenteRegistratoModel trovaUtenteRegistrato(@PathVariable("id") UUID id)
     {
         return utenteRegistratoService.trovaUtenteRegistrato(id)
                 .orElse(null);
     }
 
-    @PostMapping("/aggiungi")
-    public int aggiungiUtenteRegistrato(@RequestBody UtenteRegistratoModel utente)
+    @GetMapping("/utenti")
+    public List<UtenteRegistratoModel> trovaUtentiRegistrati()
     {
-        return utenteRegistratoService.inserisciUtenteRegistrato(utente);
+        return utenteRegistratoService.trovaUtentiRegistrati();
     }
 
     @PostMapping(path = "/aggiorna/{id}")
-    public int aggiornaUtenteRegistrato(@PathVariable("id") UUID id, @RequestBody UtenteRegistratoModel utenteAggiornato)
+    public int aggiornaUtenteRegistrato(@PathVariable("id") UUID id,
+                                        @RequestBody UtenteRegistratoModel utenteAggiornato)
     {
         return utenteRegistratoService.aggiornaUtenteRegistrato(id, utenteAggiornato);
     }
 
-    @GetMapping(path = "elimina/{id}") // funziona
-    public int eliminaUtenteRegistrato(@PathVariable("id") UUID id)
-    {
-        return utenteRegistratoService.eliminaUtenteRegistrato(id);
-    }
-
-    @GetMapping(path = "controlla/username/{user}")
-    public boolean controllaUsernameOccupato(@PathVariable("user") String username)
+    @GetMapping(path = "/controlla/username/{username}")
+    public boolean controllaUsernameOccupato(@PathVariable("username") String username)
     {
         return utenteRegistratoService.controllaUsernameOccupato(username);
     }
 
-    @GetMapping(path = "controlla/email/{mail}")
-    public boolean controllaEmailOccupata(@PathVariable("mail") String email)
+    @GetMapping(path = "/controlla/email/{email}")
+    public boolean controllaEmailOccupata(@PathVariable("email") String email)
     {
         return utenteRegistratoService.controllaEmailOccupata(email);
     }
 
     @PostMapping("/controlla/utente")
-    public boolean controllaUtenteEsiste(@RequestBody UtenteRegistratoModel utente) // nel body della richiesta posso anche avere non tutti gli attributi dell oggetto
+    public boolean controllaUtenteEsiste(@RequestBody UtenteRegistratoModel utente)
     {
         return utenteRegistratoService.controllaUtenteEsiste(utente);
     }
 
+    @GetMapping(path = "/credito/aggiungi/{id}/{creditoAggiunto}")
+    public int aggiungiCredito(@PathVariable("id") UUID id, @PathVariable("creditoAggiunto") float creditoAggiunto)
+    {
+        return utenteRegistratoService.aggiungiCredito(id, creditoAggiunto);
+    }
+
     @GetMapping(path = "/credito/{id}")
-    public InfoCredito infoCredito(@PathVariable("id") UUID id)
+    public InfoCreditoModel infoCredito(@PathVariable("id") UUID id)
     {
-        final float creditoTotale = utenteRegistratoService.creditoTotale(id);
-        final float creditoImpegnato = utenteRegistratoService.creditoImpegnato(id);
-        final float creditoDisponibile = creditoTotale - creditoImpegnato;
-
-        return new InfoCredito(creditoTotale, creditoDisponibile, creditoImpegnato);
+        return utenteRegistratoService.infoCredito(id);
     }
-
-    @GetMapping(path = "/credito/aggiungi/{id}/{quanto}")
-    public int aggiungiCredito(@PathVariable("id") UUID id, @PathVariable("quanto") float creditoAggiunto)
-    {
-        return utenteRegistratoService.aggiungiCredito(id,creditoAggiunto);
-    }
-
-
 }

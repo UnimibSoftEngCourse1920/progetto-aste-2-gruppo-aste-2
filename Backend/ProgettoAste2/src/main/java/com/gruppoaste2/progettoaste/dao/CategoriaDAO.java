@@ -9,12 +9,12 @@ import java.util.UUID;
 
 public interface CategoriaDAO {
 
-    int inserisciCategoria(UUID idCategoria, CategoriaModel categoria);
+    int aggiungiCategoria(UUID idCategoria, CategoriaModel categoria);
 
-    default int inserisciCategoria(CategoriaModel categoria)
+    default int aggiungiCategoria(CategoriaModel categoria)
     {
         UUID id = UUID.randomUUID();
-        return inserisciCategoria(id,categoria);
+        return aggiungiCategoria(id, categoria);
     }
 
     int eliminaCategoria(UUID id);
@@ -23,11 +23,11 @@ public interface CategoriaDAO {
 
     List<CategoriaModel> trovaCategorie();
 
-    int aggiornaCategoria (UUID id, CategoriaModel categoriaAggiornata);
-
     List<AttributoModel> trovaAttributiCategoria(UUID idCategoria);
 
     List<CategoriaModel> trovaCategorieOggetto (UUID idOggetto);
 
     String valoreAttributoOggetto(UUID idOggetto, UUID idAttributo);
+
+    int aggiornaCategoria (UUID id, CategoriaModel categoriaAggiornata);
 }

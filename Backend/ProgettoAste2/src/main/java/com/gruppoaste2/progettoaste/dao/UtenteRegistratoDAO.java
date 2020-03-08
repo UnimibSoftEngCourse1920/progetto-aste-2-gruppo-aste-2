@@ -8,19 +8,19 @@ import java.util.UUID;
 
 public interface UtenteRegistratoDAO {
 
-    int inserisciUtenteRegistrato(UUID id, UtenteRegistratoModel utenteRegistrato);
+    int aggiungiUtenteRegistrato(UUID id, UtenteRegistratoModel utenteRegistrato);
 
-    default int inserisciUtenteRegistrato(UtenteRegistratoModel utenteRegistrato)
+    default int aggiungiUtenteRegistrato(UtenteRegistratoModel utenteRegistrato)
     {
         UUID id = UUID.randomUUID();
-        return inserisciUtenteRegistrato(id,utenteRegistrato);
+        return aggiungiUtenteRegistrato(id,utenteRegistrato);
     }
 
     int eliminaUtenteRegistrato(UUID id);
 
     Optional<UtenteRegistratoModel> trovaUtenteRegistrato(UUID id);
 
-    List<UtenteRegistratoModel> trovaTuttiUtentiRegistrati();
+    List<UtenteRegistratoModel> trovaUtentiRegistrati();
 
     int aggiornaUtenteRegistrato(UUID id, UtenteRegistratoModel utenteAggiornato);
 
@@ -32,7 +32,7 @@ public interface UtenteRegistratoDAO {
 
     int aggiungiCredito(UUID id, float creditoAggiunto);
 
-    float creditoImpegnato(UUID id);
-
     float creditoTotale(UUID id);
+
+    float creditoImpegnato(UUID id);
 }

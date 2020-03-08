@@ -22,7 +22,7 @@ public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
     }
 
     @Override
-    public int inserisciUtenteRegistrato(UUID id, UtenteRegistratoModel utenteRegistrato) {
+    public int aggiungiUtenteRegistrato(UUID id, UtenteRegistratoModel utenteRegistrato) {
         final String sql = "INSERT INTO utente_registrato" +
                 "(id, username, password, email, telefono, credito_disponibile) " +
                 "VALUES(?, ?, ?, ?, ?, ?)";
@@ -48,7 +48,7 @@ public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
     }
 
     @Override
-    public List<UtenteRegistratoModel> trovaTuttiUtentiRegistrati() {
+    public List<UtenteRegistratoModel> trovaUtentiRegistrati() {
         final String sql = "SELECT * FROM utente_registrato";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeUtenteRegistratoFromResultSet(resultSet));
@@ -94,6 +94,12 @@ public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
     }
 
     @Override
+    public float creditoTotale(UUID id) {
+        final String sql = "SELECT credito_disponibile FROM utente_registrato WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, Float.class, id);
+    }
+    
+    @Override
     public float creditoImpegnato(UUID id) {
         final String sql = "SELECT o.credito_offerto FROM offerta AS o, asta AS a " +
                 "WHERE o.id_utente_registrato = ? AND o.id_asta = a.id AND a.data_fine IS NULL";
@@ -108,12 +114,6 @@ public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
             creditoImpegnato += offerta;
 
         return creditoImpegnato;
-    }
-
-    @Override
-    public float creditoTotale(UUID id) {
-        final String sql = "SELECT credito_disponibile FROM utente_registrato WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, Float.class, id);
     }
 
     private UtenteRegistratoModel makeUtenteRegistratoFromResultSet(ResultSet resultSet) throws SQLException {

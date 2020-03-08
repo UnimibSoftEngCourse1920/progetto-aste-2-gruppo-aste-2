@@ -20,10 +20,23 @@ public class CategoriaController {
         this.categoriaService = categoriaService;
     }
 
-    @GetMapping
-    public String esempioGet()
+    @PostMapping("/aggiungi")
+    public int aggiungiCategoria(@RequestBody CategoriaModel categoria)
     {
-        return "<h1>Prova ciao hai fatto una get ad localhost:8080/api/categoria<h1>";
+        return categoriaService.aggiungiCategoria(categoria);
+    }
+
+    @GetMapping(path = "/elimina/{id}")
+    public int eliminaCategoria(@PathVariable("id") UUID id)
+    {
+        return categoriaService.eliminaCategoria(id);
+    }
+
+    @GetMapping(path = "/{id}")
+    public CategoriaModel trovaCategoria(@PathVariable("id") UUID id)
+    {
+        return categoriaService.trovaCategoria(id)
+                .orElse(null);
     }
 
     @GetMapping("/categorie")
@@ -32,33 +45,8 @@ public class CategoriaController {
         return categoriaService.trovaCategorie();
     }
 
-    @GetMapping(path="{id}")
-    public CategoriaModel trovaCategoria(@PathVariable("id") UUID id)
-    {
-        return categoriaService.trovaCategoria(id)
-                .orElse(null);
-    }
-
-    @PostMapping("/aggiungi")
-    public int aggiungiCategoria(@RequestBody CategoriaModel categoria)
-    {
-        return categoriaService.inserisciCategoria(categoria);
-    }
-
-    @PostMapping(path = "/aggiorna/{id}")
-    public int aggiornaCategoria(@PathVariable("id") UUID id, @RequestBody CategoriaModel categoriaAggiornata)
-    {
-        return categoriaService.aggiornaCategoria(id, categoriaAggiornata);
-    }
-
-    @GetMapping(path = "/elimina/{id}") // funziona
-    public int eliminaCategoria(@PathVariable("id") UUID id)
-    {
-        return categoriaService.eliminaCategoria(id);
-    }
-
     @GetMapping(path = "/attributi/{id}")
-    public List<AttributoModel> trovaAttributiCategoria(@PathVariable("id") UUID id){
+    public List<AttributoModel> trovaAttributiCategoria(@PathVariable("id") UUID id) {
         return categoriaService.trovaAttributiCategoria(id);
     }
 
@@ -68,8 +56,14 @@ public class CategoriaController {
     }
 
     @GetMapping("/attributo/{idOggetto}/oggetto/{idAttributo}")
-    public String valoreAttributoOggetto(@PathVariable("idOggetto") UUID idOggetto,@PathVariable("idAttributo") UUID idAttributo){
+    public String valoreAttributoOggetto(@PathVariable("idOggetto") UUID idOggetto,
+                                         @PathVariable("idAttributo") UUID idAttributo){
         return categoriaService.valoreAttributoOggetto(idOggetto, idAttributo);
     }
 
+    @PostMapping(path = "/aggiorna/{id}")
+    public int aggiornaCategoria(@PathVariable("id") UUID id, @RequestBody CategoriaModel categoriaAggiornata)
+    {
+        return categoriaService.aggiornaCategoria(id, categoriaAggiornata);
+    }
 }

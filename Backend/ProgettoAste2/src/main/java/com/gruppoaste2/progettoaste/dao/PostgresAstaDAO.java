@@ -34,7 +34,7 @@ public class PostgresAstaDAO implements AstaDAO {
     }
 
     @Override
-    public int inserisciAsta(UUID id, AstaModel asta) {
+    public int aggiungiAsta(UUID id, AstaModel asta) {
         final String sql = "INSERT INTO asta(id, id_asta_manager, id_configurazione, tipo, prezzo_partenza, " +
                 "data_inizio, data_fine, durata_timeslot) " +
                 "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
@@ -64,7 +64,7 @@ public class PostgresAstaDAO implements AstaDAO {
     }
 
     @Override
-    public List<AstaModel> trovaTutteAste() {
+    public List<AstaModel> trovaAste() {
         final String sql = "SELECT * FROM asta";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeAstaFromResultSet(resultSet));
@@ -94,14 +94,14 @@ public class PostgresAstaDAO implements AstaDAO {
         ConfigurazioneModel configurazione = configurazioneDAO.trovaConfigurazione(idConfigurazione)
                 .orElse(null);
 
-        List<OggettoModel> oggetti = oggettoDAO.trovaOggetti(id);
-        List<OffertaModel> offerte = offertaDAO.trovaTutteOfferteAsta(id);
+        List<OggettoModel> oggetti = oggettoDAO.trovaOggettiAsta(id);
+        List<OffertaModel> offerte = offertaDAO.trovaOfferteAsta(id);
         String tipo = resultSet.getString("tipo");
         float prezzoPartenza = resultSet.getFloat("prezzo_partenza");
         Date dataInizio = resultSet.getDate("data_inizio");
         Date dataFine = resultSet.getDate("data_fine");
         Time durataTimeslot = resultSet.getTime("durata_timeslot");
-        InfoAsta infoAsta = new InfoAsta(tipo, prezzoPartenza, dataInizio, dataFine, durataTimeslot);
+        InfoAstaModel infoAsta = new InfoAstaModel(tipo, prezzoPartenza, dataInizio, dataFine, durataTimeslot);
         return new AstaModel(id, infoAsta, configurazione, oggetti, astaManager, offerte);
     }
 }

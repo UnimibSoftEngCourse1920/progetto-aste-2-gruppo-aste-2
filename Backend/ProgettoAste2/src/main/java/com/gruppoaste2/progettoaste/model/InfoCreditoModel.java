@@ -1,12 +1,12 @@
 package com.gruppoaste2.progettoaste.model;
 
-public class InfoCredito {
+public class InfoCreditoModel {
 
     private final float creditoTotale;
     private final float creditoDisponibile;
     private final float creditoImpegnato;
 
-    public InfoCredito(float creditoTotale, float creditoDisponibile, float creditoImpegnato) {
+    public InfoCreditoModel(float creditoTotale, float creditoDisponibile, float creditoImpegnato) {
         this.creditoTotale = creditoTotale;
         this.creditoDisponibile = creditoDisponibile;
         this.creditoImpegnato = creditoImpegnato;

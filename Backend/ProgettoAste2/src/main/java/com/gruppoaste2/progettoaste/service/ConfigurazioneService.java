@@ -39,5 +39,4 @@ public class ConfigurazioneService {
     {
         return configurazioneDAO.trovaUltimaConfigurazione();
     }
-
 }

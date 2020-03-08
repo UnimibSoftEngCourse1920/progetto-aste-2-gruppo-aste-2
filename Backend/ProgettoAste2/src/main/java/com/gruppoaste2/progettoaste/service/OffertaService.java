@@ -20,8 +20,8 @@ public class OffertaService {
         this.offertaDAO = offertaDAO;
     }
 
-    public int inserisciOfferta(UUID idAsta, OffertaModel offerta) {
-        return offertaDAO.inserisciOfferta(idAsta, offerta);
+    public int aggiungiOfferta(UUID idAsta, OffertaModel offerta) {
+        return offertaDAO.aggiungiOfferta(idAsta, offerta);
     }
 
     public int eliminaOfferta(UUID id){
@@ -32,20 +32,24 @@ public class OffertaService {
         return offertaDAO.trovaOfferta(id);
     }
 
-    public List<OffertaModel> trovaTutteOfferte(){
-        return offertaDAO.trovaTutteOfferte();
+    public List<OffertaModel> trovaOfferte(){
+        return offertaDAO.trovaOfferte();
     }
 
-    public List<OffertaModel> trovaTutteOfferteAsta(UUID idAsta){
-        return offertaDAO.trovaTutteOfferteAsta(idAsta);
+    public List<OffertaModel> trovaOfferteAsta(UUID idAsta){
+        return offertaDAO.trovaOfferteAsta(idAsta);
     }
 
-    public List<OffertaModel> trovaTutteOfferteUtente(UUID idOfferente){
-        return offertaDAO.trovaTutteOfferteUtente(idOfferente);
+    public Optional<OffertaModel> trovaUltimaOffertaAsta(UUID idAsta){
+        return offertaDAO.trovaUltimaOffertaAsta(idAsta);
     }
 
-    public List<OffertaModel> trovaTutteOfferteUtenteAsta(UUID idOfferente, UUID idAsta){
-        return offertaDAO.trovaTutteOfferteUtenteAsta(idOfferente, idAsta);
+    public List<OffertaModel> trovaOfferteUtente(UUID idOfferente){
+        return offertaDAO.trovaOfferteUtente(idOfferente);
+    }
+
+    public List<OffertaModel> trovaOfferteUtenteAsta(UUID idOfferente, UUID idAsta){
+        return offertaDAO.trovaOfferteUtenteAsta(idOfferente, idAsta);
     }
 
     public int aggiornaOfferta(UUID id, OffertaModel offertaAggiornata){

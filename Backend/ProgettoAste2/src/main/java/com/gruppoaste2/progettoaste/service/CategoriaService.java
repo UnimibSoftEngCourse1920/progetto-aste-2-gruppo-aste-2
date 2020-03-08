@@ -21,8 +21,8 @@ public class CategoriaService {
         this.categoriaDAO = categoriaDAO;
     }
 
-    public int inserisciCategoria(CategoriaModel categoria){
-        return categoriaDAO.inserisciCategoria(categoria);
+    public int aggiungiCategoria(CategoriaModel categoria){
+        return categoriaDAO.aggiungiCategoria(categoria);
 
     }
 
@@ -38,10 +38,6 @@ public class CategoriaService {
         return categoriaDAO.trovaCategorie();
     }
 
-    public int aggiornaCategoria (UUID id, CategoriaModel categoriaAggiornata){
-        return categoriaDAO.aggiornaCategoria(id, categoriaAggiornata);
-    }
-
     public List<AttributoModel> trovaAttributiCategoria(UUID idCategoria){
         return categoriaDAO.trovaAttributiCategoria(idCategoria);
     }
@@ -52,5 +48,9 @@ public class CategoriaService {
 
     public String valoreAttributoOggetto(UUID idOggetto, UUID idAttributo){
         return categoriaDAO.valoreAttributoOggetto(idOggetto, idAttributo);
+    }
+
+    public int aggiornaCategoria (UUID id, CategoriaModel categoriaAggiornata){
+        return categoriaDAO.aggiornaCategoria(id, categoriaAggiornata);
     }
 }

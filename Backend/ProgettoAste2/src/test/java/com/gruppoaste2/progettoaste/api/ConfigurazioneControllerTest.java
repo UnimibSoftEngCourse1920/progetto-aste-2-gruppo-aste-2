@@ -1,10 +1,7 @@
 package com.gruppoaste2.progettoaste.api;
 
-import com.gruppoaste2.progettoaste.model.AmministratoreModel;
 import com.gruppoaste2.progettoaste.model.ConfigurazioneModel;
-import com.gruppoaste2.progettoaste.model.UtenteRegistratoModel;
 import com.gruppoaste2.progettoaste.service.ConfigurazioneService;
-import com.gruppoaste2.progettoaste.service.UtenteRegistratoService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +12,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.sql.Date;
-import java.sql.Time;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.*;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -91,12 +85,12 @@ public class ConfigurazioneControllerTest {
     }
 
     // Test trovaConfigurazioni
-    /*@Test
-    public void whenTrovaConfigurazioni_givenExistingConfigurazioni_thenReturnJsonArrayOfMapsConfigurazione() throws Exception {
+    /* @Test
+    public void whenTrovaConfigurazione_givenExistingConfigurazione_thenReturnJsonMapConfigurazione() throws Exception {
         UUID id = UUID.randomUUID();
 
-        List<ConfigurazioneModel> configurazioniTrovate =
-                Collections.singletonList(new ConfigurazioneModel(id, "timeSlot", 3600, 10, 0.1, Date.valueOf(LocalDate.now()), 11620));
+        Optional<ConfigurazioneModel> configurazioneTrovata =
+                Optional.of(new ConfigurazioneModel(id, "timeSlot", 3600, 10, 0.1, Date.valueOf(LocalDate.now()), 11620));
 
         given(configurazioneService.trovaConfigurazione(id)).willReturn(configurazioneTrovata);
 
@@ -127,13 +121,13 @@ public class ConfigurazioneControllerTest {
     }
 
     /*@Test
-    public void whenTrovaConfigurazioni_givenExistingConfigurazioni_thenReturnJsonArrayOfMapsConfigurazione() throws Exception {
+    public void whenTrovaConfigurazioni_givenExistingConfigurazioni_thenReturnJsonArrayOfMapsConfigurazioni() throws Exception {
         UUID id = UUID.randomUUID();
 
         List<ConfigurazioneModel> configurazioniTrovate =
                 Collections.singletonList(new ConfigurazioneModel(id, "timeSlot", 3600, 10, 0.1, Date.valueOf(LocalDate.now()), 11620));
 
-        given(configurazioneService.trovaConfigurazioni()).willReturn(Optional.of(configurazioniTrovate));
+        given(configurazioneService.trovaConfigurazioni()).willReturn(configurazioniTrovate);
 
         mockMvc.perform(get("/api/configurazione/configurazioni")
                 .contentType(MediaType.APPLICATION_JSON))

@@ -1,9 +1,7 @@
 package com.gruppoaste2.progettoaste.api;
 
 import com.gruppoaste2.progettoaste.model.CategoriaModel;
-import com.gruppoaste2.progettoaste.model.ConfigurazioneModel;
 import com.gruppoaste2.progettoaste.service.CategoriaService;
-import com.gruppoaste2.progettoaste.service.ConfigurazioneService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
