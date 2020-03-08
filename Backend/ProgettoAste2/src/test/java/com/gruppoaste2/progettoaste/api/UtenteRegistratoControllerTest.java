@@ -36,7 +36,7 @@ public class UtenteRegistratoControllerTest {
 
         Optional<UtenteRegistratoModel> utenteRegistratoTrovato = Optional.empty();
 
-        given(utenteRegistratoService.trovaUtenteRegistro(id)).willReturn(utenteRegistratoTrovato);
+        given(utenteRegistratoService.trovaUtenteRegistrato(id)).willReturn(utenteRegistratoTrovato);
 
         mockMvc.perform(get("/api/utenteregistrato/" + id)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -51,7 +51,7 @@ public class UtenteRegistratoControllerTest {
         Optional<UtenteRegistratoModel> utenteRegistratoTrovato =
                 Optional.of(new UtenteRegistratoModel(id,"username","email", "numeroTelefono", "password", 3.14f));
 
-        given(utenteRegistratoService.trovaUtenteRegistro(id)).willReturn(utenteRegistratoTrovato);
+        given(utenteRegistratoService.trovaUtenteRegistrato(id)).willReturn(utenteRegistratoTrovato);
 
         mockMvc.perform(get("/api/utenteregistrato/" + id)
                 .contentType(MediaType.APPLICATION_JSON))

@@ -55,7 +55,7 @@ public class ConfigurazioneControllerTest {
 
         given(configurazioneService.eliminaConfiguazione(id)).willReturn(0);
 
-        mockMvc.perform(get("/api/configurazione/elimina/" + id.toString())
+        mockMvc.perform(get("/api/configurazione/elimina/" + id)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isNumber())
@@ -68,7 +68,7 @@ public class ConfigurazioneControllerTest {
 
         given(configurazioneService.eliminaConfiguazione(id)).willReturn(1);
 
-        mockMvc.perform(get("/api/configurazione/elimina/" + id.toString())
+        mockMvc.perform(get("/api/configurazione/elimina/" + id)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isNumber())
@@ -90,6 +90,7 @@ public class ConfigurazioneControllerTest {
                 .andExpect(jsonPath("$").doesNotExist());
     }
 
+    // Test trovaConfigurazioni
     /*@Test
     public void whenTrovaConfigurazioni_givenExistingConfigurazioni_thenReturnJsonArrayOfMapsConfigurazione() throws Exception {
         UUID id = UUID.randomUUID();
@@ -112,12 +113,11 @@ public class ConfigurazioneControllerTest {
                 .andExpect(jsonPath("$.durataTimeSlotFisso").value(configurazioneTrovata.get().getDurataTimeSlotFisso()));
     }*/
 
-    // Test trovaConfigurazioni
     @Test
     public void whenTrovaConfigurazioni_givenNonExistingConfigurazioni_thenReturnEmptyJsonArray() throws Exception {
         List<ConfigurazioneModel> configurazioniTrovate = Collections.emptyList();
 
-        given(configurazioneService.trovaConfigurazioni()).willReturn(Optional.of(configurazioniTrovate));
+        given(configurazioneService.trovaConfigurazioni()).willReturn(configurazioniTrovate);
 
         mockMvc.perform(get("/api/configurazione/configurazioni")
                 .contentType(MediaType.APPLICATION_JSON))

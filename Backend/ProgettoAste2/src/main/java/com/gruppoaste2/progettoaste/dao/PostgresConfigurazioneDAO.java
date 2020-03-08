@@ -45,7 +45,7 @@ public class PostgresConfigurazioneDAO implements ConfigurazioneDAO{
                 (resultSet, i) -> makeConfigurazioneFromResultSet(resultSet),
                 id);
         ConfigurazioneModel returnable = (results.isEmpty())? null : results.get(0);
-        return  Optional.ofNullable(returnable);
+        return Optional.ofNullable(returnable);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class PostgresConfigurazioneDAO implements ConfigurazioneDAO{
         List<ConfigurazioneModel> results = jdbcTemplate.query(sql,
                 (resultSet, i) -> makeConfigurazioneFromResultSet(resultSet));
         ConfigurazioneModel returnable = (results.isEmpty())? null : results.get(0);
-        return  Optional.ofNullable(returnable);
+        return Optional.ofNullable(returnable);
     }
 
     private ConfigurazioneModel makeConfigurazioneFromResultSet(ResultSet resultSet) throws SQLException {
