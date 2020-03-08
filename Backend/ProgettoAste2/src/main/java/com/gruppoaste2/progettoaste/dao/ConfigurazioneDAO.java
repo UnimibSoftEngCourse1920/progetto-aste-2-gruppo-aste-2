@@ -20,7 +20,7 @@ public interface ConfigurazioneDAO {
 
     Optional<ConfigurazioneModel> trovaConfigurazione(UUID id);
 
-    Optional<List<ConfigurazioneModel>> trovaConfigurazioni();
+    List<ConfigurazioneModel> trovaConfigurazioni();
 
     Optional<ConfigurazioneModel> trovaUltimaConfigurazione();
 

@@ -6,6 +6,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.util.*;
 
@@ -13,11 +15,6 @@ import java.util.*;
 public class PostgresConfigurazioneDAO implements ConfigurazioneDAO{
 
     private final JdbcTemplate jdbcTemplate;
-    private static final String TIMESLOT = "tipo_timeslot";
-    private static final String NUMERO_OFFERTE_CONTEMPORANEE_UTENTE = "numero_offerte_contemporanee_utente";
-    private static final String DURATA_TIMESLOT_FISSO = "durata_timeslot_fisso";
-    private static final String DATA_CREAZIONE = "data_creazione";
-    private static final String PENALE = "penale";
 
     @Autowired
     public PostgresConfigurazioneDAO(JdbcTemplate jdbcTemplate) {
@@ -26,11 +23,13 @@ public class PostgresConfigurazioneDAO implements ConfigurazioneDAO{
 
     @Override
     public int inserisciConfigurazione(UUID id, ConfigurazioneModel configurazioneModel) {
-        final String sql = "INSERT INTO configurazione(id,tipo_timeslot, numero_max_timeslot, numero_offerte_contemporanee_utente, penale, data_creazione, durata_timeslot_fisso)" +
-                " VALUES(?,?::tipotimeslotasta,?,?,?,?,?)";
+        final String sql = "INSERT INTO configurazione(id, tipo_timeslot, numero_max_timeslot, " +
+                "numero_offerte_contemporanee_utente, penale, data_creazione, durata_timeslot_fisso) " +
+                "VALUES(?, ?, ?, ?, ?, ?, ?)";
         return jdbcTemplate.update(sql,
-                id,configurazioneModel.getTipoTimeSlot(),configurazioneModel.getMaxTimeSlot(),configurazioneModel.getMaxOfferte(),
-                configurazioneModel.getPenale(), configurazioneModel.getDataCreazione(), configurazioneModel.getDurataTimeSlotFisso());
+                id, configurazioneModel.getTipoTimeSlot(), configurazioneModel.getMaxTimeSlot(),
+                configurazioneModel.getMaxOfferte(), configurazioneModel.getPenale(),
+                configurazioneModel.getDataCreazione(), configurazioneModel.getDurataTimeSlotFisso());
     }
 
     @Override
@@ -43,55 +42,37 @@ public class PostgresConfigurazioneDAO implements ConfigurazioneDAO{
     public Optional<ConfigurazioneModel> trovaConfigurazione(UUID id) {
         final String sql = "SELECT * FROM configurazione WHERE id = ?";
         List<ConfigurazioneModel> results = jdbcTemplate.query(sql,
-                (resultSet, i) -> {
-                    String timeSlot = resultSet.getString(TIMESLOT);
-                    int  maxTimeSlot = Integer.parseInt(resultSet.getString(NUMERO_OFFERTE_CONTEMPORANEE_UTENTE));
-                    int maxOfferte = Integer.parseInt(resultSet.getString(NUMERO_OFFERTE_CONTEMPORANEE_UTENTE));
-                    double penale =  Double.parseDouble(resultSet.getString(PENALE));
-                    Date dataCreazione =  Date.valueOf(resultSet.getString(DATA_CREAZIONE));
-                    Time durata = resultSet.getTime(DURATA_TIMESLOT_FISSO);
-                    return new ConfigurazioneModel(id,timeSlot,maxTimeSlot,maxOfferte,penale,dataCreazione, durata);
-                },
+                (resultSet, i) -> makeConfigurazioneFromResultSet(resultSet),
                 id);
-
         ConfigurazioneModel returnable = (results.isEmpty())? null : results.get(0);
         return  Optional.ofNullable(returnable);
     }
 
     @Override
-    public Optional<List<ConfigurazioneModel>> trovaConfigurazioni() {
+    public List<ConfigurazioneModel> trovaConfigurazioni() {
         final String sql = "SELECT * FROM configurazione";
-        List<ConfigurazioneModel> listConfigurazioni = jdbcTemplate.query(sql, (resultSet, i) ->
-        {
-            UUID id = UUID.fromString(resultSet.getString("id"));
-            String timeSlot = resultSet.getString(TIMESLOT);
-            int  maxTimeSlot = Integer.parseInt(resultSet.getString(NUMERO_OFFERTE_CONTEMPORANEE_UTENTE));
-            int maxOfferte = Integer.parseInt(resultSet.getString(NUMERO_OFFERTE_CONTEMPORANEE_UTENTE));
-            double penale =  Double.parseDouble(resultSet.getString(PENALE));
-            Date dataCreazione =  Date.valueOf(resultSet.getString(DATA_CREAZIONE));
-            Time durata = resultSet.getTime(DURATA_TIMESLOT_FISSO);
-            return new ConfigurazioneModel(id,timeSlot,maxTimeSlot,maxOfferte,penale,dataCreazione, durata);
-        });
-
-        return Optional.ofNullable(listConfigurazioni);
+        return jdbcTemplate.query(sql,
+                (resultSet, i) -> makeConfigurazioneFromResultSet(resultSet));
     }
 
     @Override
     public Optional<ConfigurazioneModel> trovaUltimaConfigurazione() {
         final String sql = "SELECT * FROM configurazione ORDER BY data_creazione DESC LIMIT 1";
         List<ConfigurazioneModel> results = jdbcTemplate.query(sql,
-                (resultSet, i) -> {
-                    UUID id = UUID.fromString(resultSet.getString("id"));
-                    String timeSlot = resultSet.getString(TIMESLOT);
-                    int  maxTimeSlot = Integer.parseInt(resultSet.getString(NUMERO_OFFERTE_CONTEMPORANEE_UTENTE));
-                    int maxOfferte = Integer.parseInt(resultSet.getString(NUMERO_OFFERTE_CONTEMPORANEE_UTENTE));
-                    double penale =  Double.parseDouble(resultSet.getString(PENALE));
-                    Date dataCreazione =  Date.valueOf(resultSet.getString(DATA_CREAZIONE));
-                    Time durata = resultSet.getTime(DURATA_TIMESLOT_FISSO);
-                    return new ConfigurazioneModel(id,timeSlot,maxTimeSlot,maxOfferte,penale,dataCreazione, durata);
-                });
-
+                (resultSet, i) -> makeConfigurazioneFromResultSet(resultSet));
         ConfigurazioneModel returnable = (results.isEmpty())? null : results.get(0);
         return  Optional.ofNullable(returnable);
+    }
+
+    private ConfigurazioneModel makeConfigurazioneFromResultSet(ResultSet resultSet) throws SQLException {
+        UUID id = UUID.fromString(resultSet.getString("id"));
+        String tipoTimeSlot = resultSet.getString("tipo_timeslot");
+        int maxTimeSlot = resultSet.getInt("numero_max_timeslot");
+        int maxOfferte = resultSet.getInt("numero_offerte_contemporanee_utente");
+        double penale =  resultSet.getDouble("penale");
+        Date dataCreazione =  resultSet.getDate("data_creazione");
+        Time durataTimeSlotFisso = resultSet.getTime("durata_timeslot_fisso");
+        return new ConfigurazioneModel(id, tipoTimeSlot, maxTimeSlot, maxOfferte, penale, dataCreazione,
+                durataTimeSlotFisso);
     }
 }

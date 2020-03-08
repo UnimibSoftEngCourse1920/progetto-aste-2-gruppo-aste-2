@@ -32,11 +32,7 @@ public interface UtenteRegistratoDAO {
 
     int aggiungiCredito(UUID id, float creditoAggiunto);
 
-    float creditoDisponibile(UUID id);
-
     float creditoImpegnato(UUID id);
 
     float creditoTotale(UUID id);
-
-
 }

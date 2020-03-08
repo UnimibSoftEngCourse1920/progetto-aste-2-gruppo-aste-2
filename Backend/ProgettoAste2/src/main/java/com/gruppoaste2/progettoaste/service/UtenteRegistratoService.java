@@ -28,7 +28,7 @@ public class UtenteRegistratoService {
         return utenteRegistratoDAO.eliminaUtenteRegistrato(id);
     }
 
-    public Optional<UtenteRegistratoModel> trovaUtenteRegistro(UUID id){
+    public Optional<UtenteRegistratoModel> trovaUtenteRegistrato(UUID id){
         return utenteRegistratoDAO.trovaUtenteRegistrato(id);
     }
 
@@ -68,10 +68,5 @@ public class UtenteRegistratoService {
     public float creditoImpegnato(UUID id)
     {
         return utenteRegistratoDAO.creditoImpegnato(id);
-    }
-
-    public float creditoDisponibile(UUID id)
-    {
-        return utenteRegistratoDAO.creditoDisponibile(id);
     }
 }

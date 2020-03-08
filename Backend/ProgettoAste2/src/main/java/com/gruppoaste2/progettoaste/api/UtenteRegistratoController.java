@@ -35,7 +35,7 @@ public class UtenteRegistratoController {
     @GetMapping(path="{id}")
     public UtenteRegistratoModel trovaUtenteRegistrato(@PathVariable("id") UUID id)
     {
-        return utenteRegistratoService.trovaUtenteRegistro(id)
+        return utenteRegistratoService.trovaUtenteRegistrato(id)
                 .orElse(null);
     }
 

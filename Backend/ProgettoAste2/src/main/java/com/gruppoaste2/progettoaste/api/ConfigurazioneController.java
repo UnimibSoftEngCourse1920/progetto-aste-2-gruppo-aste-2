@@ -34,7 +34,7 @@ public class ConfigurazioneController {
     }
 
     @GetMapping("/configurazioni")
-    public Optional<List<ConfigurazioneModel>> trovaConfigurazioni(){
+    public List<ConfigurazioneModel> trovaConfigurazioni(){
         return configurazioneService.trovaConfigurazioni();
     }
 
