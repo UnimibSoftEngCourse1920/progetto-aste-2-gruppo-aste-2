@@ -17,6 +17,9 @@ public class PostgresOggettoDAO implements OggettoDAO {
 
     private final JdbcTemplate jdbcTemplate;
 
+    private static final String selezioneOggetto = "SELECT o.id, o.nome, o.descrizione, o.url_immagine ";
+    private static final String daOgetto =  "FROM oggetto AS o, asta AS a ";
+
     @Autowired
     public PostgresOggettoDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -71,8 +74,8 @@ public class PostgresOggettoDAO implements OggettoDAO {
 
     @Override
     public List<OggettoModel> oggettiRegistratiDaUtente(UUID idUtente) {
-        final String sql = "SELECT o.id, o.nome, o.descrizione, o.url_immagine " +
-                "FROM oggetto AS o, asta AS a " +
+        final String sql = selezioneOggetto +
+                daOgetto +
                 "WHERE a.id_asta_manager = ? AND a.id = o.id_asta";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeOggettoFromResultSet(resultSet),
@@ -81,8 +84,8 @@ public class PostgresOggettoDAO implements OggettoDAO {
 
     @Override
     public List<OggettoModel> oggettiInCorsoAstaDaUtente(UUID idUtente) {
-        final String sql = "SELECT o.id, o.nome, o.descrizione, o.url_immagine " +
-                "FROM oggetto AS o, asta AS a " +
+        final String sql = selezioneOggetto +
+                daOgetto +
                 "WHERE a.id_asta_manager = ? AND a.id = o.id_asta AND a.data_fine IS NULL";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeOggettoFromResultSet(resultSet),
@@ -91,8 +94,8 @@ public class PostgresOggettoDAO implements OggettoDAO {
 
     @Override
     public List<OggettoModel> oggettiVintiDaUtente(UUID idUtente) {
-        final String sql = "SELECT o.id, o.nome, o.descrizione, o.url_immagine " +
-                "FROM oggetto AS o, asta AS a " +
+        final String sql = selezioneOggetto +
+                daOgetto +
                 "WHERE a.id_asta_manager = ? AND a.id = o.id_asta AND a.data_fine IS NOT NULL";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeOggettoFromResultSet(resultSet),
