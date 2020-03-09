@@ -1,6 +1,5 @@
 package com.gruppoaste2.progettoaste.api;
 
-import com.google.gson.Gson;
 import com.gruppoaste2.progettoaste.model.AmministratoreModel;
 import com.gruppoaste2.progettoaste.service.AmministratoreService;
 import org.junit.jupiter.api.Test;
