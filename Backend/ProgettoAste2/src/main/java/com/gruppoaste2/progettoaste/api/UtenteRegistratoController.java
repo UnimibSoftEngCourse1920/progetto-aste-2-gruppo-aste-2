@@ -90,6 +90,4 @@ public class UtenteRegistratoController {
     {
         return utenteRegistratoService.aggiungiCredito(id,creditoAggiunto);
     }
-
-
 }
