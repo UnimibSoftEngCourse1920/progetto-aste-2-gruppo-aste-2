@@ -1,7 +1,7 @@
 package com.gruppoaste2.progettoaste.model;
 
-import java.sql.Date;
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.UUID;
 
 public class ConfigurazioneModel {
@@ -11,10 +11,10 @@ public class ConfigurazioneModel {
     private final int maxTimeSlot;
     private final int maxOfferte;
     private final double penale; // 0.1 per indicare 10% per esempio valore tra 0 e 1
-    private final Date dataCreazione;
+    private final Timestamp dataCreazione;
     private final Time durataTimeSlotFisso;
 
-    public ConfigurazioneModel(UUID id, String tipoTimeSlot, int maxTimeSlot, int maxOfferte, double penale, Date dataCreazione, Time durataTimeSlotFisso) {
+    public ConfigurazioneModel(UUID id, String tipoTimeSlot, int maxTimeSlot, int maxOfferte, double penale, Timestamp dataCreazione, Time durataTimeSlotFisso) {
         this.id = id;
         this.tipoTimeSlot = tipoTimeSlot;
         this.maxTimeSlot = maxTimeSlot;
@@ -44,7 +44,7 @@ public class ConfigurazioneModel {
         return penale;
     }
 
-    public Date getDataCreazione() {
+    public Timestamp getDataCreazione() {
         return dataCreazione;
     }
 

@@ -1,88 +1,9 @@
 --
--- PostgreSQL database cluster dump
---
-
-SET default_transaction_read_only = off;
-
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-
---
--- Roles
---
-
-CREATE ROLE postgres;
-ALTER ROLE postgres WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION BYPASSRLS PASSWORD 'md53175bce1d3201d16594cebf9d7eb3f9d';
-
-
-
-
-
-
---
--- Databases
---
-
---
--- Database "template1" dump
---
-
-\connect template1
-
---
 -- PostgreSQL database dump
 --
 
 -- Dumped from database version 12.2
 -- Dumped by pg_dump version 12.2
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
-
---
--- PostgreSQL database dump complete
---
-
---
--- Database "databaseaste" dump
---
-
---
--- PostgreSQL database dump
---
-
--- Dumped from database version 12.2
--- Dumped by pg_dump version 12.2
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
-
---
--- Name: databaseaste; Type: DATABASE; Schema: -; Owner: postgres
---
-
-CREATE DATABASE databaseaste WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'en_US.utf8' LC_CTYPE = 'en_US.utf8';
-
-
-ALTER DATABASE databaseaste OWNER TO postgres;
-
-\connect databaseaste
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -213,13 +134,12 @@ ALTER TABLE public.categoria_oggetto OWNER TO postgres;
 
 CREATE TABLE public.configurazione (
     id uuid NOT NULL,
-    durata_timeslot_fisso time without time zone NOT NULL,
     numero_max_timeslot bigint NOT NULL,
     numero_offerte_contemporanee_utente bigint NOT NULL,
     tipo_timeslot public.tipotimeslotasta NOT NULL,
-    data_creazione date NOT NULL,
+    data_creazione timestamp(2) without time zone NOT NULL,
     penale real NOT NULL,
-    CONSTRAINT check_penale CHECK (((penale >= (0)::double precision) AND (penale <= (1)::double precision)))
+    durata_timeslot_fisso time(1) without time zone
 );
 
 
@@ -233,7 +153,8 @@ CREATE TABLE public.offerta (
     id_offerente uuid NOT NULL,
     id_asta uuid NOT NULL,
     data_offerta date NOT NULL,
-    credito_offerto real NOT NULL
+    credito_offerto real NOT NULL,
+    id uuid NOT NULL
 );
 
 
@@ -319,6 +240,8 @@ COPY public.attributo_oggetto (id_oggetto, id_attributo, valore) FROM stdin;
 --
 
 COPY public.categoria (id, nome) FROM stdin;
+1c06d000-5764-4b46-8d98-77b25b97004c	mobile
+5e325c13-2611-4394-8ba1-50a1b1494ae3	elettrodomestico
 \.
 
 
@@ -334,9 +257,8 @@ COPY public.categoria_oggetto (id_oggetto, id_categoria) FROM stdin;
 -- Data for Name: configurazione; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.configurazione (id, durata_timeslot_fisso, numero_max_timeslot, numero_offerte_contemporanee_utente, tipo_timeslot, data_creazione, penale) FROM stdin;
-19d8c42e-96ce-4477-a262-5552fca1ed1b	00:30:00	10	30	fisso	2017-03-14	0.1
-46cebfbe-635c-4e0d-bdb5-4abebb57f94b	00:30:00	10	30	variabile	2018-03-14	0.7
+COPY public.configurazione (id, numero_max_timeslot, numero_offerte_contemporanee_utente, tipo_timeslot, data_creazione, penale, durata_timeslot_fisso) FROM stdin;
+5455bc99-8fe9-4d45-9347-4c0aa180556c	10	10	fisso	2020-03-09 18:00:35.86	0.6	00:11:06
 \.
 
 
@@ -344,7 +266,7 @@ COPY public.configurazione (id, durata_timeslot_fisso, numero_max_timeslot, nume
 -- Data for Name: offerta; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.offerta (id_offerente, id_asta, data_offerta, credito_offerto) FROM stdin;
+COPY public.offerta (id_offerente, id_asta, data_offerta, credito_offerto, id) FROM stdin;
 \.
 
 
@@ -461,7 +383,7 @@ ALTER TABLE ONLY public.oggetto
 --
 
 ALTER TABLE ONLY public.offerta
-    ADD CONSTRAINT offerta_pkey PRIMARY KEY (id_offerente, id_asta);
+    ADD CONSTRAINT offerta_pkey PRIMARY KEY (id);
 
 
 --
@@ -553,11 +475,11 @@ ALTER TABLE ONLY public.categoria_oggetto
 
 
 --
--- Name: asta idConfigurazione; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: asta idConfig; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.asta
-    ADD CONSTRAINT "idConfigurazione" FOREIGN KEY (id_configurazione) REFERENCES public.configurazione(id) ON UPDATE CASCADE NOT VALID;
+    ADD CONSTRAINT "idConfig" FOREIGN KEY (id_configurazione) REFERENCES public.configurazione(id) ON UPDATE CASCADE ON DELETE SET NULL NOT VALID;
 
 
 --
@@ -602,51 +524,5 @@ ALTER TABLE ONLY public.asta
 
 --
 -- PostgreSQL database dump complete
---
-
---
--- Database "postgres" dump
---
-
-\connect postgres
-
---
--- PostgreSQL database dump
---
-
--- Dumped from database version 12.2
--- Dumped by pg_dump version 12.2
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
-
---
--- Name: uuid-ossp; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
-
-
---
--- Name: EXTENSION "uuid-ossp"; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UUIDs)';
-
-
---
--- PostgreSQL database dump complete
---
-
---
--- PostgreSQL database cluster dump complete
 --
 

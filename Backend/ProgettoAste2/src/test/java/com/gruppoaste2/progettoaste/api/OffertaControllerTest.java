@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
@@ -161,7 +162,7 @@ public class OffertaControllerTest {
                         Date.valueOf(LocalDate.now()),
                         Time.valueOf(LocalTime.now())),
                 new ConfigurazioneModel(idconf, "fisso", 1, 4, 0.21,
-                        Date.valueOf(LocalDate.now()), Time.valueOf(LocalTime.now())),
+                        Timestamp.valueOf(String.valueOf(LocalDate.now())), Time.valueOf(LocalTime.now())),
                 oggetti, offerente, offerte);
 
         List<OffertaModel> offerteTrovate =
@@ -274,7 +275,7 @@ public class OffertaControllerTest {
                         Date.valueOf(LocalDate.now()),
                         Time.valueOf(LocalTime.now())),
                 new ConfigurazioneModel(idconf, "fisso", 1, 4, 0.21,
-                        Date.valueOf(LocalDate.now()), Time.valueOf(LocalTime.now())),
+                        Timestamp.valueOf(String.valueOf(LocalDate.now())), Time.valueOf(LocalTime.now())),
                 oggetti, offerente, offerte);
 
         List<OffertaModel> offerteTrovate =

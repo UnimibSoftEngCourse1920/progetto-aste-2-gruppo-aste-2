@@ -5,10 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Time;
+import java.sql.*;
 import java.util.*;
 
 @Repository("postgres-configurazione")
@@ -25,7 +22,7 @@ public class PostgresConfigurazioneDAO implements ConfigurazioneDAO{
     public int inserisciConfigurazione(UUID id, ConfigurazioneModel configurazioneModel) {
         final String sql = "INSERT INTO configurazione(id, tipo_timeslot, numero_max_timeslot, " +
                 "numero_offerte_contemporanee_utente, penale, data_creazione, durata_timeslot_fisso) " +
-                "VALUES(?, ?, ?, ?, ?, ?, ?)";
+                "VALUES(?, ?::tipotimeslotasta, ?, ?, ?, ?, ?)";
         return jdbcTemplate.update(sql,
                 id, configurazioneModel.getTipoTimeSlot(), configurazioneModel.getMaxTimeSlot(),
                 configurazioneModel.getMaxOfferte(), configurazioneModel.getPenale(),
@@ -70,7 +67,7 @@ public class PostgresConfigurazioneDAO implements ConfigurazioneDAO{
         int maxTimeSlot = resultSet.getInt("numero_max_timeslot");
         int maxOfferte = resultSet.getInt("numero_offerte_contemporanee_utente");
         double penale =  resultSet.getDouble("penale");
-        Date dataCreazione =  resultSet.getDate("data_creazione");
+        Timestamp dataCreazione =  resultSet.getTimestamp("data_creazione");
         Time durataTimeSlotFisso = resultSet.getTime("durata_timeslot_fisso");
         return new ConfigurazioneModel(id, tipoTimeSlot, maxTimeSlot, maxOfferte, penale, dataCreazione,
                 durataTimeSlotFisso);
