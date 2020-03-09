@@ -9,5 +9,4 @@ class ProgettoAsteApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }

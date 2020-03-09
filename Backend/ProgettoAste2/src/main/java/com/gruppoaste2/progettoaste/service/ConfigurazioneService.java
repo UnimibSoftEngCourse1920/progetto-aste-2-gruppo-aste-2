@@ -31,7 +31,7 @@ public class ConfigurazioneService {
         return configurazioneDAO.trovaConfigurazione(id);
     }
 
-    public Optional<List<ConfigurazioneModel>> trovaConfigurazioni() {
+    public List<ConfigurazioneModel> trovaConfigurazioni() {
         return configurazioneDAO.trovaConfigurazioni();
     }
 
@@ -39,5 +39,4 @@ public class ConfigurazioneService {
     {
         return configurazioneDAO.trovaUltimaConfigurazione();
     }
-
 }

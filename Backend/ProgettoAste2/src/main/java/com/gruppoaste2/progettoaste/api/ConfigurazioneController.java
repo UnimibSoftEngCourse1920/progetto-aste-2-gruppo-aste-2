@@ -12,7 +12,7 @@ import java.util.UUID;
 @RestController
 public class ConfigurazioneController {
 
-    private  final ConfigurazioneService configurazioneService;
+    private final ConfigurazioneService configurazioneService;
 
     public ConfigurazioneController(ConfigurazioneService configurazioneService) {
         this.configurazioneService = configurazioneService;
@@ -20,21 +20,22 @@ public class ConfigurazioneController {
 
     @PostMapping("/inserisci")
     public int inserisciConfigurazione(@RequestBody ConfigurazioneModel configurazioneModel){
-        return configurazioneService.inserisciConfigurazione(configurazioneModel); //controllare id qui
+        return configurazioneService.inserisciConfigurazione(configurazioneModel);
     }
 
-    @GetMapping(path = "elimina/{id}")
+    @GetMapping(path = "/elimina/{id}")
     public int  eliminaConfiguazione(@PathVariable("id") UUID id){
         return configurazioneService.eliminaConfiguazione(id);
     }
 
     @GetMapping(path = "/{id}")
-    public Optional<ConfigurazioneModel> trovaConfigurazione(@PathVariable("id") UUID id) {
-        return configurazioneService.trovaConfigurazione(id);
+    public ConfigurazioneModel trovaConfigurazione(@PathVariable("id") UUID id) {
+        return configurazioneService.trovaConfigurazione(id)
+                .orElse(null);
     }
 
     @GetMapping("/configurazioni")
-    public Optional<List<ConfigurazioneModel>> trovaConfigurazioni(){
+    public List<ConfigurazioneModel> trovaConfigurazioni(){
         return configurazioneService.trovaConfigurazioni();
     }
 
@@ -43,5 +44,4 @@ public class ConfigurazioneController {
     {
         return configurazioneService.trovaUltimaConfigurazione();
     }
-
 }

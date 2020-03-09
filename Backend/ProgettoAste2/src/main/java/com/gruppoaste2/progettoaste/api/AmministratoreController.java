@@ -25,10 +25,17 @@ public class AmministratoreController {
         return amministratoreService.inserisciAmministratore(amministratore);
     }
 
+    @GetMapping(path = "/elimina/{id}")
+    public int eliminaAmministratore(@PathVariable("id") UUID id)
+    {
+        return amministratoreService.eliminaAmministratore(id);
+    }
+
     @GetMapping(path = "/{id}")
     public AmministratoreModel trovaAmministratore(@PathVariable("id") UUID id)
     {
-        return amministratoreService.trovaAmministratore(id).orElse(null);
+        return amministratoreService.trovaAmministratore(id)
+                .orElse(null);
     }
 
     @GetMapping("/amministratori")
@@ -37,16 +44,17 @@ public class AmministratoreController {
         return amministratoreService.trovaAmministratori();
     }
 
+    @PostMapping("/aggiorna/{id}")
+    public int aggiornaAmministratore(@PathVariable("id") UUID id,
+                                      @RequestBody AmministratoreModel amministratoreAggiornato)
+    {
+        return amministratoreService.aggiornaAmministratore(id, amministratoreAggiornato);
+    }
+
     @GetMapping(path = "/controlla/username/{username}")
     public boolean controllaUsernameOccupato(@PathVariable("username") String username)
     {
         return amministratoreService.controllaUsernameOccupato(username);
-    }
-
-    @GetMapping(path = "/elimina/{id}")
-    public int eliminaAmministratore(@PathVariable("id") UUID id)
-    {
-        return amministratoreService.eliminaAmministratore(id);
     }
 
     @GetMapping(path = "/controlla/email/{email}")
@@ -61,16 +69,9 @@ public class AmministratoreController {
         return amministratoreService.controllaAmministratoreEsiste(amministratore);
     }
 
-    @PostMapping("/aggiorna/{id}")
-    public int aggiornaAmministratore(@PathVariable("id") UUID id, @RequestBody AmministratoreModel amministratoreAggiornato)
-    {
-        return amministratoreService.aggiornaAmministratore(id, amministratoreAggiornato);
-    }
-
     @PostMapping("/id")
     public UUID ritornaIdAmministratore(@RequestBody AmministratoreModel amministratore)
     {
         return amministratoreService.ritornaIdAmministratore(amministratore);
     }
-
 }

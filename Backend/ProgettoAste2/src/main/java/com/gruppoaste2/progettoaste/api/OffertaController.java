@@ -19,58 +19,60 @@ public class OffertaController {
         this.offertaService = offertaService;
     }
 
-    @GetMapping
-    public String esempioGet()
+    @PostMapping(path = "/aggiungi/{id}")
+    public int aggiungiOfferta(@PathVariable("id") UUID idAsta, @RequestBody OffertaModel offerta)
     {
-        return "<h1>Prova ciao hai fatto una get ad localhost:8080/api/offerta<h1>";
+        return offertaService.aggiungiOfferta(idAsta, offerta);
     }
 
-    @GetMapping("/offerte")
-    public List<OffertaModel> trovaTutteOfferte()
+    @GetMapping(path = "/elimina/{id}")
+    public int eliminaOfferta(@PathVariable("id") UUID id)
     {
-        return offertaService.trovaTutteOfferte();
+        return offertaService.eliminaOfferta(id);
     }
 
-    @GetMapping(path="{id}")
+    @GetMapping(path = "/{id}")
     public OffertaModel trovaOfferta(@PathVariable("id") UUID id)
     {
         return offertaService.trovaOfferta(id)
                 .orElse(null);
     }
 
-    @GetMapping("/offerte/asta/{idAsta}")
-    public List<OffertaModel> trovaTutteOfferteAsta(@PathVariable("idAsta") UUID idAsta)
+    @GetMapping("/offerte")
+    public List<OffertaModel> trovaOfferte()
     {
-        return offertaService.trovaTutteOfferteAsta(idAsta);
+        return offertaService.trovaOfferte();
+    }
+
+    @GetMapping("/offerte/asta/{idAsta}")
+    public List<OffertaModel> trovaOfferteAsta(@PathVariable("idAsta") UUID idAsta)
+    {
+        return offertaService.trovaOfferteAsta(idAsta);
+    }
+
+    @GetMapping("/offerte/asta/{idAsta}/ultima")
+    public OffertaModel trovaUltimaOffertaAsta(@PathVariable("idAsta") UUID idAsta)
+    {
+        return offertaService.trovaUltimaOffertaAsta(idAsta)
+                .orElse(null);
     }
 
     @GetMapping("/offerte/offerente/{idOfferente}")
-    public List<OffertaModel> trovaTutteOfferteUtente(@PathVariable("idOfferente") UUID idOfferente)
+    public List<OffertaModel> trovaOfferteUtente(@PathVariable("idOfferente") UUID idOfferente)
     {
-        return offertaService.trovaTutteOfferteUtente(idOfferente);
+        return offertaService.trovaOfferteUtente(idOfferente);
     }
 
     @GetMapping("/offerte/{idOfferente}/{idAsta}")
-    public List<OffertaModel> trovaTutteOfferteUtenteAsta(@PathVariable("idOfferente") UUID idOfferente, @PathVariable("idAsta") UUID idAsta)
+    public List<OffertaModel> trovaOfferteUtenteAsta(@PathVariable("idOfferente") UUID idOfferente,
+                                                     @PathVariable("idAsta") UUID idAsta)
     {
-        return offertaService.trovaTutteOfferteUtenteAsta(idOfferente, idAsta);
-    }
-
-    @PostMapping(path = "/aggiungi/{id}")
-    public int aggiungiOfferta(@PathVariable("id") UUID idAsta, @RequestBody OffertaModel offerta)
-    {
-        return offertaService.inserisciOfferta(idAsta, offerta);
+        return offertaService.trovaOfferteUtenteAsta(idOfferente, idAsta);
     }
 
     @PostMapping(path = "/aggiorna/{id}")
     public int aggiornaOfferta(@PathVariable("id") UUID id, @RequestBody OffertaModel utenteAggiornato)
     {
         return offertaService.aggiornaOfferta(id, utenteAggiornato);
-    }
-
-    @GetMapping(path = "elimina/{id}")
-    public int eliminaOfferta(@PathVariable("id") UUID id)
-    {
-        return offertaService.eliminaOfferta(id);
     }
 }

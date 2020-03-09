@@ -25,14 +25,14 @@ public class OggettoService {
         return oggettoDAO.inserisciOggetto(idAsta,oggetto);
     }
 
-    public Optional<OggettoModel> trovaOggetto(UUID idOggetto)
+    public int eliminaOggetto(UUID id)
     {
-        return oggettoDAO.trovaOggetto(idOggetto);
+        return oggettoDAO.eliminaOggetto(id);
     }
 
-    public List<OggettoModel> trovaOggetti(UUID idAsta)
+    public Optional<OggettoModel> trovaOggetto(UUID id)
     {
-        return oggettoDAO.trovaOggetti(idAsta);
+        return oggettoDAO.trovaOggetto(id);
     }
 
     public List<OggettoModel> trovaOggetti()
@@ -40,25 +40,28 @@ public class OggettoService {
         return oggettoDAO.trovaOggetti();
     }
 
-    public List<OggettoModel> oggettiRegistratiDaUtente(UUID idUtente)
+    public List<OggettoModel> trovaOggettiAsta(UUID idAsta)
     {
-        return oggettoDAO.oggettiRegistratiDaUtente(idUtente);
+        return oggettoDAO.trovaOggettiAsta(idAsta);
     }
 
-    public List<OggettoModel> oggettiInCorsoAstaDaUtente(UUID idUtente)
+    public List<OggettoModel> trovaOggettiRegistratiDaUtente(UUID idUtente)
     {
-        return oggettoDAO.oggettiInCorsoAstaDaUtente(idUtente);
+        return oggettoDAO.trovaOggettiRegistratiDaUtente(idUtente);
     }
 
-    public List<OggettoModel> oggettiVintiDaUtente(UUID idUtente)
+    public List<OggettoModel> trovaOggettiInCorsoAstaUtente(UUID idUtente)
     {
-        return oggettoDAO.oggettiVintiDaUtente(idUtente);
+        return oggettoDAO.trovaOggettiInCorsoAstaUtente(idUtente);
+    }
+
+    public List<OggettoModel> trovaOggettiVintiDaUtente(UUID idUtente)
+    {
+        return oggettoDAO.trovaOggettiVintiDaUtente(idUtente);
     }
 
     public int aggiornaOggetto(UUID idOggetto, OggettoModel oggettoAggiornato)
     {
         return oggettoDAO.aggiornaOggetto(idOggetto, oggettoAggiornato);
     }
-
-
 }

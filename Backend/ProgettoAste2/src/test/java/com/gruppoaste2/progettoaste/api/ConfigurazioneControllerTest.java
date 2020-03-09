@@ -1,10 +1,7 @@
 package com.gruppoaste2.progettoaste.api;
 
-import com.gruppoaste2.progettoaste.model.AmministratoreModel;
 import com.gruppoaste2.progettoaste.model.ConfigurazioneModel;
-import com.gruppoaste2.progettoaste.model.UtenteRegistratoModel;
 import com.gruppoaste2.progettoaste.service.ConfigurazioneService;
-import com.gruppoaste2.progettoaste.service.UtenteRegistratoService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +12,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.sql.Date;
-import java.sql.Time;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.*;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -55,7 +49,7 @@ public class ConfigurazioneControllerTest {
 
         given(configurazioneService.eliminaConfiguazione(id)).willReturn(0);
 
-        mockMvc.perform(get("/api/configurazione/elimina/" + id.toString())
+        mockMvc.perform(get("/api/configurazione/elimina/" + id)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isNumber())
@@ -68,7 +62,7 @@ public class ConfigurazioneControllerTest {
 
         given(configurazioneService.eliminaConfiguazione(id)).willReturn(1);
 
-        mockMvc.perform(get("/api/configurazione/elimina/" + id.toString())
+        mockMvc.perform(get("/api/configurazione/elimina/" + id)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isNumber())
@@ -90,12 +84,13 @@ public class ConfigurazioneControllerTest {
                 .andExpect(jsonPath("$").doesNotExist());
     }
 
-    /*@Test
-    public void whenTrovaConfigurazioni_givenExistingConfigurazioni_thenReturnJsonArrayOfMapsConfigurazione() throws Exception {
+    // Test trovaConfigurazioni
+    /* @Test
+    public void whenTrovaConfigurazione_givenExistingConfigurazione_thenReturnJsonMapConfigurazione() throws Exception {
         UUID id = UUID.randomUUID();
 
-        List<ConfigurazioneModel> configurazioniTrovate =
-                Collections.singletonList(new ConfigurazioneModel(id, "timeSlot", 3600, 10, 0.1, Date.valueOf(LocalDate.now()), 11620));
+        Optional<ConfigurazioneModel> configurazioneTrovata =
+                Optional.of(new ConfigurazioneModel(id, "timeSlot", 3600, 10, 0.1, Date.valueOf(LocalDate.now()), 11620));
 
         given(configurazioneService.trovaConfigurazione(id)).willReturn(configurazioneTrovata);
 
@@ -112,12 +107,11 @@ public class ConfigurazioneControllerTest {
                 .andExpect(jsonPath("$.durataTimeSlotFisso").value(configurazioneTrovata.get().getDurataTimeSlotFisso()));
     }*/
 
-    // Test trovaConfigurazioni
     @Test
     public void whenTrovaConfigurazioni_givenNonExistingConfigurazioni_thenReturnEmptyJsonArray() throws Exception {
         List<ConfigurazioneModel> configurazioniTrovate = Collections.emptyList();
 
-        given(configurazioneService.trovaConfigurazioni()).willReturn(Optional.of(configurazioniTrovate));
+        given(configurazioneService.trovaConfigurazioni()).willReturn(configurazioniTrovate);
 
         mockMvc.perform(get("/api/configurazione/configurazioni")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -127,13 +121,13 @@ public class ConfigurazioneControllerTest {
     }
 
     /*@Test
-    public void whenTrovaConfigurazioni_givenExistingConfigurazioni_thenReturnJsonArrayOfMapsConfigurazione() throws Exception {
+    public void whenTrovaConfigurazioni_givenExistingConfigurazioni_thenReturnJsonArrayOfMapsConfigurazioni() throws Exception {
         UUID id = UUID.randomUUID();
 
         List<ConfigurazioneModel> configurazioniTrovate =
                 Collections.singletonList(new ConfigurazioneModel(id, "timeSlot", 3600, 10, 0.1, Date.valueOf(LocalDate.now()), 11620));
 
-        given(configurazioneService.trovaConfigurazioni()).willReturn(Optional.of(configurazioniTrovate));
+        given(configurazioneService.trovaConfigurazioni()).willReturn(configurazioniTrovate);
 
         mockMvc.perform(get("/api/configurazione/configurazioni")
                 .contentType(MediaType.APPLICATION_JSON))

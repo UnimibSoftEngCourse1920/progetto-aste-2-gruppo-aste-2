@@ -11,7 +11,7 @@ public interface ConfigurazioneDAO {
     default int inserisciConfigurazione(ConfigurazioneModel configurazioneModel)
     {
         UUID id = UUID.randomUUID();
-        return inserisciConfigurazione(id,configurazioneModel);
+        return inserisciConfigurazione(id, configurazioneModel);
     }
 
     int inserisciConfigurazione(UUID id, ConfigurazioneModel configurazioneModel);
@@ -20,8 +20,7 @@ public interface ConfigurazioneDAO {
 
     Optional<ConfigurazioneModel> trovaConfigurazione(UUID id);
 
-    Optional<List<ConfigurazioneModel>> trovaConfigurazioni();
+    List<ConfigurazioneModel> trovaConfigurazioni();
 
     Optional<ConfigurazioneModel> trovaUltimaConfigurazione();
-
 }

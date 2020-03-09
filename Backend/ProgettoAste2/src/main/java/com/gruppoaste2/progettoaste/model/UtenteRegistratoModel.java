@@ -7,8 +7,9 @@ public class UtenteRegistratoModel extends UtenteModel {
     private final String numeroTelefono;
     private final float credito;
 
-    public UtenteRegistratoModel(UUID id, String username, String email, String numeroTelefono, String password, float credito){
-        super(id, username, email,password);
+    public UtenteRegistratoModel(UUID id, String username, String email, String numeroTelefono, String password,
+                                 float credito){
+        super(id, username, email, password);
         this.numeroTelefono = numeroTelefono;
         this.credito = credito;
 
@@ -22,6 +23,4 @@ public class UtenteRegistratoModel extends UtenteModel {
     {
         return credito;
     }
-
-
 }

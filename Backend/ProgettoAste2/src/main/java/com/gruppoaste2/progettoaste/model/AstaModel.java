@@ -5,15 +5,14 @@ import java.util.UUID;
 
 public class AstaModel {
 
-
     private final UUID id;
-    private final InfoAsta infoAsta;
+    private final InfoAstaModel infoAsta;
     private final ConfigurazioneModel configurazione;
     private final List<OggettoModel> oggetti;
     private final UtenteRegistratoModel astaManager;
     private final List<OffertaModel> offerte;
 
-    public AstaModel(UUID id, InfoAsta infoAsta, ConfigurazioneModel configurazione, List<OggettoModel> oggetti,
+    public AstaModel(UUID id, InfoAstaModel infoAsta, ConfigurazioneModel configurazione, List<OggettoModel> oggetti,
                      UtenteRegistratoModel astaManager, List<OffertaModel> offerte) {
         this.id = id;
         this.infoAsta = infoAsta;
@@ -27,7 +26,7 @@ public class AstaModel {
         return id;
     }
 
-    public InfoAsta getInfoAsta() {
+    public InfoAstaModel getInfoAsta() {
         return infoAsta;
     }
 

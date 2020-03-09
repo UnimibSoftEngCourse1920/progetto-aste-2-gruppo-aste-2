@@ -20,8 +20,8 @@ public class AstaService {
         this.astaDAO = astaDAO;
     }
 
-    public int inserisciAsta(AstaModel astaModel) {
-        return astaDAO.inserisciAsta(astaModel);
+    public int aggiungiAsta(AstaModel astaModel) {
+        return astaDAO.aggiungiAsta(astaModel);
     }
 
     public int eliminaAsta(UUID id){
@@ -32,8 +32,8 @@ public class AstaService {
         return astaDAO.trovaAsta(id);
     }
 
-    public List<AstaModel> trovaTutteAste(){
-        return astaDAO.trovaTutteAste();
+    public List<AstaModel> trovaAste(){
+        return astaDAO.trovaAste();
     }
 
     public int aggiornaAsta(UUID id, AstaModel astaAggiornata){

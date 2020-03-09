@@ -9,13 +9,13 @@ public abstract class UtenteModel {
     private String email;
     private String password;
 
-    public UtenteModel(UUID id, String username, String email, String password){
+    UtenteModel(UUID id, String username, String email, String password){
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
     }
-    public  String getUsername(){
+    public String getUsername(){
         return username;
     }
 

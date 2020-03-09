@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RequestMapping("api/oggetto")
@@ -26,10 +25,17 @@ public class OggettoController {
         return oggettoService.inserisciOggetto(idAsta, oggetto);
     }
 
-    @PostMapping(path = "/aggiorna{id}")
-    public int aggiornaOggetto(@PathVariable("id") UUID idOggetto, @RequestBody OggettoModel oggettoAggiornato)
+    @GetMapping(path = "/elimina/{id}")
+    public int eliminaOggetto(@PathVariable UUID id)
     {
-        return oggettoService.aggiornaOggetto(idOggetto, oggettoAggiornato);
+        return oggettoService.eliminaOggetto(id);
+    }
+
+    @GetMapping(path = "/{id}")
+    public OggettoModel trovaOggetto(@PathVariable("id") UUID id)
+    {
+        return oggettoService.trovaOggetto(id)
+                .orElse(null);
     }
 
     @GetMapping("/oggetti")
@@ -38,33 +44,33 @@ public class OggettoController {
         return oggettoService.trovaOggetti();
     }
 
-    @GetMapping(path = "/{id}")
-    public Optional<OggettoModel> trovaOggetto(@PathVariable("id") UUID idOggetto)
-    {
-        return oggettoService.trovaOggetto(idOggetto);
-    }
-
     @GetMapping(path = "/asta/{id}")
     public List<OggettoModel> trovaOggettiAsta(@PathVariable("id") UUID idAsta)
     {
-        return oggettoService.trovaOggetti(idAsta);
+        return oggettoService.trovaOggettiAsta(idAsta);
     }
 
     @GetMapping(path = "/registrati/{id}")
-    public List<OggettoModel> oggettiRegistratiDaUtente(@PathVariable("id") UUID idUtente)
+    public List<OggettoModel> trovaOggettiRegistratiDaUtente(@PathVariable("id") UUID idUtente)
     {
-        return oggettoService.oggettiRegistratiDaUtente(idUtente);
+        return oggettoService.trovaOggettiRegistratiDaUtente(idUtente);
     }
 
-    @GetMapping(path = "incorso/{id}")
-    public List<OggettoModel> oggettiInCorsoAstaUtente(@PathVariable("id") UUID idUtente)
+    @GetMapping(path = "/incorso/{id}")
+    public List<OggettoModel> trovaOggettiInCorsoAstaUtente(@PathVariable("id") UUID idUtente)
     {
-        return oggettoService.oggettiInCorsoAstaDaUtente(idUtente);
+        return oggettoService.trovaOggettiInCorsoAstaUtente(idUtente);
     }
 
     @GetMapping(path = "/vinti/{id}")
-    public List<OggettoModel> oggettiVintiDaUtente(@PathVariable("id") UUID idUtente)
+    public List<OggettoModel> trovaOggettiVintiDaUtente(@PathVariable("id") UUID idUtente)
     {
-        return oggettoService.oggettiVintiDaUtente(idUtente);
+        return oggettoService.trovaOggettiVintiDaUtente(idUtente);
+    }
+
+    @PostMapping(path = "/aggiorna{id}")
+    public int aggiornaOggetto(@PathVariable("id") UUID idOggetto, @RequestBody OggettoModel oggettoAggiornato)
+    {
+        return oggettoService.aggiornaOggetto(idOggetto, oggettoAggiornato);
     }
 }

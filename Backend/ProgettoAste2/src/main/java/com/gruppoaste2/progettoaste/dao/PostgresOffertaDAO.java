@@ -7,6 +7,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -18,12 +20,6 @@ public class PostgresOffertaDAO implements OffertaDAO{
 
     private final UtenteRegistratoDAO utenteRegistratoDAO;
 
-    private static final String IDOFFERENTE = "id_offerente";
-    private static final String ID = "id";
-    private static final String DATAOFFERTA= "data_offerta";
-    private static final String CREDITOOFFERTA = "credito_offerto";
-
-
     @Autowired
     public PostgresOffertaDAO(JdbcTemplate jdbcTemplate, UtenteRegistratoDAO utenteRegistratoDAO) {
         this.jdbcTemplate = jdbcTemplate;
@@ -31,11 +27,11 @@ public class PostgresOffertaDAO implements OffertaDAO{
     }
 
     @Override
-    public int inserisciOfferta(UUID id, UUID idAsta, OffertaModel offerta) {
-        final String sql = "INSERT INTO offerta(id,id_offerente,id_asta,data_offerta,credito_offerto)" +
-                " VALUES(?,?,?,?,?)";
+    public int aggiungiOfferta(UUID id, UUID idAsta, OffertaModel offerta) {
+        final String sql = "INSERT INTO offerta(id, id_offerente, id_asta, data_offerta, credito_offerto) " +
+                "VALUES(?, ?, ?, ?, ?)";
         return jdbcTemplate.update(sql,
-                id,offerta.getOfferente().getId(),idAsta,offerta.getDataOfferta(),offerta.getCreditoOfferto());
+                id, offerta.getOfferente().getId(), idAsta, offerta.getDataOfferta(), offerta.getCreditoOfferto());
     }
 
     @Override
@@ -47,116 +43,71 @@ public class PostgresOffertaDAO implements OffertaDAO{
     @Override
     public Optional<OffertaModel> trovaOfferta(UUID id) {
         final String sql = "SELECT * FROM offerta WHERE id = ?";
-        OffertaModel offertaTrovata = jdbcTemplate.queryForObject(
-                sql, new Object[]{id},
-                (resultSet, i) -> {
-                    UUID idTrovato = UUID.fromString(resultSet.getString(ID));
-
-                    UUID idOfferente = UUID.fromString(resultSet.getString(IDOFFERENTE));
-                    Optional<UtenteRegistratoModel> optionalOfferente = utenteRegistratoDAO.trovaUtenteRegistrato(idOfferente);
-                    UtenteRegistratoModel offerente;
-                    if(optionalOfferente.isPresent())
-                        offerente = optionalOfferente.get();
-                    else
-                        return null;
-                    // TODO: throw OfferenteNotFoundException
-
-                    Date dataOfferta = resultSet.getDate(DATAOFFERTA);
-                    float creditoOfferto = resultSet.getFloat(CREDITOOFFERTA);
-                    return new OffertaModel(idTrovato, creditoOfferto, dataOfferta, offerente);
-                });
-        return Optional.ofNullable(offertaTrovata);
+        List<OffertaModel> results = jdbcTemplate.query(
+                sql, (resultSet, i) -> makeOffertaFromResultSet(resultSet),
+                id);
+        OffertaModel returnable = (results.isEmpty())? null : results.get(0);
+        return Optional.ofNullable(returnable);
     }
 
     @Override
-    public List<OffertaModel> trovaTutteOfferte() {
+    public List<OffertaModel> trovaOfferte() {
         final String sql = "SELECT * FROM offerta";
-        return jdbcTemplate.query(sql, (resultSet, i) -> {
-            UUID id = UUID.fromString(resultSet.getString(ID));
-
-            UUID idUtenteRegistrato = UUID.fromString(resultSet.getString(IDOFFERENTE));
-            Optional<UtenteRegistratoModel> optionalUtenteOfferente = utenteRegistratoDAO.trovaUtenteRegistrato(idUtenteRegistrato);
-            UtenteRegistratoModel utenteOfferente;
-            if(optionalUtenteOfferente.isPresent())
-                utenteOfferente = optionalUtenteOfferente.get();
-            else
-                return null;
-            // TODO: throw OfferenteNotFoundException
-
-            Date dataOfferta = resultSet.getDate(DATAOFFERTA);
-            float creditoOfferto = resultSet.getFloat(CREDITOOFFERTA);
-            return new OffertaModel(id, creditoOfferto, dataOfferta, utenteOfferente);
-        });
+        return jdbcTemplate.query(sql,
+                (resultSet, i) -> makeOffertaFromResultSet(resultSet));
     }
 
     @Override
-    public List<OffertaModel> trovaTutteOfferteAsta(UUID idAsta) {
+    public List<OffertaModel> trovaOfferteAsta(UUID idAsta) {
         final String sql = "SELECT * FROM offerta WHERE id_asta = ?";
-        return jdbcTemplate.query(sql, (resultSet, i) -> {
-            UUID id = UUID.fromString(resultSet.getString(ID));
-
-            UUID idOfferente = UUID.fromString(resultSet.getString(IDOFFERENTE));
-            Optional<UtenteRegistratoModel> optionalOfferente = utenteRegistratoDAO.trovaUtenteRegistrato(idOfferente);
-            UtenteRegistratoModel offerente;
-            if(optionalOfferente.isPresent())
-                offerente = optionalOfferente.get();
-            else
-                return null;
-            // TODO: throw OfferenteNotFoundException
-
-            Date dataOfferta = resultSet.getDate(DATAOFFERTA);
-            float creditoOfferto = resultSet.getFloat(CREDITOOFFERTA);
-            return new OffertaModel(id, creditoOfferto, dataOfferta, offerente);
-        },
-        idAsta);
+        return jdbcTemplate.query(sql,
+                (resultSet, i) -> makeOffertaFromResultSet(resultSet),
+                idAsta);
     }
 
     @Override
-    public List<OffertaModel> trovaTutteOfferteUtente(UUID idOfferente) {
+    public Optional<OffertaModel> trovaUltimaOffertaAsta(UUID idAsta) {
+        final String sql = "SELECT * FROM offerta WHERE id_asta = ? ORDER BY data_offerta DESC LIMIT 1";
+        List<OffertaModel> results = jdbcTemplate.query(
+                sql, (resultSet, i) -> makeOffertaFromResultSet(resultSet),
+                idAsta);
+        OffertaModel returnable = (results.isEmpty())? null : results.get(0);
+        return Optional.ofNullable(returnable);
+    }
+
+    @Override
+    public List<OffertaModel> trovaOfferteUtente(UUID idOfferente) {
         final String sql = "SELECT * FROM offerta WHERE id_offerente = ?";
-        return jdbcTemplate.query(sql, (resultSet, i) -> {
-            UUID id = UUID.fromString(resultSet.getString(ID));
-
-            Optional<UtenteRegistratoModel> optionalOfferente = utenteRegistratoDAO.trovaUtenteRegistrato(idOfferente);
-            UtenteRegistratoModel offerente;
-            if(optionalOfferente.isPresent())
-                offerente = optionalOfferente.get();
-            else
-                return null;
-            // TODO: throw OfferenteNotFoundException
-
-            Date dataOfferta = resultSet.getDate(DATAOFFERTA);
-            float creditoOfferto = resultSet.getFloat(CREDITOOFFERTA);
-            return new OffertaModel(id, creditoOfferto, dataOfferta, offerente);
-        },
-        idOfferente);
+        return jdbcTemplate.query(sql,
+                (resultSet, i) -> makeOffertaFromResultSet(resultSet),
+                idOfferente);
     }
 
     @Override
-    public List<OffertaModel> trovaTutteOfferteUtenteAsta(UUID idOfferente, UUID idAsta) {
+    public List<OffertaModel> trovaOfferteUtenteAsta(UUID idOfferente, UUID idAsta) {
         final String sql = "SELECT * FROM offerta WHERE id_offerente = ? AND id_asta = ?";
-        return jdbcTemplate.query(sql, (resultSet, i) -> {
-            UUID id = UUID.fromString(resultSet.getString(ID));
-
-            Optional<UtenteRegistratoModel> optionalOfferente = utenteRegistratoDAO.trovaUtenteRegistrato(idOfferente);
-            UtenteRegistratoModel offerente;
-            if(optionalOfferente.isPresent())
-                offerente = optionalOfferente.get();
-            else
-                return null;
-            // TODO: throw OfferenteNotFoundException
-
-            Date dataOfferta = resultSet.getDate(DATAOFFERTA);
-            float creditoOfferto = resultSet.getFloat(CREDITOOFFERTA);
-            return new OffertaModel(id, creditoOfferto, dataOfferta, offerente);
-        },
-        idOfferente, idAsta);
+        return jdbcTemplate.query(sql,
+                (resultSet, i) -> makeOffertaFromResultSet(resultSet),
+                idOfferente, idAsta);
     }
 
     @Override
     public int aggiornaOfferta(UUID id, OffertaModel offertaAggiornata) {
         final String sql = "UPDATE offerta SET id_offerente = ?, data_offerta = ?, credito_offerto = ? WHERE id = ?";
-        return jdbcTemplate.update(sql,offertaAggiornata.getOfferente().getId(), offertaAggiornata.getDataOfferta(),
+        return jdbcTemplate.update(sql,
+                offertaAggiornata.getOfferente().getId(), offertaAggiornata.getDataOfferta(),
                 offertaAggiornata.getCreditoOfferto(), id);
+    }
+
+    private OffertaModel makeOffertaFromResultSet(ResultSet resultSet) throws SQLException {
+        UUID id = UUID.fromString(resultSet.getString("id"));
+
+        UUID idOfferente = UUID.fromString(resultSet.getString("id_offerente"));
+        UtenteRegistratoModel offerente = utenteRegistratoDAO.trovaUtenteRegistrato(idOfferente)
+                .orElse(null);
+
+        Date dataOfferta = resultSet.getDate("data_offerta");
+        float creditoOfferto = resultSet.getFloat("credito_offerto");
+        return new OffertaModel(id, creditoOfferto, dataOfferta, offerente);
     }
 }

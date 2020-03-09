@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -21,10 +23,10 @@ public class PostgresAmministratoreDAO implements AmministratoreDAO {
 
     @Override
     public int inserisciAmministratore(UUID id, AmministratoreModel amministratore) {
-        final String sql = "INSERT INTO amministratore(id,username,password,email)" +
-                " VALUES(?,?,?,?)";
+        final String sql = "INSERT INTO amministratore(id, username, password, email) " +
+                "VALUES(?, ?, ?, ?)";
         return jdbcTemplate.update(sql,
-                id,amministratore.getUsername(),amministratore.getPassword(),amministratore.getEmail());
+                id, amministratore.getUsername(), amministratore.getPassword(), amministratore.getEmail());
 
     }
 
@@ -38,60 +40,60 @@ public class PostgresAmministratoreDAO implements AmministratoreDAO {
     public Optional<AmministratoreModel> trovaAmministratore(UUID id) {
         final String sql = "SELECT * FROM amministratore WHERE id = ?";
          List<AmministratoreModel> results = jdbcTemplate.query(sql,
-                (resultSet, i) -> {
-                    String username = resultSet.getString("username");
-                    String password = resultSet.getString("password");
-                    String email = resultSet.getString("email");
-                    return new AmministratoreModel(id,username,email,password);
-                },
-                id);
-
+                (resultSet, i) -> makeAmministratoreFromResultSet(resultSet),
+                 id);
         AmministratoreModel returnable = (results.isEmpty())? null : results.get(0);
-        return  Optional.ofNullable(returnable);
+        return Optional.ofNullable(returnable);
     }
 
     @Override
     public List<AmministratoreModel> trovaAmministratori() {
         final String sql = "SELECT * FROM amministratore";
-
-        return jdbcTemplate.query(sql, (resultSet, i) ->
-        {
-            UUID id = UUID.fromString(resultSet.getString("id"));
-            String username = resultSet.getString("username");
-            String password = resultSet.getString("password");
-            String email = resultSet.getString("email");
-            return new AmministratoreModel(id,username,email,password);
-        });
+        return jdbcTemplate.query(sql,
+                (resultSet, i) -> makeAmministratoreFromResultSet(resultSet));
     }
 
 
     @Override
     public int aggiornaAmministratore(UUID id, AmministratoreModel amministratoreAggiornato) {
         final String sql = "UPDATE utente_registrato SET username = ?, password = ?, email = ? WHERE id = ?";
-        return jdbcTemplate.update(sql,amministratoreAggiornato.getUsername(), amministratoreAggiornato.getPassword(), amministratoreAggiornato.getEmail(), id);
+        return jdbcTemplate.update(sql,
+                amministratoreAggiornato.getUsername(), amministratoreAggiornato.getPassword(),
+                amministratoreAggiornato.getEmail(), id);
     }
 
     @Override
     public boolean controllaUsernameOccupato(String username) {
         final String sql = "SELECT EXISTS(SELECT 1 FROM amministratore WHERE username = ?)";
-        return jdbcTemplate.queryForObject(sql,Boolean.class,username);
+        return jdbcTemplate.queryForObject(sql, Boolean.class, username);
     }
 
     @Override
     public boolean controllaEmailOccupata(String email) {
         final String sql = "SELECT EXISTS(SELECT 1 FROM amministratore WHERE email = ?)";
-        return jdbcTemplate.queryForObject(sql,Boolean.class,email);
+        return jdbcTemplate.queryForObject(sql, Boolean.class, email);
     }
 
     @Override
     public boolean controllaAmministratoreEsiste(AmministratoreModel amministratore) {
-        final String sql = "SELECT EXISTS(SELECT 1 FROM amministratore WHERE username = ? AND email = ? AND password = ?)";
-        return jdbcTemplate.queryForObject(sql,Boolean.class, amministratore.getUsername(), amministratore.getEmail(), amministratore.getPassword());
+        final String sql = "SELECT EXISTS" +
+                "(SELECT 1 FROM amministratore WHERE username = ? AND email = ? AND password = ?)";
+        return jdbcTemplate.queryForObject(sql, Boolean.class,
+                amministratore.getUsername(), amministratore.getEmail(), amministratore.getPassword());
     }
 
     @Override
     public UUID ritornaIdAmministratore(AmministratoreModel amministratore) {
         final String sql = "SELECT id FROM amministratore WHERE username = ? AND email = ? AND password = ?";
-        return jdbcTemplate.queryForObject(sql,UUID.class, amministratore.getUsername(), amministratore.getEmail(), amministratore.getPassword());
+        return jdbcTemplate.queryForObject(sql, UUID.class,
+                amministratore.getUsername(), amministratore.getEmail(), amministratore.getPassword());
+    }
+
+    private AmministratoreModel makeAmministratoreFromResultSet(ResultSet resultSet) throws SQLException {
+        UUID id = UUID.fromString(resultSet.getString("id"));
+        String username = resultSet.getString("username");
+        String email = resultSet.getString("email");
+        String password = resultSet.getString("password");
+        return new AmministratoreModel(id, username, email, password);
     }
 }

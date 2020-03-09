@@ -1,6 +1,7 @@
 package com.gruppoaste2.progettoaste.service;
 
 import com.gruppoaste2.progettoaste.dao.UtenteRegistratoDAO;
+import com.gruppoaste2.progettoaste.model.InfoCreditoModel;
 import com.gruppoaste2.progettoaste.model.UtenteRegistratoModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,20 +21,20 @@ public class UtenteRegistratoService {
         this.utenteRegistratoDAO = utenteRegistratoDAO;
     }
 
-    public int inserisciUtenteRegistrato(UtenteRegistratoModel utenteRegistratoModel) {
-        return utenteRegistratoDAO.inserisciUtenteRegistrato(utenteRegistratoModel);
+    public int aggiungiUtenteRegistrato(UtenteRegistratoModel utenteRegistratoModel) {
+        return utenteRegistratoDAO.aggiungiUtenteRegistrato(utenteRegistratoModel);
     }
 
     public int eliminaUtenteRegistrato(UUID id){
         return utenteRegistratoDAO.eliminaUtenteRegistrato(id);
     }
 
-    public Optional<UtenteRegistratoModel> trovaUtenteRegistro(UUID id){
+    public Optional<UtenteRegistratoModel> trovaUtenteRegistrato(UUID id){
         return utenteRegistratoDAO.trovaUtenteRegistrato(id);
     }
 
-    public List<UtenteRegistratoModel> trovaTuttiUtentiRegistrati(){
-        return utenteRegistratoDAO.trovaTuttiUtentiRegistrati();
+    public List<UtenteRegistratoModel> trovaUtentiRegistrati(){
+        return utenteRegistratoDAO.trovaUtentiRegistrati();
     }
 
     public int aggiornaUtenteRegistrato(UUID id, UtenteRegistratoModel utenteAggiornato){
@@ -60,18 +61,11 @@ public class UtenteRegistratoService {
         return utenteRegistratoDAO.aggiungiCredito(id,creditoAggiunto);
     }
 
-    public float creditoTotale(UUID id)
-    {
-        return utenteRegistratoDAO.creditoTotale(id);
-    }
+    public InfoCreditoModel infoCredito(UUID id) {
+        final float creditoTotale = utenteRegistratoDAO.creditoTotale(id);
+        final float creditoImpegnato = utenteRegistratoDAO.creditoImpegnato(id);
+        final float creditoDisponibile = creditoTotale - creditoImpegnato;
 
-    public float creditoImpegnato(UUID id)
-    {
-        return utenteRegistratoDAO.creditoImpegnato(id);
-    }
-
-    public float creditoDisponibile(UUID id)
-    {
-        return utenteRegistratoDAO.creditoDisponibile(id);
+        return new InfoCreditoModel(creditoTotale, creditoDisponibile, creditoImpegnato);
     }
 }

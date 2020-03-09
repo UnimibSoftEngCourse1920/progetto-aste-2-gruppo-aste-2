@@ -6,13 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Repository("postgres-categoria")
-public class PostgresCategoriaDAO implements CategoriaDAO{
+public class PostgresCategoriaDAO implements CategoriaDAO {
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -23,8 +25,9 @@ public class PostgresCategoriaDAO implements CategoriaDAO{
 
 
     @Override
-    public int inserisciCategoria(UUID idCategoria, CategoriaModel categoria) {
-        final String sql = "INSERT INTO categoria (id, nome) VALUES (?, ?)";
+    public int aggiungiCategoria(UUID idCategoria, CategoriaModel categoria) {
+        final String sql = "INSERT INTO categoria(id, nome) " +
+                "VALUES(?, ?)";
         return jdbcTemplate.update(sql, idCategoria, categoria.getNome());
     }
 
@@ -38,65 +41,60 @@ public class PostgresCategoriaDAO implements CategoriaDAO{
     public Optional<CategoriaModel> trovaCategoria(UUID id) {
         final String sql = "SELECT * FROM categoria WHERE id = ?";
         List<CategoriaModel> results = jdbcTemplate.query(sql,
-                (resultSet, i) -> {
-                    UUID idTrovato = UUID.fromString(resultSet.getString("id"));
-                    String nomeTrovato = resultSet.getString("nome");
-                    return new CategoriaModel(idTrovato, Collections.emptyMap(), nomeTrovato);
-                },
+                (resultSet, i) -> makeCategoriaFromResultSet(resultSet),
                 id);
-
         CategoriaModel returnable = (results.isEmpty())? null : results.get(0);
-        return  Optional.ofNullable(returnable);
-
+        return Optional.ofNullable(returnable);
     }
 
     @Override
     public List<CategoriaModel> trovaCategorie() {
         final String sql = "SELECT * FROM categoria";
         return jdbcTemplate.query(sql,
-                (resultSet, i) -> {
-                    UUID idTrovato = UUID.fromString(resultSet.getString("id"));
-                    String nomeTrovato = resultSet.getString("nome");
-                    return new CategoriaModel(idTrovato, Collections.emptyMap(), nomeTrovato);
-                });
-    }
-
-    @Override
-    public int aggiornaCategoria(UUID id, CategoriaModel categoriaAggiornata) {
-        final String sql = "UPDATE categoria SET nome = ?";
-        return jdbcTemplate.update(sql,categoriaAggiornata.getNome());
+                (resultSet, i) -> makeCategoriaFromResultSet(resultSet));
     }
 
     @Override
     public List<AttributoModel> trovaAttributiCategoria(UUID idCategoria) {
         final String sql = "SELECT * FROM attributo WHERE id_categoria = ?";
         return jdbcTemplate.query(sql,
-                (resultSet, i) -> {
-                    UUID id = UUID.fromString(resultSet.getString("id"));
-                    String nome = resultSet.getString("nome");
-                    return new AttributoModel(id,nome);
-                },
+                (resultSet, i) -> makeAttributoFromResultSet(resultSet),
                 idCategoria);
     }
 
     @Override
     public List<CategoriaModel> trovaCategorieOggetto(UUID idOggetto) {
-        final String sql = "SELECT c.id, c.nome FROM categoria_oggetto as co, categoria as c WHERE co.id_oggetto = ? AND c.id_categoria = c.id";
+        final String sql = "SELECT c.id, c.nome " +
+                "FROM categoria_oggetto AS co, categoria AS c " +
+                "WHERE co.id_oggetto = ? AND c.id_categoria = c.id";
         return jdbcTemplate.query(sql,
-                (resultSet, i) -> {
-                    UUID id = UUID.fromString(resultSet.getString("id"));
-                    String nome = resultSet.getString("nome");
-                    return new CategoriaModel(id, Collections.emptyMap(), nome);
-                },
+                (resultSet, i) -> makeCategoriaFromResultSet(resultSet),
                 idOggetto);
     }
 
     @Override
     public String valoreAttributoOggetto(UUID idOggetto, UUID idAttributo) {
-        final String sql = "SELECT valore FROM attributo_oggetto WHERE id_oggetto = ? AND id_categoria = ?";
+        final String sql = "SELECT valore FROM attributo_oggetto WHERE id_oggetto = ? AND id_attributo = ?";
         return jdbcTemplate.queryForObject(sql,
                 (resultSet, i) -> resultSet.getString("valore"),
                 idOggetto, idAttributo);
     }
-}
 
+    @Override
+    public int aggiornaCategoria(UUID id, CategoriaModel categoriaAggiornata) {
+        final String sql = "UPDATE categoria SET nome = ?";
+        return jdbcTemplate.update(sql, categoriaAggiornata.getNome());
+    }
+
+    private CategoriaModel makeCategoriaFromResultSet(ResultSet resultSet) throws SQLException {
+        UUID id = UUID.fromString(resultSet.getString("id"));
+        String nome = resultSet.getString("nome");
+        return new CategoriaModel(id, Collections.emptyMap(), nome);
+    }
+
+    private AttributoModel makeAttributoFromResultSet(ResultSet resultSet) throws SQLException {
+        UUID id = UUID.fromString(resultSet.getString("id"));
+        String nome = resultSet.getString("nome");
+        return new AttributoModel(id, nome);
+    }
+}

@@ -36,7 +36,7 @@ public class UtenteRegistratoControllerTest {
 
         Optional<UtenteRegistratoModel> utenteRegistratoTrovato = Optional.empty();
 
-        given(utenteRegistratoService.trovaUtenteRegistro(id)).willReturn(utenteRegistratoTrovato);
+        given(utenteRegistratoService.trovaUtenteRegistrato(id)).willReturn(utenteRegistratoTrovato);
 
         mockMvc.perform(get("/api/utenteregistrato/" + id)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -51,7 +51,7 @@ public class UtenteRegistratoControllerTest {
         Optional<UtenteRegistratoModel> utenteRegistratoTrovato =
                 Optional.of(new UtenteRegistratoModel(id,"username","email", "numeroTelefono", "password", 3.14f));
 
-        given(utenteRegistratoService.trovaUtenteRegistro(id)).willReturn(utenteRegistratoTrovato);
+        given(utenteRegistratoService.trovaUtenteRegistrato(id)).willReturn(utenteRegistratoTrovato);
 
         mockMvc.perform(get("/api/utenteregistrato/" + id)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -70,7 +70,7 @@ public class UtenteRegistratoControllerTest {
     public void whenTrovaUtentiRegistrati_givenNonExistingUtentiRegistrati_thenReturnEmptyJsonArray() throws Exception {
         List<UtenteRegistratoModel> utentiRegistratiTrovati = Collections.emptyList();
 
-        given(utenteRegistratoService.trovaTuttiUtentiRegistrati()).willReturn(utentiRegistratiTrovati);
+        given(utenteRegistratoService.trovaUtentiRegistrati()).willReturn(utentiRegistratiTrovati);
 
         mockMvc.perform(get("/api/utenteregistrato/utenti")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -86,7 +86,7 @@ public class UtenteRegistratoControllerTest {
         List<UtenteRegistratoModel> utentiRegistratiTrovati =
                 Collections.singletonList(new UtenteRegistratoModel(id,"username","email", "numeroTelefono", "password", 3.14f));
 
-        given(utenteRegistratoService.trovaTuttiUtentiRegistrati()).willReturn(utentiRegistratiTrovati);
+        given(utenteRegistratoService.trovaUtentiRegistrati()).willReturn(utentiRegistratiTrovati);
 
         mockMvc.perform(get("/api/utenteregistrato/utenti")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -223,7 +223,7 @@ public class UtenteRegistratoControllerTest {
     }
 
     @Test
-    public void whenInfoCredito_givenExistingCredito_thenReturnJsonInfoCredito() throws Exception {
+    public void whenInfoCredito_givenExistingCredito_thenReturnJsonMapInfoCredito() throws Exception {
 
     }
 
@@ -237,5 +237,4 @@ public class UtenteRegistratoControllerTest {
     public void whenAggiungiCredito_givenExistingCredito_thenReturnJsonNumber1() throws Exception {
 
     }
-
 }

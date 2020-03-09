@@ -2,7 +2,6 @@ package com.gruppoaste2.progettoaste.model;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import java.net.URL;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
