@@ -16,17 +16,9 @@ public class UtenteRegistratoModel extends UtenteModel {
         this.credito = credito;
         this.notificheEmail = notificheEmail;
         this.notificheSms = notificheEmail;
-
     }
 
-    public UtenteRegistratoModel(UUID id, String username, String email, String numeroTelefono, String password,
-                                 float credito) {
-        super(id, username, email, password);
-        this.numeroTelefono = numeroTelefono;
-        this.credito = credito;
-        this.notificheSms = false;
-        this.notificheEmail = false;
-    }
+
 
     public String getNumeroTelefono() {
         return numeroTelefono;
