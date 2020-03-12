@@ -6,6 +6,8 @@ import AdminPage from '../views/AdminPage.vue'
 import TransactionsPage from '../views/TransactionsPage.vue'
 import UltimaConfig from '../views/UltimaConfig.vue'
 import CreaConfig from '../views/CreaConfig.vue'
+import UtenteCredito from '../views/UtenteCredito.vue'
+import UserPage from '../views/UserPage.vue'
 
 Vue.use(VueRouter)
 
@@ -27,18 +29,28 @@ const routes = [
   },
   {
     path: '/transactions',
-    name: '/transactions',
+    name: 'transactions',
     component: TransactionsPage
   },
   {
     path: '/ultimaconfig',
-    name: '/ultimaconfig',
+    name: 'ultimaconfig',
     component: UltimaConfig
   },
   {
     path: '/creaconfig',
-    name: '/creaconfig',
+    name: 'creaconfig',
     component: CreaConfig
+  },
+  {
+    path: '/user',
+    name: 'user',
+    component: UserPage
+  },
+  {
+    path: '/utentecredito',
+    name: 'utentecredito',
+    component: UtenteCredito
   }
 
 

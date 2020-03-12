@@ -76,14 +76,15 @@ export default {
             email: this.form.email
           })
         })
+          .then(response => response.json())
           .then(response => {
-            return response.json();
-          })
-          .then(jsonData => {
-            console.log(jsonData);
-            if (jsonData === true) {
+            console.log(response);
+            if (response === true) {
               // move to user homepage
               alert("Utente trovato");
+              this.$router.push({
+                name: "user"
+              });
             } else {
               alert("User not found");
             }
