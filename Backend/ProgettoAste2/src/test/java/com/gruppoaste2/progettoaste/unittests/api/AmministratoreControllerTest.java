@@ -1,9 +1,13 @@
-package com.gruppoaste2.progettoaste.api;
+package com.gruppoaste2.progettoaste.unittests.api;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gruppoaste2.progettoaste.api.AmministratoreController;
 import com.gruppoaste2.progettoaste.model.AmministratoreModel;
 import com.gruppoaste2.progettoaste.service.AmministratoreService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -15,6 +19,7 @@ import java.util.*;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -33,24 +38,21 @@ public class AmministratoreControllerTest {
     // Test inserisciAmministratore
     @Test
     public void whenInserisciAmministratore_givenExistingAmministratore_thenReturnJsonNumber1() throws Exception {
-        /*
-        String body = "{"
-                + "\"username\":\"username\","
-                + "\"email\":\"email\","
-                + "\"password\":\"password\""
-                + "}";
+        AmministratoreModel amministratore =
+                new AmministratoreModel(null, "username", "email", "password");
 
-        given(amministratoreService.inserisciAmministratore(new Gson().fromJson(body, AmministratoreModel.class))).willReturn(1);
+        given(amministratoreService.inserisciAmministratore(amministratore)).willReturn(1);
 
         mockMvc.perform(post("/api/amministratore/inserisci")
                 .accept(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
-                .content(body)
+                .content(new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL)
+                        .writeValueAsString(amministratore))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isNumber())
-                .andExpect(jsonPath("$").value(1));
-         */
+                .andExpect(jsonPath("$").isNumber());
+                //.andExpect(jsonPath("$").value(1));
+        verify(amministratoreService).inserisciAmministratore(ArgumentMatchers.refEq(amministratore));
     }
 
     @Test

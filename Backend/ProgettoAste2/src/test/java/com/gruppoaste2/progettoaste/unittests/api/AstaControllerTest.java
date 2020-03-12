@@ -1,5 +1,6 @@
-package com.gruppoaste2.progettoaste.api;
+package com.gruppoaste2.progettoaste.unittests.api;
 
+import com.gruppoaste2.progettoaste.api.AstaController;
 import com.gruppoaste2.progettoaste.model.*;
 import com.gruppoaste2.progettoaste.service.AstaService;
 import org.junit.jupiter.api.Test;
@@ -28,6 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebMvcTest(AstaController.class)
 public class AstaControllerTest {
+
     @Autowired
     private MockMvc mockMvc;
 

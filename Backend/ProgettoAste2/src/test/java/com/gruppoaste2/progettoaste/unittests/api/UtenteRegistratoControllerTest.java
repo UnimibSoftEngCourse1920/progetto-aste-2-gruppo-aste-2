@@ -1,5 +1,6 @@
-package com.gruppoaste2.progettoaste.api;
+package com.gruppoaste2.progettoaste.unittests.api;
 
+import com.gruppoaste2.progettoaste.api.UtenteRegistratoController;
 import com.gruppoaste2.progettoaste.model.UtenteRegistratoModel;
 import com.gruppoaste2.progettoaste.service.UtenteRegistratoService;
 import org.junit.jupiter.api.Test;
@@ -49,7 +50,9 @@ public class UtenteRegistratoControllerTest {
         UUID id = UUID.randomUUID();
 
         Optional<UtenteRegistratoModel> utenteRegistratoTrovato =
-                Optional.of(new UtenteRegistratoModel(id,"username","email", "numeroTelefono", "password", 3.14f));
+                Optional.of(new UtenteRegistratoModel(id, "username", "email",
+                        "numeroTelefono", "password", 3.14f, false,
+                        false));
 
         given(utenteRegistratoService.trovaUtenteRegistrato(id)).willReturn(utenteRegistratoTrovato);
 
@@ -84,7 +87,9 @@ public class UtenteRegistratoControllerTest {
         UUID id = UUID.randomUUID();
 
         List<UtenteRegistratoModel> utentiRegistratiTrovati =
-                Collections.singletonList(new UtenteRegistratoModel(id,"username","email", "numeroTelefono", "password", 3.14f));
+                Collections.singletonList(new UtenteRegistratoModel(id,"username","email",
+                        "numeroTelefono", "password", 3.14f, false,
+                        false));
 
         given(utenteRegistratoService.trovaUtentiRegistrati()).willReturn(utentiRegistratiTrovati);
 

@@ -1,5 +1,6 @@
-package com.gruppoaste2.progettoaste.api;
+package com.gruppoaste2.progettoaste.unittests.api;
 
+import com.gruppoaste2.progettoaste.api.ConfigurazioneController;
 import com.gruppoaste2.progettoaste.model.ConfigurazioneModel;
 import com.gruppoaste2.progettoaste.service.ConfigurazioneService;
 import org.junit.jupiter.api.Test;

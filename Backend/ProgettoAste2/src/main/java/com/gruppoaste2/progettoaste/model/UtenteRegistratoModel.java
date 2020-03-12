@@ -6,16 +6,16 @@ public class UtenteRegistratoModel extends UtenteModel {
 
     private final String numeroTelefono;
     private final float credito;
-    private boolean notificheSms;
     private boolean notificheEmail;
+    private boolean notificheSms;
 
     public UtenteRegistratoModel(UUID id, String username, String email, String numeroTelefono, String password,
-                                 float credito, boolean notificheSms, boolean notificheEmail){
+                                 float credito, boolean notificheEmail, boolean notificheSms){
         super(id, username, email, password);
         this.numeroTelefono = numeroTelefono;
         this.credito = credito;
         this.notificheEmail = notificheEmail;
-        this.notificheSms = notificheEmail;
+        this.notificheSms = notificheSms;
     }
 
 
@@ -29,11 +29,11 @@ public class UtenteRegistratoModel extends UtenteModel {
         return credito;
     }
 
-    public boolean isNotificheSms() {
-        return notificheSms;
-    }
-
     public boolean isNotificheEmail() {
         return notificheEmail;
+    }
+
+    public boolean isNotificheSms() {
+        return notificheSms;
     }
 }

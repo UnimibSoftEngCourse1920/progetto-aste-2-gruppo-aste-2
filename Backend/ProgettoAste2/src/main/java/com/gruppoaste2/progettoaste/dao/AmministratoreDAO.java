@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface AmministratoreDAO {
 
-    int inserisciAmministratore(UUID id, AmministratoreModel amministratoreModel);
+    int inserisciAmministratore(UUID id, AmministratoreModel amministratore);
 
     default int inserisciAmministratore(AmministratoreModel amministratore)
     {

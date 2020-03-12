@@ -1,5 +1,6 @@
-package com.gruppoaste2.progettoaste.api;
+package com.gruppoaste2.progettoaste.unittests.api;
 
+import com.gruppoaste2.progettoaste.api.OggettoController;
 import com.gruppoaste2.progettoaste.service.OggettoService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;

@@ -1,5 +1,6 @@
-package com.gruppoaste2.progettoaste.api;
+package com.gruppoaste2.progettoaste.unittests.api;
 
+import com.gruppoaste2.progettoaste.api.OffertaController;
 import com.gruppoaste2.progettoaste.model.*;
 import com.gruppoaste2.progettoaste.service.OffertaService;
 import org.junit.jupiter.api.Test;
@@ -55,7 +56,9 @@ public class OffertaControllerTest {
         UUID idOfferente = UUID.randomUUID();
 
         UtenteRegistratoModel offerente =
-                new UtenteRegistratoModel(idOfferente, "username", "email", "numeroTelefono", "password", 10.5f);
+                new UtenteRegistratoModel(idOfferente, "username", "email",
+                        "numeroTelefono", "password", 10.5f, false,
+                        false);
 
         Optional<OffertaModel> offertaTrovata =
                 Optional.of(new OffertaModel(idOfferta, 3.14f, Date.valueOf(LocalDate.now()), offerente));
@@ -97,7 +100,9 @@ public class OffertaControllerTest {
         UUID idOfferente = UUID.randomUUID();
 
         UtenteRegistratoModel offerente =
-                new UtenteRegistratoModel(idOfferente, "username", "email", "numeroTelefono", "password", 10.5f);
+                new UtenteRegistratoModel(idOfferente, "username", "email",
+                        "numeroTelefono", "password", 10.5f, false,
+                        false);
 
         List<OffertaModel> offerteTrovate =
                 Collections.singletonList(new OffertaModel(idOfferta, 3.14f, Date.valueOf(LocalDate.now()), offerente));
@@ -150,11 +155,13 @@ public class OffertaControllerTest {
         OggettoModel ogg1 = new OggettoModel(idOgge, "nome", "descrizione", "url");
         oggetti.add(ogg1);
         OffertaModel off1 = new OffertaModel(idoff, 1, Date.valueOf(LocalDate.now()),
-                new UtenteRegistratoModel(idut2, "username1", "email1", "+39339025613", "boh1", 2));
+                new UtenteRegistratoModel(idut2, "username1", "email1", "+39339025613",
+                        "boh1", 2, false, false));
         offerte.add(off1);
 
         UtenteRegistratoModel offerente =
-                new UtenteRegistratoModel(idUtente, "username", "email", "339025613", "boh", 0);
+                new UtenteRegistratoModel(idUtente, "username", "email", "339025613",
+                        "boh", 0, false, false);
 
         AstaModel astaTrovata = new AstaModel (idasta,
                 new InfoAstaModel("info", 3.4,
@@ -209,7 +216,8 @@ public class OffertaControllerTest {
         UUID idOfferente = UUID.randomUUID();
 
         UtenteRegistratoModel offerente =
-                new UtenteRegistratoModel(idOfferente, "username", "email", "339025613", "boh", 0);
+                new UtenteRegistratoModel(idOfferente, "username", "email", "339025613",
+                        "boh", 0, false, false);
 
         List<OffertaModel> offerteTrovate =
                 Collections.singletonList(new OffertaModel(idOfferta, 3.14f, Date.valueOf(LocalDate.now()), offerente));
@@ -263,11 +271,13 @@ public class OffertaControllerTest {
         OggettoModel ogg1 = new OggettoModel(idOgge, "nome", "descrizione", "url");
         oggetti.add(ogg1);
         OffertaModel off1 = new OffertaModel(idoff, 1, Date.valueOf(LocalDate.now()),
-                new UtenteRegistratoModel(idut2, "username1", "email1", "+39339025613", "boh1", 2));
+                new UtenteRegistratoModel(idut2, "username1", "email1", "+39339025613",
+                        "boh1", 2, false, false));
         offerte.add(off1);
 
         UtenteRegistratoModel offerente =
-                new UtenteRegistratoModel(idUtente, "username", "email", "339025613", "boh", 0);
+                new UtenteRegistratoModel(idUtente, "username", "email", "339025613",
+                        "boh", 0, false, false);
 
         AstaModel astaTrovata = new AstaModel (idasta,
                 new InfoAstaModel("info", 3.4,

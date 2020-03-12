@@ -1,5 +1,6 @@
-package com.gruppoaste2.progettoaste.model;
+package com.gruppoaste2.progettoaste.unittests.model;
 
+import com.gruppoaste2.progettoaste.model.OggettoModel;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.UUID;
