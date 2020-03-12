@@ -60,11 +60,11 @@ public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
     @Override
     public int aggiornaUtenteRegistrato(UUID id, UtenteRegistratoModel utenteAggiornato) {
         final String sql = "UPDATE utente_registrato " +
-                "SET username = ?, password = ?, email = ?, telefono = ?, credito_disponibile = ? " +
+                "SET username = ?, password = ?, email = ?, telefono = ?, credito_disponibile = ?, notifica_sms = ?, notifica_email = ? " +
                 "WHERE id = ?";
         return jdbcTemplate.update(sql,
                 utenteAggiornato.getUsername(), utenteAggiornato.getPassword(), utenteAggiornato.getEmail(),
-                utenteAggiornato.getNumeroTelefono(), utenteAggiornato.getCredito(), id);
+                utenteAggiornato.getNumeroTelefono(), utenteAggiornato.getCredito(), utenteAggiornato.isNotificheSms(), utenteAggiornato.isNotificheEmail(), id);
     }
 
     @Override
@@ -124,7 +124,9 @@ public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
         String numeroTelefono = resultSet.getString("telefono");
         String password = resultSet.getString("password");
         float credito = resultSet.getFloat("credito_disponibile");
-        return new UtenteRegistratoModel(id, username, email, numeroTelefono, password, credito);
+        boolean sms = resultSet.getBoolean("notifica_sms");
+        boolean notificaEmail = resultSet.getBoolean("notifica_email");
+        return new UtenteRegistratoModel(id, username, email, numeroTelefono, password, credito, sms, notificaEmail);
     }
 
     @Override

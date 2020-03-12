@@ -277,7 +277,9 @@ CREATE TABLE public.utente_registrato (
     password character varying(50) NOT NULL,
     email character varying(355) NOT NULL,
     telefono character varying(12),
-    credito_disponibile real DEFAULT 0 NOT NULL
+    credito_disponibile real DEFAULT 0 NOT NULL,
+    notifica_email boolean DEFAULT false,
+    notifica_sms boolean DEFAULT false
 );
 
 
@@ -373,9 +375,9 @@ superamento_immediato
 -- Data for Name: utente_registrato; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.utente_registrato (id, username, password, email, telefono, credito_disponibile) FROM stdin;
-b505c3b6-7769-4c6f-a000-80e1615b77a8	Luca	1243	superBoh@boh.com	\N	666
-6c7983dc-e7f6-498b-801c-eee9e6c8e489	dsduca	1243	lol@boh.com	\N	666
+COPY public.utente_registrato (id, username, password, email, telefono, credito_disponibile, notifica_email, notifica_sms) FROM stdin;
+6c7983dc-e7f6-498b-801c-eee9e6c8e489	dsduca	1243	lol@boh.com	\N	666	\N	f
+b505c3b6-7769-4c6f-a000-80e1615b77a8	Luca	1243	superBoh@boh.com	\N	674	\N	f
 \.
 
 
