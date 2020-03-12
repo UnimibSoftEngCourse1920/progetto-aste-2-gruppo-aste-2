@@ -93,4 +93,15 @@ public class UtenteRegistratoController {
     public UUID ritornaIdUtenteRegistrato(@RequestBody UtenteRegistratoModel utente){
         return utenteRegistratoService.ritornaIdUtenteRegistrato(utente);
     }
+
+    @GetMapping(path = "controlla/notifica/sms/{id}")
+    public boolean isNotificheSmsAbilitate(@PathVariable("id") UUID id)
+    {
+        return utenteRegistratoService.isNotificheSmsAbilitate(id);
+    }
+
+    @GetMapping(path = "controlla/notifica/email/{id}")
+    public boolean isNotificheEmailAbilitate(@PathVariable("id") UUID id) {
+        return utenteRegistratoService.isNotificheEmailAbilitate(id);
+    }
 }

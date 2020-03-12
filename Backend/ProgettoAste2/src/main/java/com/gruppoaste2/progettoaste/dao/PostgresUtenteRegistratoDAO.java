@@ -135,4 +135,18 @@ public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
         return jdbcTemplate.queryForObject(sql, UUID.class,
                 utente.getUsername(), utente.getEmail(), utente.getPassword());
     }
+
+    @Override
+    public boolean isNotificheEmailAbilitate(UUID id) {
+        final String sql = "SELECT notifica_email FROM utente_registrato WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, Boolean.class,
+                id);
+    }
+
+    @Override
+    public boolean isNotificheSmsAbilitate(UUID id) {
+        final String sql = "SELECT notifica_sms FROM utente_registrato WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, Boolean.class,
+                id);
+    }
 }

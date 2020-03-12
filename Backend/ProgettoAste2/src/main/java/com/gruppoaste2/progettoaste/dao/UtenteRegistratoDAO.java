@@ -36,5 +36,9 @@ public interface UtenteRegistratoDAO {
 
     float creditoImpegnato(UUID id);
 
-    public UUID ritornaIdUtenteRegistrato(UtenteRegistratoModel utente);
+    UUID ritornaIdUtenteRegistrato(UtenteRegistratoModel utente);
+
+    boolean isNotificheEmailAbilitate(UUID id);
+
+    boolean isNotificheSmsAbilitate(UUID id);
 }

@@ -73,4 +73,13 @@ public class UtenteRegistratoService {
     {
         return utenteRegistratoDAO.ritornaIdUtenteRegistrato(utente);
     }
+
+    public boolean isNotificheEmailAbilitate(UUID id) {
+        return utenteRegistratoDAO.isNotificheEmailAbilitate(id);
+    }
+
+
+    public boolean isNotificheSmsAbilitate(UUID id) {
+        return utenteRegistratoDAO.isNotificheSmsAbilitate(id);
+    }
 }
