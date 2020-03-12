@@ -35,4 +35,6 @@ public interface UtenteRegistratoDAO {
     float creditoTotale(UUID id);
 
     float creditoImpegnato(UUID id);
+
+    public UUID ritornaIdUtenteRegistrato(UtenteRegistratoModel utente);
 }

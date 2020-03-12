@@ -88,4 +88,9 @@ public class UtenteRegistratoController {
     {
         return utenteRegistratoService.infoCredito(id);
     }
+
+    @PostMapping("/id")
+    public UUID ritornaIdUtenteRegistrato(@RequestBody UtenteRegistratoModel utente){
+        return utenteRegistratoService.ritornaIdUtenteRegistrato(utente);
+    }
 }

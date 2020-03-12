@@ -68,4 +68,9 @@ public class UtenteRegistratoService {
 
         return new InfoCreditoModel(creditoTotale, creditoDisponibile, creditoImpegnato);
     }
+
+    public UUID ritornaIdUtenteRegistrato(UtenteRegistratoModel utente)
+    {
+        return utenteRegistratoDAO.ritornaIdUtenteRegistrato(utente);
+    }
 }

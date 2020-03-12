@@ -1,5 +1,6 @@
 package com.gruppoaste2.progettoaste.dao;
 
+import com.gruppoaste2.progettoaste.model.AmministratoreModel;
 import com.gruppoaste2.progettoaste.model.UtenteRegistratoModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -102,7 +103,7 @@ public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
     @Override
     public float creditoImpegnato(UUID id) {
         final String sql = "SELECT o.credito_offerto FROM offerta AS o, asta AS a " +
-                "WHERE o.id_utente_registrato = ? AND o.id_asta = a.id AND a.data_fine IS NULL";
+                "WHERE o.id_offerente = ? AND o.id_asta = a.id AND a.data_fine IS NULL";
 
         float creditoImpegnato = 0;
 
@@ -124,5 +125,12 @@ public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
         String password = resultSet.getString("password");
         float credito = resultSet.getFloat("credito_disponibile");
         return new UtenteRegistratoModel(id, username, email, numeroTelefono, password, credito);
+    }
+
+    @Override
+    public UUID ritornaIdUtenteRegistrato(UtenteRegistratoModel utente) {
+        final String sql = "SELECT id FROM utente_registrato WHERE username = ? AND email = ? AND password = ?";
+        return jdbcTemplate.queryForObject(sql, UUID.class,
+                utente.getUsername(), utente.getEmail(), utente.getPassword());
     }
 }

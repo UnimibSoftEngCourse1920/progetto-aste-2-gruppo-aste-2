@@ -54,8 +54,7 @@ export default {
         tipoUtente: ""
       },
       show: true,
-      idAdmin: "",
-      idUtente: ""
+      id: ""
     };
   },
   methods: {
@@ -82,9 +81,28 @@ export default {
             if (response === true) {
               // move to user homepage
               alert("Utente trovato");
-              this.$router.push({
-                name: "user"
-              });
+              fetch("http://localhost:8080/api/utenteregistrato/id", {
+                method: "post",
+                headers: {
+                  Accept: "application/json",
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                  username: this.form.username,
+                  password: this.form.password,
+                  email: this.form.email
+                })
+              })
+                .then(response => response.json())
+                .then(response => {
+                  this.id = response;
+                  console.log(this.id);
+                  localStorage.setItem("idLog", this.id);
+                  console.log(localStorage.getItem("idLog"));
+                  this.$router.push({
+                    name: "user"
+                  });
+                });
             } else {
               alert("User not found");
             }
@@ -124,8 +142,10 @@ export default {
               })
                 .then(response => response.json())
                 .then(response => {
-                  this.idAdmin = response;
-                  console.log(this.idAdmin);
+                  this.id = response;
+                  console.log(this.id);
+                  localStorage.setItem("idLog", this.id);
+                  console.log(localStorage.getItem("idLog"));
                   this.$router.push({
                     name: "admin"
                   });
