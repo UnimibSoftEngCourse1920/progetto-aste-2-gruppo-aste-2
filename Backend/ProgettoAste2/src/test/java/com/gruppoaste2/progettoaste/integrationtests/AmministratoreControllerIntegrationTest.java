@@ -28,6 +28,7 @@ class AmministratoreControllerIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
+    /*
     @Autowired
     private static AmministratoreDAO amministratoreDAO;
 
@@ -44,6 +45,7 @@ class AmministratoreControllerIntegrationTest {
     static void tearDown() {
         amministratoreDAO.eliminaAmministratore(id);
     }
+     */
 
     // Test trovaAmministratore
     @Test
