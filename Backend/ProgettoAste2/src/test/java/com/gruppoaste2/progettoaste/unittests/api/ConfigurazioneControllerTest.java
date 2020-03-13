@@ -91,7 +91,7 @@ class ConfigurazioneControllerTest {
         UUID id = UUID.randomUUID();
 
         Optional<ConfigurazioneModel> configurazioneTrovata =
-                Optional.of(new ConfigurazioneModel(id, "timeSlot", 3600, 10, 0.1, Date.valueOf(LocalDate.now()), 11620));
+                Optional.of(new ConfigurazioneModel(id, "timeSlot", 3600, 10, 0.1, Timestamp.valueOf(LocalDateTime.now()), 11620));
 
         given(configurazioneService.trovaConfigurazione(id)).willReturn(configurazioneTrovata);
 
@@ -126,7 +126,7 @@ class ConfigurazioneControllerTest {
         UUID id = UUID.randomUUID();
 
         List<ConfigurazioneModel> configurazioniTrovate =
-                Collections.singletonList(new ConfigurazioneModel(id, "timeSlot", 3600, 10, 0.1, Date.valueOf(LocalDate.now()), 11620));
+                Collections.singletonList(new ConfigurazioneModel(id, "timeSlot", 3600, 10, 0.1, Timestamp.valueOf(LocalDateTime.now()), 11620));
 
         given(configurazioneService.trovaConfigurazioni()).willReturn(configurazioniTrovate);
 

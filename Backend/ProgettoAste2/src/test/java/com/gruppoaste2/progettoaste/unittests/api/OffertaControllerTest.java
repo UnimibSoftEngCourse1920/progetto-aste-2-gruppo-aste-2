@@ -16,6 +16,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -169,7 +170,7 @@ class OffertaControllerTest {
                         Date.valueOf(LocalDate.now()),
                         Time.valueOf(LocalTime.now())),
                 new ConfigurazioneModel(idconf, "fisso", 1, 4, 0.21,
-                        Timestamp.valueOf(String.valueOf(LocalDate.now())), Time.valueOf(LocalTime.now())),
+                        Timestamp.valueOf(LocalDateTime.now()), Time.valueOf(LocalTime.now())),
                 oggetti, offerente, offerte);
 
         List<OffertaModel> offerteTrovate =
@@ -285,7 +286,7 @@ class OffertaControllerTest {
                         Date.valueOf(LocalDate.now()),
                         Time.valueOf(LocalTime.now())),
                 new ConfigurazioneModel(idconf, "fisso", 1, 4, 0.21,
-                        Timestamp.valueOf(String.valueOf(LocalDate.now())), Time.valueOf(LocalTime.now())),
+                        Timestamp.valueOf(LocalDateTime.now()), Time.valueOf(LocalTime.now())),
                 oggetti, offerente, offerte);
 
         List<OffertaModel> offerteTrovate =
