@@ -8,6 +8,7 @@ import UltimaConfig from '../views/UltimaConfig.vue'
 import CreaConfig from '../views/CreaConfig.vue'
 import UtenteCredito from '../views/UtenteCredito.vue'
 import UserPage from '../views/UserPage.vue'
+import UtenteGestione from '../views/UtenteGestionePage.vue'
 
 Vue.use(VueRouter)
 
@@ -51,6 +52,11 @@ const routes = [
     path: '/utentecredito',
     name: 'utentecredito',
     component: UtenteCredito
+  },
+  {
+    path: '/utentegestione',
+    name: 'utentegestione',
+    component: UtenteGestione
   }
 
 

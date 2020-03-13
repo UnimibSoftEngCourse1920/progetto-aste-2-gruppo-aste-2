@@ -22,7 +22,17 @@
         label-for="input-1"
         description="Credito da aggiungere al bilancio"
       >
-        <b-form-input id="input-1" type="number" v-model="creditoDaAggiungere" min="1"></b-form-input>
+        <b-form-input id="input-1" type="number" v-model="creditoDaAggiungere" min="0"></b-form-input>
+      </b-form-group>
+
+      <b-form-group
+        v-if="creditoDisponibile > 0"
+        id="input-group-2"
+        label="Credito da togliere:"
+        label-for="input-2"
+        description="Credito da togliere dal bilancio"
+      >
+        <b-form-input id="input-2" type="number" v-model="creditoDaRestituire" min="0"></b-form-input>
       </b-form-group>
 
       <b-button type="submit" variant="primary">Submit</b-button>
@@ -38,6 +48,7 @@ export default {
   data() {
     return {
       creditoDaAggiungere: 0,
+      creditoDaRestituire: 0,
       creditoTotale: 0,
       creditoDisponibile: 0,
       creditoImpegnato: 0
@@ -65,22 +76,31 @@ export default {
         "http://localhost:8080/api/utenteregistrato/credito/aggiungi/" +
           localStorage.getItem("idLog") +
           "/" +
-          this.creditoDaAggiungere,
+          (parseFloat(this.creditoDaAggiungere) -
+            parseFloat(this.creditoDaRestituire)),
         {
           method: "get"
         }
       ).then(response => {
         if (response) {
-          this.creditoTotale = this.creditoTotale + this.creditoDaAggiungere;
+          this.creditoTotale =
+            parseFloat(this.creditoTotale) +
+            parseFloat(this.creditoDaAggiungere - this.creditoDaRestituire);
           this.creditoDisponibile =
-            this.creditoDisponibile + this.creditoDaAggiungere;
+            parseFloat(this.creditoDisponibile) +
+            parseFloat(this.creditoDaAggiungere - this.creditoDaRestituire);
+
+          if (this.creditoDisponibile === 0) {
+            this.creditoDaRestituire = 0;
+          }
         }
       });
     },
     onReset(evt) {
       evt.preventDefault();
       // Reset our form values
-      this.creditoDaAggiungere = 1;
+      this.creditoDaAggiungere = 0;
+      this.creditoDaRestituire = 0;
       // Trick to reset/clear native browser form validation state
       this.show = false;
       this.$nextTick(() => {

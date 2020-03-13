@@ -6,7 +6,8 @@
       <b-nav-item>
         <router-link to="/utentecredito">Gestisci Credito</router-link>
       </b-nav-item>
-      <b-nav-item>Gestisci Account</b-nav-item>
+      <b-nav-item>
+        <router-link to="/utentegestione">Gestisci Account</router-link></b-nav-item>
     </b-nav>
   </div>
 </template>
