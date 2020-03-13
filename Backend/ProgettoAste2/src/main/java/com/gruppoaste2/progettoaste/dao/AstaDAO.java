@@ -22,5 +22,11 @@ public interface AstaDAO {
 
     List<AstaModel> trovaAste();
 
+    List<AstaModel> trovaAsteInCorso();
+
+    List<AstaModel> trovaAsteInCorsoUtente(UUID idUtente);
+
+    List<AstaModel> trovaAsteScaduteUtente(UUID idUtente);
+
     int aggiornaAsta(UUID id, AstaModel astaAggiornata);
 }

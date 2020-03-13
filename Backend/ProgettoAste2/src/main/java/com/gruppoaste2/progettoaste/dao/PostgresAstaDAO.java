@@ -23,6 +23,8 @@ public class PostgresAstaDAO implements AstaDAO {
     private final OggettoDAO oggettoDAO;
     private final OffertaDAO offertaDAO;
 
+    private final String SELECT_ALL_FROM_ASTA = "SELECT * FROM asta";
+
     @Autowired
     public PostgresAstaDAO(JdbcTemplate jdbcTemplate, UtenteRegistratoDAO utenteRegistratoDAO,
                            ConfigurazioneDAO configurazioneDAO, OggettoDAO oggettoDAO, OffertaDAO offertaDAO) {
@@ -52,10 +54,7 @@ public class PostgresAstaDAO implements AstaDAO {
 
     @Override
     public Optional<AstaModel> trovaAsta(UUID id) {
-        final String sql = "SELECT * " +
-                "FROM asta " +
-                "JOIN tipo_asta ON asta.tipo = tipo_asta.nome " +
-                "WHERE id = ?";
+        final String sql = SELECT_ALL_FROM_ASTA + " WHERE id = ?";
         List<AstaModel> results = jdbcTemplate.query(sql,
                 (resultSet, i) -> makeAstaFromResultSet(resultSet),
                 id);
@@ -65,9 +64,34 @@ public class PostgresAstaDAO implements AstaDAO {
 
     @Override
     public List<AstaModel> trovaAste() {
-        final String sql = "SELECT * FROM asta";
+        return jdbcTemplate.query(SELECT_ALL_FROM_ASTA,
+                (resultSet, i) -> makeAstaFromResultSet(resultSet));
+    }
+
+    @Override
+    public List<AstaModel> trovaAsteInCorso() {
+        final String sql = SELECT_ALL_FROM_ASTA +
+                " WHERE asta.data_fine IS NULL";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeAstaFromResultSet(resultSet));
+    }
+
+    @Override
+    public List<AstaModel> trovaAsteInCorsoUtente(UUID idUtente) {
+        final String sql = SELECT_ALL_FROM_ASTA +
+                " WHERE id_asta_manager = ? AND data_fine IS NULL";
+        return jdbcTemplate.query(sql,
+                (resultSet, i) -> makeAstaFromResultSet(resultSet),
+                idUtente);
+    }
+
+    @Override
+    public List<AstaModel> trovaAsteScaduteUtente(UUID idUtente) {
+        final String sql = SELECT_ALL_FROM_ASTA +
+                " WHERE id_asta_manager = ? AND data_fine IS NOT NULL";
+        return jdbcTemplate.query(sql,
+                (resultSet, i) -> makeAstaFromResultSet(resultSet),
+                idUtente);
     }
 
     @Override

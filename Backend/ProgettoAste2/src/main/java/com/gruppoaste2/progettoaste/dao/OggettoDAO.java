@@ -24,11 +24,15 @@ public interface OggettoDAO {
 
     List<OggettoModel> trovaOggettiAsta(UUID idAsta);
 
-    int aggiornaOggetto(UUID idOggetto, OggettoModel oggettoAggiornato);
-
     List<OggettoModel> trovaOggettiRegistratiDaUtente(UUID idUtente);
 
     List<OggettoModel> trovaOggettiInCorsoAstaUtente(UUID idUtente);
 
+    List<OggettoModel> trovaOggettiVendutiDaUtente(UUID idUtente);
+
+    List<OggettoModel> trovaOggettiRifiutatiUtente(UUID idUtente);
+
     List<OggettoModel> trovaOggettiVintiDaUtente(UUID idUtente);
+
+    int aggiornaOggetto(UUID id, OggettoModel oggettoAggiornato);
 }

@@ -11,13 +11,16 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Repository("postgres-oggetto") // serve per identificare il tipo di database da usare (per dipendency injection)
+@Repository("postgres-oggetto") // serve per identificare il tipo di database da usare (per dependency injection)
 public class PostgresOggettoDAO implements OggettoDAO {
 
     private final JdbcTemplate jdbcTemplate;
 
-    private static final String SELECT_OGGETTO = "SELECT o.id, o.nome, o.descrizione, o.url_immagine ";
-    private static final String FROM_OGGETTO =  "FROM oggetto AS o, asta AS a ";
+    private final String SELECT_FROM_OGGETTO_JOIN_ASTA =
+            "SELECT o.id, o.nome, o.descrizione, o.url_immagine " +
+            "FROM oggetto AS o " +
+            "JOIN asta AS a ON o.id_asta = a.id ";
+    private final String WHERE_ID_ASTA_MANAGER = "WHERE a.id_asta_manager = ?";
 
     @Autowired
     public PostgresOggettoDAO(JdbcTemplate jdbcTemplate) {
@@ -64,17 +67,8 @@ public class PostgresOggettoDAO implements OggettoDAO {
     }
 
     @Override
-    public int aggiornaOggetto(UUID idOggetto, OggettoModel oggettoAggiornato) {
-        final String sql = "UPDATE oggetto SET nome = ?, descrizione = ?, url_immagine = ? WHERE id = ?";
-        return jdbcTemplate.update(sql,
-                oggettoAggiornato.getNome(), oggettoAggiornato.getDescrizione(), oggettoAggiornato.getUrlImmagine(),
-                idOggetto);
-    }
-
-    @Override
     public List<OggettoModel> trovaOggettiRegistratiDaUtente(UUID idUtente) {
-        final String sql = SELECT_OGGETTO + FROM_OGGETTO +
-                "WHERE a.id_asta_manager = ? AND a.id = o.id_asta";
+        final String sql = SELECT_FROM_OGGETTO_JOIN_ASTA + WHERE_ID_ASTA_MANAGER;
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeOggettoFromResultSet(resultSet),
                 idUtente);
@@ -82,21 +76,46 @@ public class PostgresOggettoDAO implements OggettoDAO {
 
     @Override
     public List<OggettoModel> trovaOggettiInCorsoAstaUtente(UUID idUtente) {
-        final String sql = SELECT_OGGETTO + FROM_OGGETTO +
-                "WHERE a.id_asta_manager = ? AND a.id = o.id_asta AND a.data_fine IS NULL";
+        final String sql = SELECT_FROM_OGGETTO_JOIN_ASTA + WHERE_ID_ASTA_MANAGER + " AND a.data_fine IS NULL";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeOggettoFromResultSet(resultSet),
                 idUtente);
     }
 
-    // TODO: non funziona, da sistemare
     @Override
-    public List<OggettoModel> trovaOggettiVintiDaUtente(UUID idUtente) {
-        final String sql = SELECT_OGGETTO + FROM_OGGETTO +
-                "WHERE a.id_asta_manager = ? AND a.id = o.id_asta AND a.data_fine IS NOT NULL";
+    public List<OggettoModel> trovaOggettiVendutiDaUtente(UUID idUtente) {
+        final String sql = SELECT_FROM_OGGETTO_JOIN_ASTA + WHERE_ID_ASTA_MANAGER + " AND a.data_fine IS NOT NULL";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeOggettoFromResultSet(resultSet),
                 idUtente);
+    }
+
+    // TODO: gestire il rifiuto di oggetti
+    @Override
+    public List<OggettoModel> trovaOggettiRifiutatiUtente(UUID idUtente) {
+        final String sql = SELECT_FROM_OGGETTO_JOIN_ASTA + WHERE_ID_ASTA_MANAGER +
+                " AND a.data_fine IS NOT NULL AND ";
+        return jdbcTemplate.query(sql,
+                (resultSet, i) -> makeOggettoFromResultSet(resultSet),
+                idUtente);
+    }
+
+    @Override
+    public List<OggettoModel> trovaOggettiVintiDaUtente(UUID idUtente) {
+        final String sql = SELECT_FROM_OGGETTO_JOIN_ASTA +
+                "JOIN offerta as off ON a.id = off.id_asta " +
+                "WHERE off.id_offerente = ? AND a.data_fine IS NOT NULL";
+        return jdbcTemplate.query(sql,
+                (resultSet, i) -> makeOggettoFromResultSet(resultSet),
+                idUtente);
+    }
+
+    @Override
+    public int aggiornaOggetto(UUID id, OggettoModel oggettoAggiornato) {
+        final String sql = "UPDATE oggetto SET nome = ?, descrizione = ?, url_immagine = ? WHERE id = ?";
+        return jdbcTemplate.update(sql,
+                oggettoAggiornato.getNome(), oggettoAggiornato.getDescrizione(), oggettoAggiornato.getUrlImmagine(),
+                id);
     }
 
     private OggettoModel makeOggettoFromResultSet(ResultSet resultSet) throws SQLException {

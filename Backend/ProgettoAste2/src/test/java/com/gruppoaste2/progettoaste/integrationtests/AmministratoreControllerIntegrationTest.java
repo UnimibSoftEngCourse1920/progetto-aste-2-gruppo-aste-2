@@ -2,19 +2,18 @@ package com.gruppoaste2.progettoaste.integrationtests;
 
 import com.gruppoaste2.progettoaste.dao.AmministratoreDAO;
 import com.gruppoaste2.progettoaste.model.AmministratoreModel;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.*;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Optional;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -30,7 +29,21 @@ class AmministratoreControllerIntegrationTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private AmministratoreDAO amministratoreDAO;
+    private static AmministratoreDAO amministratoreDAO;
+
+    private static final UUID id = UUID.randomUUID();
+    private static final AmministratoreModel amministratore =
+            new AmministratoreModel(id, "username", "email", "password");
+
+    @BeforeAll
+    static void setUp() {
+        amministratoreDAO.inserisciAmministratore(id, amministratore);
+    }
+
+    @AfterAll
+    static void tearDown() {
+        amministratoreDAO.eliminaAmministratore(id);
+    }
 
     // Test trovaAmministratore
     @Test
@@ -38,25 +51,18 @@ class AmministratoreControllerIntegrationTest {
         /*
         UUID id = UUID.randomUUID();
 
-        Optional<AmministratoreModel> amministratoreTrovato = Optional.empty();
-
         mockMvc.perform(get("/api/amministratore/" + id)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist());
-
+         */
     }
 
     @Test
     void whenTrovaAmministratore_givenExistingAmministratore_thenReturnJsonMapAmministratore() throws Exception {
         /*
-        UUID id = UUID.randomUUID();
-
-        Optional<AmministratoreModel> amministratoreTrovato =
-                Optional.of(new AmministratoreModel(id,"username","email","password"));
-
-        mockMvc.perform(get("/api/amministratore/" + id)
+        mockMvc.perform(get("/api/amministratore/" + this.id)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isMap())

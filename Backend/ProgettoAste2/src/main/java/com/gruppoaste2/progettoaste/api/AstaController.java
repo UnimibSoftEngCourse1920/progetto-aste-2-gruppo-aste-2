@@ -44,6 +44,24 @@ public class AstaController {
         return astaService.trovaAste();
     }
 
+    @GetMapping("/aste/incorso")
+    public List<AstaModel> trovaAsteInCorso()
+    {
+        return astaService.trovaAsteInCorso();
+    }
+
+    @GetMapping("/aste/incorso/{idUtente}")
+    public List<AstaModel> trovaAsteInCorsoUtente(@PathVariable("idUtente") UUID idUtente)
+    {
+        return astaService.trovaAsteInCorsoUtente(idUtente);
+    }
+
+    @GetMapping("/aste/scadute/{idUtente}")
+    public List<AstaModel> trovaAsteScaduteUtente(@PathVariable("idUtente") UUID idUtente)
+    {
+        return astaService.trovaAsteScaduteUtente(idUtente);
+    }
+
     @PostMapping(path = "/aggiorna/{id}")
     public int aggiornaAsta(@PathVariable("id") UUID id, @RequestBody AstaModel astaAggiornata)
     {

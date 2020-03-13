@@ -44,33 +44,45 @@ public class OggettoController {
         return oggettoService.trovaOggetti();
     }
 
-    @GetMapping(path = "/asta/{id}")
-    public List<OggettoModel> trovaOggettiAsta(@PathVariable("id") UUID idAsta)
+    @GetMapping(path = "/asta/{idAsta}")
+    public List<OggettoModel> trovaOggettiAsta(@PathVariable("idAsta") UUID idAsta)
     {
         return oggettoService.trovaOggettiAsta(idAsta);
     }
 
-    @GetMapping(path = "/registrati/{id}")
-    public List<OggettoModel> trovaOggettiRegistratiDaUtente(@PathVariable("id") UUID idUtente)
+    @GetMapping(path = "/registrati/{idUtente}")
+    public List<OggettoModel> trovaOggettiRegistratiDaUtente(@PathVariable("idUtente") UUID idUtente)
     {
         return oggettoService.trovaOggettiRegistratiDaUtente(idUtente);
     }
 
-    @GetMapping(path = "/incorso/{id}")
-    public List<OggettoModel> trovaOggettiInCorsoAstaUtente(@PathVariable("id") UUID idUtente)
+    @GetMapping(path = "/incorso/{idUtente}")
+    public List<OggettoModel> trovaOggettiInCorsoAstaUtente(@PathVariable("idUtente") UUID idUtente)
     {
         return oggettoService.trovaOggettiInCorsoAstaUtente(idUtente);
     }
 
-    @GetMapping(path = "/vinti/{id}")
-    public List<OggettoModel> trovaOggettiVintiDaUtente(@PathVariable("id") UUID idUtente)
+    @GetMapping(path = "/venduti/{idUtente}")
+    public List<OggettoModel> trovaOggettiVendutiDaUtente(@PathVariable("idUtente") UUID idUtente)
+    {
+        return oggettoService.trovaOggettiVendutiDaUtente(idUtente);
+    }
+
+    @GetMapping(path = "/invenduti/{idUtente}")
+    public List<OggettoModel> trovaOggettiRifiutatiUtente(@PathVariable("idUtente") UUID idUtente)
+    {
+        return oggettoService.trovaOggettiRifiutatiUtente(idUtente);
+    }
+
+    @GetMapping(path = "/vinti/{idUtente}")
+    public List<OggettoModel> trovaOggettiVintiDaUtente(@PathVariable("idUtente") UUID idUtente)
     {
         return oggettoService.trovaOggettiVintiDaUtente(idUtente);
     }
 
     @PostMapping(path = "/aggiorna{id}")
-    public int aggiornaOggetto(@PathVariable("id") UUID idOggetto, @RequestBody OggettoModel oggettoAggiornato)
+    public int aggiornaOggetto(@PathVariable("id") UUID id, @RequestBody OggettoModel oggettoAggiornato)
     {
-        return oggettoService.aggiornaOggetto(idOggetto, oggettoAggiornato);
+        return oggettoService.aggiornaOggetto(id, oggettoAggiornato);
     }
 }

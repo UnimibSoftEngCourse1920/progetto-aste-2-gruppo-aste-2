@@ -55,13 +55,23 @@ public class OggettoService {
         return oggettoDAO.trovaOggettiInCorsoAstaUtente(idUtente);
     }
 
+    public List<OggettoModel> trovaOggettiVendutiDaUtente(UUID idUtente)
+    {
+        return oggettoDAO.trovaOggettiVendutiDaUtente(idUtente);
+    }
+
+    public List<OggettoModel> trovaOggettiRifiutatiUtente(UUID idUtente)
+    {
+        return oggettoDAO.trovaOggettiRifiutatiUtente(idUtente);
+    }
+
     public List<OggettoModel> trovaOggettiVintiDaUtente(UUID idUtente)
     {
         return oggettoDAO.trovaOggettiVintiDaUtente(idUtente);
     }
 
-    public int aggiornaOggetto(UUID idOggetto, OggettoModel oggettoAggiornato)
+    public int aggiornaOggetto(UUID id, OggettoModel oggettoAggiornato)
     {
-        return oggettoDAO.aggiornaOggetto(idOggetto, oggettoAggiornato);
+        return oggettoDAO.aggiornaOggetto(id, oggettoAggiornato);
     }
 }
