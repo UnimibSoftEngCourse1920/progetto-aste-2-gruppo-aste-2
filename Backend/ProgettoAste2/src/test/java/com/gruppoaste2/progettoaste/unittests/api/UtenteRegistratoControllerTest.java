@@ -4,12 +4,12 @@ import com.gruppoaste2.progettoaste.api.UtenteRegistratoController;
 import com.gruppoaste2.progettoaste.model.UtenteRegistratoModel;
 import com.gruppoaste2.progettoaste.service.UtenteRegistratoService;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.*;
@@ -20,9 +20,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @WebMvcTest(UtenteRegistratoController.class)
-public class UtenteRegistratoControllerTest {
+class UtenteRegistratoControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -32,7 +32,7 @@ public class UtenteRegistratoControllerTest {
 
     // Test trovaUtenteRegistrato
     @Test
-    public void whenTrovaUtenteRegistrato_givenNonExistingUtenteRegistrato_thenReturnEmptyJson() throws Exception {
+    void whenTrovaUtenteRegistrato_givenNonExistingUtenteRegistrato_thenReturnEmptyJson() throws Exception {
         UUID id = UUID.randomUUID();
 
         Optional<UtenteRegistratoModel> utenteRegistratoTrovato = Optional.empty();
@@ -46,7 +46,7 @@ public class UtenteRegistratoControllerTest {
     }
 
     @Test
-    public void whenUtenteRegistrato_givenExistingUtenteRegistrato_thenReturnJsonMapUtenteRegistrato() throws Exception {
+    void whenUtenteRegistrato_givenExistingUtenteRegistrato_thenReturnJsonMapUtenteRegistrato() throws Exception {
         UUID id = UUID.randomUUID();
 
         Optional<UtenteRegistratoModel> utenteRegistratoTrovato =
@@ -70,7 +70,7 @@ public class UtenteRegistratoControllerTest {
 
     // Test trovaUtentiRegistrati
     @Test
-    public void whenTrovaUtentiRegistrati_givenNonExistingUtentiRegistrati_thenReturnEmptyJsonArray() throws Exception {
+    void whenTrovaUtentiRegistrati_givenNonExistingUtentiRegistrati_thenReturnEmptyJsonArray() throws Exception {
         List<UtenteRegistratoModel> utentiRegistratiTrovati = Collections.emptyList();
 
         given(utenteRegistratoService.trovaUtentiRegistrati()).willReturn(utentiRegistratiTrovati);
@@ -83,7 +83,7 @@ public class UtenteRegistratoControllerTest {
     }
 
     @Test
-    public void whenTrovaUtentiRegistrati_givenExistingUtentiRegistrati_thenReturnJsonArrayOfMapsUtentiRegistrati() throws Exception {
+    void whenTrovaUtentiRegistrati_givenExistingUtentiRegistrati_thenReturnJsonArrayOfMapsUtentiRegistrati() throws Exception {
         UUID id = UUID.randomUUID();
 
         List<UtenteRegistratoModel> utentiRegistratiTrovati =
@@ -109,29 +109,29 @@ public class UtenteRegistratoControllerTest {
 
     // Test aggiungiUtenteRegistrato
     @Test
-    public void whenAggiungiUtenteRegistrato_givenExistingUtenteRegistrato_thenReturnJsonNumber0() throws Exception {
+    void whenAggiungiUtenteRegistrato_givenExistingUtenteRegistrato_thenReturnJsonNumber0() throws Exception {
 
     }
 
     @Test
-    public void whenAggiungiUtenteRegistrato_givenNonExistingUtenteRegistrato_thenReturnJsonNumber1() throws Exception {
+    void whenAggiungiUtenteRegistrato_givenNonExistingUtenteRegistrato_thenReturnJsonNumber1() throws Exception {
 
     }
 
     // Test aggiornaUtenteRegistrato
     @Test
-    public void whenAggiornaUtenteRegistrato_givenNonExistingUtenteRegistrato_thenReturnJsonNumber0() throws Exception {
+    void whenAggiornaUtenteRegistrato_givenNonExistingUtenteRegistrato_thenReturnJsonNumber0() throws Exception {
 
     }
 
     @Test
-    public void whenAggiornaUtenteRegistrato_givenExistingUtenteRegistrato_thenReturnJsonNumber1() throws Exception {
+    void whenAggiornaUtenteRegistrato_givenExistingUtenteRegistrato_thenReturnJsonNumber1() throws Exception {
 
     }
 
     // Test eliminaUtenteRegistrato
     @Test
-    public void whenEliminaUtenteRegistrato_givenNonExistingUtenteRegistrato_thenReturnJsonNumber0() throws Exception {
+    void whenEliminaUtenteRegistrato_givenNonExistingUtenteRegistrato_thenReturnJsonNumber0() throws Exception {
         UUID id = UUID.randomUUID();
 
         given(utenteRegistratoService.eliminaUtenteRegistrato(id)).willReturn(0);
@@ -144,7 +144,7 @@ public class UtenteRegistratoControllerTest {
     }
 
     @Test
-    public void whenEliminaUtenteRegistrato_givenExistingUtenteRegistrato_thenReturnJsonNumber1() throws Exception {
+    void whenEliminaUtenteRegistrato_givenExistingUtenteRegistrato_thenReturnJsonNumber1() throws Exception {
         UUID id = UUID.randomUUID();
 
         given(utenteRegistratoService.eliminaUtenteRegistrato(id)).willReturn(1);
@@ -158,7 +158,7 @@ public class UtenteRegistratoControllerTest {
 
     // Test controllaUsernameOccupato
     @Test
-    public void whenControllaUsernameOccupato_givenUsernameNonOccupato_thenReturnJsonBooleanFalse() throws Exception {
+    void whenControllaUsernameOccupato_givenUsernameNonOccupato_thenReturnJsonBooleanFalse() throws Exception {
         String username = "username";
 
         given(utenteRegistratoService.controllaUsernameOccupato(username)).willReturn(false);
@@ -171,7 +171,7 @@ public class UtenteRegistratoControllerTest {
     }
 
     @Test
-    public void whenControllaUsernameOccupato_givenUsernameOccupato_thenReturnJsonBooleanTrue() throws Exception {
+    void whenControllaUsernameOccupato_givenUsernameOccupato_thenReturnJsonBooleanTrue() throws Exception {
         String username = "username";
 
         given(utenteRegistratoService.controllaUsernameOccupato(username)).willReturn(true);
@@ -185,7 +185,7 @@ public class UtenteRegistratoControllerTest {
 
     // Test controllaEmailOccupata
     @Test
-    public void whenControllaEmailOccupata_givenEmailNonOccupata_thenReturnJsonBooleanFalse() throws Exception {
+    void whenControllaEmailOccupata_givenEmailNonOccupata_thenReturnJsonBooleanFalse() throws Exception {
         String email = "email";
 
         given(utenteRegistratoService.controllaEmailOccupata(email)).willReturn(false);
@@ -198,7 +198,7 @@ public class UtenteRegistratoControllerTest {
     }
 
     @Test
-    public void whenControllaEmailOccupata_givenEmailOccupata_thenReturnJsonBooleanTrue() throws Exception {
+    void whenControllaEmailOccupata_givenEmailOccupata_thenReturnJsonBooleanTrue() throws Exception {
         String email = "email";
 
         given(utenteRegistratoService.controllaEmailOccupata(email)).willReturn(true);
@@ -212,34 +212,34 @@ public class UtenteRegistratoControllerTest {
 
     // Test controllaUtenteEsiste
     @Test
-    public void whenControllaUtenteRegistratoEsiste_givenNonExistingUtenteRegistrato_thenReturnJsonBooleanFalse() throws Exception {
+    void whenControllaUtenteRegistratoEsiste_givenNonExistingUtenteRegistrato_thenReturnJsonBooleanFalse() throws Exception {
 
     }
 
     @Test
-    public void whenControllaUtenteRegistratoEsiste_givenExistingUtenteRegistrato_thenReturnJsonBooleanTrue() throws Exception {
+    void whenControllaUtenteRegistratoEsiste_givenExistingUtenteRegistrato_thenReturnJsonBooleanTrue() throws Exception {
 
     }
 
     //test infoCredito
     @Test
-    public void whenInfoCredito_givenNonExistingCredito_thenReturnEmptyJson() throws Exception {
+    void whenInfoCredito_givenNonExistingCredito_thenReturnEmptyJson() throws Exception {
 
     }
 
     @Test
-    public void whenInfoCredito_givenExistingCredito_thenReturnJsonMapInfoCredito() throws Exception {
+    void whenInfoCredito_givenExistingCredito_thenReturnJsonMapInfoCredito() throws Exception {
 
     }
 
     //test aggiungiCredito
     @Test
-    public void whenAggiungiCredito_givenNonExistingCredito_thenReturnJsonNumber0() throws Exception {
+    void whenAggiungiCredito_givenNonExistingCredito_thenReturnJsonNumber0() throws Exception {
 
     }
 
     @Test
-    public void whenAggiungiCredito_givenExistingCredito_thenReturnJsonNumber1() throws Exception {
+    void whenAggiungiCredito_givenExistingCredito_thenReturnJsonNumber1() throws Exception {
 
     }
 }

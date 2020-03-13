@@ -3,13 +3,13 @@ package com.gruppoaste2.progettoaste.integrationtests;
 import com.gruppoaste2.progettoaste.dao.AmministratoreDAO;
 import com.gruppoaste2.progettoaste.model.AmministratoreModel;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.*;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Optional;
@@ -18,11 +18,11 @@ import java.util.UUID;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "/resources/application.properties")
-public class AmministratoreControllerIntegrationTest {
+class AmministratoreControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -32,7 +32,7 @@ public class AmministratoreControllerIntegrationTest {
 
     // Test trovaAmministratore
     @Test
-    public void whenTrovaAmministratore_givenNonExistingAmministratore_thenReturnEmptyJson() throws Exception {
+    void whenTrovaAmministratore_givenNonExistingAmministratore_thenReturnEmptyJson() throws Exception {
         /*
         UUID id = UUID.randomUUID();
 
@@ -47,7 +47,7 @@ public class AmministratoreControllerIntegrationTest {
     }
 
     @Test
-    public void whenTrovaAmministratore_givenExistingAmministratore_thenReturnJsonMapAmministratore() throws Exception {
+    void whenTrovaAmministratore_givenExistingAmministratore_thenReturnJsonMapAmministratore() throws Exception {
         /*
         UUID id = UUID.randomUUID();
 

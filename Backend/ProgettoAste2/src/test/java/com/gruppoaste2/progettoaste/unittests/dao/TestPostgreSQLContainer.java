@@ -2,7 +2,7 @@ package com.gruppoaste2.progettoaste.unittests.dao;
 
 import org.testcontainers.containers.PostgreSQLContainer;
 
-public class TestPostgreSQLContainer extends PostgreSQLContainer<TestPostgreSQLContainer> {
+class TestPostgreSQLContainer extends PostgreSQLContainer<TestPostgreSQLContainer> {
 
     /*
     private static final String IMAGE_VERSION = "postgres:11.1";

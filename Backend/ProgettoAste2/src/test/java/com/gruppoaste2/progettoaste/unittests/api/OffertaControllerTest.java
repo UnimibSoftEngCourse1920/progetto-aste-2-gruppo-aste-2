@@ -4,12 +4,12 @@ import com.gruppoaste2.progettoaste.api.OffertaController;
 import com.gruppoaste2.progettoaste.model.*;
 import com.gruppoaste2.progettoaste.service.OffertaService;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.sql.Date;
@@ -25,9 +25,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @WebMvcTest(OffertaController.class)
-public class OffertaControllerTest {
+class OffertaControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -37,7 +37,7 @@ public class OffertaControllerTest {
 
     // Test trovaOfferta
     @Test
-    public void whenTrovaOfferta_givenNonExistingOfferta_thenReturnEmptyJson() throws Exception {
+    void whenTrovaOfferta_givenNonExistingOfferta_thenReturnEmptyJson() throws Exception {
         UUID id = UUID.randomUUID();
 
         Optional<OffertaModel> offertaTrovata = Optional.empty();
@@ -51,7 +51,7 @@ public class OffertaControllerTest {
     }
 
     @Test
-    public void whenTrovaOfferta_givenExistingOfferta_thenReturnJsonMapOfferta() throws Exception {
+    void whenTrovaOfferta_givenExistingOfferta_thenReturnJsonMapOfferta() throws Exception {
         UUID idOfferta = UUID.randomUUID();
         UUID idOfferente = UUID.randomUUID();
 
@@ -82,7 +82,7 @@ public class OffertaControllerTest {
 
     // Test trovaOfferte
     @Test
-    public void whenTrovaOfferte_givenNonExistingOfferte_thenReturnEmptyJsonArray() throws Exception {
+    void whenTrovaOfferte_givenNonExistingOfferte_thenReturnEmptyJsonArray() throws Exception {
         List<OffertaModel> offerteTrovate = Collections.emptyList();
 
         given(offertaService.trovaOfferte()).willReturn(offerteTrovate);
@@ -95,7 +95,7 @@ public class OffertaControllerTest {
     }
 
     @Test
-    public void whenTrovaOfferte_givenExistingOfferte_thenReturnJsonArrayOfMapsOfferte() throws Exception {
+    void whenTrovaOfferte_givenExistingOfferte_thenReturnJsonArrayOfMapsOfferte() throws Exception {
         UUID idOfferta = UUID.randomUUID();
         UUID idOfferente = UUID.randomUUID();
 
@@ -128,7 +128,7 @@ public class OffertaControllerTest {
 
     // Test trovaOfferteAsta
     @Test
-    public void whenTrovaOfferteAsta_givenNonExistingOfferteAsta_thenReturnEmptyJsonArray() throws Exception {
+    void whenTrovaOfferteAsta_givenNonExistingOfferteAsta_thenReturnEmptyJsonArray() throws Exception {
         UUID idAsta = UUID.randomUUID();
 
         List<OffertaModel> offerteTrovate = Collections.emptyList();
@@ -143,7 +143,7 @@ public class OffertaControllerTest {
     }
 
     @Test
-    public void whenTrovaOfferteAsta_givenExistingOfferteAsta_thenReturnJsonArrayOfMapsOfferteAsta() throws Exception {
+    void whenTrovaOfferteAsta_givenExistingOfferteAsta_thenReturnJsonArrayOfMapsOfferteAsta() throws Exception {
         UUID idasta = UUID.randomUUID();
         UUID idconf = UUID.randomUUID();
         UUID idUtente = UUID.randomUUID();
@@ -196,7 +196,7 @@ public class OffertaControllerTest {
 
     // Test trovaOfferteUtente
     @Test
-    public void whenTrovaOfferteUtente_givenNonExistingOfferteUtente_thenReturnEmptyJsonArray() throws Exception {
+    void whenTrovaOfferteUtente_givenNonExistingOfferteUtente_thenReturnEmptyJsonArray() throws Exception {
         UUID idOfferente = UUID.randomUUID();
 
         List<OffertaModel> offerteTrovate = Collections.emptyList();
@@ -211,7 +211,7 @@ public class OffertaControllerTest {
     }
 
     @Test
-    public void whenTrovaOfferteUtente_givenExistingOfferteUtente_thenReturnJsonArrayOfMapsOfferteUtente() throws Exception {
+    void whenTrovaOfferteUtente_givenExistingOfferteUtente_thenReturnJsonArrayOfMapsOfferteUtente() throws Exception {
         UUID idOfferta = UUID.randomUUID();
         UUID idOfferente = UUID.randomUUID();
 
@@ -243,7 +243,7 @@ public class OffertaControllerTest {
 
     // Test trovaOfferteUtenteAsta
     @Test
-    public void whenTrovaOfferteUtenteAsta_givenNonExistingOfferteUtenteAsta_thenReturnEmptyJsonArray() throws Exception {
+    void whenTrovaOfferteUtenteAsta_givenNonExistingOfferteUtenteAsta_thenReturnEmptyJsonArray() throws Exception {
         UUID idOfferente = UUID.randomUUID();
         UUID idAsta = UUID.randomUUID();
 
@@ -259,7 +259,7 @@ public class OffertaControllerTest {
     }
 
     @Test
-    public void whenTrovaOfferteUtenteAsta_givenExistingOfferteUtenteAsta_thenReturnJsonArrayOfMapsOfferteUtenteAsta() throws Exception {
+    void whenTrovaOfferteUtenteAsta_givenExistingOfferteUtenteAsta_thenReturnJsonArrayOfMapsOfferteUtenteAsta() throws Exception {
         UUID idasta = UUID.randomUUID();
         UUID idconf = UUID.randomUUID();
         UUID idUtente = UUID.randomUUID();
@@ -312,29 +312,29 @@ public class OffertaControllerTest {
 
     // Test aggiungiOfferta
     @Test
-    public void whenAggiungiOfferta_givenExistingOfferta_thenReturnJsonNumber0() throws Exception {
+    void whenAggiungiOfferta_givenExistingOfferta_thenReturnJsonNumber0() throws Exception {
 
     }
 
     @Test
-    public void whenAggiungiOfferta_givenNonExistingOfferta_thenReturnJsonNumber1() throws Exception {
+    void whenAggiungiOfferta_givenNonExistingOfferta_thenReturnJsonNumber1() throws Exception {
 
     }
 
     // Test aggiornaOfferta
     @Test
-    public void whenAggiornaOfferta_givenNonExistingOfferta_thenReturnJsonNumber0() throws Exception {
+    void whenAggiornaOfferta_givenNonExistingOfferta_thenReturnJsonNumber0() throws Exception {
 
     }
 
     @Test
-    public void whenAggiornaOfferta_givenExistingOfferta_thenReturnJsonNumber1() throws Exception {
+    void whenAggiornaOfferta_givenExistingOfferta_thenReturnJsonNumber1() throws Exception {
 
     }
 
     // Test eliminaOfferta
     @Test
-    public void whenEliminaOfferta_givenNonExistingOfferta_thenReturnJsonNumber0() throws Exception {
+    void whenEliminaOfferta_givenNonExistingOfferta_thenReturnJsonNumber0() throws Exception {
         UUID id = UUID.randomUUID();
 
         given(offertaService.eliminaOfferta(id)).willReturn(0);
@@ -347,7 +347,7 @@ public class OffertaControllerTest {
     }
 
     @Test
-    public void whenEliminaOfferta_givenExistingOfferta_thenReturnJsonNumber1() throws Exception {
+    void whenEliminaOfferta_givenExistingOfferta_thenReturnJsonNumber1() throws Exception {
         UUID id = UUID.randomUUID();
 
         given(offertaService.eliminaOfferta(id)).willReturn(1);

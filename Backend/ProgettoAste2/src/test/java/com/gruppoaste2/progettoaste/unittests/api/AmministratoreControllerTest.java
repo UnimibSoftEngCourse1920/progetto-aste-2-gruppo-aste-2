@@ -6,13 +6,13 @@ import com.gruppoaste2.progettoaste.api.AmministratoreController;
 import com.gruppoaste2.progettoaste.model.AmministratoreModel;
 import com.gruppoaste2.progettoaste.service.AmministratoreService;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.*;
@@ -25,9 +25,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @WebMvcTest(AmministratoreController.class)
-public class AmministratoreControllerTest {
+class AmministratoreControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -37,7 +37,7 @@ public class AmministratoreControllerTest {
 
     // Test inserisciAmministratore
     @Test
-    public void whenInserisciAmministratore_givenExistingAmministratore_thenReturnJsonNumber1() throws Exception {
+    void whenInserisciAmministratore_givenExistingAmministratore_thenReturnJsonNumber1() throws Exception {
         AmministratoreModel amministratore =
                 new AmministratoreModel(null, "username", "email", "password");
 
@@ -56,7 +56,7 @@ public class AmministratoreControllerTest {
     }
 
     @Test
-    public void whenInserisciAmministratore_givenNonExistingAmministratore_thenReturnJsonNumber0() throws Exception {
+    void whenInserisciAmministratore_givenNonExistingAmministratore_thenReturnJsonNumber0() throws Exception {
         /*
         String body = "{"
                 + "\"username\":\"username\","
@@ -79,7 +79,7 @@ public class AmministratoreControllerTest {
 
     // Test trovaAmministratore
     @Test
-    public void whenTrovaAmministratore_givenNonExistingAmministratore_thenReturnEmptyJson() throws Exception {
+    void whenTrovaAmministratore_givenNonExistingAmministratore_thenReturnEmptyJson() throws Exception {
         UUID id = UUID.randomUUID();
 
         Optional<AmministratoreModel> amministratoreTrovato = Optional.empty();
@@ -93,7 +93,7 @@ public class AmministratoreControllerTest {
     }
 
     @Test
-    public void whenTrovaAmministratore_givenExistingAmministratore_thenReturnJsonMapAmministratore() throws Exception {
+    void whenTrovaAmministratore_givenExistingAmministratore_thenReturnJsonMapAmministratore() throws Exception {
         UUID id = UUID.randomUUID();
 
         Optional<AmministratoreModel> amministratoreTrovato =
@@ -113,7 +113,7 @@ public class AmministratoreControllerTest {
 
     // Test trovaAmministratori
     @Test
-    public void whenTrovaAmministratori_givenNonExistingAmministratori_thenReturnEmptyJsonArray() throws Exception {
+    void whenTrovaAmministratori_givenNonExistingAmministratori_thenReturnEmptyJsonArray() throws Exception {
         List<AmministratoreModel> amministratoriTrovati = Collections.emptyList();
 
         given(amministratoreService.trovaAmministratori()).willReturn(amministratoriTrovati);
@@ -126,7 +126,7 @@ public class AmministratoreControllerTest {
     }
 
     @Test
-    public void whenTrovaAmministratori_givenExistingAmministratori_thenReturnJsonArrayOfMapsAmministratori() throws Exception {
+    void whenTrovaAmministratori_givenExistingAmministratori_thenReturnJsonArrayOfMapsAmministratori() throws Exception {
         UUID id = UUID.randomUUID();
 
         List<AmministratoreModel> amministratoriTrovati =
@@ -148,7 +148,7 @@ public class AmministratoreControllerTest {
 
     // Test controllaUsernameOccupato
     @Test
-    public void whenControllaUsernameOccupato_givenUsernameNonOccupato_thenReturnJsonBooleanFalse() throws Exception {
+    void whenControllaUsernameOccupato_givenUsernameNonOccupato_thenReturnJsonBooleanFalse() throws Exception {
         String username = "username";
 
         given(amministratoreService.controllaUsernameOccupato(username)).willReturn(false);
@@ -161,7 +161,7 @@ public class AmministratoreControllerTest {
     }
 
     @Test
-    public void whenControllaUsernameOccupato_givenUsernameOccupato_thenReturnJsonBooleanTrue() throws Exception {
+    void whenControllaUsernameOccupato_givenUsernameOccupato_thenReturnJsonBooleanTrue() throws Exception {
         String username = "username";
 
         given(amministratoreService.controllaUsernameOccupato(username)).willReturn(true);
@@ -175,7 +175,7 @@ public class AmministratoreControllerTest {
 
     // Test eliminaAmministratore
     @Test
-    public void whenEliminaAmministratore_givenNonExistingAmministratore_thenReturnJsonNumber0() throws Exception {
+    void whenEliminaAmministratore_givenNonExistingAmministratore_thenReturnJsonNumber0() throws Exception {
         UUID id = UUID.randomUUID();
 
         given(amministratoreService.eliminaAmministratore(id)).willReturn(0);
@@ -188,7 +188,7 @@ public class AmministratoreControllerTest {
     }
 
     @Test
-    public void whenEliminaAmministratore_givenExistingAmministratore_thenReturnJsonNumber1() throws Exception {
+    void whenEliminaAmministratore_givenExistingAmministratore_thenReturnJsonNumber1() throws Exception {
         UUID id = UUID.randomUUID();
 
         given(amministratoreService.eliminaAmministratore(id)).willReturn(1);
@@ -202,7 +202,7 @@ public class AmministratoreControllerTest {
 
     // Test controllaEmailOccupata
     @Test
-    public void whenControllaEmailOccupata_givenEmailNonOccupata_thenReturnJsonBooleanFalse() throws Exception {
+    void whenControllaEmailOccupata_givenEmailNonOccupata_thenReturnJsonBooleanFalse() throws Exception {
         String email = "email";
 
         given(amministratoreService.controllaEmailOccupata(email)).willReturn(false);
@@ -215,7 +215,7 @@ public class AmministratoreControllerTest {
     }
 
     @Test
-    public void whenControllaEmailOccupata_givenEmailOccupata_thenReturnJsonBooleanTrue() throws Exception {
+    void whenControllaEmailOccupata_givenEmailOccupata_thenReturnJsonBooleanTrue() throws Exception {
         String email = "email";
 
         given(amministratoreService.controllaEmailOccupata(email)).willReturn(true);
@@ -229,7 +229,7 @@ public class AmministratoreControllerTest {
 
     // Test controllaAmministratoreEsiste
     @Test
-    public void whenControllaAmministratoreEsiste_givenNonExistingAmministratore_thenReturnJsonBooleanFalse() throws Exception {
+    void whenControllaAmministratoreEsiste_givenNonExistingAmministratore_thenReturnJsonBooleanFalse() throws Exception {
         /*
         String body = "{"
                 + "\"username\":\"username\","
@@ -250,7 +250,7 @@ public class AmministratoreControllerTest {
     }
 
     @Test
-    public void whenControllaAmministratoreEsiste_givenExistingAmministratore_thenReturnJsonBooleanTrue() throws Exception {
+    void whenControllaAmministratoreEsiste_givenExistingAmministratore_thenReturnJsonBooleanTrue() throws Exception {
         /*
         String body = "{"
                 + "\"username\":\"username\","
@@ -272,7 +272,7 @@ public class AmministratoreControllerTest {
 
     // Test aggiornaAmministratore
     @Test
-    public void whenAggiornaAmministratore_givenNonExistingAmministratore_thenReturnJsonNumber0() throws Exception {
+    void whenAggiornaAmministratore_givenNonExistingAmministratore_thenReturnJsonNumber0() throws Exception {
         /*
         UUID id = UUID.randomUUID();
 
@@ -289,7 +289,7 @@ public class AmministratoreControllerTest {
     }
 
     @Test
-    public void whenAggiornaAmministratore_givenExistingAmministratore_thenReturnJsonNumber1() throws Exception {
+    void whenAggiornaAmministratore_givenExistingAmministratore_thenReturnJsonNumber1() throws Exception {
         /*
         UUID id = UUID.randomUUID();
 

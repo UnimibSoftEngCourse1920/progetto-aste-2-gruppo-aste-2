@@ -4,12 +4,12 @@ import com.gruppoaste2.progettoaste.api.AstaController;
 import com.gruppoaste2.progettoaste.model.*;
 import com.gruppoaste2.progettoaste.service.AstaService;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.sql.Time;
@@ -26,9 +26,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @WebMvcTest(AstaController.class)
-public class AstaControllerTest {
+class AstaControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -37,7 +37,7 @@ public class AstaControllerTest {
     private AstaService astaService;
 
     @Test
-    public void whenTrovaAsta_givenNonExistingAsta_thenReturnEmptyJson() throws Exception{
+    void whenTrovaAsta_givenNonExistingAsta_thenReturnEmptyJson() throws Exception{
         UUID id = UUID.randomUUID();
 
         Optional<AstaModel> astaTrovata = Optional.empty();
@@ -51,7 +51,7 @@ public class AstaControllerTest {
     }
 
     /*@Test
-    public void whenTrovaAsta_givenExistingAsta_thenReturnJsonMapAsta() throws Exception {
+    void whenTrovaAsta_givenExistingAsta_thenReturnJsonMapAsta() throws Exception {
         UUID idasta = UUID.randomUUID();
         UUID idconf = UUID.randomUUID();
         UUID idUtente = UUID.randomUUID();
@@ -125,7 +125,7 @@ public class AstaControllerTest {
     }*/
 
     @Test
-    public void whenTrovaAste_givenNonExistingAste_thenReturnEmptyJsonArray() throws Exception {
+    void whenTrovaAste_givenNonExistingAste_thenReturnEmptyJsonArray() throws Exception {
         List<AstaModel> asteTrovate = Collections.emptyList();
 
         given(astaService.trovaAste()).willReturn(asteTrovate);
@@ -138,7 +138,7 @@ public class AstaControllerTest {
     }
 
     /*@Test
-    public void whenTrovaAste_givenExistingAste_thenReturnJsonArrayOfMapsAste() throws Exception {
+    void whenTrovaAste_givenExistingAste_thenReturnJsonArrayOfMapsAste() throws Exception {
         UUID idasta = UUID.randomUUID();
         UUID idconf = UUID.randomUUID();
         UUID idUtente = UUID.randomUUID();
@@ -214,7 +214,7 @@ public class AstaControllerTest {
     }*/
 
     @Test
-    public void whenEliminaAsta_givenNonExistingAsta_thenReturnJsonNumber0() throws Exception {
+    void whenEliminaAsta_givenNonExistingAsta_thenReturnJsonNumber0() throws Exception {
         UUID id = UUID.randomUUID();
 
         given(astaService.eliminaAsta(id)).willReturn(0);
@@ -228,7 +228,7 @@ public class AstaControllerTest {
     }
 
     @Test
-    public void whenEliminaAsta_givenExistingAsta_thenReturnJsonNumber1() throws Exception {
+    void whenEliminaAsta_givenExistingAsta_thenReturnJsonNumber1() throws Exception {
         UUID id = UUID.randomUUID();
 
         given(astaService.eliminaAsta(id)).willReturn(1);

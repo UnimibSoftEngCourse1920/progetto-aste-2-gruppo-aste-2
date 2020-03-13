@@ -1,15 +1,16 @@
 package com.gruppoaste2.progettoaste.unittests.dao;
 
+/*
 import com.gruppoaste2.progettoaste.dao.AmministratoreDAO;
 import com.gruppoaste2.progettoaste.model.AmministratoreModel;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.PostgreSQLContainer;
 
@@ -17,8 +18,9 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
+ */
 public class AmministratoreDAOTest {
 
     /*
@@ -32,13 +34,13 @@ public class AmministratoreDAOTest {
     private static final AmministratoreModel amministratore =
             new AmministratoreModel(id, "username", "email", "password");
 
-    @BeforeClass
-    public static void setUp() {
+    @BeforeAll
+    static void setUp() {
         amministratoreDAO.inserisciAmministratore(id, amministratore);
     }
 
-    @AfterClass
-    public static void tearDown() {
+    @AfterAll
+    static void tearDown() {
         amministratoreDAO.eliminaAmministratore(id);
     }
 

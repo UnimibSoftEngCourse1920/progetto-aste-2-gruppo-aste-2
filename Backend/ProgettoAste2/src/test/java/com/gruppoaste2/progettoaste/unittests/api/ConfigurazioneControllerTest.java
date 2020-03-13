@@ -4,12 +4,12 @@ import com.gruppoaste2.progettoaste.api.ConfigurazioneController;
 import com.gruppoaste2.progettoaste.model.ConfigurazioneModel;
 import com.gruppoaste2.progettoaste.service.ConfigurazioneService;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.sql.Date;
@@ -22,9 +22,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @WebMvcTest(ConfigurazioneController.class)
-public class ConfigurazioneControllerTest {
+class ConfigurazioneControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -34,18 +34,18 @@ public class ConfigurazioneControllerTest {
 
     // Test inserisciConfigurazione
     @Test
-    public void whenInserisciConfigurazione_givenExistingConfigurazione_thenReturnJsonNumber0() throws Exception {
+    void whenInserisciConfigurazione_givenExistingConfigurazione_thenReturnJsonNumber0() throws Exception {
 
     }
 
     @Test
-    public void whenInserisciConfigurazione_givenNonExistingConfigurazione_thenReturnJsonNumber1() throws Exception {
+    void whenInserisciConfigurazione_givenNonExistingConfigurazione_thenReturnJsonNumber1() throws Exception {
 
     }
 
     // Test eliminaConfigurazione
     @Test
-    public void whenEliminaConfigurazione_givenNonExistingConfigurazione_thenReturnJsonNumber0() throws Exception {
+    void whenEliminaConfigurazione_givenNonExistingConfigurazione_thenReturnJsonNumber0() throws Exception {
         UUID id = UUID.randomUUID();
 
         given(configurazioneService.eliminaConfiguazione(id)).willReturn(0);
@@ -58,7 +58,7 @@ public class ConfigurazioneControllerTest {
     }
 
     @Test
-    public void whenEliminaConfigurazione_givenExistingConfigurazione_thenReturnJsonNumber1() throws Exception {
+    void whenEliminaConfigurazione_givenExistingConfigurazione_thenReturnJsonNumber1() throws Exception {
         UUID id = UUID.randomUUID();
 
         given(configurazioneService.eliminaConfiguazione(id)).willReturn(1);
@@ -72,7 +72,7 @@ public class ConfigurazioneControllerTest {
 
     // Test trovaConfigurazione
     @Test
-    public void whenTrovaConfigurazione_givenNonExistingConfigurazione_thenReturnEmptyJson() throws Exception {
+    void whenTrovaConfigurazione_givenNonExistingConfigurazione_thenReturnEmptyJson() throws Exception {
         UUID id = UUID.randomUUID();
 
         Optional<ConfigurazioneModel> configurazioneTrovata = Optional.empty();
@@ -87,7 +87,7 @@ public class ConfigurazioneControllerTest {
 
     // Test trovaConfigurazioni
     /* @Test
-    public void whenTrovaConfigurazione_givenExistingConfigurazione_thenReturnJsonMapConfigurazione() throws Exception {
+    void whenTrovaConfigurazione_givenExistingConfigurazione_thenReturnJsonMapConfigurazione() throws Exception {
         UUID id = UUID.randomUUID();
 
         Optional<ConfigurazioneModel> configurazioneTrovata =
@@ -109,7 +109,7 @@ public class ConfigurazioneControllerTest {
     }*/
 
     @Test
-    public void whenTrovaConfigurazioni_givenNonExistingConfigurazioni_thenReturnEmptyJsonArray() throws Exception {
+    void whenTrovaConfigurazioni_givenNonExistingConfigurazioni_thenReturnEmptyJsonArray() throws Exception {
         List<ConfigurazioneModel> configurazioniTrovate = Collections.emptyList();
 
         given(configurazioneService.trovaConfigurazioni()).willReturn(configurazioniTrovate);
@@ -122,7 +122,7 @@ public class ConfigurazioneControllerTest {
     }
 
     /*@Test
-    public void whenTrovaConfigurazioni_givenExistingConfigurazioni_thenReturnJsonArrayOfMapsConfigurazioni() throws Exception {
+    void whenTrovaConfigurazioni_givenExistingConfigurazioni_thenReturnJsonArrayOfMapsConfigurazioni() throws Exception {
         UUID id = UUID.randomUUID();
 
         List<ConfigurazioneModel> configurazioniTrovate =
@@ -147,12 +147,12 @@ public class ConfigurazioneControllerTest {
 
     // Test trovaUltimaConfigurazione
     @Test
-    public void whenTrovaUltimaConfigurazione_givenNonExistingUltimaConfigurazione_thenReturnEmptyJson() throws Exception {
+    void whenTrovaUltimaConfigurazione_givenNonExistingUltimaConfigurazione_thenReturnEmptyJson() throws Exception {
 
     }
 
     @Test
-    public void whenTrovaUltimaConfigurazione_givenExistingUltimaConfigurazione_thenReturnJsonMapUltimaConfigurazione() throws Exception {
+    void whenTrovaUltimaConfigurazione_givenExistingUltimaConfigurazione_thenReturnJsonMapUltimaConfigurazione() throws Exception {
 
     }
 }
