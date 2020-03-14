@@ -9,6 +9,7 @@ import CreaConfig from '../views/CreaConfig.vue'
 import UtenteCredito from '../views/UtenteCredito.vue'
 import UserPage from '../views/UserPage.vue'
 import UtenteGestione from '../views/UtenteGestionePage.vue'
+import AsteLoggedIn from '../views/AsteLoggedIn.vue'
 
 Vue.use(VueRouter)
 
@@ -57,6 +58,11 @@ const routes = [
     path: '/utentegestione',
     name: 'utentegestione',
     component: UtenteGestione
+  },
+  {
+    path: '/visualizzaaste',
+    name: 'visualizzaaste',
+    component: AsteLoggedIn
   }
 
 
