@@ -153,7 +153,8 @@ CREATE TABLE public.asta (
     data_fine timestamp(1) without time zone,
     durata_timeslot time without time zone NOT NULL,
     tipo character varying(100) NOT NULL,
-    prezzo_partenza real NOT NULL
+    prezzo_partenza real NOT NULL,
+    rifiutata boolean DEFAULT false NOT NULL
 );
 
 
@@ -298,7 +299,7 @@ Provolone	93fdad81-6724-46d0-9c90-c6b237a908d7	parmigiano@brie.com	boh
 -- Data for Name: asta; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.asta (id, id_asta_manager, id_configurazione, data_inizio, data_fine, durata_timeslot, tipo, prezzo_partenza) FROM stdin;
+COPY public.asta (id, id_asta_manager, id_configurazione, data_inizio, data_fine, durata_timeslot, tipo, prezzo_partenza, rifiutata) FROM stdin;
 \.
 
 
