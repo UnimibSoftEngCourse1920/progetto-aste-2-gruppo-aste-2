@@ -149,8 +149,8 @@ CREATE TABLE public.asta (
     id uuid NOT NULL,
     id_asta_manager uuid NOT NULL,
     id_configurazione uuid NOT NULL,
-    data_inizio date NOT NULL,
-    data_fine date,
+    data_inizio timestamp(1) without time zone NOT NULL,
+    data_fine timestamp(1) without time zone,
     durata_timeslot time without time zone NOT NULL,
     tipo character varying(100) NOT NULL,
     prezzo_partenza real NOT NULL
@@ -233,7 +233,7 @@ ALTER TABLE public.configurazione OWNER TO postgres;
 CREATE TABLE public.offerta (
     id_offerente uuid NOT NULL,
     id_asta uuid NOT NULL,
-    data_offerta date NOT NULL,
+    data_offerta timestamp(1) without time zone NOT NULL,
     credito_offerto real NOT NULL,
     id uuid NOT NULL
 );
@@ -376,8 +376,9 @@ superamento_immediato
 --
 
 COPY public.utente_registrato (id, username, password, email, telefono, credito_disponibile, notifica_email, notifica_sms) FROM stdin;
-6c7983dc-e7f6-498b-801c-eee9e6c8e489	dsduca	1243	lol@boh.com	\N	666	\N	f
-b505c3b6-7769-4c6f-a000-80e1615b77a8	Luca	1243	superBoh@boh.com	\N	674	\N	f
+6c7983dc-e7f6-498b-801c-eee9e6c8e489	dsduca	1243	lol@boh.com	\N	666	f	f
+b505c3b6-7769-4c6f-a000-80e1615b77a8	Luca	1243	superBoh@boh.com	\N	8	f	f
+55a32da1-3cc7-45d6-b019-a4b9f824246e	Carlo	666	carlo@carlo.com	\N	0	f	f
 \.
 
 
