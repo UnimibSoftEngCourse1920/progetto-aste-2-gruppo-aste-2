@@ -5,11 +5,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.io.*;
+import java.nio.channels.SelectableChannel;
+import java.nio.charset.StandardCharsets;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.postgresql.copy.CopyManager;
+import org.postgresql.core.BaseConnection;
 
 @Repository("postgres-oggetto") // serve per identificare il tipo di database da usare (per dependency injection)
 public class PostgresOggettoDAO implements OggettoDAO {
@@ -122,25 +131,72 @@ public class PostgresOggettoDAO implements OggettoDAO {
 
     // TODO: importaOggetti
     @Override
-    public List<OggettoModel> importaOggetti(String urlFile) {
-        /*
-        final String sql = "COPY oggetto " +
-                "FROM '" + urlFile + "' DELIMITER ',' CSV HEADER;";
-        return jdbcTemplate.execute(sql);
-         */
-        return null;
+    public long importaOggetti(UUID idAsta, String fileName) {
+        String url = System.getProperty("jdbc-url");
+        String username = System.getProperty("username");
+        String password = System.getProperty("password");
+
+        long copyIn = 0;
+
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            CopyManager copyManager = new CopyManager((BaseConnection) connection);
+
+            try (FileInputStream fileInputStream = new FileInputStream(fileName);
+                 InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream,
+                         StandardCharsets.UTF_8)) {
+                final String selection =
+                        "SELECT oggetto.nome, descrizione, url_immagine, categoria.nome, attributo.nome, valore " +
+                                "FROM oggetto " +
+                                "JOIN categoria_oggetto ON oggetto.id = categoria_oggetto.id_oggetto " +
+                                "JOIN categoria ON categoria_oggetto.id_categoria = categoria.id " +
+                                "JOIN attributo_oggetto ON oggetto.id = attributo_oggetto.id_oggetto " +
+                                "JOIN attributo ON attributo_oggetto.id_attributo = attributo.id " +
+                                "WHERE id_asta = " + idAsta;
+                final String sql = "COPY (" + selection + ") FROM STDIN WITH DELIMITER '|'";
+                copyIn = copyManager.copyIn(sql, inputStreamReader);
+            }
+
+        } catch (SQLException | IOException exception) {
+            Logger logger = Logger.getLogger(this.getClass().getName());
+            logger.log(Level.SEVERE, exception.getMessage(), exception);
+        }
+
+        return copyIn;
     }
 
     // TODO: esportaOggetti
     @Override
-    public String esportaOggetti(UUID idAsta, String urlFile) {
-        /*
-        final String sql = "COPY oggetto " +
-                "WHERE id_asta = ? " +
-                "TO '" + urlFile + "' DELIMITER ',' CSV HEADER;";
-        return jdbcTemplate.execute(sql, idAsta);
-         */
-        return null;
+    public long esportaOggetti(UUID idAsta, String fileName) {
+        String url = System.getProperty("jdbc-url");
+        String username = System.getProperty("username");
+        String password = System.getProperty("password");
+
+        long copyOut = 0;
+
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            CopyManager copyManager = new CopyManager((BaseConnection) connection);
+
+            try (FileOutputStream fileOutputStream = new FileOutputStream(fileName);
+                 OutputStreamWriter outputStreamWriter =
+                         new OutputStreamWriter(fileOutputStream, StandardCharsets.UTF_8)) {
+                final String selection =
+                        "SELECT oggetto.nome, descrizione, url_immagine, categoria.nome, attributo.nome, valore " +
+                        "FROM oggetto " +
+                        "JOIN categoria_oggetto ON oggetto.id = categoria_oggetto.id_oggetto " +
+                        "JOIN categoria ON categoria_oggetto.id_categoria = categoria.id " +
+                        "JOIN attributo_oggetto ON oggetto.id = attributo_oggetto.id_oggetto " +
+                        "JOIN attributo ON attributo_oggetto.id_attributo = attributo.id " +
+                        "WHERE id_asta = " + idAsta;
+                final String sql = "COPY (" + selection + ") TO STDOUT WITH DELIMITER AS '|'";
+                copyOut = copyManager.copyOut(sql, outputStreamWriter);
+            }
+
+        } catch (SQLException | IOException exception) {
+            Logger logger = Logger.getLogger(this.getClass().getName());
+            logger.log(Level.SEVERE, exception.getMessage(), exception);
+        }
+
+        return copyOut;
     }
 
     private OggettoModel makeOggettoFromResultSet(ResultSet resultSet) throws SQLException {

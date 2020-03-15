@@ -36,7 +36,7 @@ public interface OggettoDAO {
 
     int aggiornaOggetto(UUID id, OggettoModel oggettoAggiornato);
 
-    List<OggettoModel> importaOggetti(String urlFile);
+    long importaOggetti(UUID idAsta, String fileName);
 
-    String esportaOggetti(UUID idAsta, String urlFile);
+    long esportaOggetti(UUID idAsta, String fileName);
 }

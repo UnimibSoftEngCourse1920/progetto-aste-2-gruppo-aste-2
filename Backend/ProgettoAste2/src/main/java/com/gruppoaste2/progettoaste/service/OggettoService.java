@@ -75,13 +75,13 @@ public class OggettoService {
         return oggettoDAO.aggiornaOggetto(id, oggettoAggiornato);
     }
 
-    public List<OggettoModel> importaOggetti(String urlFile)
+    public long importaOggetti(UUID idAsta, String fileName)
     {
-        return oggettoDAO.importaOggetti(urlFile);
+        return oggettoDAO.importaOggetti(idAsta, fileName);
     }
 
-    public String esportaOggetti(UUID idAsta, String urlFile)
+    public long esportaOggetti(UUID idAsta, String fileName)
     {
-        return oggettoDAO.esportaOggetti(idAsta, urlFile);
+        return oggettoDAO.esportaOggetti(idAsta, fileName);
     }
 }
