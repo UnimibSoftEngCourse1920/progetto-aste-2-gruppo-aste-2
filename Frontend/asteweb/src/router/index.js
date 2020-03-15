@@ -12,6 +12,7 @@ import UtenteGestione from '../views/UtenteGestionePage.vue'
 import AsteLoggedIn from '../views/AsteLoggedIn.vue'
 import Help from '../views/Help.vue'
 import Info from '../views/Info.vue'
+import CreaAsta from '../views/CreaAsta.vue'
 
 Vue.use(VueRouter)
 
@@ -75,6 +76,11 @@ const routes = [
     path: '/info',
     name: 'info',
     component: Info
+  },
+  {
+    path: '/creaasta',
+    name: 'creaasta',
+    component: CreaAsta
   }
 
 

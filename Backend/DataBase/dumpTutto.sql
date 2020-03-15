@@ -112,6 +112,18 @@ COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UU
 
 
 --
+-- Name: tipoterminazioneasta; Type: TYPE; Schema: public; Owner: postgres
+--
+
+CREATE TYPE public.tipoterminazioneasta AS ENUM (
+    'esaurimento_timeslot',
+    'max_timeslot'
+);
+
+
+ALTER TYPE public.tipoterminazioneasta OWNER TO postgres;
+
+--
 -- Name: tipotimeslotasta; Type: TYPE; Schema: public; Owner: postgres
 --
 
@@ -154,7 +166,8 @@ CREATE TABLE public.asta (
     durata_timeslot time without time zone NOT NULL,
     tipo character varying(100) NOT NULL,
     prezzo_partenza real NOT NULL,
-    rifiutata boolean DEFAULT false NOT NULL
+    rifiutata boolean DEFAULT false NOT NULL,
+    criterio_terminazione public.tipoterminazioneasta NOT NULL
 );
 
 
@@ -299,7 +312,7 @@ Provolone	93fdad81-6724-46d0-9c90-c6b237a908d7	parmigiano@brie.com	boh
 -- Data for Name: asta; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.asta (id, id_asta_manager, id_configurazione, data_inizio, data_fine, durata_timeslot, tipo, prezzo_partenza, rifiutata) FROM stdin;
+COPY public.asta (id, id_asta_manager, id_configurazione, data_inizio, data_fine, durata_timeslot, tipo, prezzo_partenza, rifiutata, criterio_terminazione) FROM stdin;
 \.
 
 
@@ -378,8 +391,8 @@ superamento_immediato
 
 COPY public.utente_registrato (id, username, password, email, telefono, credito_disponibile, notifica_email, notifica_sms) FROM stdin;
 6c7983dc-e7f6-498b-801c-eee9e6c8e489	dsduca	1243	lol@boh.com	\N	666	f	f
-b505c3b6-7769-4c6f-a000-80e1615b77a8	Luca	1243	superBoh@boh.com	\N	8	f	f
 55a32da1-3cc7-45d6-b019-a4b9f824246e	Carlo	666	carlo@carlo.com	\N	0	f	f
+b505c3b6-7769-4c6f-a000-80e1615b77a8	Luca	1243	superBoh@boh.com	0392326424	25.5	t	t
 \.
 
 
