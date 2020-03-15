@@ -8,9 +8,9 @@
             </p>
             <p>Se vuoi contattarci per problemi, consigli o altro puoi scrivere alle email</p>
             <li>f.villa71@campus.unimib.it</li>
-            <li>andrea tassi</li>
-            <li>marco grassi</li>
-            <li> francesco frigatti</li>
+            <li>a.tassi1@campus.unimib.it</li>
+            <li>m.grassi35@campus.unimib.it</li>
+            <li>f.frigrati@campus.unimib.it</li>
         </div>
     </div> 
 </template>

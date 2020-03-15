@@ -1,7 +1,9 @@
 <template>
   <div class="home">
-    <template v-for="asta in aste">
-      <li v-for="oggetto in asta.oggetti" :key="oggetto">
+    <input type="text" v-model="search" placeholder="search object"/>
+    <p></p>
+    <li v-for="asta in aste" :key="asta.id">
+      <div v-for="oggetto in asta.oggetti" :key="oggetto.id">
         <b-card img-src="oggetto.urlImmagine" img-alt="Card image" img-left class="mb-3">
           <b-card-text>
             <p class="text-left">nome: {{oggetto.nome}}</p>
@@ -9,8 +11,8 @@
             <p class="text-left">{{asta.infoAsta.tipo}}</p>
           </b-card-text>
         </b-card>
-      </li>
-    </template>
+      </div>
+    </li>
   </div>
 </template>
 
@@ -20,7 +22,8 @@ export default {
   components: {},
   data() {
     return {
-      aste: []
+      aste: [],
+      search:''
     };
   },
   created: function() {
@@ -31,6 +34,15 @@ export default {
       .then(response => {
         this.aste = response;
       });
+  },
+  computed:{
+    filterObject: function(){
+      return this.aste.filter((asta)=>{
+        return asta.oggetti[0].nome.match(this.search)
+      });
+
+    }
   }
+  
 };
 </script>

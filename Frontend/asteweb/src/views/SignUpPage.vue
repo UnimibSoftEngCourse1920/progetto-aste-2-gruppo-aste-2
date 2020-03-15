@@ -45,8 +45,8 @@ export default {
         usernamenuovo: "",
         passwordnuova: "",
       },
-      show:true,
-      valid: false
+      show: true,
+      valid: true
     };
   },
   methods: {
@@ -84,7 +84,7 @@ export default {
           else
             this.valid=false
         });
-        if(this.valid){
+        if(this.valid===true){
         fetch(
           "http://localhost:8080/api/utenteregistrato/aggiungi",
           {
@@ -103,6 +103,11 @@ export default {
           .then(response => response.json())
           .then(response => {
             console.log(response);
+            if(response === 1){
+              this.$router.push({
+                name: "login"
+                });
+            }
           });
         }
     },
