@@ -2,7 +2,6 @@ package com.gruppoaste2.progettoaste.model;
 
 import java.sql.Timestamp;
 import java.util.UUID;
-import java.util.Date;
 
 public class OffertaModel {
 
