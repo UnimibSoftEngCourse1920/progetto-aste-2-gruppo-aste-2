@@ -62,7 +62,8 @@ class OffertaControllerTest {
                         false);
 
         Optional<OffertaModel> offertaTrovata =
-                Optional.of(new OffertaModel(idOfferta, 3.14f, Date.valueOf(LocalDate.now()), offerente));
+                Optional.of(new OffertaModel(idOfferta, 3.14f, Timestamp.valueOf(LocalDateTime.now()),
+                        offerente));
 
         given(offertaService.trovaOfferta(idOfferta)).willReturn(offertaTrovata);
 
@@ -106,7 +107,8 @@ class OffertaControllerTest {
                         false);
 
         List<OffertaModel> offerteTrovate =
-                Collections.singletonList(new OffertaModel(idOfferta, 3.14f, Date.valueOf(LocalDate.now()), offerente));
+                Collections.singletonList(new OffertaModel(idOfferta, 3.14f,
+                        Timestamp.valueOf(LocalDateTime.now()), offerente));
 
         given(offertaService.trovaOfferte()).willReturn(offerteTrovate);
 
@@ -155,7 +157,7 @@ class OffertaControllerTest {
         List<OffertaModel> offerte = new ArrayList<>();
         OggettoModel ogg1 = new OggettoModel(idOgge, "nome", "descrizione", "url");
         oggetti.add(ogg1);
-        OffertaModel off1 = new OffertaModel(idoff, 1, Date.valueOf(LocalDate.now()),
+        OffertaModel off1 = new OffertaModel(idoff, 1, Timestamp.valueOf(LocalDateTime.now()),
                 new UtenteRegistratoModel(idut2, "username1", "email1", "+39339025613",
                         "boh1", 2, false, false));
         offerte.add(off1);
@@ -166,15 +168,17 @@ class OffertaControllerTest {
 
         AstaModel astaTrovata = new AstaModel (idasta,
                 new InfoAstaModel("info", 3.4,
-                        Date.valueOf(LocalDate.now()),
-                        Date.valueOf(LocalDate.now()),
-                        Time.valueOf(LocalTime.now())),
+                        Timestamp.valueOf(LocalDateTime.now()),
+                        Timestamp.valueOf(LocalDateTime.now()),
+                        Time.valueOf(LocalTime.now()),
+                        false),
                 new ConfigurazioneModel(idconf, "fisso", 1, 4, 0.21,
                         Timestamp.valueOf(LocalDateTime.now()), Time.valueOf(LocalTime.now())),
                 oggetti, offerente, offerte);
 
         List<OffertaModel> offerteTrovate =
-                Collections.singletonList(new OffertaModel(idoff, 3.14f, Date.valueOf(LocalDate.now()), offerente));
+                Collections.singletonList(new OffertaModel(idoff, 3.14f,
+                        Timestamp.valueOf(LocalDateTime.now()), offerente));
 
         given(offertaService.trovaOfferteAsta(idasta)).willReturn(offerteTrovate);
 
@@ -221,7 +225,8 @@ class OffertaControllerTest {
                         "boh", 0, false, false);
 
         List<OffertaModel> offerteTrovate =
-                Collections.singletonList(new OffertaModel(idOfferta, 3.14f, Date.valueOf(LocalDate.now()), offerente));
+                Collections.singletonList(new OffertaModel(idOfferta, 3.14f,
+                        Timestamp.valueOf(LocalDateTime.now()), offerente));
 
         given(offertaService.trovaOfferteUtente(idOfferente)).willReturn(offerteTrovate);
 
@@ -271,7 +276,7 @@ class OffertaControllerTest {
         List<OffertaModel> offerte = new ArrayList<>();
         OggettoModel ogg1 = new OggettoModel(idOgge, "nome", "descrizione", "url");
         oggetti.add(ogg1);
-        OffertaModel off1 = new OffertaModel(idoff, 1, Date.valueOf(LocalDate.now()),
+        OffertaModel off1 = new OffertaModel(idoff, 1, Timestamp.valueOf(LocalDateTime.now()),
                 new UtenteRegistratoModel(idut2, "username1", "email1", "+39339025613",
                         "boh1", 2, false, false));
         offerte.add(off1);
@@ -282,15 +287,17 @@ class OffertaControllerTest {
 
         AstaModel astaTrovata = new AstaModel (idasta,
                 new InfoAstaModel("info", 3.4,
-                        Date.valueOf(LocalDate.now()),
-                        Date.valueOf(LocalDate.now()),
-                        Time.valueOf(LocalTime.now())),
+                        Timestamp.valueOf(LocalDateTime.now()),
+                        Timestamp.valueOf(LocalDateTime.now()),
+                        Time.valueOf(LocalTime.now()),
+                        false),
                 new ConfigurazioneModel(idconf, "fisso", 1, 4, 0.21,
                         Timestamp.valueOf(LocalDateTime.now()), Time.valueOf(LocalTime.now())),
                 oggetti, offerente, offerte);
 
         List<OffertaModel> offerteTrovate =
-                Collections.singletonList(new OffertaModel(idoff, 3.14f, Date.valueOf(LocalDate.now()), offerente));
+                Collections.singletonList(new OffertaModel(idoff, 3.14f,
+                        Timestamp.valueOf(LocalDateTime.now()), offerente));
 
         given(offertaService.trovaOfferteUtenteAsta(idUtente, idasta)).willReturn(offerteTrovate);
 

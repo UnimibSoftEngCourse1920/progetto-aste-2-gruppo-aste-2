@@ -56,6 +56,11 @@ public class UtenteRegistratoService {
         return utenteRegistratoDAO.controllaUtenteEsiste(utente);
     }
 
+    public UUID ritornaIdUtenteRegistrato(UtenteRegistratoModel utente)
+    {
+        return utenteRegistratoDAO.ritornaIdUtenteRegistrato(utente);
+    }
+
     public int aggiungiCredito(UUID id, float creditoAggiunto)
     {
         return utenteRegistratoDAO.aggiungiCredito(id,creditoAggiunto);
@@ -69,15 +74,9 @@ public class UtenteRegistratoService {
         return new InfoCreditoModel(creditoTotale, creditoDisponibile, creditoImpegnato);
     }
 
-    public UUID ritornaIdUtenteRegistrato(UtenteRegistratoModel utente)
-    {
-        return utenteRegistratoDAO.ritornaIdUtenteRegistrato(utente);
-    }
-
     public boolean isNotificheEmailAbilitate(UUID id) {
         return utenteRegistratoDAO.isNotificheEmailAbilitate(id);
     }
-
 
     public boolean isNotificheSmsAbilitate(UUID id) {
         return utenteRegistratoDAO.isNotificheSmsAbilitate(id);

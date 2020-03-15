@@ -26,9 +26,13 @@ public interface OffertaDAO {
 
     Optional<OffertaModel> trovaUltimaOffertaAsta(UUID idAsta);
 
+    Optional<OffertaModel> trovaOffertaMaggioreAsta(UUID idAsta);
+
     List<OffertaModel> trovaOfferteUtente(UUID idOfferente);
 
     List<OffertaModel> trovaOfferteUtenteAsta(UUID idOfferente, UUID idAsta);
 
     int aggiornaOfferta(UUID id, OffertaModel offertaAggiornata);
+
+    boolean controllaOffertaUtenteAstaEsiste(UUID idUtente, UUID idAsta);
 }

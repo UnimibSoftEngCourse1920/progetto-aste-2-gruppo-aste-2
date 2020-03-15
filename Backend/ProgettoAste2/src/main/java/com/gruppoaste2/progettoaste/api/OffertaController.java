@@ -57,6 +57,13 @@ public class OffertaController {
                 .orElse(null);
     }
 
+    @GetMapping("/offerte/asta/{idAsta}/maggiore")
+    public OffertaModel trovaOffertaMaggioreAsta(@PathVariable("idAsta") UUID idAsta)
+    {
+        return offertaService.trovaOffertaMaggioreAsta(idAsta)
+                .orElse(null);
+    }
+
     @GetMapping("/offerte/offerente/{idOfferente}")
     public List<OffertaModel> trovaOfferteUtente(@PathVariable("idOfferente") UUID idOfferente)
     {
@@ -71,8 +78,15 @@ public class OffertaController {
     }
 
     @PostMapping(path = "/aggiorna/{id}")
-    public int aggiornaOfferta(@PathVariable("id") UUID id, @RequestBody OffertaModel utenteAggiornato)
+    public int aggiornaOfferta(@PathVariable("id") UUID id, @RequestBody OffertaModel offertaAggiornata)
     {
-        return offertaService.aggiornaOfferta(id, utenteAggiornato);
+        return offertaService.aggiornaOfferta(id, offertaAggiornata);
+    }
+
+    @GetMapping("/controlla/offerta/utente/asta/{idUtente}/{idAsta}")
+    public boolean controllaOffertaUtenteAstaEsiste(@PathVariable("idUtente") UUID idUtente,
+                                                    @PathVariable("idAsta") UUID idAsta)
+    {
+        return offertaService.controllaOffertaUtenteAstaEsiste(idUtente, idAsta);
     }
 }

@@ -13,7 +13,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 import java.sql.Date;
@@ -50,7 +52,7 @@ class AstaControllerTest {
                 .andExpect(jsonPath("$").doesNotExist());
     }
 
-    /*@Test
+    @Test
     void whenTrovaAsta_givenExistingAsta_thenReturnJsonMapAsta() throws Exception {
         UUID idasta = UUID.randomUUID();
         UUID idconf = UUID.randomUUID();
@@ -62,19 +64,22 @@ class AstaControllerTest {
         List<OffertaModel> offerte = new ArrayList<>();
         OggettoModel ogg1 = new OggettoModel(idOgge, "nome", "descrizione", "url");
         oggetti.add(ogg1);
-        OffertaModel off1 = new OffertaModel(idoff, 1, Date.valueOf(LocalDate.now()),
-                new UtenteRegistratoModel(idut2, "username1", "email1", "+39339025613", "boh1", 2));
+        OffertaModel off1 = new OffertaModel(idoff, 1, Timestamp.valueOf(LocalDateTime.now()),
+                new UtenteRegistratoModel(idut2, "username1", "email1", "+39339025613",
+                        "boh1", 2, false, false));
         offerte.add(off1);
 
         Optional<AstaModel> astaTrovata = Optional.of(new AstaModel (idasta,
                 new InfoAstaModel("info", 3.4,
-                        Date.valueOf(LocalDate.now()),
-                        Date.valueOf(LocalDate.now()),
-                        0),
+                        Timestamp.valueOf(LocalDateTime.now()),
+                        Timestamp.valueOf(LocalDateTime.now()),
+                        Time.valueOf(LocalTime.now()),
+                        false),
                         new ConfigurazioneModel(idconf, "fisso", 1, 4, 0.21,
-                                Date.valueOf(LocalDate.now()), 0,
+                                Timestamp.valueOf(LocalDateTime.now()), Time.valueOf(LocalTime.now())),
                         oggetti,
-                        new UtenteRegistratoModel(idUtente, "username", "email", "339025613", "boh", 0),
+                        new UtenteRegistratoModel(idUtente, "username", "email",
+                                "339025613", "boh", 0, false, false),
                         offerte));
 
         given(astaService.trovaAsta(idasta)).willReturn(astaTrovata);
@@ -122,7 +127,7 @@ class AstaControllerTest {
                 .andExpect(jsonPath("$.offerte[0]offerente.numeroTelefono").value(astaTrovata.get().getOfferte().get(0).getOfferente().getNumeroTelefono()))
                 .andExpect(jsonPath("$.offerte[0]offerente.password").value(astaTrovata.get().getOfferte().get(0).getOfferente().getPassword()))
                 .andExpect(jsonPath("$.offerte[0]offerente.credito").value(astaTrovata.get().getOfferte().get(0).getOfferente().getCredito()));
-    }*/
+    }
 
     @Test
     void whenTrovaAste_givenNonExistingAste_thenReturnEmptyJsonArray() throws Exception {
@@ -137,7 +142,7 @@ class AstaControllerTest {
                 .andExpect(jsonPath("$", hasSize(0)));
     }
 
-    /*@Test
+    @Test
     void whenTrovaAste_givenExistingAste_thenReturnJsonArrayOfMapsAste() throws Exception {
         UUID idasta = UUID.randomUUID();
         UUID idconf = UUID.randomUUID();
@@ -149,22 +154,25 @@ class AstaControllerTest {
         List<OffertaModel> offerte = new ArrayList<>();
         OggettoModel ogg1 = new OggettoModel(idOgge, "nome", "descrizione", "url");
         oggetti.add(ogg1);
-        OffertaModel off1 = new OffertaModel(idoff, 1, Date.valueOf(LocalDate.now()),
-                new UtenteRegistratoModel(idut2, "username1", "email1", "+39339025613", "boh1", 2));
+        OffertaModel off1 = new OffertaModel(idoff, 1, Timestamp.valueOf(LocalDateTime.now()),
+                new UtenteRegistratoModel(idut2, "username1", "email1", "+39339025613",
+                        "boh1", 2, false, false));
         offerte.add(off1);
 
         List<AstaModel> asteTrovate =
                 Collections.singletonList(new AstaModel (idasta,
                         new InfoAstaModel("info", 3.4,
-                                Date.valueOf(LocalDate.now()),
-                                Date.valueOf(LocalDate.now()),
-                                0),
+                                Timestamp.valueOf(LocalDateTime.now()),
+                                Timestamp.valueOf(LocalDateTime.now()),
+                                Time.valueOf(LocalTime.now()),
+                                false),
                         new ConfigurazioneModel(idconf, "fisso", 1, 4, 0.21,
-                                Date.valueOf(LocalDate.now()), 0),
+                                Timestamp.valueOf(LocalDateTime.now()), Time.valueOf(LocalTime.now())),
                         oggetti,
-                        new UtenteRegistratoModel(idUtente, "username", "email", "339025613", "boh", 0),
+                        new UtenteRegistratoModel(idUtente, "username", "email",
+                                "339025613", "boh", 0, false, false),
                         offerte));
-        given(astaService.trovaTutteAste()).willReturn(asteTrovate);
+        given(astaService.trovaAste()).willReturn(asteTrovate);
 
         mockMvc.perform(get("/api/asta/aste")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -211,7 +219,7 @@ class AstaControllerTest {
                 .andExpect(jsonPath("$[0].offerte[0]offerente.numeroTelefono").value(asteTrovate.get(0).getOfferte().get(0).getOfferente().getNumeroTelefono()))
                 .andExpect(jsonPath("$[0].offerte[0]offerente.password").value(asteTrovate.get(0).getOfferte().get(0).getOfferente().getPassword()))
                 .andExpect(jsonPath("$[0].offerte[0]offerente.credito").value(asteTrovate.get(0).getOfferte().get(0).getOfferente().getCredito()));
-    }*/
+    }
 
     @Test
     void whenEliminaAsta_givenNonExistingAsta_thenReturnJsonNumber0() throws Exception {
@@ -224,7 +232,6 @@ class AstaControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isNumber())
                 .andExpect(jsonPath("$").value(0));
-
     }
 
     @Test

@@ -5,6 +5,7 @@ import com.gruppoaste2.progettoaste.service.OggettoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.beans.ExceptionListener;
 import java.util.List;
 import java.util.UUID;
 
@@ -50,28 +51,28 @@ public class OggettoController {
         return oggettoService.trovaOggettiAsta(idAsta);
     }
 
-    @GetMapping(path = "/registrati/{idUtente}")
-    public List<OggettoModel> trovaOggettiRegistratiDaUtente(@PathVariable("idUtente") UUID idUtente)
+    @GetMapping(path = "/registrati/{idAstaManager}")
+    public List<OggettoModel> trovaOggettiRegistratiDaUtente(@PathVariable("idAstaManager") UUID idAstaManager)
     {
-        return oggettoService.trovaOggettiRegistratiDaUtente(idUtente);
+        return oggettoService.trovaOggettiRegistratiDaUtente(idAstaManager);
     }
 
-    @GetMapping(path = "/incorso/{idUtente}")
-    public List<OggettoModel> trovaOggettiInCorsoAstaUtente(@PathVariable("idUtente") UUID idUtente)
+    @GetMapping(path = "/incorso/{idAstaManager}")
+    public List<OggettoModel> trovaOggettiInCorsoAstaUtente(@PathVariable("idAstaManager") UUID idAstaManager)
     {
-        return oggettoService.trovaOggettiInCorsoAstaUtente(idUtente);
+        return oggettoService.trovaOggettiInCorsoAstaUtente(idAstaManager);
     }
 
-    @GetMapping(path = "/venduti/{idUtente}")
-    public List<OggettoModel> trovaOggettiVendutiDaUtente(@PathVariable("idUtente") UUID idUtente)
+    @GetMapping(path = "/venduti/{idAstaManager}")
+    public List<OggettoModel> trovaOggettiVendutiDaUtente(@PathVariable("idAstaManager") UUID idAstaManager)
     {
-        return oggettoService.trovaOggettiVendutiDaUtente(idUtente);
+        return oggettoService.trovaOggettiVendutiDaUtente(idAstaManager);
     }
 
-    @GetMapping(path = "/invenduti/{idUtente}")
-    public List<OggettoModel> trovaOggettiRifiutatiUtente(@PathVariable("idUtente") UUID idUtente)
+    @GetMapping(path = "/rifiutati/{idAstaManager}")
+    public List<OggettoModel> trovaOggettiRifiutatiUtente(@PathVariable("idAstaManager") UUID idAstaManager)
     {
-        return oggettoService.trovaOggettiRifiutatiUtente(idUtente);
+        return oggettoService.trovaOggettiRifiutatiUtente(idAstaManager);
     }
 
     @GetMapping(path = "/vinti/{idUtente}")
@@ -84,5 +85,17 @@ public class OggettoController {
     public int aggiornaOggetto(@PathVariable("id") UUID id, @RequestBody OggettoModel oggettoAggiornato)
     {
         return oggettoService.aggiornaOggetto(id, oggettoAggiornato);
+    }
+
+    @GetMapping(path = "/importa/{urlFile}")
+    public List<OggettoModel> importaOggetti(@PathVariable("urlFile") String urlFile)
+    {
+        return oggettoService.importaOggetti(urlFile);
+    }
+
+    @GetMapping(path = "/esporta/{idAsta}")
+    public String esportaOggetti(@PathVariable("idAsta") UUID idAsta, String urlFile)
+    {
+        return oggettoService.esportaOggetti(idAsta, urlFile);
     }
 }

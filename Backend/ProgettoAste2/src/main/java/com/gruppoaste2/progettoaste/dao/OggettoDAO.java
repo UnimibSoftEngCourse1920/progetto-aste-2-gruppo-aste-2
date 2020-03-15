@@ -24,15 +24,19 @@ public interface OggettoDAO {
 
     List<OggettoModel> trovaOggettiAsta(UUID idAsta);
 
-    List<OggettoModel> trovaOggettiRegistratiDaUtente(UUID idUtente);
+    List<OggettoModel> trovaOggettiRegistratiDaUtente(UUID idAstaManager);
 
-    List<OggettoModel> trovaOggettiInCorsoAstaUtente(UUID idUtente);
+    List<OggettoModel> trovaOggettiInCorsoAstaUtente(UUID idAstaManager);
 
-    List<OggettoModel> trovaOggettiVendutiDaUtente(UUID idUtente);
+    List<OggettoModel> trovaOggettiVendutiDaUtente(UUID idAstaManager);
 
-    List<OggettoModel> trovaOggettiRifiutatiUtente(UUID idUtente);
+    List<OggettoModel> trovaOggettiRifiutatiUtente(UUID idAstaManager);
 
     List<OggettoModel> trovaOggettiVintiDaUtente(UUID idUtente);
 
     int aggiornaOggetto(UUID id, OggettoModel oggettoAggiornato);
+
+    List<OggettoModel> importaOggetti(String urlFile);
+
+    String esportaOggetti(UUID idAsta, String urlFile);
 }

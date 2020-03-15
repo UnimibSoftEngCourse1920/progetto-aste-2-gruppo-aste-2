@@ -50,21 +50,59 @@ public class AstaController {
         return astaService.trovaAsteInCorso();
     }
 
-    @GetMapping("/aste/incorso/{idUtente}")
-    public List<AstaModel> trovaAsteInCorsoUtente(@PathVariable("idUtente") UUID idUtente)
+    @GetMapping("/aste/incorso/{idAstaManager}")
+    public List<AstaModel> trovaAsteInCorsoUtente(@PathVariable("idAstaManager") UUID idAstaManager)
     {
-        return astaService.trovaAsteInCorsoUtente(idUtente);
+        return astaService.trovaAsteInCorsoUtente(idAstaManager);
     }
 
-    @GetMapping("/aste/scadute/{idUtente}")
-    public List<AstaModel> trovaAsteScaduteUtente(@PathVariable("idUtente") UUID idUtente)
+    @GetMapping("/aste/scadute/{idAstaManager}")
+    public List<AstaModel> trovaAsteScaduteUtente(@PathVariable("idAstaManager") UUID idAstaManager)
     {
-        return astaService.trovaAsteScaduteUtente(idUtente);
+        return astaService.trovaAsteScaduteUtente(idAstaManager);
+    }
+
+    @GetMapping("/aste/incorso/offerente/{idOfferente}")
+    public List<AstaModel> trovaAsteInCorsoOfferente(@PathVariable("idOfferente") UUID idOfferente)
+    {
+        return astaService.trovaAsteInCorsoOfferente(idOfferente);
+    }
+
+    @GetMapping("/aste/incorso/busta-chiusa/offerente/{idOfferente}")
+    public List<AstaModel> trovaAsteInCorsoBustaChiusaOfferente(@PathVariable("idOfferente") UUID idOfferente)
+    {
+        return astaService.trovaAsteInCorsoBustaChiusaOfferente(idOfferente);
+    }
+
+    @GetMapping("/aste/incorso/superamento-immediato/massimo-offerente/{idOfferente}")
+    public List<AstaModel> trovaAsteInCorsoSuperamentoImmediatoMassimoOfferente(@PathVariable("idOfferente")
+                                                                                             UUID idOfferente)
+    {
+        return astaService.trovaAsteInCorsoSuperamentoImmediatoMassimoOfferente(idOfferente);
+    }
+
+    @GetMapping("/aste/incorso/superamento-immediato/offerente-superato/{idOfferente}")
+    public List<AstaModel> trovaAsteInCorsoSuperamentoImmediatoOfferenteSuperato(@PathVariable("idOfferente")
+                                                                                             UUID idOfferente)
+    {
+        return astaService.trovaAsteInCorsoSuperamentoImmediatoOfferenteSuperato(idOfferente);
+    }
+
+    @GetMapping("/aste/vinte/{idUtente}")
+    public List<AstaModel> trovaAsteVinteDaUtente(@PathVariable("idUtente") UUID idUtente)
+    {
+        return astaService.trovaAsteVinteDaUtente(idUtente);
     }
 
     @PostMapping(path = "/aggiorna/{id}")
     public int aggiornaAsta(@PathVariable("id") UUID id, @RequestBody AstaModel astaAggiornata)
     {
         return astaService.aggiornaAsta(id, astaAggiornata);
+    }
+
+    @GetMapping(path = "/rinuncia/{idAsta}/{idUtente}")
+    public Float rinunciaAsta(@PathVariable("idAsta") UUID idAsta, @PathVariable("idUtente") UUID idUtente)
+    {
+        return astaService.rinunciaAsta(idAsta, idUtente);
     }
 }

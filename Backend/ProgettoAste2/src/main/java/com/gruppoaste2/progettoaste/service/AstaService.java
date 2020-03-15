@@ -40,15 +40,39 @@ public class AstaService {
         return astaDAO.trovaAsteInCorso();
     }
 
-    public List<AstaModel> trovaAsteInCorsoUtente(UUID idUtente){
-        return astaDAO.trovaAsteInCorsoUtente(idUtente);
+    public List<AstaModel> trovaAsteInCorsoUtente(UUID idAstaManager){
+        return astaDAO.trovaAsteInCorsoUtente(idAstaManager);
     }
 
-    public List<AstaModel> trovaAsteScaduteUtente(UUID idUtente){
-        return astaDAO.trovaAsteScaduteUtente(idUtente);
+    public List<AstaModel> trovaAsteScaduteUtente(UUID idAstaManager){
+        return astaDAO.trovaAsteScaduteUtente(idAstaManager);
+    }
+
+    public List<AstaModel> trovaAsteInCorsoOfferente(UUID idOfferente){
+        return astaDAO.trovaAsteInCorsoOfferente(idOfferente);
+    }
+
+    public List<AstaModel> trovaAsteInCorsoBustaChiusaOfferente(UUID idOfferente){
+        return astaDAO.trovaAsteInCorsoBustaChiusaOfferente(idOfferente);
+    }
+
+    public List<AstaModel> trovaAsteInCorsoSuperamentoImmediatoMassimoOfferente(UUID idOfferente){
+        return astaDAO.trovaAsteInCorsoSuperamentoImmediatoMassimoOfferente(idOfferente);
+    }
+
+    public List<AstaModel> trovaAsteInCorsoSuperamentoImmediatoOfferenteSuperato(UUID idOfferente){
+        return astaDAO.trovaAsteInCorsoSuperamentoImmediatoOfferenteSuperato(idOfferente);
+    }
+
+    public List<AstaModel> trovaAsteVinteDaUtente(UUID idUtente){
+        return astaDAO.trovaAsteVinteDaUtente(idUtente);
     }
 
     public int aggiornaAsta(UUID id, AstaModel astaAggiornata){
         return astaDAO.aggiornaAsta(id, astaAggiornata);
+    }
+
+    public Float rinunciaAsta(UUID idAsta, UUID idUtente){
+        return astaDAO.rinunciaAsta(idAsta, idUtente);
     }
 }

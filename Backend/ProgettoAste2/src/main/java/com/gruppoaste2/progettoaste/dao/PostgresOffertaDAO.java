@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -76,6 +76,16 @@ public class PostgresOffertaDAO implements OffertaDAO{
     }
 
     @Override
+    public Optional<OffertaModel> trovaOffertaMaggioreAsta(UUID idAsta) {
+        final String sql = "SELECT * FROM offerta WHERE id_asta = ? ORDER BY credito_offerto DESC LIMIT 1";
+        List<OffertaModel> results = jdbcTemplate.query(
+                sql, (resultSet, i) -> makeOffertaFromResultSet(resultSet),
+                idAsta);
+        OffertaModel returnable = (results.isEmpty())? null : results.get(0);
+        return Optional.ofNullable(returnable);
+    }
+
+    @Override
     public List<OffertaModel> trovaOfferteUtente(UUID idOfferente) {
         final String sql = "SELECT * FROM offerta WHERE id_offerente = ?";
         return jdbcTemplate.query(sql,
@@ -99,6 +109,13 @@ public class PostgresOffertaDAO implements OffertaDAO{
                 offertaAggiornata.getCreditoOfferto(), id);
     }
 
+    @Override
+    public boolean controllaOffertaUtenteAstaEsiste(UUID idUtente, UUID idAsta) {
+        final String sql = "SELECT EXISTS(SELECT 1 FROM offerta " +
+                "WHERE id_offerente = ? AND id_asta = ?)";
+        return jdbcTemplate.queryForObject(sql, Boolean.class, idUtente, idAsta);
+    }
+
     private OffertaModel makeOffertaFromResultSet(ResultSet resultSet) throws SQLException {
         UUID id = UUID.fromString(resultSet.getString("id"));
 
@@ -106,7 +123,7 @@ public class PostgresOffertaDAO implements OffertaDAO{
         UtenteRegistratoModel offerente = utenteRegistratoDAO.trovaUtenteRegistrato(idOfferente)
                 .orElse(null);
 
-        Date dataOfferta = resultSet.getDate("data_offerta");
+        Timestamp dataOfferta = resultSet.getTimestamp("data_offerta");
         float creditoOfferto = resultSet.getFloat("credito_offerto");
         return new OffertaModel(id, creditoOfferto, dataOfferta, offerente);
     }

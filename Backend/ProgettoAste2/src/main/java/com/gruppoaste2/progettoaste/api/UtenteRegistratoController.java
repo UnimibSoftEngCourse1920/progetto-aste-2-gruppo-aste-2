@@ -77,6 +77,11 @@ public class UtenteRegistratoController {
         return utenteRegistratoService.controllaUtenteEsiste(utente);
     }
 
+    @PostMapping("/id")
+    public UUID ritornaIdUtenteRegistrato(@RequestBody UtenteRegistratoModel utente){
+        return utenteRegistratoService.ritornaIdUtenteRegistrato(utente);
+    }
+
     @GetMapping(path = "/credito/aggiungi/{id}/{creditoAggiunto}")
     public int aggiungiCredito(@PathVariable("id") UUID id, @PathVariable("creditoAggiunto") float creditoAggiunto)
     {
@@ -89,19 +94,14 @@ public class UtenteRegistratoController {
         return utenteRegistratoService.infoCredito(id);
     }
 
-    @PostMapping("/id")
-    public UUID ritornaIdUtenteRegistrato(@RequestBody UtenteRegistratoModel utente){
-        return utenteRegistratoService.ritornaIdUtenteRegistrato(utente);
+    @GetMapping(path = "controlla/notifica/email/{id}")
+    public boolean isNotificheEmailAbilitate(@PathVariable("id") UUID id) {
+        return utenteRegistratoService.isNotificheEmailAbilitate(id);
     }
 
     @GetMapping(path = "controlla/notifica/sms/{id}")
     public boolean isNotificheSmsAbilitate(@PathVariable("id") UUID id)
     {
         return utenteRegistratoService.isNotificheSmsAbilitate(id);
-    }
-
-    @GetMapping(path = "controlla/notifica/email/{id}")
-    public boolean isNotificheEmailAbilitate(@PathVariable("id") UUID id) {
-        return utenteRegistratoService.isNotificheEmailAbilitate(id);
     }
 }

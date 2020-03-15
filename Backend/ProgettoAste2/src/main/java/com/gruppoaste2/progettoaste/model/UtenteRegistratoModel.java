@@ -18,8 +18,6 @@ public class UtenteRegistratoModel extends UtenteModel {
         this.notificheSms = notificheSms;
     }
 
-
-
     public String getNumeroTelefono() {
         return numeroTelefono;
     }

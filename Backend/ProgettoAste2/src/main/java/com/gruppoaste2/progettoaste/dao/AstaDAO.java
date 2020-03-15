@@ -24,9 +24,21 @@ public interface AstaDAO {
 
     List<AstaModel> trovaAsteInCorso();
 
-    List<AstaModel> trovaAsteInCorsoUtente(UUID idUtente);
+    List<AstaModel> trovaAsteInCorsoUtente(UUID idAstaManager);
 
-    List<AstaModel> trovaAsteScaduteUtente(UUID idUtente);
+    List<AstaModel> trovaAsteScaduteUtente(UUID idAstaManager);
+
+    List<AstaModel> trovaAsteInCorsoOfferente(UUID idOfferente);
+
+    List<AstaModel> trovaAsteInCorsoBustaChiusaOfferente(UUID idOfferente);
+
+    List<AstaModel> trovaAsteInCorsoSuperamentoImmediatoMassimoOfferente(UUID idOfferente);
+
+    List<AstaModel> trovaAsteInCorsoSuperamentoImmediatoOfferenteSuperato(UUID idOfferente);
+
+    List<AstaModel> trovaAsteVinteDaUtente(UUID idUtente);
 
     int aggiornaAsta(UUID id, AstaModel astaAggiornata);
+
+    Float rinunciaAsta(UUID idAsta, UUID idUtente);
 }

@@ -67,37 +67,39 @@ public class PostgresOggettoDAO implements OggettoDAO {
     }
 
     @Override
-    public List<OggettoModel> trovaOggettiRegistratiDaUtente(UUID idUtente) {
-        final String sql = SELECT_FROM_OGGETTO_JOIN_ASTA + WHERE_ID_ASTA_MANAGER;
+    public List<OggettoModel> trovaOggettiRegistratiDaUtente(UUID idAstaManager) {
+        final String sql = SELECT_FROM_OGGETTO_JOIN_ASTA +
+                WHERE_ID_ASTA_MANAGER;
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeOggettoFromResultSet(resultSet),
-                idUtente);
+                idAstaManager);
     }
 
     @Override
-    public List<OggettoModel> trovaOggettiInCorsoAstaUtente(UUID idUtente) {
-        final String sql = SELECT_FROM_OGGETTO_JOIN_ASTA + WHERE_ID_ASTA_MANAGER + " AND a.data_fine IS NULL";
+    public List<OggettoModel> trovaOggettiInCorsoAstaUtente(UUID idAstaManager) {
+        final String sql = SELECT_FROM_OGGETTO_JOIN_ASTA +
+                WHERE_ID_ASTA_MANAGER + " AND a.data_fine IS NULL";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeOggettoFromResultSet(resultSet),
-                idUtente);
+                idAstaManager);
     }
 
     @Override
-    public List<OggettoModel> trovaOggettiVendutiDaUtente(UUID idUtente) {
-        final String sql = SELECT_FROM_OGGETTO_JOIN_ASTA + WHERE_ID_ASTA_MANAGER + " AND a.data_fine IS NOT NULL";
+    public List<OggettoModel> trovaOggettiVendutiDaUtente(UUID idAstaManager) {
+        final String sql = SELECT_FROM_OGGETTO_JOIN_ASTA +
+                WHERE_ID_ASTA_MANAGER + " AND a.data_fine IS NOT NULL";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeOggettoFromResultSet(resultSet),
-                idUtente);
+                idAstaManager);
     }
 
-    // TODO: gestire il rifiuto di oggetti
     @Override
-    public List<OggettoModel> trovaOggettiRifiutatiUtente(UUID idUtente) {
-        final String sql = SELECT_FROM_OGGETTO_JOIN_ASTA + WHERE_ID_ASTA_MANAGER +
-                " AND a.data_fine IS NOT NULL AND ";
+    public List<OggettoModel> trovaOggettiRifiutatiUtente(UUID idAstaManager) {
+        final String sql = SELECT_FROM_OGGETTO_JOIN_ASTA +
+                WHERE_ID_ASTA_MANAGER + " AND a.data_fine IS NOT NULL AND a.rifiutata = true";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeOggettoFromResultSet(resultSet),
-                idUtente);
+                idAstaManager);
     }
 
     @Override
@@ -116,6 +118,29 @@ public class PostgresOggettoDAO implements OggettoDAO {
         return jdbcTemplate.update(sql,
                 oggettoAggiornato.getNome(), oggettoAggiornato.getDescrizione(), oggettoAggiornato.getUrlImmagine(),
                 id);
+    }
+
+    // TODO: importaOggetti
+    @Override
+    public List<OggettoModel> importaOggetti(String urlFile) {
+        /*
+        final String sql = "COPY oggetto " +
+                "FROM '" + urlFile + "' DELIMITER ',' CSV HEADER;";
+        return jdbcTemplate.execute(sql);
+         */
+        return null;
+    }
+
+    // TODO: esportaOggetti
+    @Override
+    public String esportaOggetti(UUID idAsta, String urlFile) {
+        /*
+        final String sql = "COPY oggetto " +
+                "WHERE id_asta = ? " +
+                "TO '" + urlFile + "' DELIMITER ',' CSV HEADER;";
+        return jdbcTemplate.execute(sql, idAsta);
+         */
+        return null;
     }
 
     private OggettoModel makeOggettoFromResultSet(ResultSet resultSet) throws SQLException {

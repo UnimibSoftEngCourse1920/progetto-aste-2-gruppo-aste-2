@@ -44,6 +44,10 @@ public class OffertaService {
         return offertaDAO.trovaUltimaOffertaAsta(idAsta);
     }
 
+    public Optional<OffertaModel> trovaOffertaMaggioreAsta(UUID idAsta){
+        return offertaDAO.trovaOffertaMaggioreAsta(idAsta);
+    }
+
     public List<OffertaModel> trovaOfferteUtente(UUID idOfferente){
         return offertaDAO.trovaOfferteUtente(idOfferente);
     }
@@ -54,5 +58,9 @@ public class OffertaService {
 
     public int aggiornaOfferta(UUID id, OffertaModel offertaAggiornata){
         return offertaDAO.aggiornaOfferta(id, offertaAggiornata);
+    }
+
+    public boolean controllaOffertaUtenteAstaEsiste(UUID idUtente, UUID idAsta){
+        return offertaDAO.controllaOffertaUtenteAstaEsiste(idUtente, idAsta);
     }
 }

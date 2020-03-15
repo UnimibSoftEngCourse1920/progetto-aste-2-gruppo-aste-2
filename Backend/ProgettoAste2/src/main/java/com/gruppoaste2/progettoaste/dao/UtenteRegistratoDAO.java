@@ -30,13 +30,13 @@ public interface UtenteRegistratoDAO {
 
     boolean controllaUtenteEsiste(UtenteRegistratoModel utente);
 
+    UUID ritornaIdUtenteRegistrato(UtenteRegistratoModel utente);
+
     int aggiungiCredito(UUID id, float creditoAggiunto);
 
     float creditoTotale(UUID id);
 
     float creditoImpegnato(UUID id);
-
-    UUID ritornaIdUtenteRegistrato(UtenteRegistratoModel utente);
 
     boolean isNotificheEmailAbilitate(UUID id);
 

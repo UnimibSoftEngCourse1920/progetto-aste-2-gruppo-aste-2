@@ -86,6 +86,13 @@ public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
     }
 
     @Override
+    public UUID ritornaIdUtenteRegistrato(UtenteRegistratoModel utente) {
+        final String sql = "SELECT id FROM utente_registrato WHERE username = ? AND email = ? AND password = ?";
+        return jdbcTemplate.queryForObject(sql, UUID.class,
+                utente.getUsername(), utente.getEmail(), utente.getPassword());
+    }
+
+    @Override
     public int aggiungiCredito(UUID id, float creditoAggiunto) {
         final float credito = creditoAggiunto + creditoTotale(id);
         final String sql = "UPDATE utente_registrato SET credito_disponibile = ? WHERE id = ?";
@@ -115,6 +122,18 @@ public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
         return creditoImpegnato;
     }
 
+    @Override
+    public boolean isNotificheEmailAbilitate(UUID id) {
+        final String sql = "SELECT notifica_email FROM utente_registrato WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, Boolean.class, id);
+    }
+
+    @Override
+    public boolean isNotificheSmsAbilitate(UUID id) {
+        final String sql = "SELECT notifica_sms FROM utente_registrato WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, Boolean.class, id);
+    }
+
     private UtenteRegistratoModel makeUtenteRegistratoFromResultSet(ResultSet resultSet) throws SQLException {
         UUID id = UUID.fromString(resultSet.getString("id"));
         String username = resultSet.getString("username");
@@ -122,29 +141,9 @@ public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
         String numeroTelefono = resultSet.getString("telefono");
         String password = resultSet.getString("password");
         float credito = resultSet.getFloat("credito_disponibile");
-        boolean sms = resultSet.getBoolean("notifica_sms");
-        boolean notificaEmail = resultSet.getBoolean("notifica_email");
-        return new UtenteRegistratoModel(id, username, email, numeroTelefono, password, credito, sms, notificaEmail);
-    }
-
-    @Override
-    public UUID ritornaIdUtenteRegistrato(UtenteRegistratoModel utente) {
-        final String sql = "SELECT id FROM utente_registrato WHERE username = ? AND email = ? AND password = ?";
-        return jdbcTemplate.queryForObject(sql, UUID.class,
-                utente.getUsername(), utente.getEmail(), utente.getPassword());
-    }
-
-    @Override
-    public boolean isNotificheEmailAbilitate(UUID id) {
-        final String sql = "SELECT notifica_email FROM utente_registrato WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, Boolean.class,
-                id);
-    }
-
-    @Override
-    public boolean isNotificheSmsAbilitate(UUID id) {
-        final String sql = "SELECT notifica_sms FROM utente_registrato WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, Boolean.class,
-                id);
+        boolean notificheEmail = resultSet.getBoolean("notifica_email");
+        boolean notificheSms = resultSet.getBoolean("notifica_sms");
+        return new UtenteRegistratoModel(id, username, email, numeroTelefono, password, credito,
+                notificheEmail, notificheSms);
     }
 }

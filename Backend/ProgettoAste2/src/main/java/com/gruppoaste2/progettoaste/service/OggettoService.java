@@ -45,24 +45,24 @@ public class OggettoService {
         return oggettoDAO.trovaOggettiAsta(idAsta);
     }
 
-    public List<OggettoModel> trovaOggettiRegistratiDaUtente(UUID idUtente)
+    public List<OggettoModel> trovaOggettiRegistratiDaUtente(UUID idAstaManager)
     {
-        return oggettoDAO.trovaOggettiRegistratiDaUtente(idUtente);
+        return oggettoDAO.trovaOggettiRegistratiDaUtente(idAstaManager);
     }
 
-    public List<OggettoModel> trovaOggettiInCorsoAstaUtente(UUID idUtente)
+    public List<OggettoModel> trovaOggettiInCorsoAstaUtente(UUID idAstaManager)
     {
-        return oggettoDAO.trovaOggettiInCorsoAstaUtente(idUtente);
+        return oggettoDAO.trovaOggettiInCorsoAstaUtente(idAstaManager);
     }
 
-    public List<OggettoModel> trovaOggettiVendutiDaUtente(UUID idUtente)
+    public List<OggettoModel> trovaOggettiVendutiDaUtente(UUID idAstaManager)
     {
-        return oggettoDAO.trovaOggettiVendutiDaUtente(idUtente);
+        return oggettoDAO.trovaOggettiVendutiDaUtente(idAstaManager);
     }
 
-    public List<OggettoModel> trovaOggettiRifiutatiUtente(UUID idUtente)
+    public List<OggettoModel> trovaOggettiRifiutatiUtente(UUID idAstaManager)
     {
-        return oggettoDAO.trovaOggettiRifiutatiUtente(idUtente);
+        return oggettoDAO.trovaOggettiRifiutatiUtente(idAstaManager);
     }
 
     public List<OggettoModel> trovaOggettiVintiDaUtente(UUID idUtente)
@@ -73,5 +73,15 @@ public class OggettoService {
     public int aggiornaOggetto(UUID id, OggettoModel oggettoAggiornato)
     {
         return oggettoDAO.aggiornaOggetto(id, oggettoAggiornato);
+    }
+
+    public List<OggettoModel> importaOggetti(String urlFile)
+    {
+        return oggettoDAO.importaOggetti(urlFile);
+    }
+
+    public String esportaOggetti(UUID idAsta, String urlFile)
+    {
+        return oggettoDAO.esportaOggetti(idAsta, urlFile);
     }
 }
