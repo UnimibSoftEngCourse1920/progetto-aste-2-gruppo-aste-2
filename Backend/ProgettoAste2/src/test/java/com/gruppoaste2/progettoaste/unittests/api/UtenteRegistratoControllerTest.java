@@ -1,5 +1,7 @@
 package com.gruppoaste2.progettoaste.unittests.api;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gruppoaste2.progettoaste.api.UtenteRegistratoController;
 import com.gruppoaste2.progettoaste.model.UtenteRegistratoModel;
 import com.gruppoaste2.progettoaste.service.UtenteRegistratoService;
@@ -12,11 +14,14 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -29,6 +34,43 @@ class UtenteRegistratoControllerTest {
 
     @MockBean
     private UtenteRegistratoService utenteRegistratoService;
+
+    // Test inserisciUtenteRegistrato
+    @Test
+    void whenInserisciUtenteRegistrato_givenAlreadyExistingUtenteRegistrato_thenReturnJsonNumber0() throws Exception {
+        UtenteRegistratoModel utenteRegistrato =
+                new UtenteRegistratoModel(null, "username", "email", "password",
+                        "0", 0.0f, false, false);
+
+        given(utenteRegistratoService.aggiungiUtenteRegistrato(refEq(utenteRegistrato))).willReturn(0);
+
+        mockMvc.perform(post("/api/utenteregistrato/aggiungi")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding(StandardCharsets.UTF_8.name())
+                .content(new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL)
+                        .writeValueAsString(utenteRegistrato)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNumber())
+                .andExpect(jsonPath("$").value(0));
+    }
+
+    @Test
+    void whenInserisciUtenteRegistrato_givenNonExistingUtenteRegistrato_thenReturnJsonNumber1() throws Exception {
+        UtenteRegistratoModel utenteRegistrato =
+                new UtenteRegistratoModel(null, "username", "email", "password",
+                        "0", 0.0f, false, false);
+
+        given(utenteRegistratoService.aggiungiUtenteRegistrato(refEq(utenteRegistrato))).willReturn(1);
+
+        mockMvc.perform(post("/api/utenteregistrato/aggiungi")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8")
+                .content(new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL)
+                        .writeValueAsString(utenteRegistrato)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNumber())
+                .andExpect(jsonPath("$").value(1));
+    }
 
     // Test trovaUtenteRegistrato
     @Test

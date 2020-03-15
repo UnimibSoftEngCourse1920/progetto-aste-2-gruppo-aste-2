@@ -8,12 +8,16 @@ import org.springframework.stereotype.Repository;
 import java.io.*;
 import java.nio.channels.SelectableChannel;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -132,9 +136,10 @@ public class PostgresOggettoDAO implements OggettoDAO {
     // TODO: importaOggetti
     @Override
     public long importaOggetti(UUID idAsta, String fileName) {
-        String url = System.getProperty("jdbc-url");
-        String username = System.getProperty("username");
-        String password = System.getProperty("password");
+        Properties properties = readProperties();
+        String url = properties.getProperty("jdbc-url");
+        String username = properties.getProperty("username");
+        String password = properties.getProperty("password");
 
         long copyIn = 0;
 
@@ -142,8 +147,8 @@ public class PostgresOggettoDAO implements OggettoDAO {
             CopyManager copyManager = new CopyManager((BaseConnection) connection);
 
             try (FileInputStream fileInputStream = new FileInputStream(fileName);
-                 InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream,
-                         StandardCharsets.UTF_8)) {
+                 InputStreamReader inputStreamReader =
+                         new InputStreamReader(fileInputStream, StandardCharsets.UTF_8)) {
                 final String selection =
                         "SELECT oggetto.nome, descrizione, url_immagine, categoria.nome, attributo.nome, valore " +
                                 "FROM oggetto " +
@@ -157,8 +162,7 @@ public class PostgresOggettoDAO implements OggettoDAO {
             }
 
         } catch (SQLException | IOException exception) {
-            Logger logger = Logger.getLogger(this.getClass().getName());
-            logger.log(Level.SEVERE, exception.getMessage(), exception);
+            Logger.getLogger(PostgresOggettoDAO.class.getName()).log(Level.SEVERE, exception.getMessage(), exception);
         }
 
         return copyIn;
@@ -167,9 +171,10 @@ public class PostgresOggettoDAO implements OggettoDAO {
     // TODO: esportaOggetti
     @Override
     public long esportaOggetti(UUID idAsta, String fileName) {
-        String url = System.getProperty("jdbc-url");
-        String username = System.getProperty("username");
-        String password = System.getProperty("password");
+        Properties properties = readProperties();
+        String url = properties.getProperty("jdbc-url");
+        String username = properties.getProperty("username");
+        String password = properties.getProperty("password");
 
         long copyOut = 0;
 
@@ -192,8 +197,7 @@ public class PostgresOggettoDAO implements OggettoDAO {
             }
 
         } catch (SQLException | IOException exception) {
-            Logger logger = Logger.getLogger(this.getClass().getName());
-            logger.log(Level.SEVERE, exception.getMessage(), exception);
+            Logger.getLogger(PostgresOggettoDAO.class.getName()).log(Level.SEVERE, exception.getMessage(), exception);
         }
 
         return copyOut;
@@ -205,5 +209,19 @@ public class PostgresOggettoDAO implements OggettoDAO {
         String descrizione = resultSet.getString("descrizione");
         String urlImmagine = resultSet.getString("url_immagine");
         return new OggettoModel(id, nome, descrizione, urlImmagine);
+    }
+
+    private static Properties readProperties() {
+        Properties properties = new Properties();
+        Path path = Paths.get("src/main/resources/application.yml");
+
+        try (BufferedReader bufferedReader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
+            properties.load(bufferedReader);
+
+        } catch (IOException exception) {
+            Logger.getLogger(PostgresOggettoDAO.class.getName()).log(Level.SEVERE, exception.getMessage(), exception);
+        }
+
+        return properties;
     }
 }

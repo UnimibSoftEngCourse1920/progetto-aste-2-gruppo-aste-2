@@ -9,7 +9,7 @@ public class UtenteRegistratoModel extends UtenteModel {
     private boolean notificheEmail;
     private boolean notificheSms;
 
-    public UtenteRegistratoModel(UUID id, String username, String email, String numeroTelefono, String password,
+    public UtenteRegistratoModel(UUID id, String username, String email, String password, String numeroTelefono,
                                  float credito, boolean notificheEmail, boolean notificheSms){
         super(id, username, email, password);
         this.numeroTelefono = numeroTelefono;

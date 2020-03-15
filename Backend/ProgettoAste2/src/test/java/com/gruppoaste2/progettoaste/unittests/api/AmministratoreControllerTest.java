@@ -62,7 +62,7 @@ class AmministratoreControllerTest {
 
         mockMvc.perform(post("/api/amministratore/inserisci")
                 .contentType(MediaType.APPLICATION_JSON)
-                .characterEncoding("UTF-8")
+                .characterEncoding(StandardCharsets.UTF_8.name())
                 .content(new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL)
                         .writeValueAsString(amministratore)))
                 .andExpect(status().isOk())
@@ -178,7 +178,7 @@ class AmministratoreControllerTest {
 
         mockMvc.perform(post("/api/amministratore/aggiorna/" + id)
                 .contentType(MediaType.APPLICATION_JSON)
-                .characterEncoding("UTF-8")
+                .characterEncoding(StandardCharsets.UTF_8.name())
                 .content(new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL)
                         .writeValueAsString(amministratore)))
                 .andExpect(status().isOk())
@@ -197,7 +197,7 @@ class AmministratoreControllerTest {
 
         mockMvc.perform(post("/api/amministratore/aggiorna/" + id)
                 .contentType(MediaType.APPLICATION_JSON)
-                .characterEncoding("UTF-8")
+                .characterEncoding(StandardCharsets.UTF_8.name())
                 .content(new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL)
                         .writeValueAsString(amministratore)))
                 .andExpect(status().isOk())
@@ -269,7 +269,7 @@ class AmministratoreControllerTest {
 
         mockMvc.perform(post("/api/amministratore/controlla/amministratore")
                 .contentType(MediaType.APPLICATION_JSON)
-                .characterEncoding("UTF-8")
+                .characterEncoding(StandardCharsets.UTF_8.name())
                 .content(new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL)
                         .writeValueAsString(amministratore)))
                 .andExpect(status().isOk())
@@ -286,7 +286,7 @@ class AmministratoreControllerTest {
 
         mockMvc.perform(post("/api/amministratore/controlla/amministratore")
                 .contentType(MediaType.APPLICATION_JSON)
-                .characterEncoding("UTF-8")
+                .characterEncoding(StandardCharsets.UTF_8.name())
                 .content(new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL)
                         .writeValueAsString(amministratore)))
                 .andExpect(status().isOk())
@@ -304,7 +304,7 @@ class AmministratoreControllerTest {
 
         mockMvc.perform(post("/api/amministratore/id")
                 .contentType(MediaType.APPLICATION_JSON)
-                .characterEncoding("UTF-8")
+                .characterEncoding(StandardCharsets.UTF_8.name())
                 .content(new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL)
                         .writeValueAsString(amministratore)))
                 .andExpect(status().isOk())
@@ -322,7 +322,7 @@ class AmministratoreControllerTest {
 
         mockMvc.perform(post("/api/amministratore/id")
                 .contentType(MediaType.APPLICATION_JSON)
-                .characterEncoding("UTF-8")
+                .characterEncoding(StandardCharsets.UTF_8.name())
                 .content(new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL)
                         .writeValueAsString(amministratore)))
                 .andExpect(status().isOk())

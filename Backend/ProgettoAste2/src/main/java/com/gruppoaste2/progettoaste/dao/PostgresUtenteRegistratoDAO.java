@@ -143,7 +143,7 @@ public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
         float credito = resultSet.getFloat("credito_disponibile");
         boolean notificheEmail = resultSet.getBoolean("notifica_email");
         boolean notificheSms = resultSet.getBoolean("notifica_sms");
-        return new UtenteRegistratoModel(id, username, email, numeroTelefono, password, credito,
+        return new UtenteRegistratoModel(id, username, email, password, numeroTelefono, credito,
                 notificheEmail, notificheSms);
     }
 }
