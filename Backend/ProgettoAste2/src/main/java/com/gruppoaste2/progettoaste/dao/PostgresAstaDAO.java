@@ -35,13 +35,13 @@ public class PostgresAstaDAO implements AstaDAO {
     @Override
     public int aggiungiAsta(UUID id, AstaModel asta) {
         final String sql = "INSERT INTO asta(id, id_asta_manager, id_configurazione, tipo, prezzo_partenza, " +
-                "data_inizio, data_fine, durata_timeslot, rifiutata) " +
-                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "data_inizio, data_fine, durata_timeslot, rifiutata, criterio_terminazione) " +
+                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?::tipoterminazioneasta)";
         return jdbcTemplate.update(sql,
                 id, asta.getAstaManager().getId(), asta.getConfigurazione().getId(), asta.getInfoAsta().getTipo(),
                 asta.getInfoAsta().getPrezzoPartenza(), asta.getInfoAsta().getDataInizio(),
                 asta.getInfoAsta().getDataFine(), asta.getInfoAsta().getDurataTimeSlot(),
-                asta.getInfoAsta().isRifiutata());
+                asta.getInfoAsta().isRifiutata(), asta.getInfoAsta().getCriterioTerminazione());
     }
 
     @Override
@@ -149,13 +149,14 @@ public class PostgresAstaDAO implements AstaDAO {
     public int aggiornaAsta(UUID id, AstaModel astaAggiornata) {
         final String sql = "UPDATE asta " +
                 "SET id_asta_manager = ?, id_configurazione = ?, tipo = ?, prezzo_partenza = ?, data_inizio = ?, " +
-                "data_fine = ?, durata_timeslot = ?, rifiutata = ? " +
+                "data_fine = ?, durata_timeslot = ?, rifiutata = ?, criterio_terminazione = ?::tipoterminazioneasta " +
                 "WHERE id = ?";
         return jdbcTemplate.update(sql,
                 astaAggiornata.getAstaManager().getId(), astaAggiornata.getConfigurazione().getId(),
                 astaAggiornata.getInfoAsta().getTipo(), astaAggiornata.getInfoAsta().getPrezzoPartenza(),
                 astaAggiornata.getInfoAsta().getDataInizio(), astaAggiornata.getInfoAsta().getDataFine(),
-                astaAggiornata.getInfoAsta().getDurataTimeSlot(), astaAggiornata.getInfoAsta().isRifiutata(), id);
+                astaAggiornata.getInfoAsta().getDurataTimeSlot(), astaAggiornata.getInfoAsta().isRifiutata(),
+                astaAggiornata.getInfoAsta().getCriterioTerminazione(), id);
     }
 
     @Override
@@ -201,8 +202,10 @@ public class PostgresAstaDAO implements AstaDAO {
         Timestamp dataFine = resultSet.getTimestamp("data_fine");
         Time durataTimeSlot = resultSet.getTime("durata_timeslot");
         boolean rifiutata = resultSet.getBoolean("rifiutata");
+        String criterioTerminazione = resultSet.getString("criterio_terminazione");
         InfoAstaModel infoAsta =
-                new InfoAstaModel(tipo, prezzoPartenza, dataInizio, dataFine, durataTimeSlot, rifiutata);
+                new InfoAstaModel(tipo, prezzoPartenza, dataInizio, dataFine, durataTimeSlot, rifiutata,
+                        criterioTerminazione);
         return new AstaModel(id, infoAsta, configurazione, oggetti, astaManager, offerte);
     }
 }

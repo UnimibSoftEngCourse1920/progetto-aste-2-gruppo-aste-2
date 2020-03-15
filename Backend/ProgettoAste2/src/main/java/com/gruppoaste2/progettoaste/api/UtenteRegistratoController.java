@@ -20,13 +20,6 @@ public class UtenteRegistratoController {
         this.utenteRegistratoService = utenteRegistratoService;
     }
 
-    // TODO: Da eliminare una volta finita la fase di testing
-    @GetMapping
-    public String esempioGet()
-    {
-        return "<h1>Prova ciao hai fatto una get ad localhost:8080/api/utenteregistrato<h1>";
-    }
-
     @PostMapping("/aggiungi")
     public int aggiungiUtenteRegistrato(@RequestBody UtenteRegistratoModel utente)
     {
