@@ -13,6 +13,7 @@ import AsteLoggedIn from '../views/AsteLoggedIn.vue'
 import Help from '../views/Help.vue'
 import Info from '../views/Info.vue'
 import SignUpPage from '../views/SignUpPage.vue'
+import CreaAsta from '../views/CreaAsta.vue'
 
 Vue.use(VueRouter)
 
@@ -78,9 +79,15 @@ const routes = [
     component: Info
   },
   {
+
     path: '/signup',
     name: 'signup',
     component: SignUpPage
+  },
+  {
+    path: '/creaasta',
+    name: 'creaasta',
+    component: CreaAsta
   }
 
 

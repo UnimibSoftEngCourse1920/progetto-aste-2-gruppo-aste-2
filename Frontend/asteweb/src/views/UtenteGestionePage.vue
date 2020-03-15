@@ -1,5 +1,20 @@
 <template>
   <div>
+    <b-nav pills tabs fill>
+      <b-nav-item>
+        <router-link to="/creaasta">Crea Asta</router-link>
+      </b-nav-item>
+      <b-nav-item>
+        <router-link to="/visualizzaaste">Visualizza Aste</router-link>
+      </b-nav-item>
+      <b-nav-item>
+        <router-link to="/utentecredito">Gestisci Credito</router-link>
+      </b-nav-item>
+      <b-nav-item>
+        <router-link to="/utentegestione">Gestisci Account</router-link>
+      </b-nav-item>
+    </b-nav>
+
     <b-form @submit="onSubmit" @reset="onReset" v-if="show">
       <b-form-group id="input-group-1" label="Nuova email:" label-for="input-1">
         <b-form-input id="input-1" v-model="form.email" type="email" placeholder="Inserisci email"></b-form-input>

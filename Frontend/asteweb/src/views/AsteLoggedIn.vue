@@ -1,5 +1,20 @@
 <template>
   <div class="aste">
+    <b-nav pills tabs fill>
+      <b-nav-item>
+        <router-link to="/creaasta">Crea Asta</router-link>
+      </b-nav-item>
+      <b-nav-item>
+        <router-link to="/visualizzaaste">Visualizza Aste</router-link>
+      </b-nav-item>
+      <b-nav-item>
+        <router-link to="/utentecredito">Gestisci Credito</router-link>
+      </b-nav-item>
+      <b-nav-item>
+        <router-link to="/utentegestione">Gestisci Account</router-link>
+      </b-nav-item>
+    </b-nav>
+
     <b-form-select v-model="selected" :options="options"></b-form-select>
     <br />
     <br />
@@ -26,11 +41,9 @@ export default {
     };
   },
   watch: {
-    selected: function() 
-    {
-      if(this.selected === 'a')
-      {
-        console.log('a');
+    selected: function() {
+      if (this.selected === "a") {
+        console.log("a");
       }
     }
   }

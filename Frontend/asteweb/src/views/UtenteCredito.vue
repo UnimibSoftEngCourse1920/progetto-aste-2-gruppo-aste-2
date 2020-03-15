@@ -1,12 +1,18 @@
 <template>
   <div class="utenteCredito">
     <b-nav pills tabs fill>
-      <b-nav-item>Crea Asta</b-nav-item>
-      <b-nav-item>Visualizza Aste</b-nav-item>
+      <b-nav-item>
+        <router-link to="/creaasta">Crea Asta</router-link>
+      </b-nav-item>
+      <b-nav-item>
+        <router-link to="/visualizzaaste">Visualizza Aste</router-link>
+      </b-nav-item>
       <b-nav-item>
         <router-link to="/utentecredito">Gestisci Credito</router-link>
       </b-nav-item>
-      <b-nav-item>Gestisci Account</b-nav-item>
+      <b-nav-item>
+        <router-link to="/utentegestione">Gestisci Account</router-link>
+      </b-nav-item>
     </b-nav>
 
     <b-list-group>
@@ -22,7 +28,7 @@
         label-for="input-1"
         description="Credito da aggiungere al bilancio"
       >
-        <b-form-input id="input-1" type="number" v-model="creditoDaAggiungere" min="0"></b-form-input>
+        <b-form-input id="input-1" type="number" v-model="creditoDaAggiungere" min="0" step="any"></b-form-input>
       </b-form-group>
 
       <b-form-group
@@ -32,7 +38,7 @@
         label-for="input-2"
         description="Credito da togliere dal bilancio"
       >
-        <b-form-input id="input-2" type="number" v-model="creditoDaRestituire" min="0"></b-form-input>
+        <b-form-input id="input-2" type="number" v-model="creditoDaRestituire" min="0" step="any"></b-form-input>
       </b-form-group>
 
       <b-button type="submit" variant="primary">Submit</b-button>
