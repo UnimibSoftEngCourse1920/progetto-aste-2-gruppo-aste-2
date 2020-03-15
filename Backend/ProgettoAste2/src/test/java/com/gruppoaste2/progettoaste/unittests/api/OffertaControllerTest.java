@@ -146,33 +146,12 @@ class OffertaControllerTest {
     @Test
     void whenTrovaOfferteAsta_givenExistingOfferteAsta_thenReturnJsonArrayOfMapsOfferteAsta() throws Exception {
         UUID idasta = UUID.randomUUID();
-        UUID idconf = UUID.randomUUID();
         UUID idUtente = UUID.randomUUID();
-        UUID idOgge = UUID.randomUUID();
         UUID idoff = UUID.randomUUID();
-        UUID idut2 = UUID.randomUUID();
-        List<OggettoModel> oggetti = new ArrayList<>();
-        List<OffertaModel> offerte = new ArrayList<>();
-        OggettoModel ogg1 = new OggettoModel(idOgge, "nome", "descrizione", "url");
-        oggetti.add(ogg1);
-        OffertaModel off1 = new OffertaModel(idoff, 1, Timestamp.valueOf(LocalDateTime.now()),
-                new UtenteRegistratoModel(idut2, "username1", "email1", "+39339025613",
-                        "boh1", 2, false, false));
-        offerte.add(off1);
 
         UtenteRegistratoModel offerente =
                 new UtenteRegistratoModel(idUtente, "username", "email", "339025613",
                         "boh", 0, false, false);
-
-        AstaModel astaTrovata = new AstaModel (idasta,
-                new InfoAstaModel("info", 3.4,
-                        Timestamp.valueOf(LocalDateTime.now()),
-                        Timestamp.valueOf(LocalDateTime.now()),
-                        Time.valueOf(LocalTime.now()),
-                        false),
-                new ConfigurazioneModel(idconf, "fisso", 1, 4, 0.21,
-                        Timestamp.valueOf(LocalDateTime.now()), Time.valueOf(LocalTime.now())),
-                oggetti, offerente, offerte);
 
         List<OffertaModel> offerteTrovate =
                 Collections.singletonList(new OffertaModel(idoff, 3.14f,
@@ -265,33 +244,12 @@ class OffertaControllerTest {
     @Test
     void whenTrovaOfferteUtenteAsta_givenExistingOfferteUtenteAsta_thenReturnJsonArrayOfMapsOfferteUtenteAsta() throws Exception {
         UUID idasta = UUID.randomUUID();
-        UUID idconf = UUID.randomUUID();
         UUID idUtente = UUID.randomUUID();
-        UUID idOgge = UUID.randomUUID();
         UUID idoff = UUID.randomUUID();
-        UUID idut2 = UUID.randomUUID();
-        List<OggettoModel> oggetti = new ArrayList<>();
-        List<OffertaModel> offerte = new ArrayList<>();
-        OggettoModel ogg1 = new OggettoModel(idOgge, "nome", "descrizione", "url");
-        oggetti.add(ogg1);
-        OffertaModel off1 = new OffertaModel(idoff, 1, Timestamp.valueOf(LocalDateTime.now()),
-                new UtenteRegistratoModel(idut2, "username1", "email1", "+39339025613",
-                        "boh1", 2, false, false));
-        offerte.add(off1);
 
         UtenteRegistratoModel offerente =
                 new UtenteRegistratoModel(idUtente, "username", "email", "339025613",
                         "boh", 0, false, false);
-
-        AstaModel astaTrovata = new AstaModel (idasta,
-                new InfoAstaModel("info", 3.4,
-                        Timestamp.valueOf(LocalDateTime.now()),
-                        Timestamp.valueOf(LocalDateTime.now()),
-                        Time.valueOf(LocalTime.now()),
-                        false),
-                new ConfigurazioneModel(idconf, "fisso", 1, 4, 0.21,
-                        Timestamp.valueOf(LocalDateTime.now()), Time.valueOf(LocalTime.now())),
-                oggetti, offerente, offerte);
 
         List<OffertaModel> offerteTrovate =
                 Collections.singletonList(new OffertaModel(idoff, 3.14f,

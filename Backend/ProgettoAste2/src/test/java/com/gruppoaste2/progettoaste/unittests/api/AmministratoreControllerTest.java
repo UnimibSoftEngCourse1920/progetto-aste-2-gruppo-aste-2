@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -44,7 +45,7 @@ class AmministratoreControllerTest {
 
         mockMvc.perform(post("/api/amministratore/inserisci")
                 .contentType(MediaType.APPLICATION_JSON)
-                .characterEncoding("UTF-8")
+                .characterEncoding(StandardCharsets.UTF_8.name())
                 .content(new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL)
                         .writeValueAsString(amministratore)))
                 .andExpect(status().isOk())

@@ -11,15 +11,17 @@ public class InfoAstaModel {
     private final Timestamp dataFine;
     private final Time durataTimeSlot;
     private final boolean rifiutata;
+    private final String criterioTerminazione;
 
     public InfoAstaModel(String tipo, double prezzoPartenza, Timestamp dataInizio, Timestamp dataFine,
-                         Time durataTimeSlot, boolean rifiutata) {
+                         Time durataTimeSlot, boolean rifiutata, String criterioTerminazione) {
         this.tipo = tipo;
         this.prezzoPartenza = prezzoPartenza;
         this.dataInizio = dataInizio;
         this.dataFine = dataFine;
         this.durataTimeSlot = durataTimeSlot;
         this.rifiutata = rifiutata;
+        this.criterioTerminazione = criterioTerminazione;
     }
 
     public String getTipo() { return tipo; }
@@ -42,6 +44,10 @@ public class InfoAstaModel {
 
     public boolean isRifiutata() {
         return rifiutata;
+    }
+
+    public String getCriterioTerminazione() {
+        return criterioTerminazione;
     }
 }
  
