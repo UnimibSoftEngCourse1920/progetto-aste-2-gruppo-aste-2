@@ -19,24 +19,24 @@ public class AmministratoreService {
         this.amministratoreDAO = amministratoreDAO;
     }
 
-    public int inserisciAmministratore(AmministratoreModel amministratoreModel){
+    public UUID inserisciAmministratore(AmministratoreModel amministratoreModel){
         return amministratoreDAO.inserisciAmministratore(amministratoreModel);
     }
 
-    public int eliminaAmministratore(UUID id){
-        return amministratoreDAO.eliminaAmministratore(id);
+    public int eliminaAmministratore(UUID idAmministratore){
+        return amministratoreDAO.eliminaAmministratore(idAmministratore);
     }
 
-    public Optional<AmministratoreModel> trovaAmministratore(UUID id){
-        return amministratoreDAO.trovaAmministratore(id);
+    public Optional<AmministratoreModel> trovaAmministratore(UUID idAmministratore){
+        return amministratoreDAO.trovaAmministratore(idAmministratore);
     }
 
     public List<AmministratoreModel> trovaAmministratori(){
         return amministratoreDAO.trovaAmministratori();
     }
 
-    public int aggiornaAmministratore(UUID id, AmministratoreModel amministratoreAggiornato){
-        return amministratoreDAO.aggiornaAmministratore(id, amministratoreAggiornato);
+    public int aggiornaAmministratore(UUID idAmministratore, AmministratoreModel amministratoreAggiornato){
+        return amministratoreDAO.aggiornaAmministratore(idAmministratore, amministratoreAggiornato);
     }
 
     public boolean controllaUsernameOccupato(String username)

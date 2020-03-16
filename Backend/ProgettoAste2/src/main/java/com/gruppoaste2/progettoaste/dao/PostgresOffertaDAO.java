@@ -27,26 +27,30 @@ public class PostgresOffertaDAO implements OffertaDAO{
     }
 
     @Override
-    public int aggiungiOfferta(UUID id, UUID idAsta, OffertaModel offerta) {
+    public UUID aggiungiOfferta(UUID idOfferta, UUID idAsta, OffertaModel offerta) {
         final String sql = "INSERT INTO offerta(id, id_offerente, id_asta, data_offerta, credito_offerto) " +
                 "VALUES(?, ?, ?, ?, ?)";
-        return jdbcTemplate.update(sql,
-                id, offerta.getOfferente().getId(), idAsta, offerta.getDataOfferta(), offerta.getCreditoOfferto());
+        if(jdbcTemplate.update(sql,
+                idOfferta, offerta.getOfferente().getId(), idAsta, offerta.getDataOfferta(),
+                offerta.getCreditoOfferto())
+                == 0)
+            return null;
+        return idOfferta;
     }
 
     @Override
-    public int eliminaOfferta(UUID id) {
+    public int eliminaOfferta(UUID idOfferta) {
         final String sql = "DELETE FROM offerta WHERE id = ?";
-        return jdbcTemplate.update(sql, id);
+        return jdbcTemplate.update(sql, idOfferta);
     }
 
     @Override
-    public Optional<OffertaModel> trovaOfferta(UUID id) {
+    public Optional<OffertaModel> trovaOfferta(UUID idOfferta) {
         final String sql = "SELECT * FROM offerta WHERE id = ?";
         List<OffertaModel> results = jdbcTemplate.query(
                 sql, (resultSet, i) -> makeOffertaFromResultSet(resultSet),
-                id);
-        OffertaModel returnable = (results.isEmpty())? null : results.get(0);
+                idOfferta);
+        OffertaModel returnable = (results.isEmpty()) ? null : results.get(0);
         return Optional.ofNullable(returnable);
     }
 
@@ -71,7 +75,7 @@ public class PostgresOffertaDAO implements OffertaDAO{
         List<OffertaModel> results = jdbcTemplate.query(
                 sql, (resultSet, i) -> makeOffertaFromResultSet(resultSet),
                 idAsta);
-        OffertaModel returnable = (results.isEmpty())? null : results.get(0);
+        OffertaModel returnable = (results.isEmpty()) ? null : results.get(0);
         return Optional.ofNullable(returnable);
     }
 
@@ -81,7 +85,7 @@ public class PostgresOffertaDAO implements OffertaDAO{
         List<OffertaModel> results = jdbcTemplate.query(
                 sql, (resultSet, i) -> makeOffertaFromResultSet(resultSet),
                 idAsta);
-        OffertaModel returnable = (results.isEmpty())? null : results.get(0);
+        OffertaModel returnable = (results.isEmpty()) ? null : results.get(0);
         return Optional.ofNullable(returnable);
     }
 
@@ -102,11 +106,11 @@ public class PostgresOffertaDAO implements OffertaDAO{
     }
 
     @Override
-    public int aggiornaOfferta(UUID id, OffertaModel offertaAggiornata) {
+    public int aggiornaOfferta(UUID idOfferta, OffertaModel offertaAggiornata) {
         final String sql = "UPDATE offerta SET id_offerente = ?, data_offerta = ?, credito_offerto = ? WHERE id = ?";
         return jdbcTemplate.update(sql,
                 offertaAggiornata.getOfferente().getId(), offertaAggiornata.getDataOfferta(),
-                offertaAggiornata.getCreditoOfferto(), id);
+                offertaAggiornata.getCreditoOfferto(), idOfferta);
     }
 
     @Override
@@ -117,7 +121,7 @@ public class PostgresOffertaDAO implements OffertaDAO{
     }
 
     private OffertaModel makeOffertaFromResultSet(ResultSet resultSet) throws SQLException {
-        UUID id = UUID.fromString(resultSet.getString("id"));
+        UUID idOfferta = UUID.fromString(resultSet.getString("id"));
 
         UUID idOfferente = UUID.fromString(resultSet.getString("id_offerente"));
         UtenteRegistratoModel offerente = utenteRegistratoDAO.trovaUtenteRegistrato(idOfferente)
@@ -125,6 +129,6 @@ public class PostgresOffertaDAO implements OffertaDAO{
 
         Timestamp dataOfferta = resultSet.getTimestamp("data_offerta");
         float creditoOfferto = resultSet.getFloat("credito_offerto");
-        return new OffertaModel(id, creditoOfferto, dataOfferta, offerente);
+        return new OffertaModel(idOfferta, creditoOfferto, dataOfferta, offerente);
     }
 }

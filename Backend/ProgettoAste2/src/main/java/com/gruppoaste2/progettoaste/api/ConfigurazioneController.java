@@ -19,18 +19,18 @@ public class ConfigurazioneController {
     }
 
     @PostMapping("/inserisci")
-    public int inserisciConfigurazione(@RequestBody ConfigurazioneModel configurazioneModel){
+    public UUID inserisciConfigurazione(@RequestBody ConfigurazioneModel configurazioneModel){
         return configurazioneService.inserisciConfigurazione(configurazioneModel);
     }
 
-    @GetMapping(path = "/elimina/{id}")
-    public int  eliminaConfiguazione(@PathVariable("id") UUID id){
-        return configurazioneService.eliminaConfiguazione(id);
+    @GetMapping(path = "/elimina/{idConfigurazione}")
+    public int  eliminaConfiguazione(@PathVariable("idConfigurazione") UUID idConfigurazione){
+        return configurazioneService.eliminaConfiguazione(idConfigurazione);
     }
 
-    @GetMapping(path = "/{id}")
-    public ConfigurazioneModel trovaConfigurazione(@PathVariable("id") UUID id) {
-        return configurazioneService.trovaConfigurazione(id)
+    @GetMapping(path = "/{idConfigurazione}")
+    public ConfigurazioneModel trovaConfigurazione(@PathVariable("idConfigurazione") UUID idConfigurazione) {
+        return configurazioneService.trovaConfigurazione(idConfigurazione)
                 .orElse(null);
     }
 

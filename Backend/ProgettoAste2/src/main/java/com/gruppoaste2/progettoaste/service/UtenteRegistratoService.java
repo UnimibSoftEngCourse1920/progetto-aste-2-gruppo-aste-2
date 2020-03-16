@@ -21,24 +21,24 @@ public class UtenteRegistratoService {
         this.utenteRegistratoDAO = utenteRegistratoDAO;
     }
 
-    public int aggiungiUtenteRegistrato(UtenteRegistratoModel utenteRegistratoModel) {
+    public UUID aggiungiUtenteRegistrato(UtenteRegistratoModel utenteRegistratoModel) {
         return utenteRegistratoDAO.aggiungiUtenteRegistrato(utenteRegistratoModel);
     }
 
-    public int eliminaUtenteRegistrato(UUID id){
-        return utenteRegistratoDAO.eliminaUtenteRegistrato(id);
+    public int eliminaUtenteRegistrato(UUID idUtenteRegistrato){
+        return utenteRegistratoDAO.eliminaUtenteRegistrato(idUtenteRegistrato);
     }
 
-    public Optional<UtenteRegistratoModel> trovaUtenteRegistrato(UUID id){
-        return utenteRegistratoDAO.trovaUtenteRegistrato(id);
+    public Optional<UtenteRegistratoModel> trovaUtenteRegistrato(UUID idUtenteRegistrato){
+        return utenteRegistratoDAO.trovaUtenteRegistrato(idUtenteRegistrato);
     }
 
     public List<UtenteRegistratoModel> trovaUtentiRegistrati(){
         return utenteRegistratoDAO.trovaUtentiRegistrati();
     }
 
-    public int aggiornaUtenteRegistrato(UUID id, UtenteRegistratoModel utenteAggiornato){
-        return utenteRegistratoDAO.aggiornaUtenteRegistrato(id, utenteAggiornato);
+    public int aggiornaUtenteRegistrato(UUID idUtenteRegistrato, UtenteRegistratoModel utenteRegistratoAggiornato){
+        return utenteRegistratoDAO.aggiornaUtenteRegistrato(idUtenteRegistrato, utenteRegistratoAggiornato);
     }
 
     public boolean controllaUsernameOccupato(String username)
@@ -61,24 +61,24 @@ public class UtenteRegistratoService {
         return utenteRegistratoDAO.ritornaIdUtenteRegistrato(utente);
     }
 
-    public int aggiungiCredito(UUID id, float creditoAggiunto)
+    public int aggiungiCredito(UUID idUtenteRegistrato, float creditoAggiunto)
     {
-        return utenteRegistratoDAO.aggiungiCredito(id,creditoAggiunto);
+        return utenteRegistratoDAO.aggiungiCredito(idUtenteRegistrato, creditoAggiunto);
     }
 
-    public InfoCreditoModel infoCredito(UUID id) {
-        final float creditoTotale = utenteRegistratoDAO.creditoTotale(id);
-        final float creditoImpegnato = utenteRegistratoDAO.creditoImpegnato(id);
+    public InfoCreditoModel infoCredito(UUID idUtenteRegistrato) {
+        final float creditoTotale = utenteRegistratoDAO.creditoTotale(idUtenteRegistrato);
+        final float creditoImpegnato = utenteRegistratoDAO.creditoImpegnato(idUtenteRegistrato);
         final float creditoDisponibile = creditoTotale - creditoImpegnato;
 
         return new InfoCreditoModel(creditoTotale, creditoDisponibile, creditoImpegnato);
     }
 
-    public boolean isNotificheEmailAbilitate(UUID id) {
-        return utenteRegistratoDAO.isNotificheEmailAbilitate(id);
+    public boolean isNotificheEmailAbilitate(UUID idUtenteRegistrato) {
+        return utenteRegistratoDAO.isNotificheEmailAbilitate(idUtenteRegistrato);
     }
 
-    public boolean isNotificheSmsAbilitate(UUID id) {
-        return utenteRegistratoDAO.isNotificheSmsAbilitate(id);
+    public boolean isNotificheSmsAbilitate(UUID idUtenteRegistrato) {
+        return utenteRegistratoDAO.isNotificheSmsAbilitate(idUtenteRegistrato);
     }
 }

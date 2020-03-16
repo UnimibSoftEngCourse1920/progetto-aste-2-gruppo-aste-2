@@ -6,24 +6,39 @@ import java.util.UUID;
 public class CategoriaModel {
 
     private final UUID id;
-    private final Map<String, String> attributi;
     private final String nome;
+    private final Map<String, String> attributi;
+    // private final List<AttributoModel> attributi;
 
-    public CategoriaModel(UUID id, Map<String, String> attributi, String nome) {
+    public CategoriaModel(UUID id, String nome, Map<String, String> attributi) {
         this.id = id;
-        this.attributi = attributi;
         this.nome = nome;
+        this.attributi = attributi;
     }
+
+    /*
+    public CategoriaModel(UUID id, String nome, List<AttributoModel> attributi) {
+        this.id = id;
+        this.nome = nome;
+        this.attributi = attributi;
+    }
+     */
 
     public UUID getId() {
         return id;
+    }
+
+    public String getNome() {
+        return nome;
     }
 
     public Map<String, String> getAttributi() {
         return attributi;
     }
 
-    public String getNome() {
-        return nome;
+    /*
+    public List<AttributoModel> getAttributi() {
+        return attributi;
     }
+     */
 }

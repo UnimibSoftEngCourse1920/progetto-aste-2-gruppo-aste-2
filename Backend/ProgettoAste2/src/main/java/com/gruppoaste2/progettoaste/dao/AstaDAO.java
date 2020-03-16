@@ -8,17 +8,17 @@ import java.util.UUID;
 
 public interface AstaDAO {
 
-    UUID aggiungiAsta(UUID id, AstaModel asta);
+    UUID aggiungiAsta(UUID idAsta, AstaModel asta);
 
     default UUID aggiungiAsta(AstaModel asta)
     {
-        UUID id = UUID.randomUUID();
-        return aggiungiAsta(id, asta);
+        UUID idAsta = UUID.randomUUID();
+        return aggiungiAsta(idAsta, asta);
     }
 
-    int eliminaAsta(UUID id);
+    int eliminaAsta(UUID idAsta);
 
-    Optional<AstaModel> trovaAsta(UUID id);
+    Optional<AstaModel> trovaAsta(UUID idAsta);
 
     List<AstaModel> trovaAste();
 
@@ -38,7 +38,9 @@ public interface AstaDAO {
 
     List<AstaModel> trovaAsteVinteDaUtente(UUID idUtente);
 
-    int aggiornaAsta(UUID id, AstaModel astaAggiornata);
+    int aggiornaAsta(UUID idAsta, AstaModel astaAggiornata);
 
-    Float rinunciaAsta(UUID idAsta, UUID idUtente);
+    Float accettaAstaVinta(UUID idAsta, UUID idVincitore);
+
+    Float rinunciaAstaVinta(UUID idAsta, UUID idVincitore);
 }

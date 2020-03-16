@@ -8,17 +8,17 @@ import java.util.UUID;
 
 public interface OggettoDAO {
 
-    int inserisciOggetto(UUID idOggetto, UUID idAsta, OggettoModel oggetto);
+    UUID inserisciOggetto(UUID idOggetto, UUID idAsta, OggettoModel oggetto);
 
-    default int inserisciOggetto(UUID idAsta, OggettoModel oggetto)
+    default UUID inserisciOggetto(UUID idAsta, OggettoModel oggetto)
     {
-        UUID id = UUID.randomUUID();
-        return inserisciOggetto(id, idAsta, oggetto);
+        UUID idOggetto = UUID.randomUUID();
+        return inserisciOggetto(idOggetto, idAsta, oggetto);
     }
 
-    int eliminaOggetto(UUID id);
+    int eliminaOggetto(UUID idOggetto);
 
-    Optional<OggettoModel> trovaOggetto(UUID id);
+    Optional<OggettoModel> trovaOggetto(UUID idOggetto);
 
     List<OggettoModel> trovaOggetti();
 
@@ -34,7 +34,7 @@ public interface OggettoDAO {
 
     List<OggettoModel> trovaOggettiVintiDaUtente(UUID idUtente);
 
-    int aggiornaOggetto(UUID id, OggettoModel oggettoAggiornato);
+    int aggiornaOggetto(UUID idOggetto, OggettoModel oggettoAggiornato);
 
     long importaOggetti(UUID idAsta, String fileName);
 

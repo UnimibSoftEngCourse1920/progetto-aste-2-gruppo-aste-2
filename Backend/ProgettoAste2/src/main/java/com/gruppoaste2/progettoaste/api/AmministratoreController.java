@@ -20,21 +20,21 @@ public class AmministratoreController {
     }
 
     @PostMapping("/inserisci")
-    public int inserisciAmministratore(@RequestBody AmministratoreModel amministratore)
+    public UUID inserisciAmministratore(@RequestBody AmministratoreModel amministratore)
     {
         return amministratoreService.inserisciAmministratore(amministratore);
     }
 
     @GetMapping(path = "/elimina/{id}")
-    public int eliminaAmministratore(@PathVariable("id") UUID id)
+    public int eliminaAmministratore(@PathVariable("id") UUID idAmministratore)
     {
-        return amministratoreService.eliminaAmministratore(id);
+        return amministratoreService.eliminaAmministratore(idAmministratore);
     }
 
-    @GetMapping(path = "/{id}")
-    public AmministratoreModel trovaAmministratore(@PathVariable("id") UUID id)
+    @GetMapping(path = "/{idAmministratore}")
+    public AmministratoreModel trovaAmministratore(@PathVariable("idAmministratore") UUID idAmministratore)
     {
-        return amministratoreService.trovaAmministratore(id)
+        return amministratoreService.trovaAmministratore(idAmministratore)
                 .orElse(null);
     }
 
@@ -44,11 +44,11 @@ public class AmministratoreController {
         return amministratoreService.trovaAmministratori();
     }
 
-    @PostMapping("/aggiorna/{id}")
-    public int aggiornaAmministratore(@PathVariable("id") UUID id,
+    @PostMapping("/aggiorna/{idAmministratore}")
+    public int aggiornaAmministratore(@PathVariable("idAmministratore") UUID idAmministratore,
                                       @RequestBody AmministratoreModel amministratoreAggiornato)
     {
-        return amministratoreService.aggiornaAmministratore(id, amministratoreAggiornato);
+        return amministratoreService.aggiornaAmministratore(idAmministratore, amministratoreAggiornato);
     }
 
     @GetMapping(path = "/controlla/username/{username}")

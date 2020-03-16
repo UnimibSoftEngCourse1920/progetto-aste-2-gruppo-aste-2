@@ -22,27 +22,31 @@ public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
     }
 
     @Override
-    public int aggiungiUtenteRegistrato(UUID id, UtenteRegistratoModel utenteRegistrato) {
+    public UUID aggiungiUtenteRegistrato(UUID idUtenteRegistrato, UtenteRegistratoModel utenteRegistrato) {
         final String sql = "INSERT INTO utente_registrato" +
-                "(id, username, password, email, telefono, credito_disponibile) " +
-                "VALUES(?, ?, ?, ?, ?, ?)";
-        return jdbcTemplate.update(sql,
-                id, utenteRegistrato.getUsername(), utenteRegistrato.getPassword(), utenteRegistrato.getEmail(),
-                utenteRegistrato.getNumeroTelefono(), utenteRegistrato.getCredito());
+                "(id, username, password, email, telefono, credito_disponibile, notifica_sms, notifica_email) " +
+                "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+        if(jdbcTemplate.update(sql,
+                idUtenteRegistrato, utenteRegistrato.getUsername(), utenteRegistrato.getPassword(),
+                utenteRegistrato.getEmail(), utenteRegistrato.getNumeroTelefono(), utenteRegistrato.getCredito(),
+                utenteRegistrato.isNotificheSms(), utenteRegistrato.isNotificheEmail())
+                == 0)
+            return null;
+        return idUtenteRegistrato;
     }
 
     @Override
-    public int eliminaUtenteRegistrato(UUID id) {
+    public int eliminaUtenteRegistrato(UUID idUtenteRegistrato) {
         final String sql = "DELETE FROM utente_registrato WHERE id = ?";
-        return jdbcTemplate.update(sql, id);
+        return jdbcTemplate.update(sql, idUtenteRegistrato);
     }
 
     @Override
-    public Optional<UtenteRegistratoModel> trovaUtenteRegistrato(UUID id) {
+    public Optional<UtenteRegistratoModel> trovaUtenteRegistrato(UUID idUtenteRegistrato) {
         final String sql = "SELECT * FROM utente_registrato WHERE id = ?";
         List<UtenteRegistratoModel> results = jdbcTemplate.query(sql,
                 (resultSet, i) -> makeUtenteRegistratoFromResultSet(resultSet),
-                id);
+                idUtenteRegistrato);
         UtenteRegistratoModel returnable = results.isEmpty() ? null : results.get(0);
         return Optional.ofNullable(returnable);
     }
@@ -55,13 +59,16 @@ public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
     }
 
     @Override
-    public int aggiornaUtenteRegistrato(UUID id, UtenteRegistratoModel utenteAggiornato) {
+    public int aggiornaUtenteRegistrato(UUID idUtenteRegistrato, UtenteRegistratoModel utenteRegistratoAggiornato) {
         final String sql = "UPDATE utente_registrato " +
-                "SET username = ?, password = ?, email = ?, telefono = ?, credito_disponibile = ?, notifica_sms = ?, notifica_email = ? " +
+                "SET username = ?, password = ?, email = ?, telefono = ?, credito_disponibile = ?, " +
+                "notifica_sms = ?, notifica_email = ? " +
                 "WHERE id = ?";
         return jdbcTemplate.update(sql,
-                utenteAggiornato.getUsername(), utenteAggiornato.getPassword(), utenteAggiornato.getEmail(),
-                utenteAggiornato.getNumeroTelefono(), utenteAggiornato.getCredito(), utenteAggiornato.isNotificheSms(), utenteAggiornato.isNotificheEmail(), id);
+                utenteRegistratoAggiornato.getUsername(), utenteRegistratoAggiornato.getPassword(),
+                utenteRegistratoAggiornato.getEmail(), utenteRegistratoAggiornato.getNumeroTelefono(),
+                utenteRegistratoAggiornato.getCredito(), utenteRegistratoAggiornato.isNotificheSms(),
+                utenteRegistratoAggiornato.isNotificheEmail(), idUtenteRegistrato);
     }
 
     @Override
@@ -92,20 +99,20 @@ public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
     }
 
     @Override
-    public int aggiungiCredito(UUID id, float creditoAggiunto) {
-        final float credito = creditoAggiunto + creditoTotale(id);
+    public int aggiungiCredito(UUID idUtenteRegistrato, float creditoAggiunto) {
+        final float credito = creditoAggiunto + creditoTotale(idUtenteRegistrato);
         final String sql = "UPDATE utente_registrato SET credito_disponibile = ? WHERE id = ?";
-        return jdbcTemplate.update(sql, credito, id);
+        return jdbcTemplate.update(sql, credito, idUtenteRegistrato);
     }
 
     @Override
-    public float creditoTotale(UUID id) {
+    public float creditoTotale(UUID idUtenteRegistrato) {
         final String sql = "SELECT credito_disponibile FROM utente_registrato WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, Float.class, id);
+        return jdbcTemplate.queryForObject(sql, Float.class, idUtenteRegistrato);
     }
     
     @Override
-    public float creditoImpegnato(UUID id) {
+    public float creditoImpegnato(UUID idUtenteRegistrato) {
         final String sql = "SELECT o.credito_offerto FROM offerta AS o, asta AS a " +
                 "WHERE o.id_offerente = ? AND o.id_asta = a.id AND a.data_fine IS NULL";
 
@@ -113,7 +120,7 @@ public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
 
         List<Float> creditoOfferte = jdbcTemplate.query(sql,
                 (resultSet, i) -> resultSet.getFloat("credito_offerto"),
-                id);
+                idUtenteRegistrato);
 
         for(float offerta : creditoOfferte)
             creditoImpegnato += offerta;
@@ -122,19 +129,19 @@ public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
     }
 
     @Override
-    public boolean isNotificheEmailAbilitate(UUID id) {
+    public boolean isNotificheEmailAbilitate(UUID idUtenteRegistrato) {
         final String sql = "SELECT notifica_email FROM utente_registrato WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, Boolean.class, id);
+        return jdbcTemplate.queryForObject(sql, Boolean.class, idUtenteRegistrato);
     }
 
     @Override
-    public boolean isNotificheSmsAbilitate(UUID id) {
+    public boolean isNotificheSmsAbilitate(UUID idUtenteRegistrato) {
         final String sql = "SELECT notifica_sms FROM utente_registrato WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, Boolean.class, id);
+        return jdbcTemplate.queryForObject(sql, Boolean.class, idUtenteRegistrato);
     }
 
     private UtenteRegistratoModel makeUtenteRegistratoFromResultSet(ResultSet resultSet) throws SQLException {
-        UUID id = UUID.fromString(resultSet.getString("id"));
+        UUID idUtenteRegistrato = UUID.fromString(resultSet.getString("id"));
         String username = resultSet.getString("username");
         String email = resultSet.getString("email");
         String numeroTelefono = resultSet.getString("telefono");
@@ -142,7 +149,7 @@ public class PostgresUtenteRegistratoDAO implements UtenteRegistratoDAO{
         float credito = resultSet.getFloat("credito_disponibile");
         boolean notificheEmail = resultSet.getBoolean("notifica_email");
         boolean notificheSms = resultSet.getBoolean("notifica_sms");
-        return new UtenteRegistratoModel(id, username, email, password, numeroTelefono, credito,
+        return new UtenteRegistratoModel(idUtenteRegistrato, username, email, password, numeroTelefono, credito,
                 notificheEmail, notificheSms);
     }
 }

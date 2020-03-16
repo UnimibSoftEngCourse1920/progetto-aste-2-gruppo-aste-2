@@ -20,19 +20,19 @@ public class OggettoService {
         this.oggettoDAO = oggettoDAO;
     }
 
-    public int inserisciOggetto(UUID idAsta, OggettoModel oggetto)
+    public UUID inserisciOggetto(UUID idAsta, OggettoModel oggetto)
     {
         return oggettoDAO.inserisciOggetto(idAsta,oggetto);
     }
 
-    public int eliminaOggetto(UUID id)
+    public int eliminaOggetto(UUID idOggetto)
     {
-        return oggettoDAO.eliminaOggetto(id);
+        return oggettoDAO.eliminaOggetto(idOggetto);
     }
 
-    public Optional<OggettoModel> trovaOggetto(UUID id)
+    public Optional<OggettoModel> trovaOggetto(UUID idOggetto)
     {
-        return oggettoDAO.trovaOggetto(id);
+        return oggettoDAO.trovaOggetto(idOggetto);
     }
 
     public List<OggettoModel> trovaOggetti()
@@ -70,9 +70,9 @@ public class OggettoService {
         return oggettoDAO.trovaOggettiVintiDaUtente(idUtente);
     }
 
-    public int aggiornaOggetto(UUID id, OggettoModel oggettoAggiornato)
+    public int aggiornaOggetto(UUID idOggetto, OggettoModel oggettoAggiornato)
     {
-        return oggettoDAO.aggiornaOggetto(id, oggettoAggiornato);
+        return oggettoDAO.aggiornaOggetto(idOggetto, oggettoAggiornato);
     }
 
     public long importaOggetti(UUID idAsta, String fileName)

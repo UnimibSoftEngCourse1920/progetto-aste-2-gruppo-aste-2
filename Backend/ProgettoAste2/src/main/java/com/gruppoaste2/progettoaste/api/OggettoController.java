@@ -20,22 +20,22 @@ public class OggettoController {
         this.oggettoService = oggettoService;
     }
 
-    @PostMapping("/inserisci/{id}")
-    public int inserisciOggetto(@PathVariable("id") UUID idAsta, @RequestBody OggettoModel oggetto)
+    @PostMapping("/inserisci/{idAsta}")
+    public UUID inserisciOggetto(@PathVariable("idAsta") UUID idAsta, @RequestBody OggettoModel oggetto)
     {
         return oggettoService.inserisciOggetto(idAsta, oggetto);
     }
 
-    @GetMapping(path = "/elimina/{id}")
-    public int eliminaOggetto(@PathVariable UUID id)
+    @GetMapping(path = "/elimina/{idOggetto}")
+    public int eliminaOggetto(@PathVariable("idOggetto") UUID idOggetto)
     {
-        return oggettoService.eliminaOggetto(id);
+        return oggettoService.eliminaOggetto(idOggetto);
     }
 
-    @GetMapping(path = "/{id}")
-    public OggettoModel trovaOggetto(@PathVariable("id") UUID id)
+    @GetMapping(path = "/{idOggetto}")
+    public OggettoModel trovaOggetto(@PathVariable("idOggetto") UUID idOggetto)
     {
-        return oggettoService.trovaOggetto(id)
+        return oggettoService.trovaOggetto(idOggetto)
                 .orElse(null);
     }
 
@@ -81,10 +81,10 @@ public class OggettoController {
         return oggettoService.trovaOggettiVintiDaUtente(idUtente);
     }
 
-    @PostMapping(path = "/aggiorna{id}")
-    public int aggiornaOggetto(@PathVariable("id") UUID id, @RequestBody OggettoModel oggettoAggiornato)
+    @PostMapping(path = "/aggiorna{idOggetto}")
+    public int aggiornaOggetto(@PathVariable("idOggetto") UUID idOggetto, @RequestBody OggettoModel oggettoAggiornato)
     {
-        return oggettoService.aggiornaOggetto(id, oggettoAggiornato);
+        return oggettoService.aggiornaOggetto(idOggetto, oggettoAggiornato);
     }
 
     @PostMapping(path = "/importa/{idAsta}")

@@ -24,12 +24,12 @@ public class AstaService {
         return astaDAO.aggiungiAsta(astaModel);
     }
 
-    public int eliminaAsta(UUID id){
-        return astaDAO.eliminaAsta(id);
+    public int eliminaAsta(UUID idAsta){
+        return astaDAO.eliminaAsta(idAsta);
     }
 
-    public Optional<AstaModel> trovaAsta(UUID id){
-        return astaDAO.trovaAsta(id);
+    public Optional<AstaModel> trovaAsta(UUID idAsta){
+        return astaDAO.trovaAsta(idAsta);
     }
 
     public List<AstaModel> trovaAste(){
@@ -68,11 +68,15 @@ public class AstaService {
         return astaDAO.trovaAsteVinteDaUtente(idUtente);
     }
 
-    public int aggiornaAsta(UUID id, AstaModel astaAggiornata){
-        return astaDAO.aggiornaAsta(id, astaAggiornata);
+    public int aggiornaAsta(UUID idAsta, AstaModel astaAggiornata){
+        return astaDAO.aggiornaAsta(idAsta, astaAggiornata);
     }
 
-    public Float rinunciaAsta(UUID idAsta, UUID idUtente){
-        return astaDAO.rinunciaAsta(idAsta, idUtente);
+    public Float accettaAstaVinta(UUID idAsta, UUID idVincitore){
+        return astaDAO.accettaAstaVinta(idAsta, idVincitore);
+    }
+
+    public Float rinunciaAstaVinta(UUID idAsta, UUID idVincitore){
+        return astaDAO.rinunciaAstaVinta(idAsta, idVincitore);
     }
 }

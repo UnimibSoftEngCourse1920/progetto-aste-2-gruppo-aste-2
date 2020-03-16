@@ -25,16 +25,16 @@ public class AstaController {
         return astaService.aggiungiAsta(asta);
     }
 
-    @GetMapping(path = "/elimina/{id}")
-    public int eliminaAsta(@PathVariable("id") UUID id)
+    @GetMapping(path = "/elimina/{idAsta}")
+    public int eliminaAsta(@PathVariable("idAsta") UUID idAsta)
     {
-        return astaService.eliminaAsta(id);
+        return astaService.eliminaAsta(idAsta);
     }
 
-    @GetMapping(path = "/{id}")
-    public AstaModel trovaAsta(@PathVariable("id") UUID id)
+    @GetMapping(path = "/{idAsta}")
+    public AstaModel trovaAsta(@PathVariable("idAsta") UUID idAsta)
     {
-        return astaService.trovaAsta(id)
+        return astaService.trovaAsta(idAsta)
                 .orElse(null);
     }
 
@@ -94,15 +94,21 @@ public class AstaController {
         return astaService.trovaAsteVinteDaUtente(idUtente);
     }
 
-    @PostMapping(path = "/aggiorna/{id}")
-    public int aggiornaAsta(@PathVariable("id") UUID id, @RequestBody AstaModel astaAggiornata)
+    @PostMapping(path = "/aggiorna/{idAsta}")
+    public int aggiornaAsta(@PathVariable("idAsta") UUID idAsta, @RequestBody AstaModel astaAggiornata)
     {
-        return astaService.aggiornaAsta(id, astaAggiornata);
+        return astaService.aggiornaAsta(idAsta, astaAggiornata);
     }
 
-    @GetMapping(path = "/rinuncia/{idAsta}/{idUtente}")
-    public Float rinunciaAsta(@PathVariable("idAsta") UUID idAsta, @PathVariable("idUtente") UUID idUtente)
+    @GetMapping(path = "/accetta/{idAsta}/{idVincitore}")
+    public Float accettaAstaVinta(@PathVariable("idAsta") UUID idAsta, @PathVariable("idVincitore") UUID idVincitore)
     {
-        return astaService.rinunciaAsta(idAsta, idUtente);
+        return astaService.accettaAstaVinta(idAsta, idVincitore);
+    }
+
+    @GetMapping(path = "/rinuncia/{idAsta}/{idVincitore}")
+    public Float rinunciaAstaVinta(@PathVariable("idAsta") UUID idAsta, @PathVariable("idVincitore") UUID idVincitore)
+    {
+        return astaService.rinunciaAstaVinta(idAsta, idVincitore);
     }
 }

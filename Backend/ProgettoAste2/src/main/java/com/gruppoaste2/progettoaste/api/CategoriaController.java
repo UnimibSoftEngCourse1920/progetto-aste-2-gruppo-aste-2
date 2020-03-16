@@ -26,21 +26,16 @@ public class CategoriaController {
         return categoriaService.aggiungiCategoria(categoria);
     }
 
-    @GetMapping("/assegna/{idOggetto}/{idCategoria}")
-    public int assegnaCategoriaAdOggetto(@PathVariable("idOggetto") UUID idOggetto, @PathVariable("idCategoria") UUID idCategoria) {
-        return categoriaService.assegnaCategoriaAdOggetto(idOggetto, idCategoria);
+    @GetMapping(path = "/elimina/{idCategoria}")
+    public int eliminaCategoria(@PathVariable("idCategoria") UUID idCategoria)
+    {
+        return categoriaService.eliminaCategoria(idCategoria);
     }
 
-    @GetMapping(path = "/elimina/{id}")
-    public int eliminaCategoria(@PathVariable("id") UUID id)
+    @GetMapping(path = "/{idCategoria}")
+    public CategoriaModel trovaCategoria(@PathVariable("idCategoria") UUID idCategoria)
     {
-        return categoriaService.eliminaCategoria(id);
-    }
-
-    @GetMapping(path = "/{id}")
-    public CategoriaModel trovaCategoria(@PathVariable("id") UUID id)
-    {
-        return categoriaService.trovaCategoria(id)
+        return categoriaService.trovaCategoria(idCategoria)
                 .orElse(null);
     }
 
@@ -50,13 +45,13 @@ public class CategoriaController {
         return categoriaService.trovaCategorie();
     }
 
-    @GetMapping(path = "/attributi/{id}")
-    public List<AttributoModel> trovaAttributiCategoria(@PathVariable("id") UUID id) {
-        return categoriaService.trovaAttributiCategoria(id);
+    @GetMapping(path = "/attributi/{idCategoria}")
+    public List<AttributoModel> trovaAttributiCategoria(@PathVariable("idCategoria") UUID idCategoria) {
+        return categoriaService.trovaAttributiCategoria(idCategoria);
     }
 
-    @GetMapping(path = "/oggetto/{id}")
-    public List<CategoriaModel> trovaCategorieOggetto(@PathVariable("id") UUID idOggetto) {
+    @GetMapping(path = "/oggetto/{idOggetto}")
+    public List<CategoriaModel> trovaCategorieOggetto(@PathVariable("idOggetto") UUID idOggetto) {
         return categoriaService.trovaCategorieOggetto(idOggetto);
     }
 
@@ -66,9 +61,16 @@ public class CategoriaController {
         return categoriaService.valoreAttributoOggetto(idOggetto, idAttributo);
     }
 
-    @PostMapping(path = "/aggiorna/{id}")
-    public int aggiornaCategoria(@PathVariable("id") UUID id, @RequestBody CategoriaModel categoriaAggiornata)
+    @PostMapping(path = "/aggiorna/{idCategoria}")
+    public int aggiornaCategoria(@PathVariable("idCategoria") UUID idCategoria,
+                                 @RequestBody CategoriaModel categoriaAggiornata)
     {
-        return categoriaService.aggiornaCategoria(id, categoriaAggiornata);
+        return categoriaService.aggiornaCategoria(idCategoria, categoriaAggiornata);
+    }
+
+    @GetMapping("/assegna/{idOggetto}/{idCategoria}")
+    public int assegnaCategoriaAdOggetto(@PathVariable("idOggetto") UUID idOggetto,
+                                         @PathVariable("idCategoria") UUID idCategoria) {
+        return categoriaService.assegnaCategoriaAdOggetto(idOggetto, idCategoria);
     }
 }

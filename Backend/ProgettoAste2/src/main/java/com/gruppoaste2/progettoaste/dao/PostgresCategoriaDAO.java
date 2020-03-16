@@ -23,35 +23,35 @@ public class PostgresCategoriaDAO implements CategoriaDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-
     @Override
     public UUID aggiungiCategoria(UUID idCategoria, CategoriaModel categoria) {
         final String sql = "INSERT INTO categoria(id, nome) " +
                 "VALUES(?, ?)";
-        jdbcTemplate.update(sql, idCategoria, categoria.getNome());
+        if(jdbcTemplate.update(sql, idCategoria, categoria.getNome()) == 0)
+            return null;
         return idCategoria;
     }
 
     @Override
     public int assegnaCategoriaAdOggetto(UUID idOggetto, UUID idCategoria) {
-        final String sql = "INSERT INTO categoria_oggetto(id_oggetto,id_categoria) VALUES(?,?)";
+        final String sql = "INSERT INTO categoria_oggetto(id_oggetto, id_categoria) " +
+                "VALUES(?, ?)";
         return jdbcTemplate.update(sql, idOggetto, idCategoria);
-
     }
 
     @Override
-    public int eliminaCategoria(UUID id) {
+    public int eliminaCategoria(UUID idCategoria) {
         final String sql = "DELETE FROM categoria WHERE id = ?";
-        return jdbcTemplate.update(sql, id);
+        return jdbcTemplate.update(sql, idCategoria);
     }
 
     @Override
-    public Optional<CategoriaModel> trovaCategoria(UUID id) {
+    public Optional<CategoriaModel> trovaCategoria(UUID idCategoria) {
         final String sql = "SELECT * FROM categoria WHERE id = ?";
         List<CategoriaModel> results = jdbcTemplate.query(sql,
                 (resultSet, i) -> makeCategoriaFromResultSet(resultSet),
-                id);
-        CategoriaModel returnable = (results.isEmpty())? null : results.get(0);
+                idCategoria);
+        CategoriaModel returnable = (results.isEmpty()) ? null : results.get(0);
         return Optional.ofNullable(returnable);
     }
 
@@ -89,20 +89,20 @@ public class PostgresCategoriaDAO implements CategoriaDAO {
     }
 
     @Override
-    public int aggiornaCategoria(UUID id, CategoriaModel categoriaAggiornata) {
-        final String sql = "UPDATE categoria SET nome = ?";
-        return jdbcTemplate.update(sql, categoriaAggiornata.getNome());
+    public int aggiornaCategoria(UUID idCategoria, CategoriaModel categoriaAggiornata) {
+        final String sql = "UPDATE categoria SET nome = ? WHERE id = ?";
+        return jdbcTemplate.update(sql, categoriaAggiornata.getNome(), idCategoria);
     }
 
     private CategoriaModel makeCategoriaFromResultSet(ResultSet resultSet) throws SQLException {
-        UUID id = UUID.fromString(resultSet.getString("id"));
+        UUID idCategoria = UUID.fromString(resultSet.getString("id"));
         String nome = resultSet.getString("nome");
-        return new CategoriaModel(id, Collections.emptyMap(), nome);
+        return new CategoriaModel(idCategoria, nome, Collections.emptyMap());
     }
 
     private AttributoModel makeAttributoFromResultSet(ResultSet resultSet) throws SQLException {
-        UUID id = UUID.fromString(resultSet.getString("id"));
+        UUID idAttributo = UUID.fromString(resultSet.getString("id"));
         String nome = resultSet.getString("nome");
-        return new AttributoModel(id, nome);
+        return new AttributoModel(idAttributo, nome, null);
     }
 }

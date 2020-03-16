@@ -19,16 +19,16 @@ public class ConfigurazioneService {
         this.configurazioneDAO = configurazioneDAO;
     }
 
-    public int inserisciConfigurazione(ConfigurazioneModel configurazioneModel) {
+    public UUID inserisciConfigurazione(ConfigurazioneModel configurazioneModel) {
         return configurazioneDAO.inserisciConfigurazione(configurazioneModel);
     }
 
-    public int eliminaConfiguazione(UUID id) {
-        return configurazioneDAO.eliminaConfiguazione(id);
+    public int eliminaConfiguazione(UUID idConfigurazione) {
+        return configurazioneDAO.eliminaConfiguazione(idConfigurazione);
     }
 
-    public Optional<ConfigurazioneModel> trovaConfigurazione(UUID id) {
-        return configurazioneDAO.trovaConfigurazione(id);
+    public Optional<ConfigurazioneModel> trovaConfigurazione(UUID idConfigurazione) {
+        return configurazioneDAO.trovaConfigurazione(idConfigurazione);
     }
 
     public List<ConfigurazioneModel> trovaConfigurazioni() {
