@@ -1,5 +1,6 @@
 package com.gruppoaste2.progettoaste.dao;
 
+import com.gruppoaste2.progettoaste.model.CategoriaModel;
 import com.gruppoaste2.progettoaste.model.OggettoModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -35,9 +36,12 @@ public class PostgresOggettoDAO implements OggettoDAO {
             "JOIN asta AS a ON o.id_asta = a.id ";
     private final String WHERE_ID_ASTA_MANAGER = "WHERE a.id_asta_manager = ?";
 
+    private final CategoriaDAO categoriaDAO;
+
     @Autowired
-    public PostgresOggettoDAO(JdbcTemplate jdbcTemplate) {
+    public PostgresOggettoDAO(JdbcTemplate jdbcTemplate, CategoriaDAO categoriaDAO) {
         this.jdbcTemplate = jdbcTemplate;
+        this.categoriaDAO = categoriaDAO;
     }
 
     @Override
@@ -208,7 +212,8 @@ public class PostgresOggettoDAO implements OggettoDAO {
         String nome = resultSet.getString("nome");
         String descrizione = resultSet.getString("descrizione");
         String urlImmagine = resultSet.getString("url_immagine");
-        return new OggettoModel(id, nome, descrizione, urlImmagine);
+        List<CategoriaModel> categorie = categoriaDAO.trovaCategorieOggetto(id);
+        return new OggettoModel(id, nome, descrizione, urlImmagine, categorie);
     }
 
     private static Properties readProperties() {
