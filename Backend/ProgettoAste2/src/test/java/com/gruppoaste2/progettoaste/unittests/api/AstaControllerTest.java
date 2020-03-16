@@ -60,7 +60,7 @@ class AstaControllerTest {
         UUID idut2 = UUID.randomUUID();
         List<OggettoModel> oggetti = new ArrayList<>();
         List<OffertaModel> offerte = new ArrayList<>();
-        OggettoModel ogg1 = new OggettoModel(idOgge, "nome", "descrizione", "url");
+        OggettoModel ogg1 = new OggettoModel(idOgge, "nome", "descrizione", "url", Collections.emptyList()); // todo andre empty list
         oggetti.add(ogg1);
         OffertaModel off1 = new OffertaModel(idoff, 1, Timestamp.valueOf(LocalDateTime.now()),
                 new UtenteRegistratoModel(idut2, "username1", "email1", "+39339025613",
@@ -151,7 +151,7 @@ class AstaControllerTest {
         UUID idut2 = UUID.randomUUID();
         List<OggettoModel> oggetti = new ArrayList<>();
         List<OffertaModel> offerte = new ArrayList<>();
-        OggettoModel ogg1 = new OggettoModel(idOgge, "nome", "descrizione", "url");
+        OggettoModel ogg1 = new OggettoModel(idOgge, "nome", "descrizione", "url", Collections.emptyList()); // todo andre emty categorie
         oggetti.add(ogg1);
         OffertaModel off1 = new OffertaModel(idoff, 1, Timestamp.valueOf(LocalDateTime.now()),
                 new UtenteRegistratoModel(idut2, "username1", "email1", "+39339025613",

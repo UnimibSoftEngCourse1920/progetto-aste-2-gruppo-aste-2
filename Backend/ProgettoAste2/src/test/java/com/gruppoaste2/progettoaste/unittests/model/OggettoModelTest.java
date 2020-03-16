@@ -1,8 +1,13 @@
 package com.gruppoaste2.progettoaste.unittests.model;
 
+import com.gruppoaste2.progettoaste.model.CategoriaModel;
 import com.gruppoaste2.progettoaste.model.OggettoModel;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,8 +22,9 @@ class OggettoModelTest {
         String nome = "nome";
         String descrizione = "descrizione";
         String urlImmagine = "urlImmagine";
-        OggettoModel oggetto = new OggettoModel(id, nome, descrizione, urlImmagine);
-
+        List<CategoriaModel> categorie = Collections.emptyList();
+        OggettoModel oggetto = new OggettoModel(id, nome, descrizione, urlImmagine, categorie);
+//  todo andre la roba empty magari sostituisci con un test piu serio
         assertEquals(id, oggetto.getId(),
                 "Getter oggetto.getId() should return UUID: " + id);
         assertEquals(nome, oggetto.getNome(),
