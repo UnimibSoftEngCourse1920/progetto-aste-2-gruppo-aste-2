@@ -40,5 +40,5 @@ public interface AstaDAO {
 
     int aggiornaAsta(UUID id, AstaModel astaAggiornata);
 
-    float rinunciaAsta(UUID idAsta, UUID idUtente);
+    Float rinunciaAsta(UUID idAsta, UUID idUtente);
 }
