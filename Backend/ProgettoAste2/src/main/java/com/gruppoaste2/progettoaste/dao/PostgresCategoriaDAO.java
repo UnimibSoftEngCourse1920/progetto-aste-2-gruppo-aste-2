@@ -25,10 +25,18 @@ public class PostgresCategoriaDAO implements CategoriaDAO {
 
 
     @Override
-    public int aggiungiCategoria(UUID idCategoria, CategoriaModel categoria) {
+    public UUID aggiungiCategoria(UUID idCategoria, CategoriaModel categoria) {
         final String sql = "INSERT INTO categoria(id, nome) " +
                 "VALUES(?, ?)";
-        return jdbcTemplate.update(sql, idCategoria, categoria.getNome());
+        jdbcTemplate.update(sql, idCategoria, categoria.getNome());
+        return idCategoria;
+    }
+
+    @Override
+    public int assegnaCategoriaAdOggetto(UUID idOggetto, UUID idCategoria) {
+        final String sql = "INSERT INTO categoria_oggetto(id_oggetto,id_categoria) VALUES(?,?)";
+        return jdbcTemplate.update(sql, idOggetto, idCategoria);
+
     }
 
     @Override
@@ -66,7 +74,7 @@ public class PostgresCategoriaDAO implements CategoriaDAO {
     public List<CategoriaModel> trovaCategorieOggetto(UUID idOggetto) {
         final String sql = "SELECT c.id, c.nome " +
                 "FROM categoria_oggetto AS co, categoria AS c " +
-                "WHERE co.id_oggetto = ? AND c.id_categoria = c.id";
+                "WHERE co.id_oggetto = ? AND c.id = c.id";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeCategoriaFromResultSet(resultSet),
                 idOggetto);

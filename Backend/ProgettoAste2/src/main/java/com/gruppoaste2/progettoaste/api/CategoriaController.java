@@ -21,9 +21,14 @@ public class CategoriaController {
     }
 
     @PostMapping("/aggiungi")
-    public int aggiungiCategoria(@RequestBody CategoriaModel categoria)
+    public UUID aggiungiCategoria(@RequestBody CategoriaModel categoria)
     {
         return categoriaService.aggiungiCategoria(categoria);
+    }
+
+    @GetMapping("/assegna/{idOggetto}/{idCategoria}")
+    public int assegnaCategoriaAdOggetto(@PathVariable("idOggetto") UUID idOggetto, @PathVariable("idCategoria") UUID idCategoria) {
+        return categoriaService.assegnaCategoriaAdOggetto(idOggetto, idCategoria);
     }
 
     @GetMapping(path = "/elimina/{id}")

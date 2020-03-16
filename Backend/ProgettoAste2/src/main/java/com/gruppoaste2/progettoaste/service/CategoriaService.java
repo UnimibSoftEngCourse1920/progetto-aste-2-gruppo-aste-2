@@ -21,9 +21,13 @@ public class CategoriaService {
         this.categoriaDAO = categoriaDAO;
     }
 
-    public int aggiungiCategoria(CategoriaModel categoria){
+    public UUID aggiungiCategoria(CategoriaModel categoria){
         return categoriaDAO.aggiungiCategoria(categoria);
 
+    }
+
+    public int assegnaCategoriaAdOggetto(UUID idOggetto, UUID idCategoria) {
+        return categoriaDAO.assegnaCategoriaAdOggetto(idOggetto, idCategoria);
     }
 
     public int eliminaCategoria(UUID id){

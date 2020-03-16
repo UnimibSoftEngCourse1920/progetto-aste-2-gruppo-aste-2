@@ -9,13 +9,15 @@ import java.util.UUID;
 
 public interface CategoriaDAO {
 
-    int aggiungiCategoria(UUID idCategoria, CategoriaModel categoria);
+    UUID aggiungiCategoria(UUID idCategoria, CategoriaModel categoria);
 
-    default int aggiungiCategoria(CategoriaModel categoria)
+    default UUID aggiungiCategoria(CategoriaModel categoria)
     {
         UUID id = UUID.randomUUID();
         return aggiungiCategoria(id, categoria);
     }
+
+    int assegnaCategoriaAdOggetto(UUID idOggetto, UUID idCategoria);
 
     int eliminaCategoria(UUID id);
 

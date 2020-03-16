@@ -102,7 +102,7 @@
         <b-form-group label="Categorie: ">
           <b-form-tags
             input-id="tags-basic"
-            v-model="form.categorie"
+            v-model="form.categorie[i - 1]"
             class="mb-2"
             placeholder="Aggiungi delle categorie"
           ></b-form-tags>
@@ -227,11 +227,29 @@ export default {
                 descrizione: this.form.descrizioneOggetti[i],
                 urlImmagine: this.form.urlOggetti[i]
               })
-            })
-              .then(response => response.json())
-              .then(response => {
-                console.log(response);
-              });
+            }).then(response => {
+              if (response.status === 200) {
+                for (i = 0; i < this.form.numeroOggetti; i++) {
+                  var j;
+                  for (j = 0; j < this.form.categorie[i].length; j++) {
+                    fetch("http://localhost:8080/api/categoria/aggiungi/", {
+                      method: "post",
+                      headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json"
+                      },
+                      body: JSON.stringify({
+                        nome: this.form.categorie[i][j]
+                      })
+                    })
+                      .then(response => response.json())
+                      .then(response => {
+                        console.log(response);
+                      });
+                  }
+                }
+              }
+            });
           }
         });
     },
