@@ -8,9 +8,9 @@ import java.util.UUID;
 
 public interface AstaDAO {
 
-    int aggiungiAsta(UUID id, AstaModel asta);
+    UUID aggiungiAsta(UUID id, AstaModel asta);
 
-    default int aggiungiAsta(AstaModel asta)
+    default UUID aggiungiAsta(AstaModel asta)
     {
         UUID id = UUID.randomUUID();
         return aggiungiAsta(id, asta);

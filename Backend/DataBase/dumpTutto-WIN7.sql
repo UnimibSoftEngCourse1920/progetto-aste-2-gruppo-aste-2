@@ -313,6 +313,19 @@ Provolone	93fdad81-6724-46d0-9c90-c6b237a908d7	parmigiano@brie.com	boh
 --
 
 COPY public.asta (id, id_asta_manager, id_configurazione, data_inizio, data_fine, durata_timeslot, tipo, prezzo_partenza, rifiutata, criterio_terminazione) FROM stdin;
+0b0f9e7b-425b-4673-96f1-a4eaf28eb19f	b505c3b6-7769-4c6f-a000-80e1615b77a8	5455bc99-8fe9-4d45-9347-4c0aa180556c	2020-02-02 01:00:00	\N	06:00:00	busta_chiusa	0	f	max_timeslot
+af903c19-baa2-48ac-9173-cca1307ff0db	b505c3b6-7769-4c6f-a000-80e1615b77a8	5455bc99-8fe9-4d45-9347-4c0aa180556c	2020-03-16 11:31:43.7	\N	00:11:06	busta_chiusa	12	f	max_timeslot
+f9f07cd3-f580-46c8-b18b-a667208e6101	b505c3b6-7769-4c6f-a000-80e1615b77a8	5455bc99-8fe9-4d45-9347-4c0aa180556c	2020-03-16 11:35:29.5	\N	00:11:06	busta_chiusa	666	f	esaurimento_timeslot
+97a54467-1b84-438c-a7ba-b1bee7550aaa	b505c3b6-7769-4c6f-a000-80e1615b77a8	5455bc99-8fe9-4d45-9347-4c0aa180556c	2020-03-16 11:37:24.4	\N	00:11:06	superamento_immediato	3432	f	esaurimento_timeslot
+dee0bdfe-5236-4b17-b56d-62a0bdc12b01	b505c3b6-7769-4c6f-a000-80e1615b77a8	5455bc99-8fe9-4d45-9347-4c0aa180556c	2020-03-16 11:37:59.1	\N	00:11:06	busta_chiusa	2	f	max_timeslot
+ac673f65-2093-473d-8bc3-4cf84ded8141	b505c3b6-7769-4c6f-a000-80e1615b77a8	5455bc99-8fe9-4d45-9347-4c0aa180556c	2020-03-16 11:48:10	\N	00:11:06	busta_chiusa	42	f	max_timeslot
+72abfb24-6f56-40c6-afd4-ecf7f5880a68	b505c3b6-7769-4c6f-a000-80e1615b77a8	5455bc99-8fe9-4d45-9347-4c0aa180556c	2020-03-16 11:49:48.1	\N	00:11:06	superamento_immediato	555	f	max_timeslot
+f5756e7f-2552-41c3-90df-cf4fe781fd38	b505c3b6-7769-4c6f-a000-80e1615b77a8	5455bc99-8fe9-4d45-9347-4c0aa180556c	2020-03-16 11:51:33.8	\N	00:11:06	busta_chiusa	333	f	max_timeslot
+8cbc5444-882f-49e1-9122-97b4fb187a4d	b505c3b6-7769-4c6f-a000-80e1615b77a8	5455bc99-8fe9-4d45-9347-4c0aa180556c	2020-03-16 11:55:00.7	\N	00:11:06	busta_chiusa	999	f	esaurimento_timeslot
+3b76e391-abec-4e3a-865f-3480dda5d1ed	b505c3b6-7769-4c6f-a000-80e1615b77a8	5455bc99-8fe9-4d45-9347-4c0aa180556c	2020-03-16 12:05:59.5	\N	00:11:06	busta_chiusa	2	f	max_timeslot
+5716f564-2c91-4613-a413-eba54847fe05	b505c3b6-7769-4c6f-a000-80e1615b77a8	5455bc99-8fe9-4d45-9347-4c0aa180556c	2020-03-16 12:07:46.4	\N	00:11:06	busta_chiusa	456	f	esaurimento_timeslot
+14f9525e-4282-4395-82c2-2935c0fcef21	b505c3b6-7769-4c6f-a000-80e1615b77a8	5455bc99-8fe9-4d45-9347-4c0aa180556c	2020-03-16 12:08:46	\N	00:11:06	busta_chiusa	456	f	esaurimento_timeslot
+105b00d9-8fd1-4cda-8003-f443041ff483	b505c3b6-7769-4c6f-a000-80e1615b77a8	5455bc99-8fe9-4d45-9347-4c0aa180556c	2020-03-16 12:09:33.4	\N	00:11:06	busta_chiusa	456	f	esaurimento_timeslot
 \.
 
 
@@ -372,6 +385,10 @@ COPY public.offerta (id_offerente, id_asta, data_offerta, credito_offerto, id) F
 --
 
 COPY public.oggetto (id, id_asta, nome, descrizione, url_immagine) FROM stdin;
+1aa8dcab-8033-43fe-89c6-dd6697533287	5716f564-2c91-4613-a413-eba54847fe05	Divano	Un bellissimo divano	https://www.youtube.com/watch?v=m1mLNJU0zAs
+c6e7b09f-6cb2-44df-a56d-9de2096864f6	14f9525e-4282-4395-82c2-2935c0fcef21	Lampada	Una lampada stratosferica	https://www.youtube.com/watch?v=m1mLNJU0zAs
+5cb0a4de-686e-43aa-a970-4d34f79433d3	105b00d9-8fd1-4cda-8003-f443041ff483	Divano	Un bellissimo divano	https://www.youtube.com/watch?v=m1mLNJU0zAs
+0ed666d6-270d-4cb3-9fb7-f4d449e27590	105b00d9-8fd1-4cda-8003-f443041ff483	Lampada	Una lampada stratosferica	https://www.youtube.com/watch?v=m1mLNJU0zAs
 \.
 
 
@@ -466,14 +483,6 @@ ALTER TABLE ONLY public.configurazione
 
 ALTER TABLE ONLY public.amministratore
     ADD CONSTRAINT email UNIQUE (email);
-
-
---
--- Name: oggetto nome; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.oggetto
-    ADD CONSTRAINT nome UNIQUE (nome);
 
 
 --
@@ -667,61 +676,6 @@ SET check_function_bodies = false;
 SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
-
---
--- PostgreSQL database dump complete
---
-
---
--- Database "limesurveydb" dump
---
-
---
--- PostgreSQL database dump
---
-
--- Dumped from database version 12.2
--- Dumped by pg_dump version 12.2
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
-
---
--- Name: limesurveydb; Type: DATABASE; Schema: -; Owner: postgres
---
-
-CREATE DATABASE limesurveydb WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'en_US.utf8' LC_CTYPE = 'en_US.utf8';
-
-
-ALTER DATABASE limesurveydb OWNER TO postgres;
-
-\connect limesurveydb
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
-
---
--- Name: DATABASE limesurveydb; Type: ACL; Schema: -; Owner: postgres
---
-
-GRANT ALL ON DATABASE limesurveydb TO lime;
-
 
 --
 -- PostgreSQL database dump complete

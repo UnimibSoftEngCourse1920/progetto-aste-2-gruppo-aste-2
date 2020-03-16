@@ -33,15 +33,16 @@ public class PostgresAstaDAO implements AstaDAO {
     }
 
     @Override
-    public int aggiungiAsta(UUID id, AstaModel asta) {
+    public UUID aggiungiAsta(UUID id, AstaModel asta) {
         final String sql = "INSERT INTO asta(id, id_asta_manager, id_configurazione, tipo, prezzo_partenza, " +
                 "data_inizio, data_fine, durata_timeslot, rifiutata, criterio_terminazione) " +
                 "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?::tipoterminazioneasta)";
-        return jdbcTemplate.update(sql,
+        jdbcTemplate.update(sql,
                 id, asta.getAstaManager().getId(), asta.getConfigurazione().getId(), asta.getInfoAsta().getTipo(),
                 asta.getInfoAsta().getPrezzoPartenza(), asta.getInfoAsta().getDataInizio(),
                 asta.getInfoAsta().getDataFine(), asta.getInfoAsta().getDurataTimeSlot(),
                 asta.getInfoAsta().isRifiutata(), asta.getInfoAsta().getCriterioTerminazione());
+        return id;
     }
 
     @Override

@@ -20,7 +20,7 @@ public class AstaService {
         this.astaDAO = astaDAO;
     }
 
-    public int aggiungiAsta(AstaModel astaModel) {
+    public UUID aggiungiAsta(AstaModel astaModel) {
         return astaDAO.aggiungiAsta(astaModel);
     }
 

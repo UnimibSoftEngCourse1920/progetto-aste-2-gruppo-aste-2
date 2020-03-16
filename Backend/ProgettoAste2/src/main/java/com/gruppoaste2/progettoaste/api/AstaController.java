@@ -20,7 +20,7 @@ public class AstaController {
     }
 
     @PostMapping("/aggiungi")
-    public int aggiungiAsta(@RequestBody AstaModel asta)
+    public UUID aggiungiAsta(@RequestBody AstaModel asta)
     {
         return astaService.aggiungiAsta(asta);
     }
