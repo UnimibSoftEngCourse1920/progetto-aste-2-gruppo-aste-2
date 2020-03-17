@@ -30,7 +30,7 @@ public class PostgresCategoriaDAO implements CategoriaDAO {
             return null;
 
         List<AttributoModel> attributi = categoria.getAttributi();
-        if(!attributi.isEmpty())
+        if(attributi != null)
             for(AttributoModel attributo : attributi)
                 if(aggiungiAttributoCategoria(idCategoria, attributo) == null)
                     return null;
@@ -119,7 +119,7 @@ public class PostgresCategoriaDAO implements CategoriaDAO {
             return 0;
 
         List<AttributoModel> attributi = trovaAttributiCategoria(idCategoria);
-        if(!attributi.isEmpty())
+        if(attributi != null)
             for(AttributoModel attributo : attributi)
                 if(assegnaValoreAttributoAdOggetto(idOggetto, attributo) == 0)
                     return 0;
@@ -130,7 +130,7 @@ public class PostgresCategoriaDAO implements CategoriaDAO {
     @Override
     public int rimuoviCategoriaDaOggetto(UUID idOggetto, UUID idCategoria) {
         List<AttributoModel> attributi = trovaAttributiCategoria(idCategoria);
-        if(!attributi.isEmpty())
+        if(attributi != null)
             for(AttributoModel attributo : attributi)
                 if(rimuoviValoreAttributoDaOggetto(idOggetto, attributo.getId()) == 0)
                     return 0;

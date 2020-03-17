@@ -51,7 +51,7 @@ public class PostgresOggettoDAO implements OggettoDAO {
             return null;
 
         List<CategoriaModel> categorie = oggetto.getCategorie();
-        if(!categorie.isEmpty())
+        if(categorie != null)
             for(CategoriaModel categoria : categorie) {
                 UUID idCategoria;
                 if(categoria.getId() == null)
@@ -71,7 +71,7 @@ public class PostgresOggettoDAO implements OggettoDAO {
             return 0;
 
         List<CategoriaModel> categorie = categoriaDAO.trovaCategorieOggetto(idOggetto);
-        if(!categorie.isEmpty())
+        if(categorie != null)
             for(CategoriaModel categoria : categorie)
                 if(categoriaDAO.rimuoviCategoriaDaOggetto(idOggetto, categoria.getId()) == 0)
                     return 0;

@@ -46,7 +46,7 @@ public class PostgresAstaDAO implements AstaDAO {
             return null;
 
         List<OggettoModel> oggetti = asta.getOggetti();
-        if(!oggetti.isEmpty())
+        if(oggetti != null)
             for(OggettoModel oggetto : asta.getOggetti())
                 if(oggettoDAO.inserisciOggetto(idAsta, oggetto) == null)
                     return null;
@@ -61,13 +61,13 @@ public class PostgresAstaDAO implements AstaDAO {
             return 0;
 
         List<OggettoModel> oggetti = asta.get().getOggetti();
-        if(!oggetti.isEmpty())
+        if(oggetti != null)
             for(OggettoModel oggetto : oggetti)
                 if (oggettoDAO.eliminaOggetto(oggetto.getId()) == 0)
                     return 0;
 
         List<OffertaModel> offerte = asta.get().getOfferte();
-        if(!offerte.isEmpty())
+        if(offerte != null)
             for(OffertaModel offerta : offerte)
                 if(offertaDAO.eliminaOfferta(offerta.getId()) == 0)
                     return 0;
