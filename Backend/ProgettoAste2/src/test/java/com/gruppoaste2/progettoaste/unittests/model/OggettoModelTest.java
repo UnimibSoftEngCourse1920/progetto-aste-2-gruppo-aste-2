@@ -28,9 +28,8 @@ class OggettoModelTest {
         AttributoModel attributo = new AttributoModel(idAttributo, nomeAttributo, valore);
         List<AttributoModel> attributi = Collections.singletonList(attributo);
 
-        UUID idCategoria = UUID.randomUUID();
-        String nomeCategoria = "nomeCategoria";
-        CategoriaModel categoria = new CategoriaModel(idCategoria, nomeCategoria, attributi);
+        String idCategoria = "idCategoria";
+        CategoriaModel categoria = new CategoriaModel(idCategoria, attributi);
         List<CategoriaModel> categorie = Collections.singletonList(categoria);
 
         OggettoModel oggetto = new OggettoModel(idOggetto, nomeOggetto, descrizione, urlImmagine, categorie);

@@ -23,23 +23,23 @@ public class PostgresCategoriaDAO implements CategoriaDAO {
     }
 
     @Override
-    public UUID aggiungiCategoria(UUID idCategoria, CategoriaModel categoria) {
-        final String sql = "INSERT INTO categoria(id, nome) " +
+    public String aggiungiCategoria(CategoriaModel categoria) {
+        final String sql = "INSERT INTO categoria(id) " +
                 "VALUES(?, ?)";
-        if(jdbcTemplate.update(sql, idCategoria, categoria.getNome()) == 0)
+        if(jdbcTemplate.update(sql, categoria.getId()) == 0)
             return null;
 
         List<AttributoModel> attributi = categoria.getAttributi();
         if(attributi != null)
             for(AttributoModel attributo : attributi)
-                if(aggiungiAttributoCategoria(idCategoria, attributo) == null)
+                if(aggiungiAttributoCategoria(categoria.getId(), attributo) == null)
                     return null;
 
-        return idCategoria;
+        return categoria.getId();
     }
 
     @Override
-    public UUID aggiungiAttributoCategoria(UUID idAttributo, UUID idCategoria, AttributoModel attributo) {
+    public UUID aggiungiAttributoCategoria(UUID idAttributo, String idCategoria, AttributoModel attributo) {
         final String sql = "INSERT INTO attributo(id, id_categoria, nome) " +
                 "VALUES(?, ?, ?)";
         if(jdbcTemplate.update(sql, idAttributo, idCategoria, attributo.getNome()) == 0)
@@ -48,7 +48,7 @@ public class PostgresCategoriaDAO implements CategoriaDAO {
     }
 
     @Override
-    public int eliminaCategoria(UUID idCategoria) {
+    public int eliminaCategoria(String idCategoria) {
         if(eliminaAttributiCategoria(idCategoria) == 0)
             return 0;
 
@@ -57,13 +57,13 @@ public class PostgresCategoriaDAO implements CategoriaDAO {
     }
 
     @Override
-    public int eliminaAttributiCategoria(UUID idCategoria) {
+    public int eliminaAttributiCategoria(String idCategoria) {
         final String sql = "DELETE FROM attributo WHERE id_categoria = ?";
         return jdbcTemplate.update(sql, idCategoria);
     }
 
     @Override
-    public Optional<CategoriaModel> trovaCategoria(UUID idCategoria) {
+    public Optional<CategoriaModel> trovaCategoria(String idCategoria) {
         final String sql = "SELECT * FROM categoria WHERE id = ?";
         List<CategoriaModel> results = jdbcTemplate.query(sql,
                 (resultSet, i) -> makeCategoriaFromResultSet(resultSet),
@@ -80,7 +80,7 @@ public class PostgresCategoriaDAO implements CategoriaDAO {
     }
 
     @Override
-    public List<AttributoModel> trovaAttributiCategoria(UUID idCategoria) {
+    public List<AttributoModel> trovaAttributiCategoria(String idCategoria) {
         final String sql = "SELECT * FROM attributo WHERE id_categoria = ?";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeAttributoFromResultSet(resultSet),
@@ -106,13 +106,20 @@ public class PostgresCategoriaDAO implements CategoriaDAO {
     }
 
     @Override
-    public int aggiornaCategoria(UUID idCategoria, CategoriaModel categoriaAggiornata) {
-        final String sql = "UPDATE categoria SET nome = ? WHERE id = ?";
-        return jdbcTemplate.update(sql, categoriaAggiornata.getNome(), idCategoria);
+    public int aggiornaCategoria(String idCategoria, CategoriaModel categoriaAggiornata) {
+        final String sql = "UPDATE categoria SET id = ? WHERE id = ?";
+        return jdbcTemplate.update(sql, categoriaAggiornata.getId(), idCategoria);
     }
 
     @Override
-    public int assegnaCategoriaAdOggetto(UUID idOggetto, UUID idCategoria) {
+    public boolean controllaCategoriaEsiste(CategoriaModel categoria) {
+        final String sql = "SELECT EXISTS" +
+                "(SELECT 1 FROM categoria WHERE id = ?)";
+        return jdbcTemplate.queryForObject(sql, Boolean.class, categoria.getId());
+    }
+
+    @Override
+    public int assegnaCategoriaAdOggetto(UUID idOggetto, String idCategoria) {
         final String sql = "INSERT INTO categoria_oggetto(id_oggetto, id_categoria) " +
                 "VALUES(?, ?)";
         if(jdbcTemplate.update(sql, idOggetto, idCategoria) == 0)
@@ -128,7 +135,7 @@ public class PostgresCategoriaDAO implements CategoriaDAO {
     }
 
     @Override
-    public int rimuoviCategoriaDaOggetto(UUID idOggetto, UUID idCategoria) {
+    public int rimuoviCategoriaDaOggetto(UUID idOggetto, String idCategoria) {
         List<AttributoModel> attributi = trovaAttributiCategoria(idCategoria);
         if(attributi != null)
             for(AttributoModel attributo : attributi)
@@ -153,10 +160,9 @@ public class PostgresCategoriaDAO implements CategoriaDAO {
     }
 
     private CategoriaModel makeCategoriaFromResultSet(ResultSet resultSet) throws SQLException {
-        UUID idCategoria = UUID.fromString(resultSet.getString("id"));
-        String nome = resultSet.getString("nome");
+        String idCategoria = resultSet.getString("id");
         List<AttributoModel> attributi = trovaAttributiCategoria(idCategoria);
-        return new CategoriaModel(idCategoria, nome, attributi);
+        return new CategoriaModel(idCategoria, attributi);
     }
 
     private AttributoModel makeAttributoFromResultSet(ResultSet resultSet) throws SQLException {
