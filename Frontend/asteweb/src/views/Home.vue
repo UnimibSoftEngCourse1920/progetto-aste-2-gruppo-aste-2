@@ -1,8 +1,10 @@
 <template>
   <div class="home">
     <div class="search-wrapper">
-      <label>Ricerca:</label>
-      <input type="text" v-model="search" placeholder="Search" />
+      <label>Ricerca per nome:</label>
+      <input type="text" v-model="searchNome" placeholder="Search" />
+      <label>Ricerca per descrizione:</label>
+      <input type="text" v-model="searchDescrione" placeholder="Search" />
     </div>
     <li v-for="asta in filteredList()" :key="asta.id">
       <b-card :img-src="asta.oggetti[0].urlImmagine" img-alt="Card image" img-left class="mb-3">
@@ -33,16 +35,21 @@ export default {
   data() {
     return {
       aste: [],
-      search: ""
+      searchNome: "",
+      searchDescrione:""
     };
   },
   methods: {
     filteredList() {
-      if (this.search.length > 0)
-        return this.aste.filter(asta => {
-          return asta.oggetti[0].nome.includes(this.search);
-        });
-      else return this.aste;
+        if (this.searchNome.length > 0 && this.searchDescrione==0)
+          return this.aste.filter(asta => {
+            return asta.oggetti[0].nome.includes(this.searchNome);
+          });
+         if (this.searchDescrione.length > 0 && this.searchNome==0)
+          return this.aste.filter(asta => {
+            return asta.oggetti[0].descrizione.includes(this.searchDescrione);
+          });
+         else return this.aste;
     },
     trovaOffertaMaggiore(asta) {
       let vm = this;
