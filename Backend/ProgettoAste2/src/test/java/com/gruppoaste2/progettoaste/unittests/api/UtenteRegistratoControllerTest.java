@@ -37,12 +37,12 @@ class UtenteRegistratoControllerTest {
 
     // Test inserisciUtenteRegistrato
     @Test
-    void whenInserisciUtenteRegistrato_givenAlreadyExistingUtenteRegistrato_thenReturnJsonNumber0() throws Exception {
+    void whenInserisciUtenteRegistrato_givenAlreadyExistingUtenteRegistrato_thenReturnEmptyJson() throws Exception {
         UtenteRegistratoModel utenteRegistrato =
                 new UtenteRegistratoModel(null, "username", "email", "password",
                         "0", 0.0f, false, false);
 
-        given(utenteRegistratoService.aggiungiUtenteRegistrato(refEq(utenteRegistrato))).willReturn(0);
+        given(utenteRegistratoService.aggiungiUtenteRegistrato(refEq(utenteRegistrato))).willReturn(null);
 
         mockMvc.perform(post("/api/utenteregistrato/aggiungi")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -50,17 +50,19 @@ class UtenteRegistratoControllerTest {
                 .content(new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL)
                         .writeValueAsString(utenteRegistrato)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isNumber())
-                .andExpect(jsonPath("$").value(0));
+                .andExpect(jsonPath("$").doesNotExist());
     }
 
     @Test
-    void whenInserisciUtenteRegistrato_givenNonExistingUtenteRegistrato_thenReturnJsonNumber1() throws Exception {
+    void whenInserisciUtenteRegistrato_givenNonExistingUtenteRegistrato_thenReturnJsonStringIdUtenteRegistrato()
+            throws Exception {
         UtenteRegistratoModel utenteRegistrato =
                 new UtenteRegistratoModel(null, "username", "email", "password",
                         "0", 0.0f, false, false);
 
-        given(utenteRegistratoService.aggiungiUtenteRegistrato(refEq(utenteRegistrato))).willReturn(1);
+        UUID idUtenteRegistrato = UUID.randomUUID();
+
+        given(utenteRegistratoService.aggiungiUtenteRegistrato(refEq(utenteRegistrato))).willReturn(idUtenteRegistrato);
 
         mockMvc.perform(post("/api/utenteregistrato/aggiungi")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -68,20 +70,20 @@ class UtenteRegistratoControllerTest {
                 .content(new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL)
                         .writeValueAsString(utenteRegistrato)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isNumber())
-                .andExpect(jsonPath("$").value(1));
+                .andExpect(jsonPath("$").isString())
+                .andExpect(jsonPath("$").value(idUtenteRegistrato.toString()));
     }
 
     // Test trovaUtenteRegistrato
     @Test
     void whenTrovaUtenteRegistrato_givenNonExistingUtenteRegistrato_thenReturnEmptyJson() throws Exception {
-        UUID id = UUID.randomUUID();
+        UUID idUtenteRegistrato = UUID.randomUUID();
 
         Optional<UtenteRegistratoModel> utenteRegistratoTrovato = Optional.empty();
 
-        given(utenteRegistratoService.trovaUtenteRegistrato(id)).willReturn(utenteRegistratoTrovato);
+        given(utenteRegistratoService.trovaUtenteRegistrato(idUtenteRegistrato)).willReturn(utenteRegistratoTrovato);
 
-        mockMvc.perform(get("/api/utenteregistrato/" + id)
+        mockMvc.perform(get("/api/utenteregistrato/" + idUtenteRegistrato)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").doesNotExist());
@@ -89,23 +91,24 @@ class UtenteRegistratoControllerTest {
 
     @Test
     void whenUtenteRegistrato_givenExistingUtenteRegistrato_thenReturnJsonMapUtenteRegistrato() throws Exception {
-        UUID id = UUID.randomUUID();
+        UUID idUtenteRegistrato = UUID.randomUUID();
 
         Optional<UtenteRegistratoModel> utenteRegistratoTrovato =
-                Optional.of(new UtenteRegistratoModel(id, "username", "email",
+                Optional.of(new UtenteRegistratoModel(idUtenteRegistrato, "username", "email",
                         "numeroTelefono", "password", 3.14f, false,
                         false));
 
-        given(utenteRegistratoService.trovaUtenteRegistrato(id)).willReturn(utenteRegistratoTrovato);
+        given(utenteRegistratoService.trovaUtenteRegistrato(idUtenteRegistrato)).willReturn(utenteRegistratoTrovato);
 
-        mockMvc.perform(get("/api/utenteregistrato/" + id)
+        mockMvc.perform(get("/api/utenteregistrato/" + idUtenteRegistrato)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isMap())
                 .andExpect(jsonPath("$.id").value(utenteRegistratoTrovato.get().getId().toString()))
                 .andExpect(jsonPath("$.username").value(utenteRegistratoTrovato.get().getUsername()))
                 .andExpect(jsonPath("$.email").value(utenteRegistratoTrovato.get().getEmail()))
-                .andExpect(jsonPath("$.numeroTelefono").value(utenteRegistratoTrovato.get().getNumeroTelefono()))
+                .andExpect(jsonPath("$.numeroTelefono").value(utenteRegistratoTrovato.get()
+                        .getNumeroTelefono()))
                 .andExpect(jsonPath("$.password").value(utenteRegistratoTrovato.get().getPassword()))
                 .andExpect(jsonPath("$.credito").value(utenteRegistratoTrovato.get().getCredito()));
     }
@@ -126,10 +129,10 @@ class UtenteRegistratoControllerTest {
 
     @Test
     void whenTrovaUtentiRegistrati_givenExistingUtentiRegistrati_thenReturnJsonArrayOfMapsUtentiRegistrati() throws Exception {
-        UUID id = UUID.randomUUID();
+        UUID idUtenteRegistrato = UUID.randomUUID();
 
         List<UtenteRegistratoModel> utentiRegistratiTrovati =
-                Collections.singletonList(new UtenteRegistratoModel(id,"username","email",
+                Collections.singletonList(new UtenteRegistratoModel(idUtenteRegistrato,"username","email",
                         "numeroTelefono", "password", 3.14f, false,
                         false));
 
@@ -144,7 +147,8 @@ class UtenteRegistratoControllerTest {
                 .andExpect(jsonPath("$[0].id").value(utentiRegistratiTrovati.get(0).getId().toString()))
                 .andExpect(jsonPath("$[0].username").value(utentiRegistratiTrovati.get(0).getUsername()))
                 .andExpect(jsonPath("$[0].email").value(utentiRegistratiTrovati.get(0).getEmail()))
-                .andExpect(jsonPath("$[0].numeroTelefono").value(utentiRegistratiTrovati.get(0).getNumeroTelefono()))
+                .andExpect(jsonPath("$[0].numeroTelefono").value(utentiRegistratiTrovati.get(0)
+                        .getNumeroTelefono()))
                 .andExpect(jsonPath("$[0].password").value(utentiRegistratiTrovati.get(0).getPassword()))
                 .andExpect(jsonPath("$[0].credito").value(utentiRegistratiTrovati.get(0).getCredito()));
     }
@@ -174,11 +178,11 @@ class UtenteRegistratoControllerTest {
     // Test eliminaUtenteRegistrato
     @Test
     void whenEliminaUtenteRegistrato_givenNonExistingUtenteRegistrato_thenReturnJsonNumber0() throws Exception {
-        UUID id = UUID.randomUUID();
+        UUID idUtenteRegistrato = UUID.randomUUID();
 
-        given(utenteRegistratoService.eliminaUtenteRegistrato(id)).willReturn(0);
+        given(utenteRegistratoService.eliminaUtenteRegistrato(idUtenteRegistrato)).willReturn(0);
 
-        mockMvc.perform(get("/api/utenteregistrato/elimina/" + id.toString())
+        mockMvc.perform(get("/api/utenteregistrato/elimina/" + idUtenteRegistrato)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isNumber())
@@ -187,11 +191,11 @@ class UtenteRegistratoControllerTest {
 
     @Test
     void whenEliminaUtenteRegistrato_givenExistingUtenteRegistrato_thenReturnJsonNumber1() throws Exception {
-        UUID id = UUID.randomUUID();
+        UUID idUtenteRegistrato = UUID.randomUUID();
 
-        given(utenteRegistratoService.eliminaUtenteRegistrato(id)).willReturn(1);
+        given(utenteRegistratoService.eliminaUtenteRegistrato(idUtenteRegistrato)).willReturn(1);
 
-        mockMvc.perform(get("/api/utenteregistrato/elimina/" + id.toString())
+        mockMvc.perform(get("/api/utenteregistrato/elimina/" + idUtenteRegistrato)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isNumber())
