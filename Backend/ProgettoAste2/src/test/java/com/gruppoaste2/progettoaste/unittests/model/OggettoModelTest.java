@@ -1,6 +1,5 @@
 package com.gruppoaste2.progettoaste.unittests.model;
 
-import com.gruppoaste2.progettoaste.model.AttributoModel;
 import com.gruppoaste2.progettoaste.model.CategoriaModel;
 import com.gruppoaste2.progettoaste.model.OggettoModel;
 import org.junit.jupiter.api.DisplayName;
@@ -21,16 +20,7 @@ class OggettoModelTest {
         String nomeOggetto = "nomeOggetto";
         String descrizione = "descrizione";
         String urlImmagine = "urlImmagine";
-
-        UUID idAttributo = UUID.randomUUID();
-        String nomeAttributo = "nomeAttributo";
-        String valore = "valore";
-        AttributoModel attributo = new AttributoModel(idAttributo, nomeAttributo, valore);
-        List<AttributoModel> attributi = Collections.singletonList(attributo);
-
-        String idCategoria = "idCategoria";
-        CategoriaModel categoria = new CategoriaModel(idCategoria, attributi);
-        List<CategoriaModel> categorie = Collections.singletonList(categoria);
+        List<CategoriaModel> categorie = Collections.emptyList();
 
         OggettoModel oggetto = new OggettoModel(idOggetto, nomeOggetto, descrizione, urlImmagine, categorie);
 
@@ -43,6 +33,6 @@ class OggettoModelTest {
         assertEquals(urlImmagine, oggetto.getUrlImmagine(),
                 "Getter oggetto.getUrlImmagine() should return String: \"" + urlImmagine + "\"");
         assertEquals(categorie, oggetto.getCategorie(),
-                "Getter oggetto.getCategorie() should return String: \"" + urlImmagine + "\"");
+                "Getter oggetto.getCategorie() should return categorie");
     }
 }
