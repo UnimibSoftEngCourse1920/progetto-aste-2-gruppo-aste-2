@@ -52,17 +52,17 @@ public class PostgresOggettoDAO implements OggettoDAO {
                 == 0)
             return null;
 
-        for(CategoriaModel categoria : oggetto.getCategorie()) {
-            UUID idCategoria;
-            if(categoria.getId() == null)
-                idCategoria = categoriaDAO.aggiungiCategoria(categoria);
-            else
-                idCategoria = categoria.getId();
-            if(categoriaDAO.assegnaCategoriaAdOggetto(idOggetto, idCategoria) == 0)
-                return null;
-        }
+        if(!oggetto.getCategorie().isEmpty())
+            for(CategoriaModel categoria : oggetto.getCategorie()) {
+                UUID idCategoria;
+                if(categoria.getId() == null)
+                    idCategoria = categoriaDAO.aggiungiCategoria(categoria);
+                else
+                    idCategoria = categoria.getId();
+                if(categoriaDAO.assegnaCategoriaAdOggetto(idOggetto, idCategoria) == 0)
+                    return null;
+            }
         return idOggetto;
-
     }
 
     @Override
