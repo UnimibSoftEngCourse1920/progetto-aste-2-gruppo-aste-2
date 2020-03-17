@@ -19,7 +19,7 @@ public class ProgettoAsteApplication {
 		SpringApplication.run(ProgettoAsteApplication.class, args);
 	}
 
-	@Scheduled(initialDelay = 1000L, fixedDelay = 2000L)
+	@Scheduled(initialDelay = 1000L * 10, fixedDelay = 2000L)
 	public void callUpdate()
 	{
 		scheduledUpdate.aggiornaSituazioneAste();
