@@ -21,21 +21,21 @@ public class UtenteRegistratoController {
     }
 
     @PostMapping("/aggiungi")
-    public int aggiungiUtenteRegistrato(@RequestBody UtenteRegistratoModel utente)
+    public UUID aggiungiUtenteRegistrato(@RequestBody UtenteRegistratoModel utente)
     {
         return utenteRegistratoService.aggiungiUtenteRegistrato(utente);
     }
 
-    @GetMapping(path = "/elimina/{id}")
-    public int eliminaUtenteRegistrato(@PathVariable("id") UUID id)
+    @GetMapping(path = "/elimina/{idUtenteRegistrato}")
+    public int eliminaUtenteRegistrato(@PathVariable("idUtenteRegistrato") UUID idUtenteRegistrato)
     {
-        return utenteRegistratoService.eliminaUtenteRegistrato(id);
+        return utenteRegistratoService.eliminaUtenteRegistrato(idUtenteRegistrato);
     }
 
-    @GetMapping(path = "/{id}")
-    public UtenteRegistratoModel trovaUtenteRegistrato(@PathVariable("id") UUID id)
+    @GetMapping(path = "/{idUtenteRegistrato}")
+    public UtenteRegistratoModel trovaUtenteRegistrato(@PathVariable("idUtenteRegistrato") UUID idUtenteRegistrato)
     {
-        return utenteRegistratoService.trovaUtenteRegistrato(id)
+        return utenteRegistratoService.trovaUtenteRegistrato(idUtenteRegistrato)
                 .orElse(null);
     }
 
@@ -45,11 +45,11 @@ public class UtenteRegistratoController {
         return utenteRegistratoService.trovaUtentiRegistrati();
     }
 
-    @PostMapping(path = "/aggiorna/{id}")
-    public int aggiornaUtenteRegistrato(@PathVariable("id") UUID id,
-                                        @RequestBody UtenteRegistratoModel utenteAggiornato)
+    @PostMapping(path = "/aggiorna/{idUtenteRegistrato}")
+    public int aggiornaUtenteRegistrato(@PathVariable("idUtenteRegistrato") UUID idUtenteRegistrato,
+                                        @RequestBody UtenteRegistratoModel utenteRegistratoAggiornato)
     {
-        return utenteRegistratoService.aggiornaUtenteRegistrato(id, utenteAggiornato);
+        return utenteRegistratoService.aggiornaUtenteRegistrato(idUtenteRegistrato, utenteRegistratoAggiornato);
     }
 
     @GetMapping(path = "/controlla/username/{username}")
@@ -75,26 +75,27 @@ public class UtenteRegistratoController {
         return utenteRegistratoService.ritornaIdUtenteRegistrato(utente);
     }
 
-    @GetMapping(path = "/credito/aggiungi/{id}/{creditoAggiunto}")
-    public int aggiungiCredito(@PathVariable("id") UUID id, @PathVariable("creditoAggiunto") float creditoAggiunto)
+    @GetMapping(path = "/credito/aggiungi/{idUtenteRegistrato}/{creditoAggiunto}")
+    public int aggiungiCredito(@PathVariable("idUtenteRegistrato") UUID idUtenteRegistrato,
+                               @PathVariable("creditoAggiunto") float creditoAggiunto)
     {
-        return utenteRegistratoService.aggiungiCredito(id, creditoAggiunto);
+        return utenteRegistratoService.aggiungiCredito(idUtenteRegistrato, creditoAggiunto);
     }
 
-    @GetMapping(path = "/credito/{id}")
-    public InfoCreditoModel infoCredito(@PathVariable("id") UUID id)
+    @GetMapping(path = "/credito/{idUtenteRegistrato}")
+    public InfoCreditoModel infoCredito(@PathVariable("idUtenteRegistrato") UUID idUtenteRegistrato)
     {
-        return utenteRegistratoService.infoCredito(id);
+        return utenteRegistratoService.infoCredito(idUtenteRegistrato);
     }
 
-    @GetMapping(path = "controlla/notifica/email/{id}")
-    public boolean isNotificheEmailAbilitate(@PathVariable("id") UUID id) {
-        return utenteRegistratoService.isNotificheEmailAbilitate(id);
+    @GetMapping(path = "controlla/notifica/email/{idUtenteRegistrato}")
+    public boolean isNotificheEmailAbilitate(@PathVariable("idUtenteRegistrato") UUID idUtenteRegistrato) {
+        return utenteRegistratoService.isNotificheEmailAbilitate(idUtenteRegistrato);
     }
 
-    @GetMapping(path = "controlla/notifica/sms/{id}")
-    public boolean isNotificheSmsAbilitate(@PathVariable("id") UUID id)
+    @GetMapping(path = "controlla/notifica/sms/{idUtenteRegistrato}")
+    public boolean isNotificheSmsAbilitate(@PathVariable("idUtenteRegistrato") UUID idUtenteRegistrato)
     {
-        return utenteRegistratoService.isNotificheSmsAbilitate(id);
+        return utenteRegistratoService.isNotificheSmsAbilitate(idUtenteRegistrato);
     }
 }

@@ -8,21 +8,21 @@ import java.util.UUID;
 
 public interface AmministratoreDAO {
 
-    int inserisciAmministratore(UUID id, AmministratoreModel amministratore);
+    UUID inserisciAmministratore(UUID idAmministratore, AmministratoreModel amministratore);
 
-    default int inserisciAmministratore(AmministratoreModel amministratore)
+    default UUID inserisciAmministratore(AmministratoreModel amministratore)
     {
-        UUID id = UUID.randomUUID();
-        return inserisciAmministratore(id, amministratore);
+        UUID idAmministratore = UUID.randomUUID();
+        return inserisciAmministratore(idAmministratore, amministratore);
     }
 
-    int eliminaAmministratore(UUID id);
+    int eliminaAmministratore(UUID idAmministratore);
 
-    Optional<AmministratoreModel> trovaAmministratore(UUID id);
+    Optional<AmministratoreModel> trovaAmministratore(UUID idAmministratore);
 
     List<AmministratoreModel> trovaAmministratori();
 
-    int aggiornaAmministratore(UUID id, AmministratoreModel amministratoreAggiornato);
+    int aggiornaAmministratore(UUID idAmministratore, AmministratoreModel amministratoreAggiornato);
 
     boolean controllaUsernameOccupato(String username);
 

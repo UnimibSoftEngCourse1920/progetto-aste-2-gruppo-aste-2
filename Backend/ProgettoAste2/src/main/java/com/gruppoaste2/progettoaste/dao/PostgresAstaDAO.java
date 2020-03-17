@@ -33,31 +33,38 @@ public class PostgresAstaDAO implements AstaDAO {
     }
 
     @Override
-    public UUID aggiungiAsta(UUID id, AstaModel asta) {
+    public UUID aggiungiAsta(UUID idAsta, AstaModel asta) {
         final String sql = "INSERT INTO asta(id, id_asta_manager, id_configurazione, tipo, prezzo_partenza, " +
                 "data_inizio, data_fine, durata_timeslot, rifiutata, criterio_terminazione) " +
                 "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?::tipoterminazioneasta)";
-        jdbcTemplate.update(sql,
-                id, asta.getAstaManager().getId(), asta.getConfigurazione().getId(), asta.getInfoAsta().getTipo(),
+        if(jdbcTemplate.update(sql,
+                idAsta, asta.getAstaManager().getId(), asta.getConfigurazione().getId(), asta.getInfoAsta().getTipo(),
                 asta.getInfoAsta().getPrezzoPartenza(), asta.getInfoAsta().getDataInizio(),
                 asta.getInfoAsta().getDataFine(), asta.getInfoAsta().getDurataTimeSlot(),
-                asta.getInfoAsta().isRifiutata(), asta.getInfoAsta().getCriterioTerminazione());
-        return id;
+                asta.getInfoAsta().isRifiutata(), asta.getInfoAsta().getCriterioTerminazione())
+                == 0)
+            return null;
+
+        for(OggettoModel oggetto : asta.getOggetti())
+            if(oggettoDAO.inserisciOggetto(idAsta, oggetto) == null)
+                return null;
+
+        return idAsta;
     }
 
     @Override
-    public int eliminaAsta(UUID id) {
+    public int eliminaAsta(UUID idAsta) {
         final String sql = "DELETE FROM asta WHERE id = ?";
-        return jdbcTemplate.update(sql, id);
+        return jdbcTemplate.update(sql, idAsta);
     }
 
     @Override
-    public Optional<AstaModel> trovaAsta(UUID id) {
+    public Optional<AstaModel> trovaAsta(UUID idAsta) {
         final String sql = SELECT_ALL_FROM_ASTA + " WHERE id = ?";
         List<AstaModel> results = jdbcTemplate.query(sql,
                 (resultSet, i) -> makeAstaFromResultSet(resultSet),
-                id);
-        AstaModel returnable = (results.isEmpty())? null : results.get(0);
+                idAsta);
+        AstaModel returnable = (results.isEmpty()) ? null : results.get(0);
         return Optional.ofNullable(returnable);
     }
 
@@ -147,7 +154,7 @@ public class PostgresAstaDAO implements AstaDAO {
     }
 
     @Override
-    public int aggiornaAsta(UUID id, AstaModel astaAggiornata) {
+    public int aggiornaAsta(UUID idAsta, AstaModel astaAggiornata) {
         final String sql = "UPDATE asta " +
                 "SET id_asta_manager = ?, id_configurazione = ?, tipo = ?, prezzo_partenza = ?, data_inizio = ?, " +
                 "data_fine = ?, durata_timeslot = ?, rifiutata = ?, criterio_terminazione = ?::tipoterminazioneasta " +
@@ -157,11 +164,32 @@ public class PostgresAstaDAO implements AstaDAO {
                 astaAggiornata.getInfoAsta().getTipo(), astaAggiornata.getInfoAsta().getPrezzoPartenza(),
                 astaAggiornata.getInfoAsta().getDataInizio(), astaAggiornata.getInfoAsta().getDataFine(),
                 astaAggiornata.getInfoAsta().getDurataTimeSlot(), astaAggiornata.getInfoAsta().isRifiutata(),
-                astaAggiornata.getInfoAsta().getCriterioTerminazione(), id);
+                astaAggiornata.getInfoAsta().getCriterioTerminazione(), idAsta);
     }
 
     @Override
-    public Float rinunciaAsta(UUID idAsta, UUID idUtente) {
+    public Float accettaAstaVinta(UUID idAsta, UUID idVincitore) {
+        Optional<AstaModel> asta = trovaAsta(idAsta);
+        if(asta.isEmpty())
+            return null;
+        UUID idAstaManager = asta.get().getAstaManager().getId();
+
+        Optional<OffertaModel> offerta = offertaDAO.trovaOffertaMaggioreAsta(idAsta);
+        if(offerta.isEmpty())
+            return null;
+        float creditoOfferto = offerta.get().getCreditoOfferto();
+
+        if(utenteRegistratoDAO.aggiungiCredito(idVincitore, - creditoOfferto) == 0)
+            return null;
+
+        if(utenteRegistratoDAO.aggiungiCredito(idAstaManager, creditoOfferto) == 0)
+            return null;
+
+        return creditoOfferto;
+    }
+
+    @Override
+    public Float rinunciaAstaVinta(UUID idAsta, UUID idVincitore) {
         final String sql = "UPDATE asta " +
                 "SET rifiutata = ? " +
                 "WHERE id = ?";
@@ -178,14 +206,14 @@ public class PostgresAstaDAO implements AstaDAO {
             return null;
         float creditoOfferto = offerta.get().getCreditoOfferto();
 
-        float risarcimento = (float) (penale * creditoOfferto);
-        if(utenteRegistratoDAO.aggiungiCredito(idUtente, risarcimento) == 0)
+        float creditoPagamentoPenale = (float) (penale * creditoOfferto);
+        if(utenteRegistratoDAO.aggiungiCredito(idVincitore, - creditoPagamentoPenale) == 0)
             return null;
-        return risarcimento;
+        return creditoPagamentoPenale;
     }
 
     private AstaModel makeAstaFromResultSet(ResultSet resultSet) throws SQLException {
-        UUID id = UUID.fromString(resultSet.getString("id"));
+        UUID idAsta = UUID.fromString(resultSet.getString("id"));
 
         UUID idAstaManager = UUID.fromString(resultSet.getString("id_asta_manager"));
         UtenteRegistratoModel astaManager = utenteRegistratoDAO.trovaUtenteRegistrato(idAstaManager)
@@ -195,8 +223,8 @@ public class PostgresAstaDAO implements AstaDAO {
         ConfigurazioneModel configurazione = configurazioneDAO.trovaConfigurazione(idConfigurazione)
                 .orElse(null);
 
-        List<OggettoModel> oggetti = oggettoDAO.trovaOggettiAsta(id);
-        List<OffertaModel> offerte = offertaDAO.trovaOfferteAsta(id);
+        List<OggettoModel> oggetti = oggettoDAO.trovaOggettiAsta(idAsta);
+        List<OffertaModel> offerte = offertaDAO.trovaOfferteAsta(idAsta);
         String tipo = resultSet.getString("tipo");
         float prezzoPartenza = resultSet.getFloat("prezzo_partenza");
         Timestamp dataInizio = resultSet.getTimestamp("data_inizio");
@@ -207,6 +235,6 @@ public class PostgresAstaDAO implements AstaDAO {
         InfoAstaModel infoAsta =
                 new InfoAstaModel(tipo, prezzoPartenza, dataInizio, dataFine, durataTimeSlot, rifiutata,
                         criterioTerminazione);
-        return new AstaModel(id, infoAsta, configurazione, oggetti, astaManager, offerte);
+        return new AstaModel(idAsta, infoAsta, configurazione, oggetti, astaManager, offerte);
     }
 }

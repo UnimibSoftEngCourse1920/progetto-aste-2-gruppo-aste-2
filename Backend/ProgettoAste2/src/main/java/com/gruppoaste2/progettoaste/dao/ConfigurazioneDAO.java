@@ -8,17 +8,17 @@ import java.util.UUID;
 
 public interface ConfigurazioneDAO {
 
-    int inserisciConfigurazione(UUID id, ConfigurazioneModel configurazione);
+    UUID inserisciConfigurazione(UUID idConfigurazione, ConfigurazioneModel configurazione);
 
-    default int inserisciConfigurazione(ConfigurazioneModel configurazione)
+    default UUID inserisciConfigurazione(ConfigurazioneModel configurazione)
     {
-        UUID id = UUID.randomUUID();
-        return inserisciConfigurazione(id, configurazione);
+        UUID idConfigurazione = UUID.randomUUID();
+        return inserisciConfigurazione(idConfigurazione, configurazione);
     }
 
-    int eliminaConfiguazione(UUID id);
+    int eliminaConfiguazione(UUID idConfigurazione);
 
-    Optional<ConfigurazioneModel> trovaConfigurazione(UUID id);
+    Optional<ConfigurazioneModel> trovaConfigurazione(UUID idConfigurazione);
 
     List<ConfigurazioneModel> trovaConfigurazioni();
 

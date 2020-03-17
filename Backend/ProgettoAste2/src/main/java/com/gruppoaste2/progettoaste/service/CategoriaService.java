@@ -23,19 +23,14 @@ public class CategoriaService {
 
     public UUID aggiungiCategoria(CategoriaModel categoria){
         return categoriaDAO.aggiungiCategoria(categoria);
-
     }
 
-    public int assegnaCategoriaAdOggetto(UUID idOggetto, UUID idCategoria) {
-        return categoriaDAO.assegnaCategoriaAdOggetto(idOggetto, idCategoria);
+    public int eliminaCategoria(UUID idCategoria){
+        return categoriaDAO.eliminaCategoria(idCategoria);
     }
 
-    public int eliminaCategoria(UUID id){
-        return categoriaDAO.eliminaCategoria(id);
-    }
-
-    public Optional<CategoriaModel> trovaCategoria(UUID id){
-        return categoriaDAO.trovaCategoria(id);
+    public Optional<CategoriaModel> trovaCategoria(UUID idCategoria){
+        return categoriaDAO.trovaCategoria(idCategoria);
     }
 
     public List<CategoriaModel> trovaCategorie(){
@@ -54,7 +49,11 @@ public class CategoriaService {
         return categoriaDAO.valoreAttributoOggetto(idOggetto, idAttributo);
     }
 
-    public int aggiornaCategoria (UUID id, CategoriaModel categoriaAggiornata){
-        return categoriaDAO.aggiornaCategoria(id, categoriaAggiornata);
+    public int aggiornaCategoria (UUID idCategoria, CategoriaModel categoriaAggiornata){
+        return categoriaDAO.aggiornaCategoria(idCategoria, categoriaAggiornata);
+    }
+
+    public int assegnaCategoriaAdOggetto(UUID idOggetto, UUID idCategoria) {
+        return categoriaDAO.assegnaCategoriaAdOggetto(idOggetto, idCategoria);
     }
 }

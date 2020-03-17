@@ -7,7 +7,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.io.*;
-import java.nio.channels.SelectableChannel;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -30,13 +29,13 @@ public class PostgresOggettoDAO implements OggettoDAO {
 
     private final JdbcTemplate jdbcTemplate;
 
+    private final CategoriaDAO categoriaDAO;
+
     private final String SELECT_FROM_OGGETTO_JOIN_ASTA =
             "SELECT o.id, o.nome, o.descrizione, o.url_immagine " +
             "FROM oggetto AS o " +
             "JOIN asta AS a ON o.id_asta = a.id ";
     private final String WHERE_ID_ASTA_MANAGER = "WHERE a.id_asta_manager = ?";
-
-    private final CategoriaDAO categoriaDAO;
 
     @Autowired
     public PostgresOggettoDAO(JdbcTemplate jdbcTemplate, CategoriaDAO categoriaDAO) {
@@ -44,28 +43,41 @@ public class PostgresOggettoDAO implements OggettoDAO {
         this.categoriaDAO = categoriaDAO;
     }
 
-    @Override
-    public UUID inserisciOggetto(UUID id, UUID idAsta, OggettoModel oggetto) {
+
+    public UUID inserisciOggetto(UUID idOggetto, UUID idAsta, OggettoModel oggetto) {
         final String sql = "INSERT INTO oggetto(id, id_asta, nome, descrizione, url_immagine) " +
                 "VALUES(?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql,
-                id, idAsta, oggetto.getNome(), oggetto.getDescrizione(), oggetto.getUrlImmagine());
-        return id;
+        if(jdbcTemplate.update(sql,
+                idOggetto, idAsta, oggetto.getNome(), oggetto.getDescrizione(), oggetto.getUrlImmagine())
+                == 0)
+            return null;
+
+        for(CategoriaModel categoria : oggetto.getCategorie()) {
+            UUID idCategoria;
+            if(categoria.getId() == null)
+                idCategoria = categoriaDAO.aggiungiCategoria(categoria);
+            else
+                idCategoria = categoria.getId();
+            if(categoriaDAO.assegnaCategoriaAdOggetto(idOggetto, idCategoria) == 0)
+                return null;
+        }
+        return idOggetto;
+
     }
 
     @Override
-    public int eliminaOggetto(UUID id) {
+    public int eliminaOggetto(UUID idOggetto) {
         final String sql = "DELETE FROM oggetto WHERE id = ?";
-        return jdbcTemplate.update(sql, id);
+        return jdbcTemplate.update(sql, idOggetto);
     }
 
     @Override
-    public Optional<OggettoModel> trovaOggetto(UUID id) {
+    public Optional<OggettoModel> trovaOggetto(UUID idOggetto) {
         final String sql = "SELECT * FROM oggetto WHERE id = ?";
         List<OggettoModel> results = jdbcTemplate.query(sql,
                 (resultSet, i) -> makeOggettoFromResultSet(resultSet),
-                id);
-        OggettoModel returnable = (results.isEmpty())? null : results.get(0);
+                idOggetto);
+        OggettoModel returnable = (results.isEmpty()) ? null : results.get(0);
         return Optional.ofNullable(returnable);
     }
 
@@ -131,11 +143,11 @@ public class PostgresOggettoDAO implements OggettoDAO {
     }
 
     @Override
-    public int aggiornaOggetto(UUID id, OggettoModel oggettoAggiornato) {
+    public int aggiornaOggetto(UUID idOggetto, OggettoModel oggettoAggiornato) {
         final String sql = "UPDATE oggetto SET nome = ?, descrizione = ?, url_immagine = ? WHERE id = ?";
         return jdbcTemplate.update(sql,
                 oggettoAggiornato.getNome(), oggettoAggiornato.getDescrizione(), oggettoAggiornato.getUrlImmagine(),
-                id);
+                idOggetto);
     }
 
     // TODO: importaOggetti
@@ -209,12 +221,12 @@ public class PostgresOggettoDAO implements OggettoDAO {
     }
 
     private OggettoModel makeOggettoFromResultSet(ResultSet resultSet) throws SQLException {
-        UUID id = UUID.fromString(resultSet.getString("id"));
+        UUID idOggetto = UUID.fromString(resultSet.getString("id"));
         String nome = resultSet.getString("nome");
         String descrizione = resultSet.getString("descrizione");
         String urlImmagine = resultSet.getString("url_immagine");
-        List<CategoriaModel> categorie = categoriaDAO.trovaCategorieOggetto(id);
-        return new OggettoModel(id, nome, descrizione, urlImmagine, categorie);
+        List<CategoriaModel> categorie = categoriaDAO.trovaCategorieOggetto(idOggetto);
+        return new OggettoModel(idOggetto, nome, descrizione, urlImmagine, categorie);
     }
 
     private static Properties readProperties() {

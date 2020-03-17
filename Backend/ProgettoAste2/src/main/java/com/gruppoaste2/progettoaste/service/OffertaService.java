@@ -20,16 +20,16 @@ public class OffertaService {
         this.offertaDAO = offertaDAO;
     }
 
-    public int aggiungiOfferta(UUID idAsta, OffertaModel offerta) {
+    public UUID aggiungiOfferta(UUID idAsta, OffertaModel offerta) {
         return offertaDAO.aggiungiOfferta(idAsta, offerta);
     }
 
-    public int eliminaOfferta(UUID id){
-        return offertaDAO.eliminaOfferta(id);
+    public int eliminaOfferta(UUID idOfferta){
+        return offertaDAO.eliminaOfferta(idOfferta);
     }
 
-    public Optional<OffertaModel> trovaOfferta(UUID id){
-        return offertaDAO.trovaOfferta(id);
+    public Optional<OffertaModel> trovaOfferta(UUID idOfferta){
+        return offertaDAO.trovaOfferta(idOfferta);
     }
 
     public List<OffertaModel> trovaOfferte(){
@@ -56,8 +56,8 @@ public class OffertaService {
         return offertaDAO.trovaOfferteUtenteAsta(idOfferente, idAsta);
     }
 
-    public int aggiornaOfferta(UUID id, OffertaModel offertaAggiornata){
-        return offertaDAO.aggiornaOfferta(id, offertaAggiornata);
+    public int aggiornaOfferta(UUID idOfferta, OffertaModel offertaAggiornata){
+        return offertaDAO.aggiornaOfferta(idOfferta, offertaAggiornata);
     }
 
     public boolean controllaOffertaUtenteAstaEsiste(UUID idUtente, UUID idAsta){

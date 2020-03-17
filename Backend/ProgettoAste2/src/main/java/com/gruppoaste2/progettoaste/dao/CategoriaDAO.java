@@ -13,23 +13,23 @@ public interface CategoriaDAO {
 
     default UUID aggiungiCategoria(CategoriaModel categoria)
     {
-        UUID id = UUID.randomUUID();
-        return aggiungiCategoria(id, categoria);
+        UUID idCategoria = UUID.randomUUID();
+        return aggiungiCategoria(idCategoria, categoria);
     }
 
-    int assegnaCategoriaAdOggetto(UUID idOggetto, UUID idCategoria);
+    int eliminaCategoria(UUID idCategoria);
 
-    int eliminaCategoria(UUID id);
-
-    Optional<CategoriaModel> trovaCategoria(UUID id);
+    Optional<CategoriaModel> trovaCategoria(UUID idCategoria);
 
     List<CategoriaModel> trovaCategorie();
 
     List<AttributoModel> trovaAttributiCategoria(UUID idCategoria);
 
-    List<CategoriaModel> trovaCategorieOggetto (UUID idOggetto);
+    List<CategoriaModel> trovaCategorieOggetto(UUID idOggetto);
 
     String valoreAttributoOggetto(UUID idOggetto, UUID idAttributo);
 
-    int aggiornaCategoria (UUID id, CategoriaModel categoriaAggiornata);
+    int aggiornaCategoria (UUID idCategoria, CategoriaModel categoriaAggiornata);
+
+    int assegnaCategoriaAdOggetto(UUID idOggetto, UUID idCategoria);
 }

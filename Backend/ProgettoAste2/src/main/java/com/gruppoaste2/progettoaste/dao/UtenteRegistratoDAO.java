@@ -8,21 +8,21 @@ import java.util.UUID;
 
 public interface UtenteRegistratoDAO {
 
-    int aggiungiUtenteRegistrato(UUID id, UtenteRegistratoModel utenteRegistrato);
+    UUID aggiungiUtenteRegistrato(UUID idUtenteRegistrato, UtenteRegistratoModel utenteRegistrato);
 
-    default int aggiungiUtenteRegistrato(UtenteRegistratoModel utenteRegistrato)
+    default UUID aggiungiUtenteRegistrato(UtenteRegistratoModel utenteRegistrato)
     {
-        UUID id = UUID.randomUUID();
-        return aggiungiUtenteRegistrato(id,utenteRegistrato);
+        UUID idUtenteRegistrato = UUID.randomUUID();
+        return aggiungiUtenteRegistrato(idUtenteRegistrato,utenteRegistrato);
     }
 
-    int eliminaUtenteRegistrato(UUID id);
+    int eliminaUtenteRegistrato(UUID idUtenteRegistrato);
 
-    Optional<UtenteRegistratoModel> trovaUtenteRegistrato(UUID id);
+    Optional<UtenteRegistratoModel> trovaUtenteRegistrato(UUID idUtenteRegistrato);
 
     List<UtenteRegistratoModel> trovaUtentiRegistrati();
 
-    int aggiornaUtenteRegistrato(UUID id, UtenteRegistratoModel utenteAggiornato);
+    int aggiornaUtenteRegistrato(UUID idUtenteRegistrato, UtenteRegistratoModel utenteRegistratoAggiornato);
 
     boolean controllaUsernameOccupato(String username);
 
@@ -32,13 +32,13 @@ public interface UtenteRegistratoDAO {
 
     UUID ritornaIdUtenteRegistrato(UtenteRegistratoModel utente);
 
-    int aggiungiCredito(UUID id, float creditoAggiunto);
+    int aggiungiCredito(UUID idUtenteRegistrato, float creditoAggiunto);
 
-    float creditoTotale(UUID id);
+    float creditoTotale(UUID idUtenteRegistrato);
 
-    float creditoImpegnato(UUID id);
+    float creditoImpegnato(UUID idUtenteRegistrato);
 
-    boolean isNotificheEmailAbilitate(UUID id);
+    boolean isNotificheEmailAbilitate(UUID idUtenteRegistrato);
 
-    boolean isNotificheSmsAbilitate(UUID id);
+    boolean isNotificheSmsAbilitate(UUID idUtenteRegistrato);
 }

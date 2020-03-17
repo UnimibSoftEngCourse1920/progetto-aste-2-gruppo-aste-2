@@ -8,17 +8,17 @@ import java.util.UUID;
 
 public interface OffertaDAO {
 
-    int aggiungiOfferta(UUID id, UUID idAsta, OffertaModel offerta);
+    UUID aggiungiOfferta(UUID idOfferta, UUID idAsta, OffertaModel offerta);
 
-    default int aggiungiOfferta(UUID idAsta, OffertaModel offerta)
+    default UUID aggiungiOfferta(UUID idAsta, OffertaModel offerta)
     {
-        UUID id = UUID.randomUUID();
-        return aggiungiOfferta(id, idAsta, offerta);
+        UUID idOfferta = UUID.randomUUID();
+        return aggiungiOfferta(idOfferta, idAsta, offerta);
     }
 
-    int eliminaOfferta(UUID id);
+    int eliminaOfferta(UUID idOfferta);
 
-    Optional<OffertaModel> trovaOfferta(UUID id);
+    Optional<OffertaModel> trovaOfferta(UUID idOfferta);
 
     List<OffertaModel> trovaOfferte();
 
@@ -32,7 +32,7 @@ public interface OffertaDAO {
 
     List<OffertaModel> trovaOfferteUtenteAsta(UUID idOfferente, UUID idAsta);
 
-    int aggiornaOfferta(UUID id, OffertaModel offertaAggiornata);
+    int aggiornaOfferta(UUID idOfferta, OffertaModel offertaAggiornata);
 
     boolean controllaOffertaUtenteAstaEsiste(UUID idUtente, UUID idAsta);
 }

@@ -19,29 +19,32 @@ public class PostgresConfigurazioneDAO implements ConfigurazioneDAO{
     }
 
     @Override
-    public int inserisciConfigurazione(UUID id, ConfigurazioneModel configurazioneModel) {
+    public UUID inserisciConfigurazione(UUID idConfigurazione, ConfigurazioneModel configurazioneModel) {
         final String sql = "INSERT INTO configurazione(id, tipo_timeslot, numero_max_timeslot, " +
                 "numero_offerte_contemporanee_utente, penale, data_creazione, durata_timeslot_fisso) " +
                 "VALUES(?, ?::tipotimeslotasta, ?, ?, ?, ?, ?)";
-        return jdbcTemplate.update(sql,
-                id, configurazioneModel.getTipoTimeSlot(), configurazioneModel.getMaxTimeSlot(),
+        if(jdbcTemplate.update(sql,
+                idConfigurazione, configurazioneModel.getTipoTimeSlot(), configurazioneModel.getMaxTimeSlot(),
                 configurazioneModel.getMaxOfferte(), configurazioneModel.getPenale(),
-                configurazioneModel.getDataCreazione(), configurazioneModel.getDurataTimeSlotFisso());
+                configurazioneModel.getDataCreazione(), configurazioneModel.getDurataTimeSlotFisso())
+                == 0)
+            return null;
+        return idConfigurazione;
     }
 
     @Override
-    public int eliminaConfiguazione(UUID id) {
+    public int eliminaConfiguazione(UUID idConfigurazione) {
         final String sql = "DELETE FROM configurazione WHERE id = ?";
-        return jdbcTemplate.update(sql, id);
+        return jdbcTemplate.update(sql, idConfigurazione);
     }
 
     @Override
-    public Optional<ConfigurazioneModel> trovaConfigurazione(UUID id) {
+    public Optional<ConfigurazioneModel> trovaConfigurazione(UUID idConfigurazione) {
         final String sql = "SELECT * FROM configurazione WHERE id = ?";
         List<ConfigurazioneModel> results = jdbcTemplate.query(sql,
                 (resultSet, i) -> makeConfigurazioneFromResultSet(resultSet),
-                id);
-        ConfigurazioneModel returnable = (results.isEmpty())? null : results.get(0);
+                idConfigurazione);
+        ConfigurazioneModel returnable = (results.isEmpty()) ? null : results.get(0);
         return Optional.ofNullable(returnable);
     }
 
@@ -57,19 +60,19 @@ public class PostgresConfigurazioneDAO implements ConfigurazioneDAO{
         final String sql = "SELECT * FROM configurazione ORDER BY data_creazione DESC LIMIT 1";
         List<ConfigurazioneModel> results = jdbcTemplate.query(sql,
                 (resultSet, i) -> makeConfigurazioneFromResultSet(resultSet));
-        ConfigurazioneModel returnable = (results.isEmpty())? null : results.get(0);
+        ConfigurazioneModel returnable = (results.isEmpty()) ? null : results.get(0);
         return Optional.ofNullable(returnable);
     }
 
     private ConfigurazioneModel makeConfigurazioneFromResultSet(ResultSet resultSet) throws SQLException {
-        UUID id = UUID.fromString(resultSet.getString("id"));
+        UUID idConfigurazione = UUID.fromString(resultSet.getString("id"));
         String tipoTimeSlot = resultSet.getString("tipo_timeslot");
         int maxTimeSlot = resultSet.getInt("numero_max_timeslot");
         int maxOfferte = resultSet.getInt("numero_offerte_contemporanee_utente");
         double penale =  resultSet.getDouble("penale");
         Timestamp dataCreazione =  resultSet.getTimestamp("data_creazione");
         Time durataTimeSlotFisso = resultSet.getTime("durata_timeslot_fisso");
-        return new ConfigurazioneModel(id, tipoTimeSlot, maxTimeSlot, maxOfferte, penale, dataCreazione,
+        return new ConfigurazioneModel(idConfigurazione, tipoTimeSlot, maxTimeSlot, maxOfferte, penale, dataCreazione,
                 durataTimeSlotFisso);
     }
 }

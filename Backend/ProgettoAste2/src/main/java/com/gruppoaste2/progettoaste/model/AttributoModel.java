@@ -6,10 +6,12 @@ public class AttributoModel {
 
     private final UUID id;
     private final String nome;
+    private final String valore;
 
-    public AttributoModel(UUID id, String nome) {
+    public AttributoModel(UUID id, String nome, String valore) {
         this.id = id;
         this.nome = nome;
+        this.valore = valore;
     }
 
     public UUID getId() {
@@ -18,5 +20,9 @@ public class AttributoModel {
 
     public String getNome() {
         return nome;
+    }
+
+    public String getValore() {
+        return valore;
     }
 }

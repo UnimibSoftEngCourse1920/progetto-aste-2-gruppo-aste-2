@@ -22,27 +22,29 @@ public class PostgresAmministratoreDAO implements AmministratoreDAO {
     }
 
     @Override
-    public int inserisciAmministratore(UUID id, AmministratoreModel amministratore) {
+    public UUID inserisciAmministratore(UUID idAmministratore, AmministratoreModel amministratore) {
         final String sql = "INSERT INTO amministratore(id, username, password, email) " +
                 "VALUES(?, ?, ?, ?)";
-        return jdbcTemplate.update(sql,
-                id, amministratore.getUsername(), amministratore.getPassword(), amministratore.getEmail());
-
+        if(jdbcTemplate.update(sql,
+                idAmministratore, amministratore.getUsername(), amministratore.getPassword(), amministratore.getEmail())
+                == 0)
+            return null;
+        return idAmministratore;
     }
 
     @Override
-    public int eliminaAmministratore(UUID id) {
+    public int eliminaAmministratore(UUID idAmministratore) {
         final String sql = "DELETE FROM amministratore WHERE id = ?";
-        return jdbcTemplate.update(sql, id);
+        return jdbcTemplate.update(sql, idAmministratore);
     }
 
     @Override
-    public Optional<AmministratoreModel> trovaAmministratore(UUID id) {
+    public Optional<AmministratoreModel> trovaAmministratore(UUID idAmministratore) {
         final String sql = "SELECT * FROM amministratore WHERE id = ?";
          List<AmministratoreModel> results = jdbcTemplate.query(sql,
                 (resultSet, i) -> makeAmministratoreFromResultSet(resultSet),
-                 id);
-        AmministratoreModel returnable = (results.isEmpty())? null : results.get(0);
+                 idAmministratore);
+        AmministratoreModel returnable = (results.isEmpty()) ? null : results.get(0);
         return Optional.ofNullable(returnable);
     }
 
@@ -53,13 +55,12 @@ public class PostgresAmministratoreDAO implements AmministratoreDAO {
                 (resultSet, i) -> makeAmministratoreFromResultSet(resultSet));
     }
 
-
     @Override
-    public int aggiornaAmministratore(UUID id, AmministratoreModel amministratoreAggiornato) {
+    public int aggiornaAmministratore(UUID idAmministratore, AmministratoreModel amministratoreAggiornato) {
         final String sql = "UPDATE utente_registrato SET username = ?, password = ?, email = ? WHERE id = ?";
         return jdbcTemplate.update(sql,
                 amministratoreAggiornato.getUsername(), amministratoreAggiornato.getPassword(),
-                amministratoreAggiornato.getEmail(), id);
+                amministratoreAggiornato.getEmail(), idAmministratore);
     }
 
     @Override
@@ -90,10 +91,10 @@ public class PostgresAmministratoreDAO implements AmministratoreDAO {
     }
 
     private AmministratoreModel makeAmministratoreFromResultSet(ResultSet resultSet) throws SQLException {
-        UUID id = UUID.fromString(resultSet.getString("id"));
+        UUID idAmministratore = UUID.fromString(resultSet.getString("id"));
         String username = resultSet.getString("username");
         String email = resultSet.getString("email");
         String password = resultSet.getString("password");
-        return new AmministratoreModel(id, username, email, password);
+        return new AmministratoreModel(idAmministratore, username, email, password);
     }
 }
