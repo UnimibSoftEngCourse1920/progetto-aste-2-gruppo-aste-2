@@ -230,6 +230,12 @@ public class PostgresAstaDAO implements AstaDAO {
     }
 
     @Override
+    public int iniziaAsta(UUID idAsta) {
+        final String sql = "UPDATE asta SET data_inizio = ? WHERE id = ?";
+        return jdbcTemplate.update(sql, new Timestamp(System.currentTimeMillis()), idAsta);
+    }
+
+    @Override
     public int chiudiAsta(UUID idAsta) {
         final String sql = "UPDATE asta SET data_fine = ? WHERE id = ?";
         return jdbcTemplate.update(sql, new Timestamp(System.currentTimeMillis()), idAsta);

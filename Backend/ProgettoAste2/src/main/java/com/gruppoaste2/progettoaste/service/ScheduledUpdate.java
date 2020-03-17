@@ -54,8 +54,10 @@ public class ScheduledUpdate {
                 Timestamp now = Timestamp.from(Instant.now());
                 if(dataFine < now.getTime())
                 {
-                    astaDAO.chiudiAsta(asta.getId());
-                    System.out.println("Chiuso asta" + asta.getId());
+                    if(astaDAO.chiudiAsta(asta.getId()) == 0)
+                        System.out.println("Errore: asta " + asta.getId() + " non chiusa");
+                    else
+                        System.out.println("Asta " + asta.getId() + " chiusa con successo");
                 }
             }
         }

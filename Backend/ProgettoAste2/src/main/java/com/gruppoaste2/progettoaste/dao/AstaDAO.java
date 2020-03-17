@@ -44,5 +44,7 @@ public interface AstaDAO {
 
     Float rinunciaAstaVinta(UUID idAsta, UUID idVincitore);
 
+    int iniziaAsta(UUID idAsta);
+
     int chiudiAsta(UUID idAsta);
 }

@@ -18,11 +18,13 @@ public class PostgresOffertaDAO implements OffertaDAO{
 
     private final JdbcTemplate jdbcTemplate;
 
+    private final AstaDAO astaDAO;
     private final UtenteRegistratoDAO utenteRegistratoDAO;
 
     @Autowired
-    public PostgresOffertaDAO(JdbcTemplate jdbcTemplate, UtenteRegistratoDAO utenteRegistratoDAO) {
+    public PostgresOffertaDAO(JdbcTemplate jdbcTemplate, AstaDAO astaDAO, UtenteRegistratoDAO utenteRegistratoDAO) {
         this.jdbcTemplate = jdbcTemplate;
+        this.astaDAO = astaDAO;
         this.utenteRegistratoDAO = utenteRegistratoDAO;
     }
 
@@ -35,6 +37,11 @@ public class PostgresOffertaDAO implements OffertaDAO{
                 offerta.getCreditoOfferto())
                 == 0)
             return null;
+
+        if(trovaOfferteAsta(idAsta).size() == 1)
+            if(astaDAO.iniziaAsta(idAsta) == 0)
+                return null;
+
         return idOfferta;
     }
 
