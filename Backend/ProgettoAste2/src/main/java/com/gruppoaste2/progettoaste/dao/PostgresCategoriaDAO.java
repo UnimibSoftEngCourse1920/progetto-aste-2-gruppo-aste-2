@@ -72,9 +72,9 @@ public class PostgresCategoriaDAO implements CategoriaDAO {
 
     @Override
     public List<CategoriaModel> trovaCategorieOggetto(UUID idOggetto) {
-        final String sql = "SELECT c.id, c.nome " +
-                "FROM categoria_oggetto AS co, categoria AS c " +
-                "WHERE co.id_oggetto = ? AND c.id = co.id_oggetto";
+        final String sql = "SELECT * FROM categoria " +
+                "JOIN categoria_oggetto ON id = id_categoria " +
+                "WHERE id_oggetto = ?";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeCategoriaFromResultSet(resultSet),
                 idOggetto);
