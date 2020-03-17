@@ -6,8 +6,10 @@ import com.gruppoaste2.progettoaste.model.AstaModel;
 import com.gruppoaste2.progettoaste.model.ConfigurazioneModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.sql.Time;
@@ -16,6 +18,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
+@ConditionalOnProperty(name = "scheduling.enabled", havingValue = "true" , matchIfMissing = true)
 @Service
 public class ScheduledUpdate {
 
@@ -28,6 +31,7 @@ public class ScheduledUpdate {
         this.configurazioneDAO = configurazioneDAO;
     }
 
+    @Scheduled(initialDelay = 1000L * 10, fixedDelay = 2000L)
     public void aggiornaSituazioneAste()
     {
         System.out.println("aggiorna-asta");
