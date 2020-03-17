@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -146,7 +147,6 @@ public class PostgresAstaDAO implements AstaDAO {
     public List<AstaModel> trovaAsteVinteDaUtente(UUID idUtente) {
         final String sql = SELECT_ALL_FROM_ASTA +
                 " JOIN offerta ON asta.id = offerta.id_asta " +
-                "ORDER BY credito_offerto DESC LIMIT 1 " +
                 "WHERE id_offerente = ? AND data_fine IS NOT NULL";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeAstaFromResultSet(resultSet),
@@ -210,6 +210,12 @@ public class PostgresAstaDAO implements AstaDAO {
         if(utenteRegistratoDAO.aggiungiCredito(idVincitore, - creditoPagamentoPenale) == 0)
             return null;
         return creditoPagamentoPenale;
+    }
+
+    @Override
+    public int chiudiAsta(UUID idAsta) {
+        final String sql = "UPDATE asta SET data_fine = ? WHERE id = ?";
+        return jdbcTemplate.update(sql, new Time(System.currentTimeMillis()), idAsta);
     }
 
     private AstaModel makeAstaFromResultSet(ResultSet resultSet) throws SQLException {

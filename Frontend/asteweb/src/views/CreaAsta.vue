@@ -182,6 +182,24 @@ export default {
             .substr(11, 8)
         : this.durataTimeSlotFisso;
 
+      var i;
+      for (i = 0; i < this.form.numeroOggetti; i++) {
+        var cat = [];
+        var j;
+        for (j = 0; j < this.form.categorie[i].length; j++) {
+          cat.push({
+            nome: this.form.categorie[i][j]
+          });
+        }
+        this.datiOggetti.push({
+          nome: this.form.nomeOggetti[i],
+          descrizione: this.form.descrizioneOggetti[i],
+          urlImmagine: this.form.urlOggetti[i],
+          categorie: cat
+          // per ogni elemento dell array aggiungere nome:
+        });
+      }
+
       fetch("http://localhost:8080/api/asta/aggiungi", {
         method: "post",
         headers: {
@@ -202,54 +220,10 @@ export default {
             durataTimeSlot: durata,
             rifiutata: false,
             criterioTerminazione: terminazione
-          }
+          },
+          oggetti: this.datiOggetti
         })
-      })
-        .then(response => response.json())
-        .then(response => {
-          var idAsta = response;
-          var i;
-          for (i = 0; i < this.form.numeroOggetti; i++) {
-            this.datiOggetti.push({
-              nome: this.form.nomeOggetti[i],
-              descrizione: this.form.descrizioneOggetti[i],
-              urlImmagine: this.form.urlOggetti[i]
-            });
-
-            fetch("http://localhost:8080/api/oggetto/inserisci/" + idAsta, {
-              method: "post",
-              headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-              },
-              body: JSON.stringify({
-                nome: this.form.nomeOggetti[i],
-                descrizione: this.form.descrizioneOggetti[i],
-                urlImmagine: this.form.urlOggetti[i]
-              })
-            })
-              .then(response => response.json())
-              .then(response => {
-                this.idOggetti.push(response);
-
-                console.log(i);
-
-                var j;
-                for (j = 0; j < this.form.categorie[i].length; j++) {
-                  fetch("http://localhost:8080/api/categoria/aggiungi/", {
-                    method: "post",
-                    headers: {
-                      Accept: "application/json",
-                      "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                      nome: this.form.categorie[i][j]
-                    })
-                  });
-                }
-              });
-          }
-        });
+      });
     },
     onReset(evt) {
       evt.preventDefault();

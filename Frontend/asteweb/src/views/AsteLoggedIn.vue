@@ -37,7 +37,8 @@
         </p>
       </b-card-text>
 
-      <b-button>Prova</b-button>
+      <b-button>Visualizza oggetti</b-button>
+      <b-button>Partecipa</b-button>
     </b-card>
   </div>
 </template>
@@ -53,7 +54,8 @@ export default {
           text: "Visualizza aste in corso"
         },
         { value: "b", text: "Visualizza aste vinte" },
-        { value: "c", text: "Visualizza aste dove sei massimo offerente" }
+        { value: "c", text: "Visualizza aste dove sei massimo offerente" },
+        { value: "d", text: "Visualizza aste a cui stai partecipando" }
       ],
       asteDaVisualizzare: []
     };
@@ -69,8 +71,71 @@ export default {
           .then(() => {
             var i;
             for (i = 0; i < this.asteDaVisualizzare.length; i++) {
-              console.log(i);
-              console.log(document.getElementById("1"));
+              document
+                .getElementById(i + 1)
+                .getElementsByClassName(
+                  "card-img-left"
+                )[0].src = this.asteDaVisualizzare[i].oggetti[0].urlImmagine;
+            }
+          });
+      } else if (this.selected === "b") {
+        fetch(
+          "http://localhost:8080/api/asta/aste/vinte/" +
+            localStorage.getItem("idLog"),
+          { method: "get" }
+        )
+          .then(response => response.json())
+          .then(response => {
+            this.asteDaVisualizzare = response;
+          })
+          .then(() => {
+            var i;
+            for (i = 0; i < this.asteDaVisualizzare.length; i++) {
+              document
+                .getElementById(i + 1)
+                .getElementsByClassName(
+                  "card-img-left"
+                )[0].src = this.asteDaVisualizzare[i].oggetti[0].urlImmagine;
+            }
+          });
+      } else if (this.selected === "c") {
+        fetch(
+          "http://localhost:8080/api/asta/aste/incorso/superamento-immediato/massimo-offerente/" +
+            localStorage.getItem("idLog"),
+          { method: "get" }
+        )
+          .then(response => response.json())
+          .then(response => {
+            this.asteDaVisualizzare = response;
+          })
+          .then(() => {
+            var i;
+            for (i = 0; i < this.asteDaVisualizzare.length; i++) {
+              document
+                .getElementById(i + 1)
+                .getElementsByClassName(
+                  "card-img-left"
+                )[0].src = this.asteDaVisualizzare[i].oggetti[0].urlImmagine;
+            }
+          });
+      } else if (this.selected === "d") {
+        fetch(
+          "http://localhost:8080/api/asta/aste/incorso/offerente/" +
+            localStorage.getItem("idLog"),
+          { method: "get" }
+        )
+          .then(response => response.json())
+          .then(response => {
+            this.asteDaVisualizzare = response;
+          })
+          .then(() => {
+            var i;
+            for (i = 0; i < this.asteDaVisualizzare.length; i++) {
+              document
+                .getElementById(i + 1)
+                .getElementsByClassName(
+                  "card-img-left"
+                )[0].src = this.asteDaVisualizzare[i].oggetti[0].urlImmagine;
             }
           });
       }
@@ -78,3 +143,11 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.card-img-left {
+  width: 30%;
+  height: 15vw;
+  object-fit: cover;
+}
+</style>
