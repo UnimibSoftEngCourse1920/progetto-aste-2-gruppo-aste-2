@@ -45,15 +45,33 @@ public class PostgresAstaDAO implements AstaDAO {
                 == 0)
             return null;
 
-        for(OggettoModel oggetto : asta.getOggetti())
-            if(oggettoDAO.inserisciOggetto(idAsta, oggetto) == null)
-                return null;
+        List<OggettoModel> oggetti = asta.getOggetti();
+        if(!oggetti.isEmpty())
+            for(OggettoModel oggetto : asta.getOggetti())
+                if(oggettoDAO.inserisciOggetto(idAsta, oggetto) == null)
+                    return null;
 
         return idAsta;
     }
 
     @Override
     public int eliminaAsta(UUID idAsta) {
+        Optional<AstaModel> asta = trovaAsta(idAsta);
+        if(asta.isEmpty())
+            return 0;
+
+        List<OggettoModel> oggetti = asta.get().getOggetti();
+        if(!oggetti.isEmpty())
+            for(OggettoModel oggetto : oggetti)
+                if (oggettoDAO.eliminaOggetto(oggetto.getId()) == 0)
+                    return 0;
+
+        List<OffertaModel> offerte = asta.get().getOfferte();
+        if(!offerte.isEmpty())
+            for(OffertaModel offerta : offerte)
+                if(offertaDAO.eliminaOfferta(offerta.getId()) == 0)
+                    return 0;
+
         final String sql = "DELETE FROM asta WHERE id = ?";
         return jdbcTemplate.update(sql, idAsta);
     }

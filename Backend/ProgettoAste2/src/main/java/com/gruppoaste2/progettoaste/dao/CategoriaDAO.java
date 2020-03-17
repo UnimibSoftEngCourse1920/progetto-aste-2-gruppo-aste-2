@@ -17,7 +17,17 @@ public interface CategoriaDAO {
         return aggiungiCategoria(idCategoria, categoria);
     }
 
+    UUID aggiungiAttributoCategoria(UUID idAttributo, UUID idCategoria, AttributoModel attributo);
+
+    default UUID aggiungiAttributoCategoria(UUID idCategoria, AttributoModel attributo)
+    {
+        UUID idAttributo = UUID.randomUUID();
+        return aggiungiAttributoCategoria(idAttributo, idCategoria, attributo);
+    }
+
     int eliminaCategoria(UUID idCategoria);
+
+    int eliminaAttributiCategoria(UUID idCategoria);
 
     Optional<CategoriaModel> trovaCategoria(UUID idCategoria);
 
@@ -32,4 +42,10 @@ public interface CategoriaDAO {
     int aggiornaCategoria (UUID idCategoria, CategoriaModel categoriaAggiornata);
 
     int assegnaCategoriaAdOggetto(UUID idOggetto, UUID idCategoria);
+
+    int rimuoviCategoriaDaOggetto(UUID idOggetto, UUID idCategoria);
+
+    int assegnaValoreAttributoAdOggetto(UUID idOggetto, AttributoModel attributo);
+
+    int rimuoviValoreAttributoDaOggetto(UUID idOggetto, UUID idAttributo);
 }

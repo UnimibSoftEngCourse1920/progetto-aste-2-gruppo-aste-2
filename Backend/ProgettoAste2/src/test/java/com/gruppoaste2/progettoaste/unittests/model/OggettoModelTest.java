@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,9 +22,14 @@ class OggettoModelTest {
         String descrizione = "descrizione";
         String urlImmagine = "urlImmagine";
 
+        UUID idAttributo = UUID.randomUUID();
+        String nomeAttributo = "nomeAttributo";
+        String valore = "valore";
+        AttributoModel attributo = new AttributoModel(idAttributo, nomeAttributo, valore);
+        List<AttributoModel> attributi = Collections.singletonList(attributo);
+
         UUID idCategoria = UUID.randomUUID();
         String nomeCategoria = "nomeCategoria";
-        Map<String, String> attributi = Collections.emptyMap();
         CategoriaModel categoria = new CategoriaModel(idCategoria, nomeCategoria, attributi);
         List<CategoriaModel> categorie = Collections.singletonList(categoria);
 

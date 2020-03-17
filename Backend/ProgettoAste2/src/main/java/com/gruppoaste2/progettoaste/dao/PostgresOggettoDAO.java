@@ -1,5 +1,6 @@
 package com.gruppoaste2.progettoaste.dao;
 
+import com.gruppoaste2.progettoaste.model.AttributoModel;
 import com.gruppoaste2.progettoaste.model.CategoriaModel;
 import com.gruppoaste2.progettoaste.model.OggettoModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Optional;
-import java.util.Properties;
-import java.util.UUID;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.postgresql.copy.CopyManager;
@@ -52,8 +50,9 @@ public class PostgresOggettoDAO implements OggettoDAO {
                 == 0)
             return null;
 
-        if(!oggetto.getCategorie().isEmpty())
-            for(CategoriaModel categoria : oggetto.getCategorie()) {
+        List<CategoriaModel> categorie = oggetto.getCategorie();
+        if(!categorie.isEmpty())
+            for(CategoriaModel categoria : categorie) {
                 UUID idCategoria;
                 if(categoria.getId() == null)
                     idCategoria = categoriaDAO.aggiungiCategoria(categoria);
@@ -67,6 +66,16 @@ public class PostgresOggettoDAO implements OggettoDAO {
 
     @Override
     public int eliminaOggetto(UUID idOggetto) {
+        Optional<OggettoModel> oggetto = trovaOggetto(idOggetto);
+        if(oggetto.isEmpty())
+            return 0;
+
+        List<CategoriaModel> categorie = categoriaDAO.trovaCategorieOggetto(idOggetto);
+        if(!categorie.isEmpty())
+            for(CategoriaModel categoria : categorie)
+                if(categoriaDAO.rimuoviCategoriaDaOggetto(idOggetto, categoria.getId()) == 0)
+                    return 0;
+
         final String sql = "DELETE FROM oggetto WHERE id = ?";
         return jdbcTemplate.update(sql, idOggetto);
     }

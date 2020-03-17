@@ -26,10 +26,23 @@ public class CategoriaController {
         return categoriaService.aggiungiCategoria(categoria);
     }
 
+    @PostMapping(path = "/aggiungi/attributo/{idCategoria}")
+    public UUID aggiungiAttributoCategoria(@PathVariable("idCategoria") UUID idCategoria,
+                                           @RequestBody AttributoModel attributo)
+    {
+        return categoriaService.aggiungiAttributoCategoria(idCategoria, attributo);
+    }
+
     @GetMapping(path = "/elimina/{idCategoria}")
     public int eliminaCategoria(@PathVariable("idCategoria") UUID idCategoria)
     {
         return categoriaService.eliminaCategoria(idCategoria);
+    }
+
+    @GetMapping(path = "/elimina/attributi/{idCategoria}")
+    public int eliminaAttributiCategoria(@PathVariable("idCategoria") UUID idCategoria)
+    {
+        return categoriaService.eliminaAttributiCategoria(idCategoria);
     }
 
     @GetMapping(path = "/{idCategoria}")
@@ -68,9 +81,27 @@ public class CategoriaController {
         return categoriaService.aggiornaCategoria(idCategoria, categoriaAggiornata);
     }
 
-    @GetMapping("/assegna/{idOggetto}/{idCategoria}")
+    @GetMapping("/assegna/categoria/{idOggetto}/{idCategoria}")
     public int assegnaCategoriaAdOggetto(@PathVariable("idOggetto") UUID idOggetto,
                                          @PathVariable("idCategoria") UUID idCategoria) {
         return categoriaService.assegnaCategoriaAdOggetto(idOggetto, idCategoria);
+    }
+
+    @GetMapping("/rimuovi/categoria/{idOggetto}/{idCategoria}")
+    public int rimuoviCategoriaDaOggetto(@PathVariable("idOggetto") UUID idOggetto,
+                                         @PathVariable("idCategoria") UUID idCategoria) {
+        return categoriaService.rimuoviCategoriaDaOggetto(idOggetto, idCategoria);
+    }
+
+    @PostMapping("/assegna/attributo/{idOggetto}")
+    public int assegnaValoreAttributoAdOggetto(@PathVariable("idOggetto") UUID idOggetto,
+                                               @RequestBody AttributoModel attributo) {
+        return categoriaService.assegnaValoreAttributoAdOggetto(idOggetto, attributo);
+    }
+
+    @GetMapping("/rimuovi/attributo/{idOggetto}/{idAttributo}")
+    public int rimuoviValoreAttributoDaOggetto(@PathVariable("idOggetto") UUID idOggetto,
+                                               @PathVariable("idAttributo") UUID idAttributo) {
+        return categoriaService.rimuoviValoreAttributoDaOggetto(idOggetto, idAttributo);
     }
 }

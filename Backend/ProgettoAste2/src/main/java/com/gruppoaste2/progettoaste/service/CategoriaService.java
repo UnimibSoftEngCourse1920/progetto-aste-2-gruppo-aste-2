@@ -25,8 +25,16 @@ public class CategoriaService {
         return categoriaDAO.aggiungiCategoria(categoria);
     }
 
+    public UUID aggiungiAttributoCategoria(UUID idCategoria, AttributoModel attributo){
+        return categoriaDAO.aggiungiAttributoCategoria(idCategoria, attributo);
+    }
+
     public int eliminaCategoria(UUID idCategoria){
         return categoriaDAO.eliminaCategoria(idCategoria);
+    }
+
+    public int eliminaAttributiCategoria(UUID idCategoria){
+        return categoriaDAO.eliminaAttributiCategoria(idCategoria);
     }
 
     public Optional<CategoriaModel> trovaCategoria(UUID idCategoria){
@@ -55,5 +63,17 @@ public class CategoriaService {
 
     public int assegnaCategoriaAdOggetto(UUID idOggetto, UUID idCategoria) {
         return categoriaDAO.assegnaCategoriaAdOggetto(idOggetto, idCategoria);
+    }
+
+    public int rimuoviCategoriaDaOggetto(UUID idOggetto, UUID idCategoria) {
+        return categoriaDAO.rimuoviCategoriaDaOggetto(idOggetto, idCategoria);
+    }
+
+    public int assegnaValoreAttributoAdOggetto(UUID idOggetto, AttributoModel attributo) {
+        return categoriaDAO.assegnaValoreAttributoAdOggetto(idOggetto, attributo);
+    }
+
+    public int rimuoviValoreAttributoDaOggetto(UUID idOggetto, UUID idAttributo) {
+        return categoriaDAO.rimuoviValoreAttributoDaOggetto(idOggetto, idAttributo);
     }
 }
