@@ -348,7 +348,7 @@ COPY public.attributo_oggetto (id_oggetto, id_attributo, valore) FROM stdin;
 -- Data for Name: categoria; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.categoria (nome) FROM stdin;
+COPY public.categoria (id) FROM stdin;
 mobile
 elettrodomestico
 \.
