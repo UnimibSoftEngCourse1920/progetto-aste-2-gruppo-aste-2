@@ -99,6 +99,17 @@
           ></b-form-textarea>
         </b-form-group>
 
+        <h8>Categorie disponibili:</h8>
+        <b-list-group horizontal>
+          <b-list-group-item
+            v-for="i in parseInt(categorieDisponibili.length)"
+            :key="i"
+          >{{categorieDisponibili[i-1]}}</b-list-group-item>
+        </b-list-group>
+
+        <br />
+        <br />
+
         <b-form-group label="Categorie: ">
           <b-form-tags
             input-id="tags-basic"
@@ -144,7 +155,8 @@ export default {
       idOggetti: [],
       idCategorie: [],
       show: true,
-      idConfig: null
+      idConfig: null,
+      categorieDisponibili: []
     };
   },
   created: function() {
@@ -160,6 +172,17 @@ export default {
           this.cambiaDurataTimeSlot = true;
         }
         this.idConfig = response.id;
+      });
+
+    fetch("http://localhost:8080/api/categoria/categorie", {
+      method: "get"
+    })
+      .then(response => response.json())
+      .then(response => {
+        console.log(response);
+        response.forEach(element => {
+          this.categorieDisponibili.push(element.nome);
+        });
       });
   },
   methods: {
@@ -216,7 +239,6 @@ export default {
           infoAsta: {
             tipo: tipo,
             prezzoPartenza: this.form.prezzoPartenza,
-            dataInizio: new Date().toISOString(),
             durataTimeSlot: durata,
             rifiutata: false,
             criterioTerminazione: terminazione
@@ -238,6 +260,7 @@ export default {
       this.form.descrizioneOggetti = [];
       this.form.urlOggetti = [];
       this.form.categorie = [];
+      this.categorieDisponibili = [];
 
       this.datiOggetti = [];
       this.idOggetti = [];
