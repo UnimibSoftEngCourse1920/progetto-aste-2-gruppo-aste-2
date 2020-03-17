@@ -17,9 +17,12 @@ public class PostgresCategoriaDAO implements CategoriaDAO {
 
     private final JdbcTemplate jdbcTemplate;
 
+    private final AttributoDAO attributoDAO;
+
     @Autowired
-    public PostgresCategoriaDAO(JdbcTemplate jdbcTemplate) {
+    public PostgresCategoriaDAO(JdbcTemplate jdbcTemplate, AttributoDAO attributoDAO) {
         this.jdbcTemplate = jdbcTemplate;
+        this.attributoDAO = attributoDAO;
     }
 
     @Override
@@ -32,33 +35,21 @@ public class PostgresCategoriaDAO implements CategoriaDAO {
         List<AttributoModel> attributi = categoria.getAttributi();
         if(attributi != null)
             for(AttributoModel attributo : attributi)
-                if(aggiungiAttributoCategoria(categoria.getId(), attributo) == null)
+                if(attributoDAO.aggiungiAttributo(categoria.getId(), attributo) == null)
                     return null;
 
         return categoria.getId();
     }
 
     @Override
-    public UUID aggiungiAttributoCategoria(UUID idAttributo, String idCategoria, AttributoModel attributo) {
-        final String sql = "INSERT INTO attributo(id, id_categoria, nome) " +
-                "VALUES(?, ?, ?)";
-        if(jdbcTemplate.update(sql, idAttributo, idCategoria, attributo.getNome()) == 0)
-            return null;
-        return idAttributo;
-    }
-
-    @Override
     public int eliminaCategoria(String idCategoria) {
-        if(eliminaAttributiCategoria(idCategoria) == 0)
-            return 0;
+        List<AttributoModel> attributi = attributoDAO.trovaAttributiCategoria(idCategoria);
+        if(attributi != null)
+            for(AttributoModel attributo : attributi)
+                if(attributoDAO.eliminaAttributo(attributo.getId()) == 0)
+                    return 0;
 
         final String sql = "DELETE FROM categoria WHERE id = ?";
-        return jdbcTemplate.update(sql, idCategoria);
-    }
-
-    @Override
-    public int eliminaAttributiCategoria(String idCategoria) {
-        final String sql = "DELETE FROM attributo WHERE id_categoria = ?";
         return jdbcTemplate.update(sql, idCategoria);
     }
 
@@ -80,14 +71,6 @@ public class PostgresCategoriaDAO implements CategoriaDAO {
     }
 
     @Override
-    public List<AttributoModel> trovaAttributiCategoria(String idCategoria) {
-        final String sql = "SELECT * FROM attributo WHERE id_categoria = ?";
-        return jdbcTemplate.query(sql,
-                (resultSet, i) -> makeAttributoFromResultSet(resultSet),
-                idCategoria);
-    }
-
-    @Override
     public List<CategoriaModel> trovaCategorieOggetto(UUID idOggetto) {
         final String sql = "SELECT * FROM categoria " +
                 "JOIN categoria_oggetto ON id = id_categoria " +
@@ -95,14 +78,6 @@ public class PostgresCategoriaDAO implements CategoriaDAO {
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeCategoriaFromResultSet(resultSet),
                 idOggetto);
-    }
-
-    @Override
-    public String valoreAttributoOggetto(UUID idOggetto, UUID idAttributo) {
-        final String sql = "SELECT valore FROM attributo_oggetto WHERE id_oggetto = ? AND id_attributo = ?";
-        return jdbcTemplate.queryForObject(sql,
-                (resultSet, i) -> resultSet.getString("valore"),
-                idOggetto, idAttributo);
     }
 
     @Override
@@ -125,10 +100,10 @@ public class PostgresCategoriaDAO implements CategoriaDAO {
         if(jdbcTemplate.update(sql, idOggetto, idCategoria) == 0)
             return 0;
 
-        List<AttributoModel> attributi = trovaAttributiCategoria(idCategoria);
+        List<AttributoModel> attributi = attributoDAO.trovaAttributiCategoria(idCategoria);
         if(attributi != null)
             for(AttributoModel attributo : attributi)
-                if(assegnaValoreAttributoAdOggetto(idOggetto, attributo) == 0)
+                if(attributoDAO.assegnaValoreAttributoAdOggetto(idOggetto, attributo) == 0)
                     return 0;
 
         return 1;
@@ -136,38 +111,19 @@ public class PostgresCategoriaDAO implements CategoriaDAO {
 
     @Override
     public int rimuoviCategoriaDaOggetto(UUID idOggetto, String idCategoria) {
-        List<AttributoModel> attributi = trovaAttributiCategoria(idCategoria);
+        List<AttributoModel> attributi = attributoDAO.trovaAttributiCategoria(idCategoria);
         if(attributi != null)
             for(AttributoModel attributo : attributi)
-                if(rimuoviValoreAttributoDaOggetto(idOggetto, attributo.getId()) == 0)
+                if(attributoDAO.rimuoviValoreAttributoDaOggetto(idOggetto, attributo.getId()) == 0)
                     return 0;
 
         final String sql = "DELETE FROM categoria_oggetto WHERE id_oggetto = ? AND id_categoria = ?";
         return jdbcTemplate.update(sql, idOggetto, idCategoria);
     }
 
-    @Override
-    public int assegnaValoreAttributoAdOggetto(UUID idOggetto, AttributoModel attributo) {
-        final String sql = "INSERT INTO attributo_oggetto(id_oggetto, id_attributo, valore) " +
-                "VALUES(?, ?, ?)";
-        return jdbcTemplate.update(sql, idOggetto, attributo.getId(), attributo.getValore());
-    }
-
-    @Override
-    public int rimuoviValoreAttributoDaOggetto(UUID idOggetto, UUID idAttributo) {
-        final String sql = "DELETE FROM attributo_oggetto WHERE id_oggetto = ? AND id_attributo = ?";
-        return jdbcTemplate.update(sql, idOggetto, idAttributo);
-    }
-
     private CategoriaModel makeCategoriaFromResultSet(ResultSet resultSet) throws SQLException {
         String idCategoria = resultSet.getString("id");
-        List<AttributoModel> attributi = trovaAttributiCategoria(idCategoria);
+        List<AttributoModel> attributi = attributoDAO.trovaAttributiCategoria(idCategoria);
         return new CategoriaModel(idCategoria, attributi);
-    }
-
-    private AttributoModel makeAttributoFromResultSet(ResultSet resultSet) throws SQLException {
-        UUID idAttributo = UUID.fromString(resultSet.getString("id"));
-        String nome = resultSet.getString("nome");
-        return new AttributoModel(idAttributo, nome, null);
     }
 }

@@ -1,6 +1,5 @@
 package com.gruppoaste2.progettoaste.api;
 
-import com.gruppoaste2.progettoaste.model.AttributoModel;
 import com.gruppoaste2.progettoaste.model.CategoriaModel;
 import com.gruppoaste2.progettoaste.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,23 +25,10 @@ public class CategoriaController {
         return categoriaService.aggiungiCategoria(categoria);
     }
 
-    @PostMapping(path = "/aggiungi/attributo/{idCategoria}")
-    public UUID aggiungiAttributoCategoria(@PathVariable("idCategoria") String idCategoria,
-                                           @RequestBody AttributoModel attributo)
-    {
-        return categoriaService.aggiungiAttributoCategoria(idCategoria, attributo);
-    }
-
     @GetMapping(path = "/elimina/{idCategoria}")
     public int eliminaCategoria(@PathVariable("idCategoria") String idCategoria)
     {
         return categoriaService.eliminaCategoria(idCategoria);
-    }
-
-    @GetMapping(path = "/elimina/attributi/{idCategoria}")
-    public int eliminaAttributiCategoria(@PathVariable("idCategoria") String idCategoria)
-    {
-        return categoriaService.eliminaAttributiCategoria(idCategoria);
     }
 
     @GetMapping(path = "/{idCategoria}")
@@ -58,20 +44,9 @@ public class CategoriaController {
         return categoriaService.trovaCategorie();
     }
 
-    @GetMapping(path = "/attributi/{idCategoria}")
-    public List<AttributoModel> trovaAttributiCategoria(@PathVariable("idCategoria") String idCategoria) {
-        return categoriaService.trovaAttributiCategoria(idCategoria);
-    }
-
-    @GetMapping(path = "/oggetto/{idOggetto}")
+    @GetMapping(path = "categorie/oggetto/{idOggetto}")
     public List<CategoriaModel> trovaCategorieOggetto(@PathVariable("idOggetto") UUID idOggetto) {
         return categoriaService.trovaCategorieOggetto(idOggetto);
-    }
-
-    @GetMapping("/attributo/{idOggetto}/oggetto/{idAttributo}")
-    public String valoreAttributoOggetto(@PathVariable("idOggetto") UUID idOggetto,
-                                         @PathVariable("idAttributo") UUID idAttributo){
-        return categoriaService.valoreAttributoOggetto(idOggetto, idAttributo);
     }
 
     @PostMapping(path = "/aggiorna/{idCategoria}")
@@ -97,17 +72,5 @@ public class CategoriaController {
     public int rimuoviCategoriaDaOggetto(@PathVariable("idOggetto") UUID idOggetto,
                                          @PathVariable("idCategoria") String idCategoria) {
         return categoriaService.rimuoviCategoriaDaOggetto(idOggetto, idCategoria);
-    }
-
-    @PostMapping("/assegna/attributo/{idOggetto}")
-    public int assegnaValoreAttributoAdOggetto(@PathVariable("idOggetto") UUID idOggetto,
-                                               @RequestBody AttributoModel attributo) {
-        return categoriaService.assegnaValoreAttributoAdOggetto(idOggetto, attributo);
-    }
-
-    @GetMapping("/rimuovi/attributo/{idOggetto}/{idAttributo}")
-    public int rimuoviValoreAttributoDaOggetto(@PathVariable("idOggetto") UUID idOggetto,
-                                               @PathVariable("idAttributo") UUID idAttributo) {
-        return categoriaService.rimuoviValoreAttributoDaOggetto(idOggetto, idAttributo);
     }
 }

@@ -2,6 +2,7 @@ package com.gruppoaste2.progettoaste.service;
 
 import com.gruppoaste2.progettoaste.dao.AstaDAO;
 import com.gruppoaste2.progettoaste.model.AstaModel;
+import com.gruppoaste2.progettoaste.model.OffertaModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -40,27 +41,27 @@ public class AstaService {
         return astaDAO.trovaAsteInCorso();
     }
 
-    public List<AstaModel> trovaAsteInCorsoUtente(UUID idAstaManager){
+    public List<AstaModel> trovaAsteInCorsoUtente(UUID idAstaManager) {
         return astaDAO.trovaAsteInCorsoUtente(idAstaManager);
     }
 
-    public List<AstaModel> trovaAsteScaduteUtente(UUID idAstaManager){
+    public List<AstaModel> trovaAsteScaduteUtente(UUID idAstaManager) {
         return astaDAO.trovaAsteScaduteUtente(idAstaManager);
     }
 
-    public List<AstaModel> trovaAsteInCorsoOfferente(UUID idOfferente){
+    public List<AstaModel> trovaAsteInCorsoOfferente(UUID idOfferente) {
         return astaDAO.trovaAsteInCorsoOfferente(idOfferente);
     }
 
-    public List<AstaModel> trovaAsteInCorsoBustaChiusaOfferente(UUID idOfferente){
+    public List<AstaModel> trovaAsteInCorsoBustaChiusaOfferente(UUID idOfferente) {
         return astaDAO.trovaAsteInCorsoBustaChiusaOfferente(idOfferente);
     }
 
-    public List<AstaModel> trovaAsteInCorsoSuperamentoImmediatoMassimoOfferente(UUID idOfferente){
+    public List<AstaModel> trovaAsteInCorsoSuperamentoImmediatoMassimoOfferente(UUID idOfferente) {
         return astaDAO.trovaAsteInCorsoSuperamentoImmediatoMassimoOfferente(idOfferente);
     }
 
-    public List<AstaModel> trovaAsteInCorsoSuperamentoImmediatoOfferenteSuperato(UUID idOfferente){
+    public List<AstaModel> trovaAsteInCorsoSuperamentoImmediatoOfferenteSuperato(UUID idOfferente) {
         return astaDAO.trovaAsteInCorsoSuperamentoImmediatoOfferenteSuperato(idOfferente);
     }
 
@@ -68,15 +69,19 @@ public class AstaService {
         return astaDAO.trovaAsteVinteDaUtente(idUtente);
     }
 
-    public int aggiornaAsta(UUID idAsta, AstaModel astaAggiornata){
+    public int aggiornaAsta(UUID idAsta, AstaModel astaAggiornata) {
         return astaDAO.aggiornaAsta(idAsta, astaAggiornata);
     }
 
-    public Float accettaAstaVinta(UUID idAsta, UUID idVincitore){
+    public UUID partecipaAdAsta(UUID idAsta, OffertaModel offerta) {
+        return astaDAO.partecipaAdAsta(idAsta, offerta);
+    }
+
+    public Float accettaAstaVinta(UUID idAsta, UUID idVincitore) {
         return astaDAO.accettaAstaVinta(idAsta, idVincitore);
     }
 
-    public Float rinunciaAstaVinta(UUID idAsta, UUID idVincitore){
+    public Float rinunciaAstaVinta(UUID idAsta, UUID idVincitore) {
         return astaDAO.rinunciaAstaVinta(idAsta, idVincitore);
     }
 }

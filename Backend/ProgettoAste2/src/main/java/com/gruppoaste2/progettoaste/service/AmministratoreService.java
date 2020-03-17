@@ -19,15 +19,15 @@ public class AmministratoreService {
         this.amministratoreDAO = amministratoreDAO;
     }
 
-    public UUID inserisciAmministratore(AmministratoreModel amministratoreModel){
+    public UUID inserisciAmministratore(AmministratoreModel amministratoreModel) {
         return amministratoreDAO.inserisciAmministratore(amministratoreModel);
     }
 
-    public int eliminaAmministratore(UUID idAmministratore){
+    public int eliminaAmministratore(UUID idAmministratore) {
         return amministratoreDAO.eliminaAmministratore(idAmministratore);
     }
 
-    public Optional<AmministratoreModel> trovaAmministratore(UUID idAmministratore){
+    public Optional<AmministratoreModel> trovaAmministratore(UUID idAmministratore) {
         return amministratoreDAO.trovaAmministratore(idAmministratore);
     }
 

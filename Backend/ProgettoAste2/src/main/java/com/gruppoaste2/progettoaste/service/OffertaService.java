@@ -40,27 +40,27 @@ public class OffertaService {
         return offertaDAO.trovaOfferteAsta(idAsta);
     }
 
-    public Optional<OffertaModel> trovaUltimaOffertaAsta(UUID idAsta){
+    public Optional<OffertaModel> trovaUltimaOffertaAsta(UUID idAsta) {
         return offertaDAO.trovaUltimaOffertaAsta(idAsta);
     }
 
-    public Optional<OffertaModel> trovaOffertaMaggioreAsta(UUID idAsta){
+    public Optional<OffertaModel> trovaOffertaMaggioreAsta(UUID idAsta) {
         return offertaDAO.trovaOffertaMaggioreAsta(idAsta);
     }
 
-    public List<OffertaModel> trovaOfferteUtente(UUID idOfferente){
+    public List<OffertaModel> trovaOfferteUtente(UUID idOfferente) {
         return offertaDAO.trovaOfferteUtente(idOfferente);
     }
 
-    public List<OffertaModel> trovaOfferteUtenteAsta(UUID idOfferente, UUID idAsta){
+    public List<OffertaModel> trovaOfferteUtenteAsta(UUID idOfferente, UUID idAsta) {
         return offertaDAO.trovaOfferteUtenteAsta(idOfferente, idAsta);
     }
 
-    public int aggiornaOfferta(UUID idOfferta, OffertaModel offertaAggiornata){
+    public int aggiornaOfferta(UUID idOfferta, OffertaModel offertaAggiornata) {
         return offertaDAO.aggiornaOfferta(idOfferta, offertaAggiornata);
     }
 
-    public boolean controllaOffertaUtenteAstaEsiste(UUID idUtente, UUID idAsta){
+    public boolean controllaOffertaUtenteAstaEsiste(UUID idUtente, UUID idAsta) {
         return offertaDAO.controllaOffertaUtenteAstaEsiste(idUtente, idAsta);
     }
 }

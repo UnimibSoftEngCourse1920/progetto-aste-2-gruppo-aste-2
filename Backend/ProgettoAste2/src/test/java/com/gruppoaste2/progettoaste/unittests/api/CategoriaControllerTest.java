@@ -89,17 +89,6 @@ class CategoriaControllerTest {
 
     }
 
-    // Test trovaAttributiCategoria
-    @Test
-    void whenTrovaAttributiCategoria_givenNonExistingAttributiCategoria_thenReturnEmptyJsonArray() throws Exception {
-
-    }
-
-    @Test
-    void whenTrovaAttributiCategoria_givenExistingAttributiCategoria_thenReturnJsonArrayOfMapsAttributiCategoria() throws Exception {
-
-    }
-
     // Test trovaCategorieOggetto
     @Test
     void whenTrovaCategorieOggetto_givenNonExistingCategorieOggetto_thenReturnEmptyJsonArray() throws Exception {
@@ -109,10 +98,5 @@ class CategoriaControllerTest {
     @Test
     void whenTrovaCategorieOggetto_givenExistingCategorieOggetto_thenReturnJsonArrayOfMapsCategorieOggetto() throws Exception {
 
-    }
-
-    // Test valoreAttributiOggetto
-    @Test
-    void valoreAttributoOggetto() {
     }
 }
