@@ -8,9 +8,9 @@ import java.util.UUID;
 
 public interface OggettoDAO {
 
-    int inserisciOggetto(UUID idOggetto, UUID idAsta, OggettoModel oggetto);
+    UUID inserisciOggetto(UUID idOggetto, UUID idAsta, OggettoModel oggetto);
 
-    default int inserisciOggetto(UUID idAsta, OggettoModel oggetto)
+    default UUID inserisciOggetto(UUID idAsta, OggettoModel oggetto)
     {
         UUID id = UUID.randomUUID();
         return inserisciOggetto(id, idAsta, oggetto);

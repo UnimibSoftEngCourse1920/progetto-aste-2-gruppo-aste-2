@@ -20,7 +20,7 @@ public class OggettoService {
         this.oggettoDAO = oggettoDAO;
     }
 
-    public int inserisciOggetto(UUID idAsta, OggettoModel oggetto)
+    public UUID inserisciOggetto(UUID idAsta, OggettoModel oggetto)
     {
         return oggettoDAO.inserisciOggetto(idAsta,oggetto);
     }

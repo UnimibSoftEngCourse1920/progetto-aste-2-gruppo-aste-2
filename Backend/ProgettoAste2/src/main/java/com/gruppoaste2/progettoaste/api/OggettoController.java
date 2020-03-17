@@ -21,7 +21,7 @@ public class OggettoController {
     }
 
     @PostMapping("/inserisci/{id}")
-    public int inserisciOggetto(@PathVariable("id") UUID idAsta, @RequestBody OggettoModel oggetto)
+    public UUID inserisciOggetto(@PathVariable("id") UUID idAsta, @RequestBody OggettoModel oggetto)
     {
         return oggettoService.inserisciOggetto(idAsta, oggetto);
     }

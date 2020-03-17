@@ -45,11 +45,12 @@ public class PostgresOggettoDAO implements OggettoDAO {
     }
 
     @Override
-    public int inserisciOggetto(UUID id, UUID idAsta, OggettoModel oggetto) {
+    public UUID inserisciOggetto(UUID id, UUID idAsta, OggettoModel oggetto) {
         final String sql = "INSERT INTO oggetto(id, id_asta, nome, descrizione, url_immagine) " +
                 "VALUES(?, ?, ?, ?, ?)";
-        return jdbcTemplate.update(sql,
+        jdbcTemplate.update(sql,
                 id, idAsta, oggetto.getNome(), oggetto.getDescrizione(), oggetto.getUrlImmagine());
+        return id;
     }
 
     @Override

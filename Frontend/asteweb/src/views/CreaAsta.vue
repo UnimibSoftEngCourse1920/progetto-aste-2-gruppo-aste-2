@@ -141,6 +141,8 @@ export default {
       cambiaDurataTimeSlot: false,
       durataTimeSlotFisso: null,
       datiOggetti: [],
+      idOggetti: [],
+      idCategorie: [],
       show: true,
       idConfig: null
     };
@@ -205,8 +207,6 @@ export default {
       })
         .then(response => response.json())
         .then(response => {
-          console.log(response);
-          console.log("tutto ok");
           var idAsta = response;
           var i;
           for (i = 0; i < this.form.numeroOggetti; i++) {
@@ -227,29 +227,27 @@ export default {
                 descrizione: this.form.descrizioneOggetti[i],
                 urlImmagine: this.form.urlOggetti[i]
               })
-            }).then(response => {
-              if (response.status === 200) {
-                for (i = 0; i < this.form.numeroOggetti; i++) {
-                  var j;
-                  for (j = 0; j < this.form.categorie[i].length; j++) {
-                    fetch("http://localhost:8080/api/categoria/aggiungi/", {
-                      method: "post",
-                      headers: {
-                        Accept: "application/json",
-                        "Content-Type": "application/json"
-                      },
-                      body: JSON.stringify({
-                        nome: this.form.categorie[i][j]
-                      })
+            })
+              .then(response => response.json())
+              .then(response => {
+                this.idOggetti.push(response);
+
+                console.log(i);
+
+                var j;
+                for (j = 0; j < this.form.categorie[i].length; j++) {
+                  fetch("http://localhost:8080/api/categoria/aggiungi/", {
+                    method: "post",
+                    headers: {
+                      Accept: "application/json",
+                      "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                      nome: this.form.categorie[i][j]
                     })
-                      .then(response => response.json())
-                      .then(response => {
-                        console.log(response);
-                      });
-                  }
+                  });
                 }
-              }
-            });
+              });
           }
         });
     },
@@ -266,6 +264,12 @@ export default {
       this.form.descrizioneOggetti = [];
       this.form.urlOggetti = [];
       this.form.categorie = [];
+
+      this.datiOggetti = [];
+      this.idOggetti = [];
+      this.idCategorie = [];
+
+      this.id;
       // Trick to reset/clear native browser form validation state
       this.show = false;
       this.$nextTick(() => {
