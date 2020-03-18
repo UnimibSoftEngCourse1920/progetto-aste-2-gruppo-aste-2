@@ -53,6 +53,7 @@ class AstaControllerTest {
         UUID idut2 = UUID.randomUUID();
         List<OggettoModel> oggetti = new ArrayList<>();
         List<OffertaModel> offerte = new ArrayList<>();
+        List<CategoriaModel> categorie = new ArrayList<>();
         OggettoModel ogg1 = new OggettoModel(idOgge, "nome", "descrizione", "url", Collections.emptyList()); // todo andre empty list
         oggetti.add(ogg1);
         OffertaModel off1 = new OffertaModel(idoff, 1, Timestamp.valueOf(LocalDateTime.now()),
@@ -490,4 +491,39 @@ class AstaControllerTest {
     void whenAggiornaAsta_givenExistingAsta_thenReturnJsonNumber1() throws Exception
      */
 
+    private AstaModel makeAstaTest() {
+        UUID idAsta = UUID.randomUUID();
+        UUID idConfigurazione = UUID.randomUUID();
+        UUID idAstaManager = UUID.randomUUID();
+        UUID idOggetto = UUID.randomUUID();
+        UUID idCategoria = UUID.randomUUID();
+        UUID idAttributo = UUID.randomUUID();
+        UUID idOfferta = UUID.randomUUID();
+        UUID idOfferente = UUID.randomUUID();
+
+        List<OggettoModel> oggetti = new ArrayList<>();
+        List<OffertaModel> offerte = new ArrayList<>();
+        List<CategoriaModel> categorie = new ArrayList<>();
+        OggettoModel ogg1 = new OggettoModel(idOgge, "nome", "descrizione", "url", Collections.emptyList()); // todo andre empty list
+        oggetti.add(ogg1);
+        OffertaModel off1 = new OffertaModel(idoff, 1, Timestamp.valueOf(LocalDateTime.now()),
+                new UtenteRegistratoModel(idut2, "username1", "email1", "+39339025613",
+                        "boh1", 2, false, false));
+        offerte.add(off1);
+
+        AstaModel asta = new AstaModel(idasta,
+                new InfoAstaModel("info", 3.4,
+                        Timestamp.valueOf(LocalDateTime.now()),
+                        Timestamp.valueOf(LocalDateTime.now()),
+                        Time.valueOf(LocalTime.now()),
+                        false,
+                        "max_timeslot"),
+                new ConfigurazioneModel(idconf, "fisso", 1, 4, 0.21,
+                        Timestamp.valueOf(LocalDateTime.now()), Time.valueOf(LocalTime.now())),
+                oggetti,
+                new UtenteRegistratoModel(idUtente, "username", "email",
+                        "339025613", "boh", 0, false, false),
+                offerte);
+        return asta;
+    }
 }
