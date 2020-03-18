@@ -1,0 +1,4 @@
+#+TITLE: Relazione Progetto Aste 2
+#+OPTIONS: author:nil date:nil toc:nil num:nil
+
+
