@@ -14,10 +14,6 @@ public class AttributoModel {
         this.valore = valore;
     }
 
-    public AttributoModel(UUID id, String nome) {
-        this(id, nome, null);
-    }
-
     public UUID getId() {
         return id;
     }

@@ -19,7 +19,8 @@ class OggettoCSVHelper {
 
         while(!oggettiCSV.isEmpty()) {
             int beginIndex = oggettiCSV.indexOf(NEW_LINE) + 1;
-            int endIndex = oggettiCSV.indexOf(NEW_LINE, beginIndex);
+            int endIndex = (oggettiCSV.substring(beginIndex).contains(NEW_LINE)) ?
+                    oggettiCSV.indexOf(NEW_LINE, beginIndex) : oggettiCSV.length();
 
             String oggettoCSV = oggettiCSV.substring(beginIndex, endIndex);
             oggetti.add(readOggettoCSV(oggettoCSV));
@@ -34,7 +35,7 @@ class OggettoCSVHelper {
 
         if(oggetti != null)
             for(OggettoModel oggetto : oggetti)
-                oggettiCSV = oggettiCSV.concat("\n").concat(writeOggettoCSV(oggetto));
+                oggettiCSV = oggettiCSV.concat(NEW_LINE).concat(writeOggettoCSV(oggetto));
 
         return oggettiCSV;
     }

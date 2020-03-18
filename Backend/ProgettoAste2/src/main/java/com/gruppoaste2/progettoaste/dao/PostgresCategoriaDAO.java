@@ -100,16 +100,7 @@ public class PostgresCategoriaDAO implements CategoriaDAO {
     public int assegnaCategoriaAdOggetto(UUID idOggetto, String idCategoria) {
         final String sql = "INSERT INTO categoria_oggetto(id_oggetto, id_categoria) " +
                 "VALUES(?, ?)";
-        if(jdbcTemplate.update(sql, idOggetto, idCategoria) == 0)
-            return 0;
-
-        List<AttributoModel> attributi = attributoDAO.trovaAttributiCategoria(idCategoria);
-        if(attributi != null)
-            for(AttributoModel attributo : attributi)
-                if(attributoDAO.assegnaValoreAttributoAdOggetto(idOggetto, attributo) == 0)
-                    return 0;
-
-        return 1;
+        return jdbcTemplate.update(sql, idOggetto, idCategoria);
     }
 
     @Override

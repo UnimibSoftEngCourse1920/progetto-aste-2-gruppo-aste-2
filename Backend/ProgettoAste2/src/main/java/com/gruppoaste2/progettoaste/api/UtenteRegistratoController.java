@@ -9,6 +9,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * La classe {@link RestController @RestController} {@code UtenteRegistratoController}
+ * rappresenta le funzionalità della classe {@code UtenteRegistratoModel},
+ * richiamabili esternamente tramite richieste HTTP.
+ * <p>
+ * L'URL dell'endpoint è definito tramite l'annotazione
+ * {@code {@link RequestMapping @RequestMapping}("api/utenteregistrato")}.
+ * Le funzioni in questa classe sono accessibili tramite richieste HTTP.
+ */
 @RequestMapping("api/utenteregistrato")
 @RestController
 public class UtenteRegistratoController {

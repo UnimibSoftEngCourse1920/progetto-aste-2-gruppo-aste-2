@@ -1,4 +1,4 @@
-package com.gruppoaste2.progettoaste.unittests.model;
+package com.gruppoaste2.progettoaste.unit.model;
 
 import com.gruppoaste2.progettoaste.model.CategoriaModel;
 import com.gruppoaste2.progettoaste.model.OggettoModel;

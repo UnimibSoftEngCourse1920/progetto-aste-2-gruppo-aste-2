@@ -7,20 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.postgresql.copy.CopyManager;
-import org.postgresql.core.BaseConnection;
 
 @Repository("postgres-oggetto") // serve per identificare il tipo di database da usare (per dependency injection)
 public class PostgresOggettoDAO implements OggettoDAO {
@@ -28,6 +17,7 @@ public class PostgresOggettoDAO implements OggettoDAO {
     private final JdbcTemplate jdbcTemplate;
 
     private final CategoriaDAO categoriaDAO;
+    private final AttributoDAO attributoDAO;
 
     private final String SELECT_FROM_OGGETTO_JOIN_ASTA =
             "SELECT o.id, o.nome, o.descrizione, o.url_immagine " +
@@ -36,9 +26,10 @@ public class PostgresOggettoDAO implements OggettoDAO {
     private final String WHERE_ID_ASTA_MANAGER = "WHERE a.id_asta_manager = ?";
 
     @Autowired
-    public PostgresOggettoDAO(JdbcTemplate jdbcTemplate, CategoriaDAO categoriaDAO) {
+    public PostgresOggettoDAO(JdbcTemplate jdbcTemplate, CategoriaDAO categoriaDAO, AttributoDAO attributoDAO) {
         this.jdbcTemplate = jdbcTemplate;
         this.categoriaDAO = categoriaDAO;
+        this.attributoDAO = attributoDAO;
     }
 
 
@@ -58,6 +49,28 @@ public class PostgresOggettoDAO implements OggettoDAO {
                         return null;
                 if(categoriaDAO.assegnaCategoriaAdOggetto(idOggetto, categoria.getId()) == 0)
                     return null;
+
+                List<AttributoModel> attributiCategoria = attributoDAO.trovaAttributiCategoria(categoria.getId());
+                List<AttributoModel> attributiOggetto = categoria.getAttributi();
+                List<AttributoModel> attributi = new ArrayList<>();
+
+                if(attributiCategoria != null && attributiOggetto != null)
+                    for(int i = 0; i < attributiCategoria.size(); i++) {
+                        AttributoModel attributoCategoria = attributiCategoria.get(i);
+                        AttributoModel attributoOggetto = attributiOggetto.get(i);
+
+                        UUID idAttributo = attributoCategoria.getId();
+                        String nome = attributoCategoria.getNome();
+                        String valore = attributoOggetto.getValore();
+
+                        AttributoModel attributo = new AttributoModel(idAttributo, nome, valore);
+                        attributi.add(attributo);
+                    }
+
+                if(!attributi.isEmpty())
+                    for(AttributoModel attributo : attributi)
+                        if(attributoDAO.assegnaValoreAttributoAdOggetto(idOggetto, attributo) == 0)
+                            return null;
             }
         return idOggetto;
     }

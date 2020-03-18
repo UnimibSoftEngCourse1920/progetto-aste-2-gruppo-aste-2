@@ -39,6 +39,10 @@ public interface AstaDAO {
 
     List<AstaModel> trovaAsteVinteDaUtente(UUID idUtente);
 
+    List<AstaModel> trovaAsteAccettateDaUtente(UUID idUtente);
+
+    List<AstaModel> trovaAsteRifiutateDaUtente(UUID idUtente);
+
     int aggiornaAsta(UUID idAsta, AstaModel astaAggiornata);
 
     int iniziaAsta(UUID idAsta);

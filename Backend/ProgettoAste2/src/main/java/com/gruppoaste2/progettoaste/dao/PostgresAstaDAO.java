@@ -21,6 +21,7 @@ public class PostgresAstaDAO implements AstaDAO {
     private final OffertaDAO offertaDAO;
 
     private final String SELECT_ALL_FROM_ASTA = "SELECT * FROM asta";
+    private final String JOIN_ASTA = "JOIN offerta ON asta.id = offerta.id_asta ";
 
     @Autowired
     public PostgresAstaDAO(JdbcTemplate jdbcTemplate, UtenteRegistratoDAO utenteRegistratoDAO,
@@ -34,14 +35,17 @@ public class PostgresAstaDAO implements AstaDAO {
 
     @Override
     public UUID aggiungiAsta(UUID idAsta, AstaModel asta) {
+        Time durataTimeSlot = (asta.getConfigurazione().getTipoTimeSlot().equals("fisso")) ?
+                asta.getConfigurazione().getDurataTimeSlotFisso() : asta.getInfoAsta().getDurataTimeSlot();
+
         final String sql = "INSERT INTO asta(id, id_asta_manager, id_configurazione, tipo, prezzo_partenza, " +
                 "data_inizio, data_fine, durata_timeslot, rifiutata, criterio_terminazione) " +
                 "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?::tipoterminazioneasta)";
         if(jdbcTemplate.update(sql,
                 idAsta, asta.getAstaManager().getId(), asta.getConfigurazione().getId(), asta.getInfoAsta().getTipo(),
                 asta.getInfoAsta().getPrezzoPartenza(), asta.getInfoAsta().getDataInizio(),
-                asta.getInfoAsta().getDataFine(), asta.getInfoAsta().getDurataTimeSlot(),
-                asta.getInfoAsta().isRifiutata(), asta.getInfoAsta().getCriterioTerminazione())
+                asta.getInfoAsta().getDataFine(), durataTimeSlot, asta.getInfoAsta().isRifiutata(),
+                asta.getInfoAsta().getCriterioTerminazione())
                 == 0)
             return null;
 
@@ -121,7 +125,7 @@ public class PostgresAstaDAO implements AstaDAO {
     @Override
     public List<AstaModel> trovaAsteInCorsoOfferente(UUID idOfferente) {
         final String sql = SELECT_ALL_FROM_ASTA +
-                " JOIN offerta ON asta.id = offerta.id_asta " +
+                JOIN_ASTA +
                 "WHERE id_offerente = ? AND data_fine IS NULL";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeAstaFromResultSet(resultSet),
@@ -131,7 +135,7 @@ public class PostgresAstaDAO implements AstaDAO {
     @Override
     public List<AstaModel> trovaAsteInCorsoBustaChiusaOfferente(UUID idOfferente) {
         final String sql = SELECT_ALL_FROM_ASTA +
-                " JOIN offerta ON asta.id = offerta.id_asta " +
+                JOIN_ASTA +
                 "WHERE tipo = busta_chiusa AND id_offerente = ? AND data_fine IS NULL";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeAstaFromResultSet(resultSet),
@@ -141,9 +145,12 @@ public class PostgresAstaDAO implements AstaDAO {
     @Override
     public List<AstaModel> trovaAsteInCorsoSuperamentoImmediatoMassimoOfferente(UUID idOfferente) {
         final String sql = SELECT_ALL_FROM_ASTA +
-                " JOIN offerta ON asta.id = offerta.id_asta " +
-                "ORDER BY credito_offerto DESC LIMIT 1 " +
-                "WHERE tipo = superamento_immediato AND id_offerente = ? AND data_fine IS NULL ";
+                " JOIN offerta AS o ON asta.id = o.id_asta " +
+                "WHERE tipo = superamento_immediato AND o.id_offerente = ? AND data_fine IS NULL " +
+                "AND o.credito_offerto = " +
+                "(SELECT MAX(o2.credito_offerto) " +
+                "FROM offerta AS o2 " +
+                "WHERE o.id = o2.id)";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeAstaFromResultSet(resultSet),
                 idOfferente);
@@ -152,9 +159,12 @@ public class PostgresAstaDAO implements AstaDAO {
     @Override
     public List<AstaModel> trovaAsteInCorsoSuperamentoImmediatoOfferenteSuperato(UUID idOfferente) {
         final String sql = SELECT_ALL_FROM_ASTA +
-                " JOIN offerta ON asta.id = offerta.id_asta " +
-                "ORDER BY credito_offerto DESC OFFSET 1 ROWS " +
-                "WHERE tipo = superamento_immediato AND id_offerente = ? AND data_fine IS NULL";
+                " JOIN offerta AS o ON asta.id = o.id_asta " +
+                "WHERE tipo = superamento_immediato AND o.id_offerente = ? AND data_fine IS NULL " +
+                "AND o.credito_offerto < " +
+                "(SELECT MAX(o2.credito_offerto) " +
+                "FROM offerta AS o2 " +
+                "WHERE o.id = o2.id)";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeAstaFromResultSet(resultSet),
                 idOfferente);
@@ -163,8 +173,28 @@ public class PostgresAstaDAO implements AstaDAO {
     @Override
     public List<AstaModel> trovaAsteVinteDaUtente(UUID idUtente) {
         final String sql = SELECT_ALL_FROM_ASTA +
-                " JOIN offerta ON asta.id = offerta.id_asta " +
+                " JOIN offerta ON asta.id = id_asta " +
                 "WHERE id_offerente = ? AND data_fine IS NOT NULL";
+        return jdbcTemplate.query(sql,
+                (resultSet, i) -> makeAstaFromResultSet(resultSet),
+                idUtente);
+    }
+
+    @Override
+    public List<AstaModel> trovaAsteAccettateDaUtente(UUID idUtente) {
+        final String sql = SELECT_ALL_FROM_ASTA +
+                " JOIN offerta ON asta.id = id_asta " +
+                "WHERE id_offerente = ? AND data_fine IS NOT NULL AND rifiutata = false";
+        return jdbcTemplate.query(sql,
+                (resultSet, i) -> makeAstaFromResultSet(resultSet),
+                idUtente);
+    }
+
+    @Override
+    public List<AstaModel> trovaAsteRifiutateDaUtente(UUID idUtente) {
+        final String sql = SELECT_ALL_FROM_ASTA +
+                " JOIN offerta ON asta.id = id_asta " +
+                "WHERE id_offerente = ? AND data_fine IS NOT NULL AND rifiutata = true";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeAstaFromResultSet(resultSet),
                 idUtente);
