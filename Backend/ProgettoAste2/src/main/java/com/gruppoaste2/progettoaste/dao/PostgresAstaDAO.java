@@ -45,15 +45,33 @@ public class PostgresAstaDAO implements AstaDAO {
                 == 0)
             return null;
 
-        for(OggettoModel oggetto : asta.getOggetti())
-            if(oggettoDAO.inserisciOggetto(idAsta, oggetto) == null)
-                return null;
+        List<OggettoModel> oggetti = asta.getOggetti();
+        if(oggetti != null)
+            for(OggettoModel oggetto : asta.getOggetti())
+                if(oggettoDAO.inserisciOggetto(idAsta, oggetto) == null)
+                    return null;
 
         return idAsta;
     }
 
     @Override
     public int eliminaAsta(UUID idAsta) {
+        Optional<AstaModel> asta = trovaAsta(idAsta);
+        if(asta.isEmpty())
+            return 0;
+
+        List<OggettoModel> oggetti = asta.get().getOggetti();
+        if(oggetti != null)
+            for(OggettoModel oggetto : oggetti)
+                if (oggettoDAO.eliminaOggetto(oggetto.getId()) == 0)
+                    return 0;
+
+        List<OffertaModel> offerte = asta.get().getOfferte();
+        if(offerte != null)
+            for(OffertaModel offerta : offerte)
+                if(offertaDAO.eliminaOfferta(offerta.getId()) == 0)
+                    return 0;
+
         final String sql = "DELETE FROM asta WHERE id = ?";
         return jdbcTemplate.update(sql, idAsta);
     }
@@ -167,6 +185,31 @@ public class PostgresAstaDAO implements AstaDAO {
     }
 
     @Override
+    public int iniziaAsta(UUID idAsta) {
+        final String sql = "UPDATE asta SET data_inizio = ? WHERE id = ?";
+        return jdbcTemplate.update(sql, new Timestamp(System.currentTimeMillis()), idAsta);
+    }
+
+    @Override
+    public UUID partecipaAdAsta(UUID idAsta, OffertaModel offerta) {
+        UUID idOfferta = offertaDAO.aggiungiOfferta(idAsta, offerta);
+        if(idOfferta == null)
+            return null;
+
+        if(offertaDAO.trovaOfferteAsta(idAsta).size() == 1)
+            if(iniziaAsta(idAsta) == 0)
+                return null;
+
+        return idOfferta;
+    }
+
+    @Override
+    public int chiudiAsta(UUID idAsta) {
+        final String sql = "UPDATE asta SET data_fine = ? WHERE id = ?";
+        return jdbcTemplate.update(sql, new Timestamp(System.currentTimeMillis()), idAsta);
+    }
+
+    @Override
     public Float accettaAstaVinta(UUID idAsta, UUID idVincitore) {
         Optional<AstaModel> asta = trovaAsta(idAsta);
         if(asta.isEmpty())
@@ -209,12 +252,6 @@ public class PostgresAstaDAO implements AstaDAO {
         if(utenteRegistratoDAO.aggiungiCredito(idVincitore, - creditoPagamentoPenale) == 0)
             return null;
         return creditoPagamentoPenale;
-    }
-
-    @Override
-    public int chiudiAsta(UUID idAsta) {
-        final String sql = "UPDATE asta SET data_fine = ? WHERE id = ?";
-        return jdbcTemplate.update(sql, new Timestamp(System.currentTimeMillis()), idAsta);
     }
 
     private AstaModel makeAstaFromResultSet(ResultSet resultSet) throws SQLException {

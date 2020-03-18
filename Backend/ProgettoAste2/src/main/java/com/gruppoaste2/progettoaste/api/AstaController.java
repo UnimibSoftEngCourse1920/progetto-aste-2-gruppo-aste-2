@@ -1,6 +1,7 @@
 package com.gruppoaste2.progettoaste.api;
 
 import com.gruppoaste2.progettoaste.model.AstaModel;
+import com.gruppoaste2.progettoaste.model.OffertaModel;
 import com.gruppoaste2.progettoaste.service.AstaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -98,6 +99,12 @@ public class AstaController {
     public int aggiornaAsta(@PathVariable("idAsta") UUID idAsta, @RequestBody AstaModel astaAggiornata)
     {
         return astaService.aggiornaAsta(idAsta, astaAggiornata);
+    }
+
+    @PostMapping(path = "/partecipa/{idAsta}")
+    public UUID partecipaAdAsta(@PathVariable("idAsta") UUID idAsta, @RequestBody OffertaModel offerta)
+    {
+        return astaService.partecipaAdAsta(idAsta, offerta);
     }
 
     @GetMapping(path = "/accetta/{idAsta}/{idVincitore}")

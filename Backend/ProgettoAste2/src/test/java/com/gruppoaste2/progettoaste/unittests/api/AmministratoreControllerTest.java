@@ -5,11 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gruppoaste2.progettoaste.api.AmministratoreController;
 import com.gruppoaste2.progettoaste.model.AmministratoreModel;
 import com.gruppoaste2.progettoaste.service.AmministratoreService;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -37,6 +37,7 @@ class AmministratoreControllerTest {
     private AmministratoreService amministratoreService;
 
     // Test inserisciAmministratore
+    @DisplayName("inserisciAmministratore non inserisce Amministratore")
     @Test
     void whenInserisciAmministratore_givenAlreadyExistingAmministratore_thenReturnEmptyJson() throws Exception {
         AmministratoreModel amministratore =
@@ -53,6 +54,7 @@ class AmministratoreControllerTest {
                 .andExpect(jsonPath("$").doesNotExist());
     }
 
+    @DisplayName("inserisciAmministratore inserisce Amministratore")
     @Test
     void whenInserisciAmministratore_givenNonExistingAmministratore_thenReturnJsonStringIdAmministratore()
             throws Exception {
@@ -74,6 +76,7 @@ class AmministratoreControllerTest {
     }
 
     // Test eliminaAmministratore
+    @DisplayName("eliminaAmministratore non elimina Amministratore")
     @Test
     void whenEliminaAmministratore_givenNonExistingAmministratore_thenReturnJsonNumber0() throws Exception {
         UUID idAmministratore = UUID.randomUUID();
@@ -87,6 +90,7 @@ class AmministratoreControllerTest {
                 .andExpect(jsonPath("$").value(0));
     }
 
+    @DisplayName("eliminaAmministratore elimina Amministratore")
     @Test
     void whenEliminaAmministratore_givenExistingAmministratore_thenReturnJsonNumber1() throws Exception {
         UUID idAmministratore = UUID.randomUUID();
@@ -101,6 +105,7 @@ class AmministratoreControllerTest {
     }
 
     // Test trovaAmministratore
+    @DisplayName("trovaAmministratore non trova Amministratore")
     @Test
     void whenTrovaAmministratore_givenNonExistingAmministratore_thenReturnEmptyJson() throws Exception {
         UUID idAmministratore = UUID.randomUUID();
@@ -115,6 +120,7 @@ class AmministratoreControllerTest {
                 .andExpect(jsonPath("$").doesNotExist());
     }
 
+    @DisplayName("trovaAmministratore trova Amministratore")
     @Test
     void whenTrovaAmministratore_givenExistingAmministratore_thenReturnJsonMapAmministratore() throws Exception {
         UUID idAmministratore = UUID.randomUUID();
@@ -136,6 +142,7 @@ class AmministratoreControllerTest {
     }
 
     // Test trovaAmministratori
+    @DisplayName("trovaAmministratori non trova Amministratori")
     @Test
     void whenTrovaAmministratori_givenNonExistingAmministratori_thenReturnEmptyJsonArray() throws Exception {
         List<AmministratoreModel> amministratoriTrovati = Collections.emptyList();
@@ -149,6 +156,7 @@ class AmministratoreControllerTest {
                 .andExpect(jsonPath("$", hasSize(0)));
     }
 
+    @DisplayName("trovaAmministratori trova Amministratori")
     @Test
     void whenTrovaAmministratori_givenExistingAmministratori_thenReturnJsonArrayOfMapsAmministratori() throws Exception {
         UUID idAmministratore = UUID.randomUUID();
@@ -172,6 +180,7 @@ class AmministratoreControllerTest {
     }
 
     // Test aggiornaAmministratore
+    @DisplayName("aggiornaAmministratore non aggiorna Amministratore")
     @Test
     void whenAggiornaAmministratore_givenNonExistingAmministratore_thenReturnJsonNumber0() throws Exception {
         UUID idAmministratore = UUID.randomUUID();
@@ -192,6 +201,7 @@ class AmministratoreControllerTest {
                 .andExpect(jsonPath("$").value(0));
     }
 
+    @DisplayName("aggiornaAmministratore aggiorna Amministratore")
     @Test
     void whenAggiornaAmministratore_givenExistingAmministratore_thenReturnJsonNumber1() throws Exception {
         UUID idAmministratore = UUID.randomUUID();
@@ -213,6 +223,7 @@ class AmministratoreControllerTest {
     }
 
     // Test controllaUsernameOccupato
+    @DisplayName("controllaUsernameOccupato non trova username non occupato")
     @Test
     void whenControllaUsernameOccupato_givenUsernameNonOccupato_thenReturnJsonBooleanFalse() throws Exception {
         String username = "username";
@@ -226,6 +237,7 @@ class AmministratoreControllerTest {
                 .andExpect(jsonPath("$").value(false));
     }
 
+    @DisplayName("controllaUsernameOccupato trova username occupato")
     @Test
     void whenControllaUsernameOccupato_givenUsernameOccupato_thenReturnJsonBooleanTrue() throws Exception {
         String username = "username";
@@ -240,6 +252,7 @@ class AmministratoreControllerTest {
     }
 
     // Test controllaEmailOccupata
+    @DisplayName("controllaEmailOccupata non trova email non occupata")
     @Test
     void whenControllaEmailOccupata_givenEmailNonOccupata_thenReturnJsonBooleanFalse() throws Exception {
         String email = "email";
@@ -253,6 +266,7 @@ class AmministratoreControllerTest {
                 .andExpect(jsonPath("$").value(false));
     }
 
+    @DisplayName("controllaEmailOccupata trova email occupata")
     @Test
     void whenControllaEmailOccupata_givenEmailOccupata_thenReturnJsonBooleanTrue() throws Exception {
         String email = "email";
@@ -267,6 +281,7 @@ class AmministratoreControllerTest {
     }
 
     // Test controllaAmministratoreEsiste
+    @DisplayName("controllaAmministratoreEsiste non trova Amministratore")
     @Test
     void whenControllaAmministratoreEsiste_givenNonExistingAmministratore_thenReturnJsonBooleanFalse() throws Exception {
         AmministratoreModel amministratore =
@@ -284,6 +299,7 @@ class AmministratoreControllerTest {
                 .andExpect(jsonPath("$").value(false));
     }
 
+    @DisplayName("controllaAmministratoreEsiste trova Amministratore")
     @Test
     void whenControllaAmministratoreEsiste_givenExistingAmministratore_thenReturnJsonBooleanTrue() throws Exception {
         AmministratoreModel amministratore =
@@ -302,6 +318,7 @@ class AmministratoreControllerTest {
     }
 
     // Test ritornaIdAmministratore
+    @DisplayName("ritornaIdAmministratore non trova Amministratore")
     @Test
     void whenRitornaIdAmministratore_givenNonExistingAmministratore_thenReturnEmptyJson() throws Exception {
         AmministratoreModel amministratore =
@@ -318,6 +335,7 @@ class AmministratoreControllerTest {
                 .andExpect(jsonPath("$").doesNotExist());
     }
 
+    @DisplayName("ritornaIdAmministratore trova Amministratore")
     @Test
     void whenRitornaIdAmministratore_givenExistingAmministratore_thenReturnIdAmministratore() throws Exception {
         UUID idAmministratore = UUID.randomUUID();

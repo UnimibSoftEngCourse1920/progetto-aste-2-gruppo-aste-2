@@ -1,7 +1,6 @@
 package com.gruppoaste2.progettoaste.service;
 
 import com.gruppoaste2.progettoaste.dao.CategoriaDAO;
-import com.gruppoaste2.progettoaste.model.AttributoModel;
 import com.gruppoaste2.progettoaste.model.CategoriaModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -21,15 +20,15 @@ public class CategoriaService {
         this.categoriaDAO = categoriaDAO;
     }
 
-    public UUID aggiungiCategoria(CategoriaModel categoria){
+    public String aggiungiCategoria(CategoriaModel categoria){
         return categoriaDAO.aggiungiCategoria(categoria);
     }
 
-    public int eliminaCategoria(UUID idCategoria){
+    public int eliminaCategoria(String idCategoria){
         return categoriaDAO.eliminaCategoria(idCategoria);
     }
 
-    public Optional<CategoriaModel> trovaCategoria(UUID idCategoria){
+    public Optional<CategoriaModel> trovaCategoria(String idCategoria) {
         return categoriaDAO.trovaCategoria(idCategoria);
     }
 
@@ -37,23 +36,23 @@ public class CategoriaService {
         return categoriaDAO.trovaCategorie();
     }
 
-    public List<AttributoModel> trovaAttributiCategoria(UUID idCategoria){
-        return categoriaDAO.trovaAttributiCategoria(idCategoria);
-    }
-
-    public List<CategoriaModel> trovaCategorieOggetto (UUID idOggetto){
+    public List<CategoriaModel> trovaCategorieOggetto (UUID idOggetto) {
         return categoriaDAO.trovaCategorieOggetto(idOggetto);
     }
 
-    public String valoreAttributoOggetto(UUID idOggetto, UUID idAttributo){
-        return categoriaDAO.valoreAttributoOggetto(idOggetto, idAttributo);
-    }
-
-    public int aggiornaCategoria (UUID idCategoria, CategoriaModel categoriaAggiornata){
+    public int aggiornaCategoria(String idCategoria, CategoriaModel categoriaAggiornata) {
         return categoriaDAO.aggiornaCategoria(idCategoria, categoriaAggiornata);
     }
 
-    public int assegnaCategoriaAdOggetto(UUID idOggetto, UUID idCategoria) {
+    public boolean controllaCategoriaEsiste(CategoriaModel categoria) {
+        return categoriaDAO.controllaCategoriaEsiste(categoria);
+    }
+
+    public int assegnaCategoriaAdOggetto(UUID idOggetto, String idCategoria) {
         return categoriaDAO.assegnaCategoriaAdOggetto(idOggetto, idCategoria);
+    }
+
+    public int rimuoviCategoriaDaOggetto(UUID idOggetto, String idCategoria) {
+        return categoriaDAO.rimuoviCategoriaDaOggetto(idOggetto, idCategoria);
     }
 }

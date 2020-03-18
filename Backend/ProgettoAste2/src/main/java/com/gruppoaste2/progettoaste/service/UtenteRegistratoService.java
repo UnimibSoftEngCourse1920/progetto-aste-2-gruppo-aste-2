@@ -25,11 +25,11 @@ public class UtenteRegistratoService {
         return utenteRegistratoDAO.aggiungiUtenteRegistrato(utenteRegistratoModel);
     }
 
-    public int eliminaUtenteRegistrato(UUID idUtenteRegistrato){
+    public int eliminaUtenteRegistrato(UUID idUtenteRegistrato) {
         return utenteRegistratoDAO.eliminaUtenteRegistrato(idUtenteRegistrato);
     }
 
-    public Optional<UtenteRegistratoModel> trovaUtenteRegistrato(UUID idUtenteRegistrato){
+    public Optional<UtenteRegistratoModel> trovaUtenteRegistrato(UUID idUtenteRegistrato) {
         return utenteRegistratoDAO.trovaUtenteRegistrato(idUtenteRegistrato);
     }
 
@@ -37,7 +37,7 @@ public class UtenteRegistratoService {
         return utenteRegistratoDAO.trovaUtentiRegistrati();
     }
 
-    public int aggiornaUtenteRegistrato(UUID idUtenteRegistrato, UtenteRegistratoModel utenteRegistratoAggiornato){
+    public int aggiornaUtenteRegistrato(UUID idUtenteRegistrato, UtenteRegistratoModel utenteRegistratoAggiornato) {
         return utenteRegistratoDAO.aggiornaUtenteRegistrato(idUtenteRegistrato, utenteRegistratoAggiornato);
     }
 

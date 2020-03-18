@@ -1,6 +1,7 @@
 package com.gruppoaste2.progettoaste.dao;
 
 import com.gruppoaste2.progettoaste.model.AstaModel;
+import com.gruppoaste2.progettoaste.model.OffertaModel;
 
 import java.util.List;
 import java.util.Optional;
@@ -40,9 +41,13 @@ public interface AstaDAO {
 
     int aggiornaAsta(UUID idAsta, AstaModel astaAggiornata);
 
+    int iniziaAsta(UUID idAsta);
+
+    UUID partecipaAdAsta(UUID idAsta, OffertaModel offerta);
+
+    int chiudiAsta(UUID idAsta);
+
     Float accettaAstaVinta(UUID idAsta, UUID idVincitore);
 
     Float rinunciaAstaVinta(UUID idAsta, UUID idVincitore);
-
-    int chiudiAsta(UUID idAsta);
 }

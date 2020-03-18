@@ -35,8 +35,4 @@ public interface OggettoDAO {
     List<OggettoModel> trovaOggettiVintiDaUtente(UUID idUtente);
 
     int aggiornaOggetto(UUID idOggetto, OggettoModel oggettoAggiornato);
-
-    long importaOggetti(UUID idAsta, String fileName);
-
-    long esportaOggetti(UUID idAsta, String fileName);
 }

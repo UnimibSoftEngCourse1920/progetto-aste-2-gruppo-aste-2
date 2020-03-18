@@ -10,17 +10,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 @SpringBootApplication
 public class ProgettoAsteApplication {
-
-
-
-
 	public static void main(String[] args) {
 		SpringApplication.run(ProgettoAsteApplication.class, args);
 	}
-
-
-
-
-
-
 }

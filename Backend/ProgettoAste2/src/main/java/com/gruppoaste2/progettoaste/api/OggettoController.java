@@ -89,15 +89,15 @@ public class OggettoController {
         return oggettoService.aggiornaOggetto(idOggetto, oggettoAggiornato);
     }
 
-    @PostMapping(path = "/importa/{idAsta}")
-    public long importaOggetti(@PathVariable("idAsta") UUID idAsta, @RequestBody String fileName)
+    @GetMapping("/importa")
+    public List<OggettoModel> importaOggetti(String oggettiCSV)
     {
-        return oggettoService.importaOggetti(idAsta, fileName);
+        return oggettoService.importaOggetti(oggettiCSV);
     }
 
-    @PostMapping(path = "/esporta/{idAsta}")
-    public long esportaOggetti(@PathVariable("idAsta") UUID idAsta, @RequestBody String fileName)
+    @GetMapping(path = "/esporta/{idAsta}")
+    public String esportaOggetti(@PathVariable("idAsta") UUID idAsta)
     {
-        return oggettoService.esportaOggetti(idAsta, fileName);
+        return oggettoService.esportaOggetti(idAsta);
     }
 }

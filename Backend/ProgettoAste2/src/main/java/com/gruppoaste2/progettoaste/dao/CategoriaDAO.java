@@ -1,7 +1,6 @@
 package com.gruppoaste2.progettoaste.dao;
 
 import com.gruppoaste2.progettoaste.model.CategoriaModel;
-import com.gruppoaste2.progettoaste.model.AttributoModel;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,27 +8,21 @@ import java.util.UUID;
 
 public interface CategoriaDAO {
 
-    UUID aggiungiCategoria(UUID idCategoria, CategoriaModel categoria);
+    String aggiungiCategoria(CategoriaModel categoria);
 
-    default UUID aggiungiCategoria(CategoriaModel categoria)
-    {
-        UUID idCategoria = UUID.randomUUID();
-        return aggiungiCategoria(idCategoria, categoria);
-    }
+    int eliminaCategoria(String idCategoria);
 
-    int eliminaCategoria(UUID idCategoria);
-
-    Optional<CategoriaModel> trovaCategoria(UUID idCategoria);
+    Optional<CategoriaModel> trovaCategoria(String idCategoria);
 
     List<CategoriaModel> trovaCategorie();
 
-    List<AttributoModel> trovaAttributiCategoria(UUID idCategoria);
-
     List<CategoriaModel> trovaCategorieOggetto(UUID idOggetto);
 
-    String valoreAttributoOggetto(UUID idOggetto, UUID idAttributo);
+    int aggiornaCategoria(String idCategoria, CategoriaModel categoriaAggiornata);
 
-    int aggiornaCategoria (UUID idCategoria, CategoriaModel categoriaAggiornata);
+    boolean controllaCategoriaEsiste(CategoriaModel categoria);
 
-    int assegnaCategoriaAdOggetto(UUID idOggetto, UUID idCategoria);
+    int assegnaCategoriaAdOggetto(UUID idOggetto, String idCategoria);
+
+    int rimuoviCategoriaDaOggetto(UUID idOggetto, String idCategoria);
 }

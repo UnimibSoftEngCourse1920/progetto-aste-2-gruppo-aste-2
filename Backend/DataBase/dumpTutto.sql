@@ -179,7 +179,7 @@ ALTER TABLE public.asta OWNER TO postgres;
 
 CREATE TABLE public.attributo (
     id uuid NOT NULL,
-    id_categoria uuid NOT NULL,
+    id_categoria character varying(100) NOT NULL,
     nome character varying(100) NOT NULL
 );
 
@@ -204,8 +204,7 @@ ALTER TABLE public.attributo_oggetto OWNER TO postgres;
 --
 
 CREATE TABLE public.categoria (
-    id uuid NOT NULL,
-    nome character varying(100) NOT NULL
+    id character varying(100) NOT NULL
 );
 
 
@@ -217,7 +216,7 @@ ALTER TABLE public.categoria OWNER TO postgres;
 
 CREATE TABLE public.categoria_oggetto (
     id_oggetto uuid NOT NULL,
-    id_categoria uuid NOT NULL
+    id_categoria character varying(100) NOT NULL
 );
 
 
@@ -349,9 +348,9 @@ COPY public.attributo_oggetto (id_oggetto, id_attributo, valore) FROM stdin;
 -- Data for Name: categoria; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.categoria (id, nome) FROM stdin;
-1c06d000-5764-4b46-8d98-77b25b97004c	mobile
-5e325c13-2611-4394-8ba1-50a1b1494ae3	elettrodomestico
+COPY public.categoria (id) FROM stdin;
+mobile
+elettrodomestico
 \.
 
 
