@@ -33,7 +33,7 @@ public class ScheduledUpdate {
     public void aggiornaSituazioneAste()
     {
         System.out.println("aggiorna-asta");
-/*
+
         List<AstaModel> asteInCorso = astaDAO.trovaAsteInCorso();
         for(AstaModel asta : asteInCorso)
         {
@@ -48,13 +48,12 @@ public class ScheduledUpdate {
                 Timestamp dataCreazione = asta.getInfoAsta().getDataInizio();
                 System.out.println("DataCreazione: " + dataCreazione + " long: " + dataCreazione.getTime());
                 System.out.println("Numero timeslot" + numeroTimeSlot);
-                System.out.println("Duarata timeslot: " + asta.getInfoAsta().getDurataTimeSlot().toInstant());
+                var durata = asta.getInfoAsta().getDurataTimeSlot().toLocalTime();
+                System.out.println("Duarata timeslot: " + "H: " + durata.getHour() + "M: " + durata.getMinute() + " S: " + durata.getSecond());
                 long dataFine = dataCreazione.getTime() +
-                        (numeroTimeSlot * asta.getInfoAsta().getDurataTimeSlot().getTime());
+                        (numeroTimeSlot * (durata.getHour() * 3600000 + durata.getMinute() * 60000 + durata.getSecond() * 1000));
                 System.out.println("DataFine: " + new Timestamp(dataFine) + " long: " + dataFine);
                 Timestamp now = Timestamp.from(Instant.now());
-            }
-
 
                 if(dataFine < now.getTime())
                 {
@@ -63,9 +62,13 @@ public class ScheduledUpdate {
                     else
                         System.out.println("Asta " + asta.getId() + " chiusa con successo");
                 }
+            }
+
+
+
 
 
         }
-*/
+
     }
 }
