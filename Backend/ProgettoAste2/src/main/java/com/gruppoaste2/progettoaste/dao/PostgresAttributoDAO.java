@@ -100,7 +100,7 @@ public class PostgresAttributoDAO implements AttributoDAO {
     private AttributoModel makeAttributoCategoriaFromResultSet(ResultSet resultSet) throws SQLException {
         UUID idAttributo = UUID.fromString(resultSet.getString("id"));
         String nome = resultSet.getString("nome");
-        return new AttributoModel(idAttributo, nome);
+        return new AttributoModel(idAttributo, nome, null);
     }
 
     private AttributoModel makeAttributoOggettoFromResultSet(ResultSet resultSet) throws SQLException {
