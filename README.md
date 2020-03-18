@@ -13,9 +13,15 @@ traccia del progetto
 
 Il sistema fornisce accesso agli utenti attraverso il Web.
 
+## Istruzioni di installazione
+Vedi [Relazione Progetto Asta2.pdf](https://github.com/UnimibSoftEngCourse1920/progetto-aste-2-gruppo-aste-2/blob/master/Relazione%20Progetto%20Asta2.pdf)
+
 ## Framework e Tool utilizzati
 * [Spring Boot](https://spring.io/projects/spring-boot) - Framework utilizzato
 * [Maven](https://maven.apache.org/) - Gestione delle dipendenze
+* [Travis](https://travis-ci.com/) - Test and Deployment Confidence
+* [SonarCloud](https://sonarcloud.io) - Code Quality, Reliability, Security and Maintainability
+* [Understand] - Anti-Patterns and Code Metrics
 
 ## Autori
 * Francesco Frigati ([francescofrigati](https://github.com/francescofrigati))
