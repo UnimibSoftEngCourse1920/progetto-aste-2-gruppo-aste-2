@@ -57,13 +57,12 @@ export default {
     filteredList() {
       if (this.searchNome.length > 0 && this.searchDescrione == 0)
         return this.aste.filter(asta => {
-          return asta.oggetti[0].nome.includes(this.searchNome.toLowerCase);
+          return asta.oggetti[0].nome.includes(this.searchNome);
         });
       if (this.searchDescrione.length > 0 && this.searchNome == 0)
         return this.aste.filter(asta => {
           return asta.oggetti[0].descrizione.includes(
-            this.searchDescrione.toLowerCase
-          );
+            this.searchDescrione);
         });
       else return this.aste;
     },
