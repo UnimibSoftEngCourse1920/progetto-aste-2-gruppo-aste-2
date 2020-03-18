@@ -172,8 +172,28 @@ public class PostgresAstaDAO implements AstaDAO {
     @Override
     public List<AstaModel> trovaAsteVinteDaUtente(UUID idUtente) {
         final String sql = SELECT_ALL_FROM_ASTA +
-                " JOIN offerta ON asta.id = offerta.id_asta " +
+                " JOIN offerta ON asta.id = id_asta " +
                 "WHERE id_offerente = ? AND data_fine IS NOT NULL";
+        return jdbcTemplate.query(sql,
+                (resultSet, i) -> makeAstaFromResultSet(resultSet),
+                idUtente);
+    }
+
+    @Override
+    public List<AstaModel> trovaAsteAccettateDaUtente(UUID idUtente) {
+        final String sql = SELECT_ALL_FROM_ASTA +
+                " JOIN offerta ON asta.id = id_asta " +
+                "WHERE id_offerente = ? AND data_fine IS NOT NULL AND rifiutata = false";
+        return jdbcTemplate.query(sql,
+                (resultSet, i) -> makeAstaFromResultSet(resultSet),
+                idUtente);
+    }
+
+    @Override
+    public List<AstaModel> trovaAsteRifiutateDaUtente(UUID idUtente) {
+        final String sql = SELECT_ALL_FROM_ASTA +
+                " JOIN offerta ON asta.id = id_asta " +
+                "WHERE id_offerente = ? AND data_fine IS NOT NULL AND rifiutata = true";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeAstaFromResultSet(resultSet),
                 idUtente);

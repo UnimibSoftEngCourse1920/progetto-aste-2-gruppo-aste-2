@@ -69,6 +69,14 @@ public class AstaService {
         return astaDAO.trovaAsteVinteDaUtente(idUtente);
     }
 
+    public List<AstaModel> trovaAsteAccettateDaUtente(UUID idUtente){
+        return astaDAO.trovaAsteAccettateDaUtente(idUtente);
+    }
+
+    public List<AstaModel> trovaAsteRifiutateDaUtente(UUID idUtente){
+        return astaDAO.trovaAsteRifiutateDaUtente(idUtente);
+    }
+
     public int aggiornaAsta(UUID idAsta, AstaModel astaAggiornata) {
         return astaDAO.aggiornaAsta(idAsta, astaAggiornata);
     }
