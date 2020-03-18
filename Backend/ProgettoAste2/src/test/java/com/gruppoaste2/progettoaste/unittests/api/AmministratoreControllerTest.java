@@ -223,7 +223,7 @@ class AmministratoreControllerTest {
     }
 
     // Test controllaUsernameOccupato
-    @DisplayName("controllaUsernameOccupato trova username non occupato")
+    @DisplayName("controllaUsernameOccupato non trova username non occupato")
     @Test
     void whenControllaUsernameOccupato_givenUsernameNonOccupato_thenReturnJsonBooleanFalse() throws Exception {
         String username = "username";
@@ -252,7 +252,7 @@ class AmministratoreControllerTest {
     }
 
     // Test controllaEmailOccupata
-    @DisplayName("controllaEmailOccupata trova email non occupata")
+    @DisplayName("controllaEmailOccupata non trova email non occupata")
     @Test
     void whenControllaEmailOccupata_givenEmailNonOccupata_thenReturnJsonBooleanFalse() throws Exception {
         String email = "email";

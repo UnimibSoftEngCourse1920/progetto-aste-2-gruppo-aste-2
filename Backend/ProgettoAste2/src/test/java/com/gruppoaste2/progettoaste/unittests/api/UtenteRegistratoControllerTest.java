@@ -3,8 +3,10 @@ package com.gruppoaste2.progettoaste.unittests.api;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gruppoaste2.progettoaste.api.UtenteRegistratoController;
+import com.gruppoaste2.progettoaste.model.AmministratoreModel;
 import com.gruppoaste2.progettoaste.model.UtenteRegistratoModel;
 import com.gruppoaste2.progettoaste.service.UtenteRegistratoService;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +37,10 @@ class UtenteRegistratoControllerTest {
     @MockBean
     private UtenteRegistratoService utenteRegistratoService;
 
-    // Test inserisciUtenteRegistrato
+    // Test aggiungiUtenteRegistrato
+    @DisplayName("aggiungiUtenteRegistrato non aggiunge UtenteRegistrato")
     @Test
-    void whenInserisciUtenteRegistrato_givenAlreadyExistingUtenteRegistrato_thenReturnEmptyJson() throws Exception {
+    void whenAggiungiUtenteRegistrato_givenAlreadyExistingUtenteRegistrato_thenReturnEmptyJson() throws Exception {
         UtenteRegistratoModel utenteRegistrato =
                 new UtenteRegistratoModel(null, "username", "email", "password",
                         "0", 0.0f, false, false);
@@ -53,8 +56,9 @@ class UtenteRegistratoControllerTest {
                 .andExpect(jsonPath("$").doesNotExist());
     }
 
+    @DisplayName("aggiungiUtenteRegistrato aggiunge UtenteRegistrato")
     @Test
-    void whenInserisciUtenteRegistrato_givenNonExistingUtenteRegistrato_thenReturnJsonStringIdUtenteRegistrato()
+    void whenAggiungiUtenteRegistrato_givenNonExistingUtenteRegistrato_thenReturnJsonStringIdUtenteRegistrato()
             throws Exception {
         UtenteRegistratoModel utenteRegistrato =
                 new UtenteRegistratoModel(null, "username", "email", "password",
@@ -74,7 +78,37 @@ class UtenteRegistratoControllerTest {
                 .andExpect(jsonPath("$").value(idUtenteRegistrato.toString()));
     }
 
+    // Test eliminaUtenteRegistrato
+    @DisplayName("eliminaUtenteRegistrato non elimina UtenteRegistrato")
+    @Test
+    void whenEliminaUtenteRegistrato_givenNonExistingUtenteRegistrato_thenReturnJsonNumber0() throws Exception {
+        UUID idUtenteRegistrato = UUID.randomUUID();
+
+        given(utenteRegistratoService.eliminaUtenteRegistrato(idUtenteRegistrato)).willReturn(0);
+
+        mockMvc.perform(get("/api/utenteregistrato/elimina/" + idUtenteRegistrato)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNumber())
+                .andExpect(jsonPath("$").value(0));
+    }
+
+    @DisplayName("eliminaUtenteRegistrato elimina UtenteRegistrato")
+    @Test
+    void whenEliminaUtenteRegistrato_givenExistingUtenteRegistrato_thenReturnJsonNumber1() throws Exception {
+        UUID idUtenteRegistrato = UUID.randomUUID();
+
+        given(utenteRegistratoService.eliminaUtenteRegistrato(idUtenteRegistrato)).willReturn(1);
+
+        mockMvc.perform(get("/api/utenteregistrato/elimina/" + idUtenteRegistrato)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNumber())
+                .andExpect(jsonPath("$").value(1));
+    }
+
     // Test trovaUtenteRegistrato
+    @DisplayName("trovaUtenteRegistrato non trova UtenteRegistrato")
     @Test
     void whenTrovaUtenteRegistrato_givenNonExistingUtenteRegistrato_thenReturnEmptyJson() throws Exception {
         UUID idUtenteRegistrato = UUID.randomUUID();
@@ -89,6 +123,7 @@ class UtenteRegistratoControllerTest {
                 .andExpect(jsonPath("$").doesNotExist());
     }
 
+    @DisplayName("trovaUtenteRegistrato trova UtenteRegistrato")
     @Test
     void whenUtenteRegistrato_givenExistingUtenteRegistrato_thenReturnJsonMapUtenteRegistrato() throws Exception {
         UUID idUtenteRegistrato = UUID.randomUUID();
@@ -114,6 +149,7 @@ class UtenteRegistratoControllerTest {
     }
 
     // Test trovaUtentiRegistrati
+    @DisplayName("trovaUtentiRegistrati non trova UtentiRegistrati")
     @Test
     void whenTrovaUtentiRegistrati_givenNonExistingUtentiRegistrati_thenReturnEmptyJsonArray() throws Exception {
         List<UtenteRegistratoModel> utentiRegistratiTrovati = Collections.emptyList();
@@ -127,6 +163,7 @@ class UtenteRegistratoControllerTest {
                 .andExpect(jsonPath("$", hasSize(0)));
     }
 
+    @DisplayName("trovaUtentiRegistrati trova UtentiRegistrati")
     @Test
     void whenTrovaUtentiRegistrati_givenExistingUtentiRegistrati_thenReturnJsonArrayOfMapsUtentiRegistrati() throws Exception {
         UUID idUtenteRegistrato = UUID.randomUUID();
@@ -153,56 +190,51 @@ class UtenteRegistratoControllerTest {
                 .andExpect(jsonPath("$[0].credito").value(utentiRegistratiTrovati.get(0).getCredito()));
     }
 
-    // Test aggiungiUtenteRegistrato
-    @Test
-    void whenAggiungiUtenteRegistrato_givenExistingUtenteRegistrato_thenReturnJsonNumber0() throws Exception {
-
-    }
-
-    @Test
-    void whenAggiungiUtenteRegistrato_givenNonExistingUtenteRegistrato_thenReturnJsonNumber1() throws Exception {
-
-    }
-
     // Test aggiornaUtenteRegistrato
+    @DisplayName("aggiornaUtenteRegistrato non aggiorna UtenteRegistrato")
     @Test
     void whenAggiornaUtenteRegistrato_givenNonExistingUtenteRegistrato_thenReturnJsonNumber0() throws Exception {
-
-    }
-
-    @Test
-    void whenAggiornaUtenteRegistrato_givenExistingUtenteRegistrato_thenReturnJsonNumber1() throws Exception {
-
-    }
-
-    // Test eliminaUtenteRegistrato
-    @Test
-    void whenEliminaUtenteRegistrato_givenNonExistingUtenteRegistrato_thenReturnJsonNumber0() throws Exception {
         UUID idUtenteRegistrato = UUID.randomUUID();
 
-        given(utenteRegistratoService.eliminaUtenteRegistrato(idUtenteRegistrato)).willReturn(0);
+        UtenteRegistratoModel utenteRegistrato =
+                new UtenteRegistratoModel(idUtenteRegistrato, "username", "email", "password", "3336669991", 0.0f, true, true);
 
-        mockMvc.perform(get("/api/utenteregistrato/elimina/" + idUtenteRegistrato)
-                .contentType(MediaType.APPLICATION_JSON))
+        given(utenteRegistratoService.aggiornaUtenteRegistrato(refEq(idUtenteRegistrato), refEq(utenteRegistrato)))
+                .willReturn(0);
+
+        mockMvc.perform(post("/api/utenteregistrato/aggiorna/" + idUtenteRegistrato)
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding(StandardCharsets.UTF_8.name())
+                .content(new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL)
+                        .writeValueAsString(utenteRegistrato)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isNumber())
                 .andExpect(jsonPath("$").value(0));
     }
 
+    @DisplayName("aggiornaUtenteRegistrato aggiorna UtenteRegistrato")
     @Test
-    void whenEliminaUtenteRegistrato_givenExistingUtenteRegistrato_thenReturnJsonNumber1() throws Exception {
+    void whenAggiornaAmministratore_givenExistingAmministratore_thenReturnJsonNumber1() throws Exception {
         UUID idUtenteRegistrato = UUID.randomUUID();
 
-        given(utenteRegistratoService.eliminaUtenteRegistrato(idUtenteRegistrato)).willReturn(1);
+        UtenteRegistratoModel utenteRegistrato =
+                new UtenteRegistratoModel(idUtenteRegistrato, "username", "email", "password", "3336669991", 0.0f, true, true);
 
-        mockMvc.perform(get("/api/utenteregistrato/elimina/" + idUtenteRegistrato)
-                .contentType(MediaType.APPLICATION_JSON))
+        given(utenteRegistratoService.aggiornaUtenteRegistrato(refEq(idUtenteRegistrato), refEq(utenteRegistrato)))
+                .willReturn(1);
+
+        mockMvc.perform(post("/api/utenteregistrato/aggiorna/" + idUtenteRegistrato)
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding(StandardCharsets.UTF_8.name())
+                .content(new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL)
+                        .writeValueAsString(utenteRegistrato)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isNumber())
                 .andExpect(jsonPath("$").value(1));
     }
 
     // Test controllaUsernameOccupato
+    @DisplayName("controllaUsernameOccupato non trova username non occupato")
     @Test
     void whenControllaUsernameOccupato_givenUsernameNonOccupato_thenReturnJsonBooleanFalse() throws Exception {
         String username = "username";
@@ -216,6 +248,7 @@ class UtenteRegistratoControllerTest {
                 .andExpect(jsonPath("$").value(false));
     }
 
+    @DisplayName("controllaUsernameOccupato trova username non occupato")
     @Test
     void whenControllaUsernameOccupato_givenUsernameOccupato_thenReturnJsonBooleanTrue() throws Exception {
         String username = "username";
@@ -230,6 +263,7 @@ class UtenteRegistratoControllerTest {
     }
 
     // Test controllaEmailOccupata
+    @DisplayName("controllaEmailOccupata non trova email non occupata")
     @Test
     void whenControllaEmailOccupata_givenEmailNonOccupata_thenReturnJsonBooleanFalse() throws Exception {
         String email = "email";
@@ -243,6 +277,7 @@ class UtenteRegistratoControllerTest {
                 .andExpect(jsonPath("$").value(false));
     }
 
+    @DisplayName("controllaEmailOccupata trova email non occupata")
     @Test
     void whenControllaEmailOccupata_givenEmailOccupata_thenReturnJsonBooleanTrue() throws Exception {
         String email = "email";
@@ -256,36 +291,82 @@ class UtenteRegistratoControllerTest {
                 .andExpect(jsonPath("$").value(true));
     }
 
-    // Test controllaUtenteEsiste
+    // Test controllaUtenteRegistratoEsiste
+    @DisplayName("controllaUtenteRegistratoEsiste non trova UtenteRegistrato")
     @Test
     void whenControllaUtenteRegistratoEsiste_givenNonExistingUtenteRegistrato_thenReturnJsonBooleanFalse() throws Exception {
+        UtenteRegistratoModel utenteRegistrato =
+                new UtenteRegistratoModel(null, "username", "email", "password",
+                        "0", 0.0f, false, false);
 
+        given(utenteRegistratoService.controllaUtenteEsiste(refEq(utenteRegistrato))).willReturn(false);
+
+        mockMvc.perform(post("/api/utenteregistrato/controlla/utente")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding(StandardCharsets.UTF_8.name())
+                .content(new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL)
+                        .writeValueAsString(utenteRegistrato)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isBoolean())
+                .andExpect(jsonPath("$").value(false));
     }
 
+    @DisplayName("controllaUtenteRegistratoEsiste trova UtenteRegistrato")
     @Test
     void whenControllaUtenteRegistratoEsiste_givenExistingUtenteRegistrato_thenReturnJsonBooleanTrue() throws Exception {
+        UtenteRegistratoModel utenteRegistrato =
+                new UtenteRegistratoModel(null, "username", "email", "password",
+                        "0", 0.0f, false, false);
 
+        given(utenteRegistratoService.controllaUtenteEsiste(refEq(utenteRegistrato))).willReturn(true);
+
+        mockMvc.perform(post("/api/utenteregistrato/controlla/utente")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding(StandardCharsets.UTF_8.name())
+                .content(new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL)
+                        .writeValueAsString(utenteRegistrato)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isBoolean())
+                .andExpect(jsonPath("$").value(true));
     }
 
-    //test infoCredito
+    // Test ritornaIdUtenteRegistrato
+    @DisplayName("ritornaIdUtenteRegistrato non trova UtenteRegistrato")
     @Test
-    void whenInfoCredito_givenNonExistingCredito_thenReturnEmptyJson() throws Exception {
+    void whenRitornaIdUtenteRegistrato_givenNonExistingUtenteRegistrato_thenReturnEmptyJson() throws Exception {
+        UtenteRegistratoModel utenteRegistrato =
+                new UtenteRegistratoModel(null, "username", "email", "password",
+                        "0", 0.0f, false, false);
 
+        given(utenteRegistratoService.ritornaIdUtenteRegistrato(refEq(utenteRegistrato))).willReturn(null);
+
+        mockMvc.perform(post("/api/utenteregistrato/id")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding(StandardCharsets.UTF_8.name())
+                .content(new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL)
+                        .writeValueAsString(utenteRegistrato)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").doesNotExist());
     }
 
+    @DisplayName("ritornaIdUtenteRegistrato trova UtenteRegistrato")
     @Test
-    void whenInfoCredito_givenExistingCredito_thenReturnJsonMapInfoCredito() throws Exception {
+    void whenRitornaIdUtenteRegistrato_givenExistingUtenteRegistrato_thenReturnIdUtenteRegistrato() throws Exception {
+        UUID idUtenteRegistrato = UUID.randomUUID();
 
-    }
+        UtenteRegistratoModel utenteRegistrato =
+                new UtenteRegistratoModel(null, "username", "email", "password",
+                        "0", 0.0f, false, false);
 
-    //test aggiungiCredito
-    @Test
-    void whenAggiungiCredito_givenNonExistingCredito_thenReturnJsonNumber0() throws Exception {
+        given(utenteRegistratoService.ritornaIdUtenteRegistrato(refEq(utenteRegistrato))).willReturn(idUtenteRegistrato);
 
-    }
-
-    @Test
-    void whenAggiungiCredito_givenExistingCredito_thenReturnJsonNumber1() throws Exception {
-
+        mockMvc.perform(post("/api/utenteregistrato/id")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding(StandardCharsets.UTF_8.name())
+                .content(new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL)
+                        .writeValueAsString(utenteRegistrato)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isString())
+                .andExpect(jsonPath("$").value(idUtenteRegistrato.toString()));
     }
 }
