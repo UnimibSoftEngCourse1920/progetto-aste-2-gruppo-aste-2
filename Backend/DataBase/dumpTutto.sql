@@ -441,7 +441,7 @@ ALTER TABLE ONLY public.amministratore
 --
 
 ALTER TABLE ONLY public.attributo_oggetto
-    ADD CONSTRAINT "attributoOggetto_pkey" PRIMARY KEY (id_oggetto);
+    ADD CONSTRAINT "attributoOggetto_pkey" PRIMARY KEY (id_oggetto, id_attributo);
 
 
 --
