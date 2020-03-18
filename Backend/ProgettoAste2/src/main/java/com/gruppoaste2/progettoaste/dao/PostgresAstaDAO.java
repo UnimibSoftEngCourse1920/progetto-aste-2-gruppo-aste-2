@@ -35,8 +35,13 @@ public class PostgresAstaDAO implements AstaDAO {
 
     @Override
     public UUID aggiungiAsta(UUID idAsta, AstaModel asta) {
-        Time durataTimeSlot = (asta.getConfigurazione().getTipoTimeSlot().equals("fisso")) ?
-                asta.getConfigurazione().getDurataTimeSlotFisso() : asta.getInfoAsta().getDurataTimeSlot();
+        Optional<ConfigurazioneModel> configurazione =
+                configurazioneDAO.trovaConfigurazione(asta.getConfigurazione().getId());
+        if(configurazione.isEmpty())
+            return null;
+
+        Time durataTimeSlot = (configurazione.get().getTipoTimeSlot().equals("fisso")) ?
+                configurazione.get().getDurataTimeSlotFisso() : asta.getInfoAsta().getDurataTimeSlot();
 
         final String sql = "INSERT INTO asta(id, id_asta_manager, id_configurazione, tipo, prezzo_partenza, " +
                 "data_inizio, data_fine, durata_timeslot, rifiutata, criterio_terminazione) " +
