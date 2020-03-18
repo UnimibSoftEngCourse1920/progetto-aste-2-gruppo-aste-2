@@ -14,6 +14,9 @@ class OggettoCSVHelper {
     private static final String BEGIN_ATTRIBUTO = "[";
     private static final String END_ATTRIBUTO = "]";
 
+    private OggettoCSVHelper() {
+    }
+
     static List<OggettoModel> readOggettiCSV(String oggettiCSV) {
         List<OggettoModel> oggetti = new ArrayList<>();
 
