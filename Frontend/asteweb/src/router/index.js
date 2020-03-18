@@ -15,6 +15,7 @@ import Info from '../views/Info.vue'
 import SignUpPage from '../views/SignUpPage.vue'
 import CreaAsta from '../views/CreaAsta.vue'
 import FaiOfferta from '../views/FaiOfferta.vue'
+import AstaPage from '../views/AstaPage.vue'
 
 Vue.use(VueRouter)
 
@@ -94,6 +95,11 @@ const routes = [
     path: '/faiofferta/:idAsta',
     name: 'faiofferta',
     component: FaiOfferta
+  },
+  {
+    path:'/asta/:idasta',
+    name: 'astapage',
+    component: AstaPage
   }
 
 
