@@ -188,4 +188,10 @@ class ConfigurazioneControllerTest {
     void whenTrovaUltimaConfigurazione_givenExistingUltimaConfigurazione_thenReturnJsonMapUltimaConfigurazione() throws Exception {
 
     }
+
+    static ConfigurazioneModel makeConfigurazioneTest() {
+        UUID id = UUID.randomUUID();
+        return new ConfigurazioneModel(id, "fisso", 1, 1, 0.0,
+                Timestamp.valueOf(LocalDateTime.now()), Time.valueOf(LocalTime.now()));
+    }
 }
