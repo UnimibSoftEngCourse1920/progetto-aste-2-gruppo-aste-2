@@ -1,9 +1,8 @@
-package com.gruppoaste2.progettoaste.unittests.api;
+package com.gruppoaste2.progettoaste.unit.api;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gruppoaste2.progettoaste.api.UtenteRegistratoController;
-import com.gruppoaste2.progettoaste.model.AmministratoreModel;
 import com.gruppoaste2.progettoaste.model.UtenteRegistratoModel;
 import com.gruppoaste2.progettoaste.service.UtenteRegistratoService;
 import org.junit.jupiter.api.DisplayName;

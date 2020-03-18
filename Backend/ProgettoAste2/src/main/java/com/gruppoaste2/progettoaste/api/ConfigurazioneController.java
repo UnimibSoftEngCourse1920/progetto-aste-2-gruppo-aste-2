@@ -8,6 +8,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * La classe {@link RestController @RestController} {@code ConfigurazioneController}
+ * rappresenta le funzionalità della classe {@code ConfigurazioneModel},
+ * richiamabili esternamente tramite richieste HTTP.
+ * <p>
+ * L'URL dell'endpoint è definito tramite l'annotazione
+ * {@code {@link RequestMapping @RequestMapping}("api/configurazione")}.
+ * Le funzioni in questa classe sono accessibili tramite richieste HTTP.
+ */
 @RequestMapping("api/configurazione")
 @RestController
 public class ConfigurazioneController {

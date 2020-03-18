@@ -1,4 +1,4 @@
-package com.gruppoaste2.progettoaste.unittests.api;
+package com.gruppoaste2.progettoaste.unit.api;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;

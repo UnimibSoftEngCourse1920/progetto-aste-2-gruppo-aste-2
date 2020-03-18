@@ -1,8 +1,7 @@
-package com.gruppoaste2.progettoaste.unittests.api;
+package com.gruppoaste2.progettoaste.unit.api;
 
 import com.gruppoaste2.progettoaste.api.OggettoController;
 import com.gruppoaste2.progettoaste.service.OggettoService;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

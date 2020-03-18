@@ -9,6 +9,15 @@ import java.beans.ExceptionListener;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * La classe {@link RestController @RestController} {@code OggettoController}
+ * rappresenta le funzionalità della classe {@code OggettoModel},
+ * richiamabili esternamente tramite richieste HTTP.
+ * <p>
+ * L'URL dell'endpoint è definito tramite l'annotazione
+ * {@code {@link RequestMapping @RequestMapping}("api/oggetto")}.
+ * Le funzioni in questa classe sono accessibili tramite richieste HTTP.
+ */
 @RequestMapping("api/oggetto")
 @RestController
 public class OggettoController {
@@ -89,8 +98,8 @@ public class OggettoController {
         return oggettoService.aggiornaOggetto(idOggetto, oggettoAggiornato);
     }
 
-    @GetMapping("/importa")
-    public List<OggettoModel> importaOggetti(String oggettiCSV)
+    @PostMapping("/importa")
+    public List<OggettoModel> importaOggetti(@RequestBody String oggettiCSV)
     {
         return oggettoService.importaOggetti(oggettiCSV);
     }
