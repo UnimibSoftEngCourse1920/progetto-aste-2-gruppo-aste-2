@@ -21,6 +21,7 @@ public class PostgresAstaDAO implements AstaDAO {
     private final OffertaDAO offertaDAO;
 
     private final String SELECT_ALL_FROM_ASTA = "SELECT * FROM asta";
+    private final String JOIN_ASTA = "JOIN offerta ON asta.id = offerta.id_asta ";
 
     @Autowired
     public PostgresAstaDAO(JdbcTemplate jdbcTemplate, UtenteRegistratoDAO utenteRegistratoDAO,
@@ -124,7 +125,7 @@ public class PostgresAstaDAO implements AstaDAO {
     @Override
     public List<AstaModel> trovaAsteInCorsoOfferente(UUID idOfferente) {
         final String sql = SELECT_ALL_FROM_ASTA +
-                " JOIN offerta ON asta.id = offerta.id_asta " +
+                JOIN_ASTA +
                 "WHERE id_offerente = ? AND data_fine IS NULL";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeAstaFromResultSet(resultSet),
@@ -134,7 +135,7 @@ public class PostgresAstaDAO implements AstaDAO {
     @Override
     public List<AstaModel> trovaAsteInCorsoBustaChiusaOfferente(UUID idOfferente) {
         final String sql = SELECT_ALL_FROM_ASTA +
-                " JOIN offerta ON asta.id = offerta.id_asta " +
+                JOIN_ASTA +
                 "WHERE tipo = busta_chiusa AND id_offerente = ? AND data_fine IS NULL";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeAstaFromResultSet(resultSet),
