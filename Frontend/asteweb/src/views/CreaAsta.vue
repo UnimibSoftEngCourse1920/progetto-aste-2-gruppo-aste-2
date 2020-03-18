@@ -181,7 +181,7 @@ export default {
       .then(response => {
         console.log(response);
         response.forEach(element => {
-          this.categorieDisponibili.push(element.nome);
+          this.categorieDisponibili.push(element.id);
         });
       });
   },
@@ -211,7 +211,7 @@ export default {
         var j;
         for (j = 0; j < this.form.categorie[i].length; j++) {
           cat.push({
-            nome: this.form.categorie[i][j]
+            id: this.form.categorie[i][j]
           });
         }
         this.datiOggetti.push({

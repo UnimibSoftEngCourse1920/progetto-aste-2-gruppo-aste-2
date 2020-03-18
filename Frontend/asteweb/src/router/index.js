@@ -14,6 +14,7 @@ import Help from '../views/Help.vue'
 import Info from '../views/Info.vue'
 import SignUpPage from '../views/SignUpPage.vue'
 import CreaAsta from '../views/CreaAsta.vue'
+import FaiOfferta from '../views/FaiOfferta.vue'
 
 Vue.use(VueRouter)
 
@@ -88,6 +89,11 @@ const routes = [
     path: '/creaasta',
     name: 'creaasta',
     component: CreaAsta
+  },
+  {
+    path: '/faiofferta/:idAsta',
+    name: 'faiofferta',
+    component: FaiOfferta
   }
 
 

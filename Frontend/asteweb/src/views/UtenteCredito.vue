@@ -16,8 +16,8 @@
     </b-nav>
 
     <b-list-group>
-      <b-list-group-item>Credito totale: {{this.creditoTotale}}</b-list-group-item>
-      <b-list-group-item>Credito diponibibile: {{this.creditoDisponibile}}</b-list-group-item>
+      <b-list-group-item>Credito disponibile: {{this.creditoTotale}}</b-list-group-item>
+
       <b-list-group-item>Credito impegnato: {{this.creditoImpegnato}}</b-list-group-item>
     </b-list-group>
 
@@ -32,7 +32,7 @@
       </b-form-group>
 
       <b-form-group
-        v-if="creditoDisponibile > 0"
+        v-if="creditoTotale > 0"
         id="input-group-2"
         label="Credito da togliere:"
         label-for="input-2"
@@ -96,7 +96,7 @@ export default {
             parseFloat(this.creditoDisponibile) +
             parseFloat(this.creditoDaAggiungere - this.creditoDaRestituire);
 
-          if (this.creditoDisponibile === 0) {
+          if (this.creditoTotale === 0) {
             this.creditoDaRestituire = 0;
           }
         }

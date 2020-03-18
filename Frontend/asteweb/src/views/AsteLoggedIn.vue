@@ -30,7 +30,7 @@
       <b-card-text>
         <p>Tipo di asta: {{asteDaVisualizzare[i - 1].infoAsta.tipo}}</p>
         <p>Prezzo di partenza: {{asteDaVisualizzare[i - 1].infoAsta.prezzoPartenza}}</p>
-        <p>
+        <p v-if="asteDaVisualizzare[i - 1].infoAsta.dataInizio != null">
           Iniziata il:
           {{asteDaVisualizzare[i - 1].infoAsta.dataInizio
           }}
@@ -38,7 +38,13 @@
       </b-card-text>
 
       <b-button>Visualizza oggetti</b-button>
-      <b-button>Partecipa</b-button>
+
+      <b-button v-if=" userId != asteDaVisualizzare[i - 1].astaManager.id">
+        <router-link
+          style="color:white"
+          :to="{name: 'faiofferta', params: {idAsta: asteDaVisualizzare[i - 1].id}}"
+        >Partecipa ad asta</router-link>
+      </b-button>
     </b-card>
   </div>
 </template>
@@ -57,8 +63,12 @@ export default {
         { value: "c", text: "Visualizza aste dove sei massimo offerente" },
         { value: "d", text: "Visualizza aste a cui stai partecipando" }
       ],
-      asteDaVisualizzare: []
+      asteDaVisualizzare: [],
+      userId: null
     };
+  },
+  created: function() {
+    this.userId = localStorage.getItem("idLog");
   },
   watch: {
     selected: function() {

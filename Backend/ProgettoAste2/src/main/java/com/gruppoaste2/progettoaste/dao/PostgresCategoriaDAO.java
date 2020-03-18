@@ -28,15 +28,18 @@ public class PostgresCategoriaDAO implements CategoriaDAO {
     @Override
     public String aggiungiCategoria(CategoriaModel categoria) {
         final String sql = "INSERT INTO categoria(id) " +
-                "VALUES(?, ?)";
+                "VALUES(?)";
         if(jdbcTemplate.update(sql, categoria.getId()) == 0)
             return null;
+
 
         List<AttributoModel> attributi = categoria.getAttributi();
         if(attributi != null)
             for(AttributoModel attributo : attributi)
                 if(attributoDAO.aggiungiAttributo(categoria.getId(), attributo) == null)
                     return null;
+
+
 
         return categoria.getId();
     }
