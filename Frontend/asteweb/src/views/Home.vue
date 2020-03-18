@@ -8,11 +8,6 @@
         <label>Ricerca per descrizione:</label>
         <input type="text" v-model="searchDescrione" placeholder="Search" />
         <p></p>
-        <label>Ricerca per categoria:</label>
-        <ul v-for="categoria in categorie" :key="categoria.id">
-          
-        </ul>
-        <p>{{inputcb}}</p>
       </div>
     </div>
     <div class="col-lg-9">
@@ -20,7 +15,7 @@
       <li v-for="asta in filteredList()" :key="asta.id">
         <b-card :img-src="asta.oggetti[0].urlImmagine" img-alt="Card image" img-left class="mb-3">
           <b-card-text>
-            <router-link :to="'/asta/'+ asta.id"> {{asta.oggetti[0].nome}}</router-link>
+            <router-link :to="'/asta/'+ asta.id">{{asta.oggetti[0].nome}}</router-link>
             <div v-if="asta.infoAsta.tipo==='superamento_immediato'">
               <div v-if="asta.prezzoPiuAlto &&asta.prezzoPiuAlto">
                 <p class="text-left">offerta corrente: {{asta.prezzoPiuAlto}}</p>
@@ -61,8 +56,7 @@ export default {
         });
       if (this.searchDescrione.length > 0 && this.searchNome == 0)
         return this.aste.filter(asta => {
-          return asta.oggetti[0].descrizione.includes(
-            this.searchDescrione);
+          return asta.oggetti[0].descrizione.includes(this.searchDescrione);
         });
       else return this.aste;
     },
