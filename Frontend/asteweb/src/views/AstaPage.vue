@@ -1,20 +1,21 @@
 <template>
   <div>
-    <ul v-for="item in asta" :key="item.id">
-      <div v-for="oggetto in item.oggetti" :key="oggetto.id">
+    <div v-if="asta.infoAsta">
+      <div v-for="oggetto in asta.oggetti" :key="oggetto.id">
         <b-img :src="oggetto.urlImmagine" fluid alt="Fluid image"></b-img>
-        <p class="text-left">nome: {{oggetto.nome}}</p>
-        <p class="text-left">nome: {{oggetto.descrizione}}</p>
+        <p class="text-center">nome: {{oggetto.nome}}</p>
+        <p class="text-center">descrizione: {{oggetto.descrizione}}</p>
       </div>
       <div v-if="asta.infoAsta.tipo==='superamento_immediato'">
         <div v-if="asta.prezzoPiuAlto &&asta.prezzoPiuAlto">
-          <p class="text-left">offerta corrente: {{asta.prezzoPiuAlto}}</p>
-        </div>
-        <div v-else>
-          <p class="text-left">Prezzo: {{asta.infoAsta.prezzoPartenza}}</p>
+          <p class="text-center">offerta corrente: {{asta.prezzoPiuAlto}}</p>
         </div>
       </div>
-    </ul>
+       <div v-else>
+          <p class="text-center">Prezzo: {{asta.infoAsta.prezzoPartenza}}</p>
+        </div>
+      </div>
+       <div v-else=""> caricamento</div>
   </div>
 </template>
 
