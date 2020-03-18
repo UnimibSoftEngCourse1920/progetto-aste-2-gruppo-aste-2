@@ -21,7 +21,7 @@ public class PostgresAstaDAO implements AstaDAO {
     private final OffertaDAO offertaDAO;
 
     private final String SELECT_ALL_FROM_ASTA = "SELECT * FROM asta";
-    private final String JOIN_ASTA = "JOIN offerta ON asta.id = offerta.id_asta ";
+    private final String JOIN_ASTA = " JOIN offerta ON asta.id = offerta.id_asta ";
 
     @Autowired
     public PostgresAstaDAO(JdbcTemplate jdbcTemplate, UtenteRegistratoDAO utenteRegistratoDAO,
