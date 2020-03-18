@@ -303,7 +303,7 @@ ALTER TABLE public.utente_registrato OWNER TO postgres;
 --
 
 COPY public.amministratore (username, id, email, password) FROM stdin;
-Provolone	93fdad81-6724-46d0-9c90-c6b237a908d7	parmigiano@brie.com	boh
+admin	93fdad81-6724-46d0-9c90-c6b237a908d7	admin@gmail.com	admin
 \.
 
 
@@ -312,7 +312,6 @@ Provolone	93fdad81-6724-46d0-9c90-c6b237a908d7	parmigiano@brie.com	boh
 --
 
 COPY public.asta (id, id_asta_manager, id_configurazione, data_inizio, data_fine, durata_timeslot, tipo, prezzo_partenza, rifiutata, criterio_terminazione) FROM stdin;
-a40787f6-2b84-4fd1-b3bd-b3dfcaddc02f	b505c3b6-7769-4c6f-a000-80e1615b77a8	864289ea-c585-4076-93b7-3ea467036602	2020-03-18 16:23:56.5	\N	01:00:00	busta_chiusa	666	f	max_timeslot
 \.
 
 
@@ -337,8 +336,6 @@ COPY public.attributo_oggetto (id_oggetto, id_attributo, valore) FROM stdin;
 --
 
 COPY public.categoria (id) FROM stdin;
-Mobile
-Casa
 \.
 
 
@@ -347,8 +344,6 @@ Casa
 --
 
 COPY public.categoria_oggetto (id_oggetto, id_categoria) FROM stdin;
-a9a0495b-fd3c-42ef-aef8-583bcb0c30ca	Mobile
-a9a0495b-fd3c-42ef-aef8-583bcb0c30ca	Casa
 \.
 
 
@@ -360,6 +355,7 @@ COPY public.configurazione (id, numero_max_timeslot, numero_offerte_contemporane
 5455bc99-8fe9-4d45-9347-4c0aa180556c	10	10	fisso	2020-03-09 18:00:35.86	0.6	00:11:06
 523e7fda-3cd2-4458-8c98-cc61228af94e	1	1	fisso	2020-03-17 12:24:16.26	0	00:00:20
 864289ea-c585-4076-93b7-3ea467036602	4	4	fisso	2020-03-17 17:51:15.17	0	01:00:00
+44b02dc0-8a4e-4983-8de7-9434019b18cd	1	20	fisso	2020-03-18 17:40:34.55	0	00:01:00
 \.
 
 
@@ -368,7 +364,6 @@ COPY public.configurazione (id, numero_max_timeslot, numero_offerte_contemporane
 --
 
 COPY public.offerta (id_offerente, id_asta, data_offerta, credito_offerto, id) FROM stdin;
-b505c3b6-7769-4c6f-a000-80e1615b77a8	a40787f6-2b84-4fd1-b3bd-b3dfcaddc02f	2020-03-18 16:23:56.2	666	be52215a-8ff6-4c90-8ac6-40c3993e3dfe
 \.
 
 
@@ -377,7 +372,6 @@ b505c3b6-7769-4c6f-a000-80e1615b77a8	a40787f6-2b84-4fd1-b3bd-b3dfcaddc02f	2020-0
 --
 
 COPY public.oggetto (id, id_asta, nome, descrizione, url_immagine) FROM stdin;
-a9a0495b-fd3c-42ef-aef8-583bcb0c30ca	a40787f6-2b84-4fd1-b3bd-b3dfcaddc02f	Divano	Divano	https://www.ikea.com/it/it/images/products/backabro-divano-letto-con-chaise-longue-beige__0242501_PE381865_S4.JPG
 \.
 
 
@@ -399,7 +393,7 @@ COPY public.utente_registrato (id, username, password, email, telefono, credito_
 6c7983dc-e7f6-498b-801c-eee9e6c8e489	dsduca	1243	lol@boh.com	\N	666	f	f
 55a32da1-3cc7-45d6-b019-a4b9f824246e	Carlo	666	carlo@carlo.com	\N	0	f	f
 b505c3b6-7769-4c6f-a000-80e1615b77a8	Luca	1243	superBoh@boh.com	0392326424	100	t	t
-247ed1c0-2236-4f39-ac52-ac18ec0d0c1d	Utente	utente	1234@gmail.com	\N	0	f	f
+247ed1c0-2236-4f39-ac52-ac18ec0d0c1d	Utente	utente	1234@gmail.com	\N	6	f	f
 \.
 
 
