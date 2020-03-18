@@ -44,9 +44,8 @@ public class PostgresOggettoDAO implements OggettoDAO {
         List<CategoriaModel> categorie = oggetto.getCategorie();
         if(categorie != null)
             for(CategoriaModel categoria : categorie) {
-                if(!categoriaDAO.controllaCategoriaEsiste(categoria))
-                    if(categoriaDAO.aggiungiCategoria(categoria) == null)
-                        return null;
+                if(!categoriaDAO.controllaCategoriaEsiste(categoria) && categoriaDAO.aggiungiCategoria(categoria) == null)
+                    return null;
                 if(categoriaDAO.assegnaCategoriaAdOggetto(idOggetto, categoria.getId()) == 0)
                     return null;
 

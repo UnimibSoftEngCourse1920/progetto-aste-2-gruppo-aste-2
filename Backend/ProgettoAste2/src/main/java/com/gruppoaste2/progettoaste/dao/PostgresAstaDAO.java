@@ -226,9 +226,8 @@ public class PostgresAstaDAO implements AstaDAO {
         if(idOfferta == null)
             return null;
 
-        if(offertaDAO.trovaOfferteAsta(idAsta).size() == 1)
-            if(iniziaAsta(idAsta) == 0)
-                return null;
+        if(offertaDAO.trovaOfferteAsta(idAsta).size() == 1 && iniziaAsta(idAsta) == 0)
+            return null;
 
         return idOfferta;
     }
