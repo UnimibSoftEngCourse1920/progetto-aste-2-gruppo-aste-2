@@ -1,8 +1,11 @@
 package com.gruppoaste2.progettoaste.unittests.api;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gruppoaste2.progettoaste.api.OffertaController;
 import com.gruppoaste2.progettoaste.model.*;
 import com.gruppoaste2.progettoaste.service.OffertaService;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.nio.charset.StandardCharsets;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -19,8 +23,10 @@ import java.time.LocalTime;
 import java.util.*;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -34,7 +40,49 @@ class OffertaControllerTest {
     @MockBean
     private OffertaService offertaService;
 
+    // Test inserisciOfferta
+    /*
+    @DisplayName("inserisciOfferta non inserisce Offerta")
+    @Test
+    void whenInserisciOfferta_givenAlreadyExistingOfferta_thenReturnEmptyJson() throws Exception
+
+    @DisplayName("inserisciOfferta inserisce Offerta")
+    @Test
+    void whenInserisciOfferta_givenNonExistingOfferta_thenReturnJsonStringIdOfferta()
+            throws Exception
+    */
+
+    // Test eliminaOfferta
+    @DisplayName("eliminaOfferta non elimina Offerta")
+    @Test
+    void whenEliminaOfferta_givenNonExistingOfferta_thenReturnJsonNumber0() throws Exception {
+        UUID id = UUID.randomUUID();
+
+        given(offertaService.eliminaOfferta(id)).willReturn(0);
+
+        mockMvc.perform(get("/api/offerta/elimina/" + id.toString())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNumber())
+                .andExpect(jsonPath("$").value(0));
+    }
+
+    @DisplayName("eliminaOfferta elimina Offerta")
+    @Test
+    void whenEliminaOfferta_givenExistingOfferta_thenReturnJsonNumber1() throws Exception {
+        UUID id = UUID.randomUUID();
+
+        given(offertaService.eliminaOfferta(id)).willReturn(1);
+
+        mockMvc.perform(get("/api/offerta/elimina/" + id.toString())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNumber())
+                .andExpect(jsonPath("$").value(1));
+    }
+
     // Test trovaOfferta
+    @DisplayName("trovaOfferta non trova Offerta")
     @Test
     void whenTrovaOfferta_givenNonExistingOfferta_thenReturnEmptyJson() throws Exception {
         UUID id = UUID.randomUUID();
@@ -49,6 +97,7 @@ class OffertaControllerTest {
                 .andExpect(jsonPath("$").doesNotExist());
     }
 
+    @DisplayName("trovaOfferta trova Offerta")
     @Test
     void whenTrovaOfferta_givenExistingOfferta_thenReturnJsonMapOfferta() throws Exception {
         UUID idOfferta = UUID.randomUUID();
@@ -81,6 +130,7 @@ class OffertaControllerTest {
     }
 
     // Test trovaOfferte
+    @DisplayName("trovaOfferte non trova Offerte")
     @Test
     void whenTrovaOfferte_givenNonExistingOfferte_thenReturnEmptyJsonArray() throws Exception {
         List<OffertaModel> offerteTrovate = Collections.emptyList();
@@ -94,6 +144,7 @@ class OffertaControllerTest {
                 .andExpect(jsonPath("$", hasSize(0)));
     }
 
+    @DisplayName("trovaOfferte trova Offerte")
     @Test
     void whenTrovaOfferte_givenExistingOfferte_thenReturnJsonArrayOfMapsOfferte() throws Exception {
         UUID idOfferta = UUID.randomUUID();
@@ -128,6 +179,7 @@ class OffertaControllerTest {
     }
 
     // Test trovaOfferteAsta
+    @DisplayName("trovaOfferteAsta non trova OfferteAsta")
     @Test
     void whenTrovaOfferteAsta_givenNonExistingOfferteAsta_thenReturnEmptyJsonArray() throws Exception {
         UUID idAsta = UUID.randomUUID();
@@ -143,6 +195,7 @@ class OffertaControllerTest {
                 .andExpect(jsonPath("$", hasSize(0)));
     }
 
+    @DisplayName("trovaOfferteAsta trova OfferteAsta")
     @Test
     void whenTrovaOfferteAsta_givenExistingOfferteAsta_thenReturnJsonArrayOfMapsOfferteAsta() throws Exception {
         UUID idasta = UUID.randomUUID();
@@ -177,6 +230,7 @@ class OffertaControllerTest {
     }
 
     // Test trovaOfferteUtente
+    @DisplayName("trovaOfferteUtente non trova OfferteUtente")
     @Test
     void whenTrovaOfferteUtente_givenNonExistingOfferteUtente_thenReturnEmptyJsonArray() throws Exception {
         UUID idOfferente = UUID.randomUUID();
@@ -192,6 +246,7 @@ class OffertaControllerTest {
                 .andExpect(jsonPath("$", hasSize(0)));
     }
 
+    @DisplayName("trovaOfferteUtente trova OfferteUtente")
     @Test
     void whenTrovaOfferteUtente_givenExistingOfferteUtente_thenReturnJsonArrayOfMapsOfferteUtente() throws Exception {
         UUID idOfferta = UUID.randomUUID();
@@ -225,6 +280,7 @@ class OffertaControllerTest {
     }
 
     // Test trovaOfferteUtenteAsta
+    @DisplayName("trovaOfferteUtenteAsta non trova OfferteUtenteAsta")
     @Test
     void whenTrovaOfferteUtenteAsta_givenNonExistingOfferteUtenteAsta_thenReturnEmptyJsonArray() throws Exception {
         UUID idOfferente = UUID.randomUUID();
@@ -241,6 +297,7 @@ class OffertaControllerTest {
                 .andExpect(jsonPath("$", hasSize(0)));
     }
 
+    @DisplayName("trovaOfferteUtenteAsta trova OfferteUtenteAsta")
     @Test
     void whenTrovaOfferteUtenteAsta_givenExistingOfferteUtenteAsta_thenReturnJsonArrayOfMapsOfferteUtenteAsta() throws Exception {
         UUID idasta = UUID.randomUUID();
@@ -274,52 +331,5 @@ class OffertaControllerTest {
                 .andExpect(jsonPath("$[0].offerente.credito").value(offerteTrovate.get(0).getOfferente().getCredito()));
     }
 
-    // Test aggiungiOfferta
-    @Test
-    void whenAggiungiOfferta_givenExistingOfferta_thenReturnJsonNumber0() throws Exception {
 
-    }
-
-    @Test
-    void whenAggiungiOfferta_givenNonExistingOfferta_thenReturnJsonNumber1() throws Exception {
-
-    }
-
-    // Test aggiornaOfferta
-    @Test
-    void whenAggiornaOfferta_givenNonExistingOfferta_thenReturnJsonNumber0() throws Exception {
-
-    }
-
-    @Test
-    void whenAggiornaOfferta_givenExistingOfferta_thenReturnJsonNumber1() throws Exception {
-
-    }
-
-    // Test eliminaOfferta
-    @Test
-    void whenEliminaOfferta_givenNonExistingOfferta_thenReturnJsonNumber0() throws Exception {
-        UUID id = UUID.randomUUID();
-
-        given(offertaService.eliminaOfferta(id)).willReturn(0);
-
-        mockMvc.perform(get("/api/offerta/elimina/" + id.toString())
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isNumber())
-                .andExpect(jsonPath("$").value(0));
-    }
-
-    @Test
-    void whenEliminaOfferta_givenExistingOfferta_thenReturnJsonNumber1() throws Exception {
-        UUID id = UUID.randomUUID();
-
-        given(offertaService.eliminaOfferta(id)).willReturn(1);
-
-        mockMvc.perform(get("/api/offerta/elimina/" + id.toString())
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isNumber())
-                .andExpect(jsonPath("$").value(1));
-    }
 }
