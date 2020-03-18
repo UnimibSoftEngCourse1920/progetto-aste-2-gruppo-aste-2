@@ -32,7 +32,7 @@ public class ScheduledUpdate {
     @Scheduled(initialDelay = 1000L * 10, fixedDelay = 2000L)
     public void aggiornaSituazioneAste()
     {
-        System.out.println("aggiorna-asta");
+        // System.out.println("aggiorna-asta");
 
         List<AstaModel> asteInCorso = astaDAO.trovaAsteInCorso();
         for(AstaModel asta : asteInCorso)
@@ -46,13 +46,13 @@ public class ScheduledUpdate {
                     numeroTimeSlot = conf.get().getMaxTimeSlot();
                 }
                 Timestamp dataCreazione = asta.getInfoAsta().getDataInizio();
-                System.out.println("DataCreazione: " + dataCreazione + " long: " + dataCreazione.getTime());
-                System.out.println("Numero timeslot" + numeroTimeSlot);
+                // System.out.println("DataCreazione: " + dataCreazione + " long: " + dataCreazione.getTime());
+                // System.out.println("Numero timeslot" + numeroTimeSlot);
                 var durata = asta.getInfoAsta().getDurataTimeSlot().toLocalTime();
-                System.out.println("Duarata timeslot: " + "H: " + durata.getHour() + "M: " + durata.getMinute() + " S: " + durata.getSecond());
+                // System.out.println("Duarata timeslot: " + "H: " + durata.getHour() + "M: " + durata.getMinute() + " S: " + durata.getSecond());
                 long dataFine = dataCreazione.getTime() +
                         (numeroTimeSlot * (durata.getHour() * 3600000 + durata.getMinute() * 60000 + durata.getSecond() * 1000));
-                System.out.println("DataFine: " + new Timestamp(dataFine) + " long: " + dataFine);
+                // System.out.println("DataFine: " + new Timestamp(dataFine) + " long: " + dataFine);
                 Timestamp now = Timestamp.from(Instant.now());
 
                 if(dataFine < now.getTime())
