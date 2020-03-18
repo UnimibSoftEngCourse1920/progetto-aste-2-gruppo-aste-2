@@ -113,3 +113,12 @@ export default {
   computed: {}
 };
 </script>
+
+
+<style scoped>
+.card-img-left {
+  width: 30%;
+  height: 15vw;
+  object-fit: cover;
+}
+</style>

@@ -59,10 +59,7 @@
     <b-alert v-model="showAlertEmail" variant="danger" dismissible>Email occupata</b-alert>
     <b-alert v-model="showAlertUsername" variant="danger" dismissible>Username occupato</b-alert>
 
-    <b-card class="mt-3" header="Dati correnti">
-      <pre class="m-0">{{ form }}</pre>
-      <pre class="m-0">{{ userInfo }}</pre>
-    </b-card>
+    
   </div>
 </template>
 

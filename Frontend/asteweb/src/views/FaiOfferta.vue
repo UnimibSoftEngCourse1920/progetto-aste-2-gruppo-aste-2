@@ -48,7 +48,9 @@ export default {
       show: true,
       prezzoPartenza: 0,
       offertaMinima: -1,
-      creditoDisponibile: 0
+      creditoDisponibile: 0,
+      numeroOfferteUtente: 0,
+      massimoNumeroOfferte: 0
     };
   },
   created: function() {
@@ -58,6 +60,27 @@ export default {
       .then(response => response.json())
       .then(response => {
         this.prezzoPartenza = response.infoAsta.prezzoPartenza;
+      });
+
+    fetch(
+      "http://localhost:8080/api/asta/aste/incorso/offerente/" +
+        localStorage.getItem("idLog"),
+      {
+        method: "get"
+      }
+    )
+      .then(response => response.json())
+      .then(response => {
+        this.numeroOfferteUtente = response.length;
+        console.log("offerte fatte: " + this.numeroOfferteUtente);
+      });
+
+    fetch("http://localhost:8080/api/configurazione/configurazioni/ultima/", {
+      method: "get"
+    })
+      .then(response => response.json())
+      .then(response => {
+        this.massimoNumeroOfferte = response.maxOfferte;
       });
   },
   mounted: function() {
@@ -94,13 +117,21 @@ export default {
       evt.preventDefault();
       alert(JSON.stringify(this.form));
 
+      if (this.numeroOfferteUtente == this.massimoNumeroOfferte) {
+        alert(
+          "Hai raggiunto il massimo numero di offerte contemporanee possibili"
+        );
+      }
+
       if (this.form.offerta > this.creditoDisponibile) {
         alert("Non hai abbastanza soldi");
       }
 
       if (
         this.form.offerta >= this.offertaMinima &&
-        this.form.offerta >= this.prezzoPartenza
+        this.form.offerta >= this.prezzoPartenza &&
+        this.form.offerta <= this.creditoDisponibile &&
+        this.numeroOfferteUtente < this.massimoNumeroOfferte
       ) {
         fetch(
           "http://localhost:8080/api/asta/partecipa/" +

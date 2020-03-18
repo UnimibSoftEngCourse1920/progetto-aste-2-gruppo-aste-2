@@ -39,7 +39,9 @@
 
       <b-button>Visualizza oggetti</b-button>
 
-      <b-button v-if=" userId != asteDaVisualizzare[i - 1].astaManager.id">
+      <b-button v-if="selected === 'b' && asteDaVisualizzare[i - 1].infoAsta.rifiutata === false" v-on:click="rinuncia(i)">Rinuncia ad asta</b-button>
+
+      <b-button v-if=" userId != asteDaVisualizzare[i - 1].astaManager.id && selected != 'b'">
         <router-link
           style="color:white"
           :to="{name: 'faiofferta', params: {idAsta: asteDaVisualizzare[i - 1].id}}"
@@ -66,6 +68,22 @@ export default {
       asteDaVisualizzare: [],
       userId: null
     };
+  },
+  methods: {
+    rinuncia: function(i) {
+      console.log(i);
+      fetch(
+        "http://localhost:8080/api/asta/rinuncia/" +
+          this.asteDaVisualizzare[i - 1].id +
+          "/" +
+          localStorage.getItem("idLog"),
+        { method: "get" }
+      ).then(response => {
+        if (response.status === 200) {
+          alert("Rinuncia avvenuta con successo");
+        }
+      });
+    }
   },
   created: function() {
     this.userId = localStorage.getItem("idLog");
