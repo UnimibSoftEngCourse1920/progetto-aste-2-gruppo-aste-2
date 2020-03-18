@@ -157,76 +157,6 @@ public class PostgresOggettoDAO implements OggettoDAO {
                 idOggetto);
     }
 
-    // TODO: importaOggetti
-    @Override
-    public long importaOggetti(UUID idAsta, String fileName) {
-        Properties properties = readProperties();
-        String url = properties.getProperty("jdbc-url");
-        String username = properties.getProperty("username");
-        String password = properties.getProperty("password");
-
-        long copyIn = 0;
-
-        try (Connection connection = DriverManager.getConnection(url, username, password)) {
-            CopyManager copyManager = new CopyManager((BaseConnection) connection);
-
-            try (FileInputStream fileInputStream = new FileInputStream(fileName);
-                 InputStreamReader inputStreamReader =
-                         new InputStreamReader(fileInputStream, StandardCharsets.UTF_8)) {
-                final String selection =
-                        "SELECT oggetto.nome, descrizione, url_immagine, categoria.nome, attributo.nome, valore " +
-                                "FROM oggetto " +
-                                "JOIN categoria_oggetto ON oggetto.id = categoria_oggetto.id_oggetto " +
-                                "JOIN categoria ON categoria_oggetto.id_categoria = categoria.id " +
-                                "JOIN attributo_oggetto ON oggetto.id = attributo_oggetto.id_oggetto " +
-                                "JOIN attributo ON attributo_oggetto.id_attributo = attributo.id " +
-                                "WHERE id_asta = " + idAsta;
-                final String sql = "COPY (" + selection + ") FROM STDIN WITH DELIMITER '|'";
-                copyIn = copyManager.copyIn(sql, inputStreamReader);
-            }
-
-        } catch (SQLException | IOException exception) {
-            Logger.getLogger(PostgresOggettoDAO.class.getName()).log(Level.SEVERE, exception.getMessage(), exception);
-        }
-
-        return copyIn;
-    }
-
-    // TODO: esportaOggetti
-    @Override
-    public long esportaOggetti(UUID idAsta, String fileName) {
-        Properties properties = readProperties();
-        String url = properties.getProperty("jdbc-url");
-        String username = properties.getProperty("username");
-        String password = properties.getProperty("password");
-
-        long copyOut = 0;
-
-        try (Connection connection = DriverManager.getConnection(url, username, password)) {
-            CopyManager copyManager = new CopyManager((BaseConnection) connection);
-
-            try (FileOutputStream fileOutputStream = new FileOutputStream(fileName);
-                 OutputStreamWriter outputStreamWriter =
-                         new OutputStreamWriter(fileOutputStream, StandardCharsets.UTF_8)) {
-                final String selection =
-                        "SELECT oggetto.nome, descrizione, url_immagine, categoria.nome, attributo.nome, valore " +
-                        "FROM oggetto " +
-                        "JOIN categoria_oggetto ON oggetto.id = categoria_oggetto.id_oggetto " +
-                        "JOIN categoria ON categoria_oggetto.id_categoria = categoria.id " +
-                        "JOIN attributo_oggetto ON oggetto.id = attributo_oggetto.id_oggetto " +
-                        "JOIN attributo ON attributo_oggetto.id_attributo = attributo.id " +
-                        "WHERE id_asta = " + idAsta;
-                final String sql = "COPY (" + selection + ") TO STDOUT WITH DELIMITER AS '|'";
-                copyOut = copyManager.copyOut(sql, outputStreamWriter);
-            }
-
-        } catch (SQLException | IOException exception) {
-            Logger.getLogger(PostgresOggettoDAO.class.getName()).log(Level.SEVERE, exception.getMessage(), exception);
-        }
-
-        return copyOut;
-    }
-
     private OggettoModel makeOggettoFromResultSet(ResultSet resultSet) throws SQLException {
         UUID idOggetto = UUID.fromString(resultSet.getString("id"));
         String nome = resultSet.getString("nome");
@@ -234,19 +164,5 @@ public class PostgresOggettoDAO implements OggettoDAO {
         String urlImmagine = resultSet.getString("url_immagine");
         List<CategoriaModel> categorie = categoriaDAO.trovaCategorieOggetto(idOggetto);
         return new OggettoModel(idOggetto, nome, descrizione, urlImmagine, categorie);
-    }
-
-    private static Properties readProperties() {
-        Properties properties = new Properties();
-        Path path = Paths.get("src/main/resources/application.yml");
-
-        try (BufferedReader bufferedReader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
-            properties.load(bufferedReader);
-
-        } catch (IOException exception) {
-            Logger.getLogger(PostgresOggettoDAO.class.getName()).log(Level.SEVERE, exception.getMessage(), exception);
-        }
-
-        return properties;
     }
 }

@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import org.springframework.stereotype.Service;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+
+import java.util.*;
+
+import static com.gruppoaste2.progettoaste.service.OggettoCSVHelper.readOggettiCSV;
+import static com.gruppoaste2.progettoaste.service.OggettoCSVHelper.writeOggettiCSV;
 
 @Service
 public class OggettoService {
@@ -75,13 +77,13 @@ public class OggettoService {
         return oggettoDAO.aggiornaOggetto(idOggetto, oggettoAggiornato);
     }
 
-    public long importaOggetti(UUID idAsta, String fileName)
+    public List<OggettoModel> importaOggetti(String oggettiCSV)
     {
-        return oggettoDAO.importaOggetti(idAsta, fileName);
+        return readOggettiCSV(oggettiCSV);
     }
 
-    public long esportaOggetti(UUID idAsta, String fileName)
+    public String esportaOggetti(UUID idAsta)
     {
-        return oggettoDAO.esportaOggetti(idAsta, fileName);
+        return writeOggettiCSV(oggettoDAO.trovaOggettiAsta(idAsta));
     }
 }

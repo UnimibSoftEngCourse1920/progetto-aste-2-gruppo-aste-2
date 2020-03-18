@@ -62,11 +62,11 @@ public class PostgresAttributoDAO implements AttributoDAO {
     }
 
     @Override
-    public AttributoModel trovaAttributiOggetto(UUID idOggetto) {
+    public List<AttributoModel> trovaAttributiOggetto(UUID idOggetto) {
         final String sql = "SELECT * FROM attributo " +
                 "JOIN attributo_oggetto ON id = id_attributo " +
                 "WHERE id_oggetto = ?";
-        return jdbcTemplate.queryForObject(sql,
+        return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeAttributoOggettoFromResultSet(resultSet),
                 idOggetto);
     }

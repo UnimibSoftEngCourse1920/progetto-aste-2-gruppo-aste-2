@@ -76,7 +76,7 @@ public class PostgresCategoriaDAO implements CategoriaDAO {
                 "JOIN categoria_oggetto ON id = id_categoria " +
                 "WHERE id_oggetto = ?";
         return jdbcTemplate.query(sql,
-                (resultSet, i) -> makeCategoriaFromResultSet(resultSet),
+                (resultSet, i) -> makeCategoriaOggettoFromResultSet(resultSet),
                 idOggetto);
     }
 
@@ -124,6 +124,15 @@ public class PostgresCategoriaDAO implements CategoriaDAO {
     private CategoriaModel makeCategoriaFromResultSet(ResultSet resultSet) throws SQLException {
         String idCategoria = resultSet.getString("id");
         List<AttributoModel> attributi = attributoDAO.trovaAttributiCategoria(idCategoria);
+        return new CategoriaModel(idCategoria, attributi);
+    }
+
+    private CategoriaModel makeCategoriaOggettoFromResultSet(ResultSet resultSet) throws SQLException {
+        String idCategoria = resultSet.getString("id");
+
+        UUID idOggetto = UUID.fromString(resultSet.getString("id_oggetto"));
+        List<AttributoModel> attributi = attributoDAO.trovaAttributiOggetto(idOggetto);
+
         return new CategoriaModel(idCategoria, attributi);
     }
 }

@@ -51,7 +51,7 @@ public class AttributoController {
     }
 
     @GetMapping("/attributi/oggetto/{idOggetto}")
-    public AttributoModel trovaAttributiOggetto(@PathVariable("idOggetto") UUID idOggetto) {
+    public List<AttributoModel> trovaAttributiOggetto(@PathVariable("idOggetto") UUID idOggetto) {
         return attributoService.trovaAttributiOggetto(idOggetto);
     }
 

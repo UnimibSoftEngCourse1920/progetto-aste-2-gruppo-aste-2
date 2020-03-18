@@ -24,7 +24,7 @@ public interface AttributoDAO {
 
     List<AttributoModel> trovaAttributiCategoria(String idCategoria);
 
-    AttributoModel trovaAttributiOggetto(UUID idOggetto);
+    List<AttributoModel> trovaAttributiOggetto(UUID idOggetto);
 
     int aggiornaAttributo(UUID idAttributo, AttributoModel attributoAggiornato);
 

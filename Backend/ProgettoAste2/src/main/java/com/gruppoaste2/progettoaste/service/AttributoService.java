@@ -40,7 +40,7 @@ public class AttributoService {
         return attributoDAO.trovaAttributiCategoria(idCategoria);
     }
 
-    public AttributoModel trovaAttributiOggetto(UUID idOggetto) {
+    public List<AttributoModel> trovaAttributiOggetto(UUID idOggetto) {
         return attributoDAO.trovaAttributiOggetto(idOggetto);
     }
 
