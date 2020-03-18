@@ -20,7 +20,7 @@
       <li v-for="asta in filteredList()" :key="asta.id">
         <b-card :img-src="asta.oggetti[0].urlImmagine" img-alt="Card image" img-left class="mb-3">
           <b-card-text>
-            <p class="text-left">nome: {{asta.oggetti[0].nome}}</p>
+            <router-link :to="'/asta/'+ asta.id"> {{asta.oggetti[0].nome}}</router-link>
             <div v-if="asta.infoAsta.tipo==='superamento_immediato'">
               <div v-if="asta.prezzoPiuAlto &&asta.prezzoPiuAlto">
                 <p class="text-left">offerta corrente: {{asta.prezzoPiuAlto}}</p>
