@@ -490,11 +490,16 @@ class AstaControllerTest {
     @Test
     void whenAggiornaAsta_givenExistingAsta_thenReturnJsonNumber1() throws Exception
      */
-
-    private AstaModel makeAstaTest() {
+/*
+    AstaModel makeAstaTest() {
         UUID idAsta = UUID.randomUUID();
+
         UUID idConfigurazione = UUID.randomUUID();
+        ConfigurazioneModel configurazione = ConfigurazioneControllerTest.makeConfigurazioneTest();
+
         UUID idAstaManager = UUID.randomUUID();
+        UtenteRegistratoModel astaManager = new UtenteRegistratoModel(idAstaManager, "username", "email");
+
         UUID idOggetto = UUID.randomUUID();
         UUID idCategoria = UUID.randomUUID();
         UUID idAttributo = UUID.randomUUID();
@@ -504,7 +509,7 @@ class AstaControllerTest {
         List<OggettoModel> oggetti = new ArrayList<>();
         List<OffertaModel> offerte = new ArrayList<>();
         List<CategoriaModel> categorie = new ArrayList<>();
-        OggettoModel ogg1 = new OggettoModel(idOgge, "nome", "descrizione", "url", Collections.emptyList()); // todo andre empty list
+        OggettoModel ogg1 = new OggettoModel(idOggetto, "nome", "descrizione", "url", Collections.emptyList()); // todo andre empty list
         oggetti.add(ogg1);
         OffertaModel off1 = new OffertaModel(idoff, 1, Timestamp.valueOf(LocalDateTime.now()),
                 new UtenteRegistratoModel(idut2, "username1", "email1", "+39339025613",
@@ -526,4 +531,6 @@ class AstaControllerTest {
                 offerte);
         return asta;
     }
+
+ */
 }

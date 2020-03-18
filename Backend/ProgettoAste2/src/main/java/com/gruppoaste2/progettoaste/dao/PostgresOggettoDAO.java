@@ -19,11 +19,11 @@ public class PostgresOggettoDAO implements OggettoDAO {
     private final CategoriaDAO categoriaDAO;
     private final AttributoDAO attributoDAO;
 
-    private final String SELECT_FROM_OGGETTO_JOIN_ASTA =
+    private final static String SELECTFROMOGGETTOJOINASTA =
             "SELECT o.id, o.nome, o.descrizione, o.url_immagine " +
             "FROM oggetto AS o " +
             "JOIN asta AS a ON o.id_asta = a.id ";
-    private final String WHERE_ID_ASTA_MANAGER = "WHERE a.id_asta_manager = ?";
+    private final static String WHEREIDASTAMANAGER = "WHERE a.id_asta_manager = ?";
 
     @Autowired
     public PostgresOggettoDAO(JdbcTemplate jdbcTemplate, CategoriaDAO categoriaDAO, AttributoDAO attributoDAO) {
@@ -117,8 +117,8 @@ public class PostgresOggettoDAO implements OggettoDAO {
 
     @Override
     public List<OggettoModel> trovaOggettiRegistratiDaUtente(UUID idAstaManager) {
-        final String sql = SELECT_FROM_OGGETTO_JOIN_ASTA +
-                WHERE_ID_ASTA_MANAGER;
+        final String sql = SELECTFROMOGGETTOJOINASTA +
+                WHEREIDASTAMANAGER;
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeOggettoFromResultSet(resultSet),
                 idAstaManager);
@@ -126,8 +126,8 @@ public class PostgresOggettoDAO implements OggettoDAO {
 
     @Override
     public List<OggettoModel> trovaOggettiInCorsoAstaUtente(UUID idAstaManager) {
-        final String sql = SELECT_FROM_OGGETTO_JOIN_ASTA +
-                WHERE_ID_ASTA_MANAGER + " AND a.data_fine IS NULL";
+        final String sql = SELECTFROMOGGETTOJOINASTA +
+                WHEREIDASTAMANAGER + " AND a.data_fine IS NULL";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeOggettoFromResultSet(resultSet),
                 idAstaManager);
@@ -135,8 +135,8 @@ public class PostgresOggettoDAO implements OggettoDAO {
 
     @Override
     public List<OggettoModel> trovaOggettiVendutiDaUtente(UUID idAstaManager) {
-        final String sql = SELECT_FROM_OGGETTO_JOIN_ASTA +
-                WHERE_ID_ASTA_MANAGER + " AND a.data_fine IS NOT NULL";
+        final String sql = SELECTFROMOGGETTOJOINASTA +
+                WHEREIDASTAMANAGER + " AND a.data_fine IS NOT NULL";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeOggettoFromResultSet(resultSet),
                 idAstaManager);
@@ -144,8 +144,8 @@ public class PostgresOggettoDAO implements OggettoDAO {
 
     @Override
     public List<OggettoModel> trovaOggettiRifiutatiUtente(UUID idAstaManager) {
-        final String sql = SELECT_FROM_OGGETTO_JOIN_ASTA +
-                WHERE_ID_ASTA_MANAGER + " AND a.data_fine IS NOT NULL AND a.rifiutata = true";
+        final String sql = SELECTFROMOGGETTOJOINASTA +
+                WHEREIDASTAMANAGER + " AND a.data_fine IS NOT NULL AND a.rifiutata = true";
         return jdbcTemplate.query(sql,
                 (resultSet, i) -> makeOggettoFromResultSet(resultSet),
                 idAstaManager);
@@ -153,7 +153,7 @@ public class PostgresOggettoDAO implements OggettoDAO {
 
     @Override
     public List<OggettoModel> trovaOggettiVintiDaUtente(UUID idUtente) {
-        final String sql = SELECT_FROM_OGGETTO_JOIN_ASTA +
+        final String sql = SELECTFROMOGGETTOJOINASTA +
                 "JOIN offerta as off ON a.id = off.id_asta " +
                 "WHERE off.id_offerente = ? AND a.data_fine IS NOT NULL";
         return jdbcTemplate.query(sql,
