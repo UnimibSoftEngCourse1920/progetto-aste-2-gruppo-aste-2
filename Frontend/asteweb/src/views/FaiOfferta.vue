@@ -109,7 +109,7 @@ export default {
         .then(response => {
           this.creditoDisponibile = response.creditoDisponibile;
         });
-    }, 5000);
+    }, 1000);
   },
 
   methods: {
